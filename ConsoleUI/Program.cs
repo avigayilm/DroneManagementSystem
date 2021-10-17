@@ -6,7 +6,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IDAL.DO.Station Station = new IDAL.DO.Station();
             IDAL.DO.Customer client = new IDAL.DO.Customer
             {
                 Name = "Avigayil",
