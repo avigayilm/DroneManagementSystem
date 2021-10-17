@@ -1,4 +1,5 @@
 ﻿using System;
+using IDAL.DO;
 
 namespace IDAL
 {
@@ -11,7 +12,6 @@ namespace IDAL
             public int Targetid { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorites Priority { get; set; }
-
             public DateTime Requested { get; set; }
 
             public int DroneId { get; set; }
