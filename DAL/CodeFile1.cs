@@ -2,8 +2,6 @@
 using IDAL.DO;
 //using DalObject;
 
-
-
 namespace DalObject
 {
     internal class DataSource

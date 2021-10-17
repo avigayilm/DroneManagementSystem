@@ -12,15 +12,19 @@ namespace IDAL
         {
             available, maintenance, delivery
         }
+        public enum DroneStatuses
+        {
+            available = 0, maintenance, delivery
+        }
 
         public enum WeightCategories
         {
-            light, medium, heavy
+            light = 0, medium, heavy
         }
 
         public enum Priorities
         {
-            empty = 0, full
+            normal = 0, fast, emergency
         }
     }
     
