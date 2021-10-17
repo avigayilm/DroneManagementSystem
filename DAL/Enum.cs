@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    public  enum DroneStatuses
+    namespace DO
     {
-        available=0,maintenance,delivery
-    }
+        public enum DroneStatuses
+        {
+            available = 0, maintenance, delivery
+        }
 
-    public enum WeightCategories
-    {
-        light=0, medium, heavy
-    }
+        public enum WeightCategories
+        {
+            light = 0, medium, heavy
+        }
 
-    public enum Priotities
-    {
-        empty=0,full
+        public enum Priorities
+        {
+            normal = 0, fast, emergency
+        }
     }
 }
