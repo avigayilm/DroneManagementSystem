@@ -2,77 +2,6 @@
 using IDAL.DO;
 //using DalObject;
 
-namespace IDAL
-{
-    namespace DO
-    {
-        enum Hello { WeightCategories, Priorities };
-        public struct Customer
-    {
-       
-        public int ID { get; set; }// so no one can change ID
-        public String Name { get; set; }
-        public String Phone { get; set; }// we make it string so it can have 0 at beginning
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-
-        public override string ToString()
-        {
-            String result = " ";
-            result += $"ID is {ID}, \n";
-            result += $"Name is {Name}, \n";
-            result += $"Telephone is {Phone.Substring(0, 3) + '-' + Phone.Substring(3)}, \n";
-            result += $"Latitude is {Latitude}, \n";
-            result += $"longitude is {Longitude}, \n";
-            return result;
-        }
-    }
-
-            public struct Parcel
-            {
-                public int ID { get; set; }
-                public int Senderid { get; set; }
-                public int Targetid { get; set; }
-                public WeightCategories Weight { get; set; }
-                public Priorites Priority { get; set; }
-
-                public DateTime Requested { get; set; }
-
-                public int DroneId { get; set; }
-                public DateTime Scheduled { get; set; }
-                public DateTime PickedUp { get; set; }
-                public DateTime Delivered { get; set; }
-            }
-
-            public struct Drone
-            {
-                public int ID { get; set; }
-                public string Model { get; set; }
-                public WeightCategories MaxWeight { get; set; }
-                public DroneStatuses Status { get; set; }
-                public double Battery { get; set; }
-
-
-            }
-
-            public struct Station
-            {
-                public int ID { get; set; }
-                public int Name { get; set; }
-                public double Longitude { get; set; }
-                public double Latitude { get; set; }
-                public int ChargeSlots { get; set; }
-
-            }
-
-            public struct DroneCharge
-            {
-                public int DroneId { get; set; }
-                public int StationId { get; set; }
-            }
-
-        }
-     }
 
 
 namespace DalObject
@@ -239,10 +168,11 @@ namespace DalObject
 
         public DroneCharge SendToCharge(int DroneId, int StationId)
         {
-            int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
+            int size = DataSource.Config.droneIndex;//getting amount of drones in the array
+            int size2 = DataSource.Config.stationIndex;
             int index = -1;
             DroneCharge DC = new DroneCharge();// making a new Dronecharge
-            for (int i = 0; i <= size; i++)
+            for (int i = 0; i < size; i++)
             {
                 if (DataSource.DronesArr[i].ID == DroneId)// if the parcel was found
                 {
@@ -252,19 +182,41 @@ namespace DalObject
             }
             if (index == -1)// if the value is not found
             {
-                Console.WriteLine("Parcel not found");// return a dronecharge
+                Console.WriteLine("Drone not found");// return a dronecharge
                 return DC;
             }
 
-            //update the parcel values
+
+            //update the drone values
             else
             {
                 //   DataSource.DronesArr[index].Status= ;//updating the DroneId of hte parcel
 
             }
+
+            index = -1;
+            for (int i = 0; i < size2; i++)
+            {
+                if (DataSource.StationArr [i].ID == StationId)// if the station was found
+                {
+                    index = i;
+                    break;
+                }
+            }
             
+            if (index == -1)// if the value is not found
+            {
+                Console.WriteLine("Station not found");// return a dronecharge
+                return DC;
+            }
+            else
+            {
+                DataSource.StationArr[index].ChargeSlots -= 1;
+            }
+
             DC.DroneId = DroneId;
             DC.StationId = StationId;
+           
             return DC;
 
         }
