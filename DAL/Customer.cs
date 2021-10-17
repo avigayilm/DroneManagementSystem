@@ -6,7 +6,7 @@ namespace IDAL
         public struct Customer
         {
 
-            public int ID { get; set; }// so no one can change ID
+            public string ID { get; set; }// so no one can change ID
             public String Name { get; set; }
             public String Phone { get; set; }// we make it string so it can have 0 at beginning
             public double Latitude { get; set; }
