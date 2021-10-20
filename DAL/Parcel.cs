@@ -27,7 +27,7 @@ namespace IDAL
                 result += $"Targetid is {Targetid}, \n";
                 result += $"Weight is {Weight},\n";
                 result += $"Priority is {Priority}\n";
-                result += $"The parcel was requested at {Requested},\n";
+                result += $"The parcel was requested at {requested},\n";
                 result += $"Droneid is {DroneId}, \n";
                 result += $" The Parcel is scheduled for {Scheduled},\n";
                 result += $"The Parcel was picked up at{PickedUp},\n";
