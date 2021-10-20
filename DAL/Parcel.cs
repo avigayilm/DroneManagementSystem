@@ -7,17 +7,17 @@ namespace IDAL
         public struct Parcel
         {
             public int ID { get; set; }
-            public int Senderid { get; set; }
-            public int Targetid { get; set; }
-            public WeightCategories Weight { get; set; }
-            public Priorities Priority { get; set; }
+            public int senderId { get; set; }
+            public int targetId { get; set; }
+            public WeightCategories weight { get; set; }
+            public Priorities priority { get; set; }
 
-            public DateTime Requested { get; set; }
+            public DateTime requested { get; set; }
 
-            public int DroneId { get; set; }
-            public DateTime Scheduled { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public int droneId { get; set; }
+            public DateTime acheduled { get; set; }
+            public DateTime pickedUp { get; set; }
+            public DateTime delivered { get; set; }
         }
     }
 }
