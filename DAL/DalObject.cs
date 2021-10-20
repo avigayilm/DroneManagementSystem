@@ -11,21 +11,23 @@ namespace IDAL
         {
             public class DalObject
             {
-                public int addStation(Station Victoria)
+                public static int addStation(Station Victoria)
                 {
+                    Victoria.ID = DataSource.Config.stationIndex;
                     DataSource.StationArr[DataSource.Config.stationIndex] = Victoria;
                     DataSource.Config.stationIndex++;
                     return DataSource.Config.stationIndex - 1;
                 }
 
-                public int addDrone(Drone Flyboy)
+                public static int addDrone(Drone Flyboy)
                 {
+                    Flyboy.ID = DataSource.Config.droneIndex;
                     DataSource.DronesArr[DataSource.Config.droneIndex] = Flyboy;
                     DataSource.Config.droneIndex++;
                     return DataSource.Config.droneIndex - 1;
                 }
 
-                public int addCustomer(Customer me)
+                public static int addCustomer(Customer me)
                 {
 
                     DataSource.CustomerArr[DataSource.Config.customerIndex] = me;
@@ -33,27 +35,28 @@ namespace IDAL
                     return DataSource.Config.customerIndex - 1;
                 }
 
-                public int addParcel(Parcel Fedex)
+                public static int addParcel(Parcel Fedex)
                 {
+                    Fedex.ID = DataSource.Config.parcelIndex;
                     DataSource.ParcelArr[DataSource.Config.parcelIndex] = Fedex;
                     DataSource.Config.parcelIndex++;
                     return DataSource.Config.parcelIndex - 1;
                 }
 
-                public void ParcelDrone(int ParcelId)
+                public static void ParcelDrone(int ParcelId)
                 {
                     int j;
                     for (j = 0; j < DataSource.Config.droneIndex && DataSource.DronesArr[j].Status != 0; j++) ;
                     DataSource.ParcelArr[ParcelId].DroneId = DataSource.DronesArr[j].ID;
                 }
 
-                public void ParcelPickedUp(int parcelId, DateTime day)
+                public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
                     DataSource.ParcelArr[parcelId].PickedUp = day;//updating the DroneId of hte parcel
                     DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = 2;//updating parcel status to delivery
                 }
 
-                public void ParcelDelivered(int parcelId, DateTime day)
+                public static void ParcelDelivered(int parcelId, DateTime day)
                 {
                     int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
                     int i;
@@ -61,7 +64,7 @@ namespace IDAL
                     DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = 0;//updating parcel status to delivery
                 }
 
-                public DroneCharge SendToCharge(int DroneId, int StationId)
+                public static DroneCharge SendToCharge(int DroneId, int StationId)
                 {
                     DroneCharge DC = new DroneCharge();
                     DC.droneId = DroneId;
@@ -74,7 +77,7 @@ namespace IDAL
                     return DC;
                 }
 
-                public void BatteryCharged(DroneCharge Buzzer)
+                public static void BatteryCharged(DroneCharge Buzzer)
                 {
 
                     DataSource.DronesArr[Buzzer.droneId].Status = 0;//updating the DroneId of hte parcel
@@ -82,50 +85,58 @@ namespace IDAL
 
                 }
 
-                public string DisplayParcel(int ID)
+                public static string DisplayParcel(int ID)
                 {
                     return DataSource.ParcelArr[ID].ToString();
                 }
 
-                public string DisplayCustomer(string ID)
+                public static string DisplayCustomer(string ID)
                 {
                     int j;
                     for (j = 0; j < DataSource.Config.customerIndex && DataSource.CustomerArr[j].ID != ID; j++) ;
                     return DataSource.CustomerArr[j].ToString();
                 }
 
-                public string DisplayDrone(int ID)
+                public static string DisplayDrone(int ID)
                 {
                     return DataSource.DronesArr[ID].ToString();
                 }
 
-                public string DisplayStation(int ID)
+                public static string DisplayStation(int ID)
                 {
                     return DataSource.StationArr[ID].ToString();
                 }
 
-                public void DisplayStationList()// Print the list with all the stations
+                public static Station[] DisplayStationList()// Print the list with all the stations
                 {
-                    int size = DataSource.Config.stationIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        Console.WriteLine(DataSource.StationArr[i].ToString() + "\n");
+
+                    //int size = DataSource.StationArr.length();//getting amount of parcels in the array
+                    //int size = DataSource.StationArr.Length;
+                    //Station[] newList = new Station[size];
+                    //for (int i = 0; i <= size; i++)
+                    //{
+                    //    newList[i] = new Station();
+                    //    newList[i] = DataSource.StationArr[i];
+                    //}
+                    return DataSource.StationArr;
+
                 }
 
-                public void DisplayCustomerList()// Display the list with all the customers
+                public static void DisplayCustomerList()// Display the list with all the customers
                 {
                     int size = DataSource.Config.customerIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
                         Console.WriteLine(DataSource.CustomerArr[i].ToString() + "\n");
                 }
 
-                public void DisplayParcelList()// Display all the parcels in the array
+                public static void DisplayParcelList()// Display all the parcels in the array
                 {
                     int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
                         Console.WriteLine(DataSource.ParcelArr[i].ToString() + "\n");
                 }
 
-                public void DisplayvacantParcel()// print the parcels that have not been assigned to a drone
+                public static void DisplayvacantParcel()// print the parcels that have not been assigned to a drone
                 {
                     int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
@@ -133,7 +144,7 @@ namespace IDAL
                             Console.WriteLine(DataSource.ParcelArr[i].ToString() + "\n");
                 }
 
-                public void StationWithCharging()// prints the stations that have availble charging
+                public static void StationWithCharging()// prints the stations that have availble charging
                 {
                     int size = DataSource.Config.stationIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
@@ -144,7 +155,7 @@ namespace IDAL
                 }
 
                 //function receives coordinates 
-                public string DecimalToSexagesimal(double coord, char latOrLot)
+                public static string DecimalToSexagesimal(double coord, char latOrLot)
                 {
                     char direction;
                     if (latOrLot == 't')

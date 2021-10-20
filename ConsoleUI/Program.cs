@@ -2,6 +2,7 @@
 using DalObject;
 using IDAL.DO;
 
+
 namespace ConsoleUI
 {
     class Program
@@ -9,58 +10,60 @@ namespace ConsoleUI
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
         enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
-        enum ListOptions { Exit, BaseStations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
+        enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
 
         private static void ShowMenu()
         {
             EntityOptions entityOption;
-            int menuOption;
+            MenuOptions menuOption;
+            ListOptions listOption;
             do
             {
                 Console.WriteLine("options:\n 1-Add, \n 2 Update,\n,3 Show Item,\n 4-showL list\n, 0-Exit");
-                menuOption = Convert.ToInt32(Console.ReadLine());
+                menuOption = (MenuOptions)int.Parse(Console.ReadLine());
                 switch (menuOption)
                 {
                     case MenuOptions.Add:
                         {
                             Console.WriteLine("what do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
-                            entityOption = Convert.ToInt32(Console.ReadLine());
+                            entityOption = (EntityOptions)int.Parse(Console.ReadLine());
                             switch (entityOption)
                             {
                                 case EntityOptions.Station:
                                     {
                                         Console.WriteLine("Enter the name, longitude, latitude, and chargeslots\n ");
                                         string inputname = Console.ReadLine();
-                                        int positions, longitudeInput, latitudeInput;
+                                        int positions;
+                                        double longitudeInput, latitudeInput;
                                         int.TryParse(Console.ReadLine(), out positions);
-                                        int.TryParse(Console.ReadLine(), out longitudeInput);
-                                        int.TryParse(Console.ReadLine(), out latitudeInput);
+                                        double.TryParse(Console.ReadLine(), out longitudeInput);
+                                        double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Station Victoria = new Station()
                                         {
                                             Name = inputname,
                                             ChargeSlots = positions,
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
-
-
                                         };
-                                        IDAL.DO.DalObject.DalObject.addStation(Victoria);
+                                        int index = IDAL.DO.DalObject.DalObject.addStation(Victoria);
                                         break;
                                     }
                                 case EntityOptions.Customer:
                                     {
 
-                                        Console.WriteLine("Enter the name, phone, latitude, and chargeslots\n ");
+                                        Console.WriteLine("Enter the name, ID, phone, latitude, longtitude\n ");
                                         string inputname = Console.ReadLine();
+                                        string inputId = Console.ReadLine();
                                         string inputphone = Console.ReadLine();
-                                        int longitudeInput, latitudeInput;
-                                        int.TryParse(Console.ReadLine(), out longitudeInput);
+                                        int longtitudeInput, latitudeInput;
+                                        int.TryParse(Console.ReadLine(), out longtitudeInput);
                                         int.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new Customer()
                                         {
+                                            ID = inputId,
                                             Name = inputname,
                                             Phone = inputphone,
-                                            Longitude = longitudeInput,
+                                            Longitude = longtitudeInput,
                                             Latitude = latitudeInput,
 
 
@@ -71,17 +74,18 @@ namespace ConsoleUI
                                 case EntityOptions.Drone:
                                     {
 
-                                        Console.WriteLine("Enter the name, longitude, latitude, and chargeslots\n ");
+                                        Console.WriteLine("Enter the model, weightcategory(0-2),status(0-2), battery percentage\n ");
                                         string inputmodel = Console.ReadLine();
-                                        string inputphone = Console.ReadLine();
-                                        int longitudeInput, latitudeInput;
-                                        int.TryParse(Console.ReadLine(), out longitudeInput);
-                                        int.TryParse(Console.ReadLine(), out latitudeInput);
+                                        WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
+                                        DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
+                                        double batt;
+                                        double.TryParse(Console.ReadLine(), out batt);
                                         Drone newDrone = new Drone()
                                         {
-                                            Model =
-
-
+                                            Model = inputmodel,
+                                            MaxWeight = maxim,
+                                            Status = stat,
+                                            Battery = batt
                                         };
                                         IDAL.DO.DalObject.DalObject.addDrone(newDrone);
                                         break;
@@ -89,14 +93,23 @@ namespace ConsoleUI
                                 case EntityOptions.Parcel:
                                     {
 
-                                        Console.WriteLine("Enter the name, longitude, latitude, and chargeslots\n ");
-                                        string inputmodel = Console.ReadLine();
-                                        string inputphone = Console.ReadLine();
-                                        int longitudeInput, latitudeInput;
-                                        int.TryParse(Console.ReadLine(), out longitudeInput);
-                                        int.TryParse(Console.ReadLine(), out latitudeInput);
-                                        Drone newParcel = new Parcel()
+                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
+                                        string inputSenderId = Console.ReadLine();
+                                        string inputTargetId = Console.ReadLine();
+                                        WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
+                                        Priorities prio = (Priorities)int.Parse(Console.ReadLine());
+                                        DateTime req;
+                                       DateTime sched;
+                                       DateTime.TryParse(Console.ReadLine(), out req);
+                                       DateTime.TryParse(Console.ReadLine(), out sched);
+                                       Parcel newParcel = new Parcel()
                                         {
+                                            Senderid = inputSenderId,
+                                            Targetid = inputTargetId,
+                                            Weight = maxim,
+                                            Priority = prio,
+                                            requested=req,
+                                            Scheduled=sched
                                         };
                                         IDAL.DO.DalObject.DalObject.addParcel(newParcel);
                                         break;
@@ -108,22 +121,113 @@ namespace ConsoleUI
                         }
                     case MenuOptions.Update:
                         {
+                            Console.WriteLine("what do you want to update?\n  1-Assignment,\n 2-Pickedup\n 3-Delivery,\n 4-Recharge\n ");
                             break;
 
                         }
                     case MenuOptions.Show_List:
                         {
+                            Console.WriteLine("what List do you want to print?\n 1-Stations\n, 2-Drones\n, 3-Customers\n, 4-Parcels\n, 5-UnAssignmentParcels\n, 6-AvailableChargingStations\n");
+                            listOption = (ListOptions)int.Parse(Console.ReadLine());
+                            switch (listOption)
+                            {
+                                case ListOptions.Stations:
+                                    {
+                                        Station[] newstation = IDAL.DO.DalObject.DalObject.DisplayStationList();
+                                        for(int i=0;i<newstation.Length;i++)
+                                            Console.WriteLine(newstation[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.Parcels:
+                                    {
+                                        Parcel[] newParcel = IDAL.DO.DalObject.DalObject.DisplayParcelList();
+                                        for (int i = 0; i < newParcel.Length; i++)
+                                            Console.WriteLine(newParcel[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.Drones:
+                                    {
+                                        Drone[] newDrone = IDAL.DO.DalObject.DalObject.displayDroneList();
+                                        for (int i = 0; i < newDrone.Length; i++)
+                                            Console.WriteLine(newDrone[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.Customers:
+                                    {
+                                        Customer[] newCustomer = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
+                                        for (int i = 0; i < newCustomer.Length; i++)
+                                            Console.WriteLine(newCustomer[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.UnAssignmentParcels:
+                                    {
+                                        Parcel[] UnAssignmentParcel= IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
+                                        for (int i = 0; i < UnAssignmentParcel.Length; i++)
+                                            Console.WriteLine(UnAssignmentParcel[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.AvailableChargingStations:
+                                    {
+                                        Station[] AvailableChargingStation = IDAL.DO.DalObject.DalObject.StationWithCharging();
+                                        for (int i = 0; i < AvailableChargingStation.Length; i++)
+                                            Console.WriteLine(AvailableChargingStation[i].ToString());
+                                        break;
+                                    }
+                                case ListOptions.Exit:
+                                    {
+                                        break;
+                                    }
+                            }
                             break;
                         }
                     case MenuOptions.Show_One:
                         {
-                            break;
+                            Console.WriteLine("what do you want to print?\n 1-Station,\n 2-Drone,\n 3-Customer,\n 4-Parcel\n");
+                            entityOption= (EntityOptions)int.Parse(Console.ReadLine());
+                            switch (entityOption)
+                            {
+                                case EntityOptions.Station:
+                                    {
+                                        Console.WriteLine("Enter the ID of the station you want to print\n");
+                                        int ID;
+                                        int.TryParse(Console.ReadLine(), out ID);
+                                        Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayStation(ID));
+                                        break;
+                                    }
+                                case EntityOptions.Parcel:
+                                    {
+                                        Console.WriteLine("Enter the ID of the parcel you want to print\n");
+                                        int ID;
+                                        int.TryParse(Console.ReadLine(), out ID);
+                                        Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayParcel(ID));
+                                        break;
+                                    }
+                                case EntityOptions.Drone:
+                                    {
+                                        Console.WriteLine("Enter the ID of the drone you want to print\n");
+                                        int ID;
+                                        int.TryParse(Console.ReadLine(), out ID);
+                                        Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayDrone(ID));
+                                        break;
+                                    }
+                                case EntityOptions.Customer:
+                                    {
+                                        Console.WriteLine("Enter the ID of the Customer you want to print\n");
+                                        string ID = Console.ReadLine();
+                                        Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayCustomer(ID));
+                                        break;
+                                    }
+                                case EntityOptions.Exit:
+                                    {
+                                        break;
+                                    }
 
-                        }
+                            }
                     case MenuOptions.Exit:
                         {
                             break;
                         }
+                        while (menuOption != MenuOptions.Exit);
 
                 }
             }
