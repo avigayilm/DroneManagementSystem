@@ -13,6 +13,11 @@ namespace DalObject
         internal static Station[] StationArr = new IDAL.DO.Station[5];
         internal static Customer[] CustomerArr = new Customer[100];
         internal static Parcel[] ParcelArr = new Parcel[1000];
+        
+        public static Drone[] DronesArr = new Drone[10];
+        public static Station[] StationArr = new IDAL.DO.Station[5];
+        public static Customer[] CustomerArr = new Customer[100];
+        public static Parcel[] ParcelArr = new Parcel[1000];
 
 
         internal class Config
@@ -32,9 +37,11 @@ namespace DalObject
             createCustomer();
             createParcel();
 
-        }
-        public static void createDrone()
-        {
+        }    
+                   public static void createDrone()
+                   {   //loop for updete 5 drone
+                        for (int i = Config.droneIndex; i < 5; i++)
+			            {
             //string[] types = { "o", "two", "three" };//string to get array
             for (int i = 0; i < 5; i++)
             {
@@ -47,11 +54,11 @@ namespace DalObject
                     Battery = 100.0
                 };
                 Config.droneIndex++;
-            }
-        }
+			            }
+                   }
 
         public static void createCustomer()
-        {
+			            {
             string[] customerNames = { "Frodo", "Sam", "Gloin", "Oin", "Sauron", "Saruman", "Elrond", "Galadriel", "Legolas", "Aragorn" };
             //lop for 10 customer
             for (int i = 0; i < 10; i++)
@@ -67,14 +74,14 @@ namespace DalObject
                 };
                 Config.customerIndex++;
             }
-        }
+			            }
         public static void createParcel()
         {
             DateTime temp = DateTime.Now;
             for (int i = 0; i < ParcelArr.Length; i++)
             {
                 ParcelArr[Config.parcelIndex] = new Parcel()
-                {
+			        {
                     ID = Config.parcelIndex,
                     Senderid = CustomerArr[rand.Next(Config.customerIndex)].ID,// gets a random number of one of the customers
                     Targetid = CustomerArr[rand.Next(Config.customerIndex)].ID,
@@ -84,13 +91,13 @@ namespace DalObject
                 };
                 Config.parcelIndex++;
             }
-        }
+			        }
         public static void createStation()// maybe just one
         {
             for (int i = 0; i < StationArr.Length; i++)
             {
                 StationArr[Config.stationIndex] = new Station
-                {
+			        {
                     ID = Config.stationIndex,
                     Name = $"Station {Config.stationIndex}",
                     ChargeSlots = rand.Next(10),
@@ -99,14 +106,14 @@ namespace DalObject
                 };
                 Config.stationIndex++;
             }
-        }
+			        }
             public static double GetRandomNumber(double minimum, double maximum)
             {
                 return rand.NextDouble() * (maximum - minimum) + minimum;
-            }
+                }
 
-        }
     }
+}
 
 
 

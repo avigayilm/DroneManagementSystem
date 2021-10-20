@@ -10,6 +10,10 @@ namespace IDAL
     {
         public enum DroneStatuses
         {
+            available, maintenance, delivery
+        }
+        public enum DroneStatuses
+        {
             available = 0, maintenance, delivery
         }
 
@@ -23,4 +27,5 @@ namespace IDAL
             normal = 0, fast, emergency
         }
     }
+    
 }
