@@ -104,42 +104,58 @@ namespace IDAL
                     return DataSource.StationArr[ID].ToString();
                 }
 
-                public void DisplayStationList()// Print the list with all the stations
+                // Print the list with all the stations
+                public static DataSource.Station[] DisplayStationList()
                 {
-                    int size = DataSource.Config.stationIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        Console.WriteLine(DataSource.StationArr[i].ToString() + "\n");
+                    return DataSource.StationArr;
                 }
 
-                public void DisplayCustomerList()// Display the list with all the customers
+                // Display the list with all the customers
+                public static Customer[] DisplayCustomerList()
                 {
-                    int size = DataSource.Config.customerIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        Console.WriteLine(DataSource.CustomerArr[i].ToString() + "\n");
+                    return DataSource.CustomerArr
                 }
 
-                public void DisplayParcelList()// Display all the parcels in the array
-                {
-                    int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        Console.WriteLine(DataSource.ParcelArr[i].ToString() + "\n");
+                public static Parcel[] DisplayParcelList()// Display all the parcels in the array
+                { 
+                    return DataSource.Customer
                 }
 
-                public void DisplayvacantParcel()// print the parcels that have not been assigned to a drone
+                // print the parcels that have not been assigned to a drone
+                public static Parcel[] DisplayvacantParcel()
                 {
-                    int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
+                    int counter = 0, size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
                         if (DataSource.ParcelArr[i].DroneId == 0)// if the parcel was not assigned yet to a drone
-                            Console.WriteLine(DataSource.ParcelArr[i].ToString() + "\n");
+                            counter++;
+                    Parcel[] newList = new Parcel[counter];
+                    for (int i = 0, j = 0; i <= size; j++)
+                    {
+                        if (DataSource.ParcelArr[j].DroneId == 0)
+                        {
+                            newList[i] = new Parcel();
+                            newList[i] = DataSource.ParcelArr[j];
+                            i++;
+                        }
+                    }
                 }
 
-                public void StationWithCharging()// prints the stations that have availble charging
+                // prints the stations that have availble charging
+                public static Station[] StationWithCharging()
                 {
-                    int size = DataSource.Config.stationIndex;//getting amount of parcels in the array
+                    int counter = 0, size = DataSource.Config.StationIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
+                        if (DataSource.StatioonArr[i].ChargeSlots > 0)// if the parcel was not assigned yet to a drone
+                            counter++;
+                    Station[] newList = new Station[counter];
+                    for (int i = 0, j = 0; i <= size; j++)
                     {
-                        if (DataSource.StationArr[i].ChargeSlots != 0)// if there are chargeslots in the station
-                            Console.WriteLine(DataSource.ParcelArr[i].ToString() + "\n");
+                        if (DataSource.StationArr[j].ChargeSlots > 0)
+                        {
+                            newList[i] = new Station();
+                            newList[i] = DataSource.StationArr[j];
+                            i++;
+                        }
                     }
                 }
 
