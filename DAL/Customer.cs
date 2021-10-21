@@ -18,8 +18,8 @@ namespace IDAL
                 result += $"ID is {ID}, \n";
                 result += $"Name is {Name}, \n";
                 result += $"Telephone is {Phone.Substring(0, 3) + '-' + Phone.Substring(3)}, \n";
-                result += $"Latitude is {Latitude}, \n"; // they did with if state ment if smalll than 0 than S else N
-                result += $"longitude is {Longitude}, \n";
+                result += $"Latitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(Latitude, 't'))}, \n";
+                result += $"longitude is{(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(Longitude, 'n'))}, \n";
                 return result;
             }
         }

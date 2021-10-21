@@ -168,15 +168,15 @@ namespace IDAL
                 }
 
                 //function receives coordinates 
-                public static string DecimalToSexagesimal(double coord, char latOrLot)
+                public static string DecimalToSexagesimal(double coord, char latOrLot)// funciton receives char to decide wheter it is t=latitude and n=lonitude.
                 {
                     char direction;
-                    if (latOrLot == 't')
+                    if (latOrLot == 't')// if latitude
                         if (coord >= 0)
                             direction = 'N';
                         else
                             direction = 'S';
-                    else
+                    else // if longitude
                         if (coord >= 0)
                         direction = 'E';
                     else
@@ -188,7 +188,7 @@ namespace IDAL
                     double sec = (((coord % 1) * 60) % 1) * 60;
                     const string quote = "\"";
                     string toReturn = deg + "° " + min + $"' " + sec + quote + direction + "\n";
-                    return toReturn;
+                    return toReturn;// return the string with the result
                 }
 
                 public static double Hav(double radian)
