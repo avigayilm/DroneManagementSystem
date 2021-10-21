@@ -191,6 +191,27 @@ namespace IDAL
                     return toReturn;
                 }
 
+                public static double Hav(double radian)
+                {
+                    return Math.Sin(radian / 2) * Math.Sin(radian / 2);
+                }
+
+                public static double Radians(double degree)
+                {
+                    return degree * Math.PI / 180;
+                }
+
+                public static double Haversine(double lon1, double lat1, double lon2, double lat2)
+                {
+                    const double PI = Math.PI;//receives the value of PI 
+                    const int RADIUS = 6371;//earths radius
+
+                    double radLon = Radians(lon2 - lon1);
+                    double radLat = Radians(lat2 - lat1);
+                    double havd = Hav(radLat) + (Math.Cos(Radians(lat2)) * Math.Cos(Radians(lat1)) * Hav(radLon));
+                    double distance = 2 * RADIUS * Math.Asin(havd);
+                    return distance;
+                }
             }
 
 
