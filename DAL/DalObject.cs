@@ -1,6 +1,5 @@
 ﻿using System;
 using IDAL.DO;
-using DalObject;
 
 
 namespace IDAL
@@ -43,7 +42,7 @@ namespace IDAL
                     return DataSource.Config.parcelIndex - 1;
                 }
 
-                public static void ParcelDrone(int ParcelId)
+                public static void ParcelDrone(int ParcelId)// we initilized the parcels with empty droneid so don't we need to add a drone id
                 {
                     int j;
                     for (j = 0; j < DataSource.Config.droneIndex && DataSource.DronesArr[j].Status != 0; j++) ;
@@ -53,15 +52,14 @@ namespace IDAL
                 public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
                     DataSource.ParcelArr[parcelId].PickedUp = day;//updating the DroneId of hte parcel
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = 2;//updating parcel status to delivery
+                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.delivery;//updating parcel status to delivery
                 }
 
                 public static void ParcelDelivered(int parcelId, DateTime day)
                 {
                     int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
-                    int i;
                     DataSource.ParcelArr[parcelId].Delivered = day;//updating the time of delivery to today
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = 0;//updating parcel status to delivery
+                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.available;//updating parcel status to delivery
                 }
 
                 public static DroneCharge SendToCharge(int DroneId, int StationId)
@@ -71,7 +69,7 @@ namespace IDAL
                     DC.stationId = StationId;
 
                     // making a new Dronecharge            
-                    DataSource.DronesArr[DroneId].Status = 1;//updating the drone to maintenance
+                    DataSource.DronesArr[DroneId].Status = DroneStatuses.maintenance;//updating the drone to maintenance
                     DataSource.StationArr[StationId].ChargeSlots -= 1;
 
                     return DC;
@@ -108,7 +106,7 @@ namespace IDAL
                 }
 
                 // Print the list with all the stations
-                public static DataSource.Station[] DisplayStationList()
+                public static Station[] DisplayStationList()
                 {
                     return DataSource.StationArr;
                 }
@@ -116,12 +114,17 @@ namespace IDAL
                 // Display the list with all the customers
                 public static Customer[] DisplayCustomerList()
                 {
-                    return DataSource.CustomerArr
+                    return DataSource.CustomerArr;
+                }
+
+                public static Drone[] DisplayDroneList()
+                {
+                    return DataSource.DronesArr;
                 }
 
                 public static Parcel[] DisplayParcelList()// Display all the parcels in the array
-                { 
-                    return DataSource.Customer
+                {
+                    return DataSource.ParcelArr;
                 }
 
                 // print the parcels that have not been assigned to a drone
@@ -141,14 +144,15 @@ namespace IDAL
                             i++;
                         }
                     }
+                    return newList;
                 }
 
                 // prints the stations that have availble charging
                 public static Station[] StationWithCharging()
                 {
-                    int counter = 0, size = DataSource.Config.StationIndex;//getting amount of parcels in the array
+                    int counter = 0, size = DataSource.Config.stationIndex;//getting amount of parcels in the array
                     for (int i = 0; i <= size; i++)
-                        if (DataSource.StatioonArr[i].ChargeSlots > 0)// if the parcel was not assigned yet to a drone
+                        if (DataSource.StationArr[i].ChargeSlots > 0)// if the parcel was not assigned yet to a drone
                             counter++;
                     Station[] newList = new Station[counter];
                     for (int i = 0, j = 0; i <= size; j++)
@@ -160,6 +164,7 @@ namespace IDAL
                             i++;
                         }
                     }
+                    return newList;
                 }
 
                 //function receives coordinates 
