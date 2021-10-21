@@ -170,19 +170,23 @@ namespace IDAL
                         if (coord >= 0)
                             direction = 'N';
                         else
+                        {
                             direction = 'S';
+                            coord = coord * -1;
+                        }
                     else
                         if (coord >= 0)
                         direction = 'E';
                     else
+                    {
                         direction = 'W';
-
-                    coord = coord * -1;
+                        coord = coord * -1; 
+                    }                    
                     int deg = (int)(coord / 1);
                     int min = (int)((coord % 1) * 60) / 1;
                     double sec = (((coord % 1) * 60) % 1) * 60;
                     const string quote = "\"";
-                    string toReturn = deg + "° " + min + $"' " + sec + quote + direction + "\n";
+                    string toReturn = deg + "° " + min + $"' " + sec + quote + direction;
                     return toReturn;
                 }
 
@@ -208,8 +212,6 @@ namespace IDAL
                     return distance;
                 }
             }
-
-
 
         }
     }
