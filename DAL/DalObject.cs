@@ -175,20 +175,24 @@ namespace IDAL
                         if (coord >= 0)
                             direction = 'N';
                         else
+                        {
                             direction = 'S';
-                    else // if longitude
+                            coord = coord * -1;
+                        }
+                    else
                         if (coord >= 0)
                         direction = 'E';
                     else
+                    {
                         direction = 'W';
-
-                    coord = coord * -1;
+                        coord = coord * -1; 
+                    }                    
                     int deg = (int)(coord / 1);
                     int min = (int)((coord % 1) * 60) / 1;
                     double sec = (((coord % 1) * 60) % 1) * 60;
                     const string quote = "\"";
-                    string toReturn = deg + "° " + min + $"' " + sec + quote + direction + "\n";
-                    return toReturn;// return the string with the result
+                    string toReturn = deg + "° " + min + $"' " + sec + quote + direction;
+                    return toReturn;
                 }
 
                 public static double Hav(double radian)
@@ -213,8 +217,6 @@ namespace IDAL
                     return distance;
                 }
             }
-
-
 
         }
     }
