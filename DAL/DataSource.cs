@@ -14,23 +14,29 @@ namespace IDAL
         {
             public class DataSource// the datasource class just initializes all the classes
             {
-                internal static Drone[] DronesArr = new Drone[10];
-                internal static Station[] StationArr = new IDAL.DO.Station[5];
-                internal static Customer[] CustomerArr = new Customer[100];
-                internal static Parcel[] ParcelArr = new Parcel[1000];
-                internal static DroneCharge[] ChargeArr = new DroneCharge[10]
+                internal static List<Drone> dronesList = new List<Drone>(10);
+                internal static List<Station> stationList = new List<Station>(5);
+                internal static List<Customer> customerList = new List<Customer>(100);
+                internal static List<Parcel> parcelList = new List<Parcel>(1000);
+                internal static List<DroneCharge> chargeList = new List<DroneCharge>(10);
 
-                internal class Config
-                {
-                    internal static int droneIndex { get; set; } = 0;
-                    internal static int stationIndex { get; set; } = 0;
-                    internal static int customerIndex { get; set; } = 0;
-                    internal static int parcelIndex { get; set; } = 0;
+                //internal static Drone[] DronesArr = new Drone[10];
+                //internal static Station[] StationArr = new IDAL.DO.Station[5];
+                //internal static Customer[] CustomerArr = new Customer[100];
+                //internal static Parcel[] ParcelArr = new Parcel[1000];
+                //internal static DroneCharge[] ChargeArr = new DroneCharge[10];
+
+                //internal class Config
+                //{
+                //    internal static int droneIndex { get; set; } = 0;
+                //    internal static int stationIndex { get; set; } = 0;
+                //    internal static int customerIndex { get; set; } = 0;
+                //    internal static int parcelIndex { get; set; } = 0;
 
 
-                    // public int runnerID;
+                //    // public int runnerID;
 
-                }
+                //}
                 static Random rand = new Random();
                 public static void Initialize()
                 {
@@ -44,15 +50,15 @@ namespace IDAL
                 {   //loop for updete 5 drone
                     for (int i = 0; i < 5; i++)
                     {
-                        DronesArr[Config.droneIndex] = new Drone()
+                        dronesList[i] = new Drone()
                         {
-                            ID = Config.droneIndex,
+                            ID = 23,
                             Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
                             MaxWeight = (WeightCategories)rand.Next(3),
                             Status = DroneStatuses.available,
                             Battery = 100.0
                         };
-                        Config.droneIndex++;
+                       // Config.droneIndex++;
                     }
                 }
 
@@ -62,7 +68,7 @@ namespace IDAL
                     //lop for 10 customer
                     for (int i = 0; i < 10; i++)
                     {
-                        CustomerArr[Config.customerIndex] = new Customer
+                        customerList[i] = new Customer
                         {
                             ID = $"0{rand.Next(100000000, 999999999)}",
                             Name = customerNames[i],
@@ -71,39 +77,39 @@ namespace IDAL
                             Latitude = GetRandomNumber(29.55805, 33.20733),
                             Longitude = GetRandomNumber(34.57149, 35.57212)
                         };
-                        Config.customerIndex++;
+                       // Config.customerIndex++;
                     }
                 }
                 public static void createParcel()
                 {
                     DateTime temp = DateTime.Now;
-                    for (int i = 0; i < ParcelArr.Length; i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        ParcelArr[Config.parcelIndex] = new Parcel()
+                        parcelList[i] = new Parcel()
                         {
-                            ID = Config.parcelIndex,
-                            Senderid = CustomerArr[rand.Next(Config.customerIndex)].ID,// gets a random number of one of the customers
-                            Targetid = CustomerArr[rand.Next(Config.customerIndex)].ID,
+                            ID = 34343,
+                            Senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
+                            Targetid = customerList[rand.Next(customerList.Count)].ID,
                             Weight = (WeightCategories)rand.Next(3),
                             Priority = (Priorities)rand.Next(3),
                             requested = temp.AddDays(Math.Pow(i, 2))//random date
                         };
-                        Config.parcelIndex++;
+                        //Config.parcelIndex++;
                     }
                 }
                 public static void createStation()// maybe just one
                 {
-                    for (int i = 0; i < StationArr.Length; i++)
+                    for (int i = 0; i < 2; i++)
                     {
-                        StationArr[Config.stationIndex] = new Station
+                        stationList[i] = new Station
                         {
-                            ID = Config.stationIndex,
+                            ID = 543,
                             Name = $"Station {Config.stationIndex}",
                             ChargeSlots = rand.Next(10),
                             Latitude = GetRandomNumber(29.55805, 33.20733),
                             Longitude = GetRandomNumber(34.57149, 35.57212)
                         };
-                        Config.stationIndex++;
+                        //Config.stationIndex++;
                     }
                 }
                 public static double GetRandomNumber(double minimum, double maximum)

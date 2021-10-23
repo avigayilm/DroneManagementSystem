@@ -10,99 +10,138 @@ namespace IDAL
         {
             public class DalObject
             {
-                public static int addStation(Station Victoria)
+                public static void addStation(Station Victoria)
                 {
-                    Victoria.ID = DataSource.Config.stationIndex;
-                    DataSource.StationArr[DataSource.Config.stationIndex] = Victoria;
-                    DataSource.Config.stationIndex++;
-                    return DataSource.Config.stationIndex - 1;
+                    DataSource.stationList.Add(Victoria);
+                    //Victoria.ID = DataSource.Config.stationIndex;
+                    //DataSource.StationArr[DataSource.Config.stationIndex] = Victoria;
+                    //DataSource.Config.stationIndex++;
+                    //return DataSource.Config.stationIndex - 1;
                 }
 
-                public static int addDrone(Drone Flyboy)
+                public static void addDrone(Drone Flyboy)
                 {
-                    Flyboy.ID = DataSource.Config.droneIndex;
-                    DataSource.DronesArr[DataSource.Config.droneIndex] = Flyboy;
-                    DataSource.Config.droneIndex++;
-                    return DataSource.Config.droneIndex - 1;
+                    DataSource.dronesList.Add(Flyboy);
+                    //Flyboy.ID = DataSource.Config.droneIndex;
+                    //DataSource.DronesArr[DataSource.Config.droneIndex] = Flyboy;
+                    //DataSource.Config.droneIndex++;
+                    //return DataSource.Config.droneIndex - 1;
                 }
 
-                public static int addCustomer(Customer me)
+                public static void addCustomer(Customer me)
                 {
-
-                    DataSource.CustomerArr[DataSource.Config.customerIndex] = me;
-                    DataSource.Config.customerIndex++;
-                    return DataSource.Config.customerIndex - 1;
+                    DataSource.customerList.Add(me);
+                    //DataSource.CustomerArr[DataSource.Config.customerIndex] = me;
+                    //DataSource.Config.customerIndex++;
+                    //return DataSource.Config.customerIndex - 1;
                 }
 
-                public static int addParcel(Parcel Fedex)
+                public static void addParcel(Parcel Fedex)
                 {
-                    Fedex.ID = DataSource.Config.parcelIndex;
-                    DataSource.ParcelArr[DataSource.Config.parcelIndex] = Fedex;
-                    DataSource.Config.parcelIndex++;
-                    return DataSource.Config.parcelIndex - 1;
+                    DataSource.parcelList.Add(Fedex);
+                    //Fedex.ID = DataSource.Config.parcelIndex;
+                    //DataSource.ParcelArr[DataSource.Config.parcelIndex] = Fedex;
+                    //DataSource.Config.parcelIndex++;
+                    //return DataSource.Config.parcelIndex - 1;
                 }
 
                 public static void ParcelDrone(int ParcelId)// we initilized the parcels with empty droneid so don't we need to add a drone id
                 {
-                    int j;
-                    for (j = 0; j < DataSource.Config.droneIndex && DataSource.DronesArr[j].Status != 0; j++) ;
-                    DataSource.ParcelArr[ParcelId].DroneId = DataSource.DronesArr[j].ID;
+                    int j,i;
+                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].Status != 0; j++) ;
+                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != ParcelId; i++) ;// find the index of the parcel
+                    Parcel temp = DataSource.parcelList[i];
+                    temp.DroneId = DataSource.dronesList[j].ID;
+                    DataSource.parcelList[i] = temp;
                 }
 
                 public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
-                    DataSource.ParcelArr[parcelId].PickedUp = day;//updating the DroneId of hte parcel
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.delivery;//updating parcel status to delivery
+                    int i,j;
+                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != parcelId; i++) ;// find the index of the parcel
+                    Parcel temp = DataSource.parcelList[i];
+                    temp.PickedUp = day;
+                    DataSource.parcelList[i] = temp;
+                    int Droneid = DataSource.parcelList[i].DroneId;// finding the Id of the drone delivering the parel
+                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].ID != Droneid; j++) ;// find the index of the droneid
+                    Drone temp2= DataSource.dronesList[j];
+                    temp2.Status = DroneStatuses.delivery;//updating parcel status to delivery
+                    DataSource.dronesList[i] = temp2;
                 }
 
                 public static void ParcelDelivered(int parcelId, DateTime day)
                 {
-                    int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
-                    DataSource.ParcelArr[parcelId].Delivered = day;//updating the time of delivery to today
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.available;//updating parcel status to delivery
+                    int i,j;
+                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != parcelId; i++) ;// find the index of the parcel
+                    Parcel temp = DataSource.parcelList[i];
+                    temp.PickedUp = day;
+                    DataSource.parcelList[i] = temp;
+                    int Droneid = DataSource.parcelList[i].DroneId;// finding the Id of the drone delivering the parel
+                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].ID != Droneid; j++) ;// find the index of the droneid
+                    Drone temp2 = DataSource.dronesList[j];
+                    temp2.Status = DroneStatuses.delivery;//updating parcel status to delivery
+                    DataSource.dronesList[i] = temp2;
                 }
 
                 public static DroneCharge SendToCharge(int DroneId, int StationId)
                 {
+                    // making a new Dronecharge
                     DroneCharge DC = new DroneCharge();
                     DC.droneId = DroneId;
                     DC.stationId = StationId;
-
-                    // making a new Dronecharge            
-                    DataSource.DronesArr[DroneId].Status = DroneStatuses.maintenance;//updating the drone to maintenance
-                    DataSource.StationArr[StationId].ChargeSlots -= 1;
+                    int i,j;
+                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != DroneId; i++) ;// find the index of the droneid
+                    Drone temp = DataSource.dronesList[i];
+                    temp.Status = DroneStatuses.maintenance;
+                    DataSource.dronesList[i] = temp;
+                    for (j = 0; j < DataSource.stationList.Count && DataSource.stationList[j].ID != StationId; j++) ;
+                    Station temp2 = DataSource.stationList[j];
+                    temp2.ChargeSlots -= 1;
+                    DataSource.stationList[i] = temp2;
 
                     return DC;
                 }
 
                 public static void BatteryCharged(DroneCharge Buzzer)
                 {
-
-                    DataSource.DronesArr[Buzzer.droneId].Status = 0;//updating the DroneId of hte parcel
-                    DataSource.StationArr[Buzzer.stationId].ChargeSlots -= 1;
+                    int i,j = 0;
+                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != Buzzer.droneId; i++) ;
+                    Drone temp = DataSource.dronesList[i];
+                    temp.Status = DroneStatuses.available;
+                    DataSource.dronesList[i] = temp;
+                    for (j = 0; j < DataSource.stationList.Count && DataSource.stationList[j].ID != Buzzer.stationId; j++) ;
+                    Station temp2 = DataSource.stationList[j];
+                    temp2.ChargeSlots += 1;// there is a new chargeslot free
+                    DataSource.stationList[i] = temp2;
 
                 }
 
                 public static string DisplayParcel(int ID)
                 {
-                    return DataSource.ParcelArr[ID].ToString();
+                    int i;
+                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != ID; i++) ;
+                    return DataSource.parcelList[i].ToString();
                 }
 
                 public static string DisplayCustomer(string ID)
                 {
-                    int j;
-                    for (j = 0; j < DataSource.Config.customerIndex && DataSource.CustomerArr[j].ID != ID; j++) ;
-                    return DataSource.CustomerArr[j].ToString();
+                    int i;
+                    for (i = 0; i < DataSource.customerList.Count && DataSource.customerList[i].ID != ID; i++) ;
+                    return DataSource.customerList[i].ToString();
                 }
 
                 public static string DisplayDrone(int ID)
                 {
-                    return DataSource.DronesArr[ID].ToString();
+                    int i;
+                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != ID; i++) ;
+                    return DataSource.dronesList[i].ToString();
                 }
 
                 public static string DisplayStation(int ID)
                 {
-                    return DataSource.StationArr[ID].ToString();
+                    int i;
+                    for (i = 0; i < DataSource.stationList.Count && DataSource.stationList[i].ID != ID; i++) ;
+                    return DataSource.stationList[i].ToString();
                 }
 
                 // Print the list with all the stations
