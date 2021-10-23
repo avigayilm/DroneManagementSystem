@@ -45,21 +45,28 @@ namespace IDAL
                 public static void ParcelDrone(int ParcelId)// we initilized the parcels with empty droneid so don't we need to add a drone id
                 {
                     int j;
-                    for (j = 0; j < DataSource.Config.droneIndex && DataSource.DronesArr[j].Status != 0; j++) ;
+                    for (j = 0; j < DataSource.dro && DataSource.DronesArr[j].Status != 0; j++) ;
                     DataSource.ParcelArr[ParcelId].DroneId = DataSource.DronesArr[j].ID;
                 }
 
                 public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
-                    DataSource.ParcelArr[parcelId].PickedUp = day;//updating the DroneId of hte parcel
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.delivery;//updating parcel status to delivery
+                    int j, i;
+                    DataSource.parcelList
+                    for (j = 0; j < DataSource.parcelList.count && DataSource.parcelList[j].ID != parcelId; j++) ;
+                    DataSource.parcelList[j].PickedUp = day;//updating the DroneId of hte parcel
+                    for (i = 0; i < DataSource.droneList.count && DataSource.dronesList[i].ID != DataSource.parcelList[j].droneID ; i++) ;
+                    DataSource.DronesArr[i].Status = DroneStatuses.delivery;//updating parcel status to delivery
                 }
 
                 public static void ParcelDelivered(int parcelId, DateTime day)
                 {
-                    int size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
-                    DataSource.ParcelArr[parcelId].Delivered = day;//updating the time of delivery to today
-                    DataSource.DronesArr[DataSource.ParcelArr[parcelId].DroneId].Status = DroneStatuses.available;//updating parcel status to delivery
+                    int j, i;
+                    DataSource.parcelList
+                    for (j = 0; j < DataSource.parcelList.count && DataSource.parcelList[j].ID != parcelId; j++) ;
+                    DataSource.parcelList[j].Delivered = day;//updating the DroneId of the parcel
+                    for (i = 0; i < DataSource.droneList.count && DataSource.dronesList[i].ID != DataSource.parcelList[j].droneID; i++) ;//updating the time of delivery to today
+                    DataSource.DronesArr[i].Status = DroneStatuses.available;//updating parcel status to delivery
                 }
 
                 public static DroneCharge SendToCharge(int DroneId, int StationId)
