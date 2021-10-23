@@ -175,10 +175,10 @@ namespace IDAL
                 }
 
                 //function receives coordinates 
-                public static string DecimalToSexagesimal(double coord, char latOrLot)
+                public static string DecimalToSexagesimal(double coord, char latOrLot)// funciton receives char to decide wheter it is t=latitude and n=lonitude.
                 {
                     char direction;
-                    if (latOrLot == 't')
+                    if (latOrLot == 't')// if latitude
                         if (coord >= 0)
                             direction = 'N';
                         else
