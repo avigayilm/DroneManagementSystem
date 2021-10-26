@@ -70,10 +70,10 @@ namespace ConsoleUI
                                         Customer newCustomer = new Customer()
                                         {
                                             ID = inputId,
-                                            Name = inputname,
-                                            Phone = inputphone,
-                                            Longitude = longtitudeInput,
-                                            Latitude = latitudeInput,
+                                            name = inputname,
+                                            phone = inputphone,
+                                            longitude = longtitudeInput,
+                                            latitude = latitudeInput,
 
 
                                         };
@@ -302,12 +302,13 @@ namespace ConsoleUI
                         {
                             double latP, lonP;
                             Console.WriteLine("Enter lattitude for required point");
-                            double.Parse(Console.ReadLine(), out latP);
+                            double.TryParse(Console.ReadLine(), out latP);
                             Console.WriteLine("Enter longitude for required point");
-                            double.Parse(Console.ReadLine(), out lonP);
+                            double.TryParse(Console.ReadLine(), out lonP);
                             Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
                             int ID = int.Parse(Console.ReadLine());
                            Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(lonP, latP,ID + "KM");// calls the distance function to determine distance btween the points
+                            break;
                         }
                     case MenuOptions.Exit:
                         {
