@@ -142,7 +142,7 @@ namespace IDAL
                 }
 
                 // prints the stations that have availble charging
-                public static List<Station> StationWithCharging()
+                public static List<Station> DisplayStationWithCharging()
                 {
                     List<Station> temp = new List<Station>();
                     DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });

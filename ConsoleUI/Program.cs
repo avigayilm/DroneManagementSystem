@@ -1,6 +1,10 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using IDAL.DO;
+
 
 
 namespace ConsoleUI
@@ -20,7 +24,7 @@ namespace ConsoleUI
             UpdateOptions updateOption;
             do
             {
-                Console.WriteLine("options:\n 1-Add, \n 2 Update,\n,3 Show Item,\n 4-showL list\n, 0-Exit");
+                Console.WriteLine("Welcome! \noptions:\n 1-Add, \n 2 Update,\n,3 Show Item,\n 4-show List\n, 5-Show distance between a point and a station or a customer\n 0-Exit");
                 menuOption = (MenuOptions)int.Parse(Console.ReadLine());
                 switch (menuOption)
                 {
@@ -35,8 +39,8 @@ namespace ConsoleUI
                                         Console.WriteLine("Enter the ID, name, longitude, latitude, and chargeslots\n ");
                                         
                                         
-                                        int slots, ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
+                                        int slots, stationID;
+                                        int.TryParse(Console.ReadLine(), out stationID);
                                         string inputname = Console.ReadLine();
                                         double longitudeInput, latitudeInput;
                                         double.TryParse(Console.ReadLine(), out longitudeInput);
@@ -44,6 +48,7 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out slots);
                                         Station Victoria = new Station()
                                         {
+                                            ID=stationID,
                                             Name = inputname,
                                             ChargeSlots = slots,
                                             Longitude = longitudeInput,
@@ -79,8 +84,8 @@ namespace ConsoleUI
                                     {
 
                                         Console.WriteLine("Enter the Id, model, weightcategory(0-2),status(0-2), battery percentage\n ");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
+                                        int droneID;
+                                        int.TryParse(Console.ReadLine(), out droneID);
                                         string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
@@ -88,6 +93,7 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out batt);
                                         Drone newDrone = new Drone()
                                         {
+                                            ID= droneID,
                                             Model = inputmodel,
                                             MaxWeight = maxim,
                                             Status = stat,
@@ -99,7 +105,9 @@ namespace ConsoleUI
                                 case EntityOptions.Parcel:
                                     {
 
-                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
+                                        Console.WriteLine("Enter the parcelId, senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
+                                        int parcelID;
+                                        int.TryParse(Console.ReadLine(), out parcelID);
                                         string inputSenderId = Console.ReadLine();
                                         string inputTargetId = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
@@ -110,6 +118,7 @@ namespace ConsoleUI
                                         DateTime.TryParse(Console.ReadLine(), out sched);
                                         Parcel newParcel = new Parcel()
                                         {
+                                            ID = parcelID,
                                             Senderid = inputSenderId,
                                             Targetid = inputTargetId,
                                             Weight = maxim,
@@ -133,10 +142,11 @@ namespace ConsoleUI
                             {
                                 case UpdateOptions.Assignment:
                                     {
-                                        Console.WriteLine("Enter the parcelid for the assignment of the parcel\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        IDAL.DO.DalObject.DalObject.ParcelDrone(ID);
+                                        Console.WriteLine("Enter the parcelid for the assignment of the parcel and the droneid.\n");
+                                        int parcelId, droneId;
+                                        int.TryParse(Console.ReadLine(), out parcelId);
+                                        int.TryParse(Console.ReadLine(), out droneId);
+                                        IDAL.DO.DalObject.DalObject.ParcelDrone(parcelId,droneId);
                                         break;
                                     }
                                 case UpdateOptions.Delivery:
@@ -165,7 +175,7 @@ namespace ConsoleUI
                                         int droneId, stationId;
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
-                                        IDAL.DO.DalObject.DalObject.SendToCharge(droneId, stationId);//why does the funciton need to return a dronecharge
+                                        IDAL.DO.DalObject.DalObject.SendToCharge(droneId, stationId);
                                         break;
                                     }
                                 case UpdateOptions.Exit:
@@ -184,44 +194,55 @@ namespace ConsoleUI
                             {
                                 case ListOptions.Stations:
                                     {
-                                        Station[] newstation = IDAL.DO.DalObject.DalObject.DisplayStationList();
-                                        for (int i = 0; i < newstation.Length; i++)
-                                            Console.WriteLine(newstation[i].ToString());
+                                        List<Station> stationListTemp = IDAL.DO.DalObject.DalObject.DisplayStationList();
+                                        stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //Station[] newstation = IDAL.DO.DalObject.DalObject.DisplayStationList();
+                                        //for (int i = 0; i < newstation.Length; i++)
+                                        //    Console.WriteLine(newstation[i].ToString());
                                         break;
                                     }
                                 case ListOptions.Parcels:
                                     {
-                                        Parcel[] newParcel = IDAL.DO.DalObject.DalObject.DisplayParcelList();
-                                        for (int i = 0; i < newParcel.Length; i++)
-                                            Console.WriteLine(newParcel[i].ToString());
+                                        List<Parcel> parcelListTemp = IDAL.DO.DalObject.DalObject.DisplayParcelList();
+                                        parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //Parcel[] newParcel = IDAL.DO.DalObject.DalObject.DisplayParcelList();
+                                        //for (int i = 0; i < newParcel.Length; i++)
+                                        //    Console.WriteLine(newParcel[i].ToString());
                                         break;
                                     }
                                 case ListOptions.Drones:
                                     {
-                                        Drone[] newDrone = IDAL.DO.DalObject.DalObject.DisplayDroneList();
-                                        for (int i = 0; i < newDrone.Length; i++)
-                                            Console.WriteLine(newDrone[i].ToString());
+                                        List<Drone> dronesListTemp= IDAL.DO.DalObject.DalObject.DisplayDroneList();
+                                        dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //for (int i = 0; i < newDrone.Length; i++)
+                                        //    Console.WriteLine(newDrone[i].ToString());
                                         break;
                                     }
                                 case ListOptions.Customers:
                                     {
-                                        Customer[] newCustomer = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
-                                        for (int i = 0; i < newCustomer.Length; i++)
-                                            Console.WriteLine(newCustomer[i].ToString());
+                                        List<Customer> customerListTemp = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
+                                        customerListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //Customer[] newCustomer = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
+                                        //for (int i = 0; i < newCustomer.Length; i++)
+                                        //    Console.WriteLine(newCustomer[i].ToString());
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels:
                                     {
-                                        Parcel[] UnAssignmentParcel = IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
-                                        for (int i = 0; i < UnAssignmentParcel.Length; i++)
-                                            Console.WriteLine(UnAssignmentParcel[i].ToString());
+                                        List<Parcel> UnAssignmentListTemp = IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
+                                        UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //Parcel[] UnAssignmentParcel = IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
+                                        //for (int i = 0; i < UnAssignmentParcel.Length; i++)
+                                        //    Console.WriteLine(UnAssignmentParcel[i].ToString());
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations:
                                     {
-                                        Station[] AvailableChargingStation = IDAL.DO.DalObject.DalObject.StationWithCharging();
-                                        for (int i = 0; i < AvailableChargingStation.Length; i++)
-                                            Console.WriteLine(AvailableChargingStation[i].ToString());
+                                        List<Station> stationChargingListTemp = IDAL.DO.DalObject.DalObject.DisplayStationWithCharging();
+                                        stationChargingListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        //Station[] AvailableChargingStation = IDAL.DO.DalObject.DalObject.StationWithCharging();
+                                        //for (int i = 0; i < AvailableChargingStation.Length; i++)
+                                        //    Console.WriteLine(AvailableChargingStation[i].ToString());
                                         break;
                                     }
                                 case ListOptions.Exit:
