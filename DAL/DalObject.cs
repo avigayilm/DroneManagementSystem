@@ -154,21 +154,22 @@ namespace IDAL
                 {
                     char direction;
                     if (latOrLot == 't')// if latitude
-                        if (coord >= 0)
+                        if (coord >= 0)//determines how many minutse norht or south 0 is the equator  larger then 0 is north smaller is south
                             direction = 'N';
                         else
                         {
                             direction = 'S';
                             coord = coord * -1;
                         }
-                    else
-                        if (coord >= 0)
-                        direction = 'E';
+                    else//if longitude
+                        if (coord >= 0) //determines how many minutse east or west, 0 is Grinwich  larger then 0 is east smaller is west
+                         direction = 'E';
                     else
                     {
                         direction = 'W';
                         coord = coord * -1; 
-                    }                    
+                    }  
+                    //determines the various sexagesimal factors
                     int deg = (int)(coord / 1);
                     int min = (int)((coord % 1) * 60) / 1;
                     double sec = (((coord % 1) * 60) % 1) * 60;
@@ -177,26 +178,36 @@ namespace IDAL
                     return toReturn;
                 }
 
+                // computes half a versine of the angle
                 public static double Hav(double radian)
                 {
-                    return Math.Sin(radian / 2) * Math.Sin(radian / 2);
+                    return Math.Sin(radian / 2) * Math.Sin(radian / 2); 
                 }
 
+                //returns an angle in radians
                 public static double Radians(double degree)
                 {
                     return degree * Math.PI / 180;
                 }
 
+                //receiving 2 points the haversine formula returns the distance (in km) between the 2
                 public static double Haversine(double lon1, double lat1, double lon2, double lat2)
                 {
-                    const double PI = Math.PI;//receives the value of PI 
-                    const int RADIUS = 6371;//earths radius
+                    const double PI = Math.PI;//computes the value of PI 
+                    const int RADIUS = 6371;//earths radius in KM
 
-                    double radLon = Radians(lon2 - lon1);
+                    double radLon = Radians(lon2 - lon1);//converts differance btween the points to radians
                     double radLat = Radians(lat2 - lat1);
-                    double havd = Hav(radLat) + (Math.Cos(Radians(lat2)) * Math.Cos(Radians(lat1)) * Hav(radLon));
+                    double havd = Hav(radLat) + (Math.Cos(Radians(lat2)) * Math.Cos(Radians(lat1)) * Hav(radLon));//haversine formula determines the spherical distance between the two points using given versine
                     double distance = 2 * RADIUS * Math.Asin(havd);
                     return distance;
+                }
+                public static string Distance(int ID, double lonP, double latP)
+                {
+                    if(ID > 9999)//if its a customer
+                        DataSource.customerList.ForEach(c => { if (c.ID == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
+                    else//its a station
+                        DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
                 }
             }
 

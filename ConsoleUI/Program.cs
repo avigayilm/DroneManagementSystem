@@ -11,7 +11,7 @@ namespace ConsoleUI
 {
     class Program
     {
-        enum MenuOptions { Exit, Add, Update, Show_One, Show_List }
+        enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
         enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations }
@@ -297,6 +297,17 @@ namespace ConsoleUI
 
                             }
                             break;
+                        }
+                    case MenuOptions.Show_Distance://to show distance between a point and a station/cusomer
+                        {
+                            double latP, lonP;
+                            Console.WriteLine("Enter lattitude for required point");
+                            double.Parse(Console.ReadLine(), out latP);
+                            Console.WriteLine("Enter longitude for required point");
+                            double.Parse(Console.ReadLine(), out lonP);
+                            Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
+                            int ID = int.Parse(Console.ReadLine());
+                           Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(lonP, latP,ID + "KM");// calls the distance function to determine distance btween the points
                         }
                     case MenuOptions.Exit:
                         {
