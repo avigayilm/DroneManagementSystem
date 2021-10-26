@@ -145,6 +145,7 @@ namespace IDAL
                 public static List<Station> StationWithCharging()
                 {
                     List<Station> temp = new List<Station>();
+
                     DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
                     return temp;
                 }
@@ -205,11 +206,14 @@ namespace IDAL
                 public static string Distance(int ID, double lonP, double latP)
                 {
                     if(ID > 9999)//if its a customer
-                        DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
+                        foreach(customer in DataSource.customerList) { if (int.Parse(customer.ID) == ID)  return Haversine(lonP, latP, c.longitude, c.latitude); }
+
+                       // DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
                     else//its a station
-                        DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
-                }
+                        //DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
+                }       foreach(station in DataSource.stationList) { if (station.ID == ID)  return Haversine(lonP, latP, station.longitude, station.latitude);
             }
+        }
 
         }
     }
