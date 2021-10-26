@@ -32,29 +32,32 @@ namespace ConsoleUI
                             {
                                 case EntityOptions.Station:
                                     {
-                                        Console.WriteLine("Enter the name, longitude, latitude, and chargeslots\n ");
+                                        Console.WriteLine("Enter the ID, name, longitude, latitude, and chargeslots\n ");
+                                        
+                                        
+                                        int slots, ID;
+                                        int.TryParse(Console.ReadLine(), out ID);
                                         string inputname = Console.ReadLine();
-                                        int positions;
                                         double longitudeInput, latitudeInput;
                                         double.TryParse(Console.ReadLine(), out longitudeInput);
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
-                                        int.TryParse(Console.ReadLine(), out positions);
+                                        int.TryParse(Console.ReadLine(), out slots);
                                         Station Victoria = new Station()
                                         {
                                             Name = inputname,
-                                            ChargeSlots = positions,
+                                            ChargeSlots = slots,
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
                                         };
-                                        int index = IDAL.DO.DalObject.DalObject.addStation(Victoria);
+                                        IDAL.DO.DalObject.DalObject.addStation(Victoria);
                                         break;
                                     }
                                 case EntityOptions.Customer:
                                     {
 
-                                        Console.WriteLine("Enter the name, ID, phone, latitude, longtitude\n ");
-                                        string inputname = Console.ReadLine();
+                                        Console.WriteLine("Enter the ID, name, phone, latitude, longtitude\n ");
                                         string inputId = Console.ReadLine();
+                                        string inputname = Console.ReadLine();
                                         string inputphone = Console.ReadLine();
                                         int longtitudeInput, latitudeInput;
                                         int.TryParse(Console.ReadLine(), out longtitudeInput);
@@ -75,7 +78,9 @@ namespace ConsoleUI
                                 case EntityOptions.Drone:
                                     {
 
-                                        Console.WriteLine("Enter the model, weightcategory(0-2),status(0-2), battery percentage\n ");
+                                        Console.WriteLine("Enter the Id, model, weightcategory(0-2),status(0-2), battery percentage\n ");
+                                        int ID;
+                                        int.TryParse(Console.ReadLine(), out ID);
                                         string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());

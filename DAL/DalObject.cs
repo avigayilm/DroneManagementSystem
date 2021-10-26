@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using IDAL.DO;
 
 
@@ -13,106 +17,67 @@ namespace IDAL
                 public static void addStation(Station Victoria)
                 {
                     DataSource.stationList.Add(Victoria);
-                    //Victoria.ID = DataSource.Config.stationIndex;
-                    //DataSource.StationArr[DataSource.Config.stationIndex] = Victoria;
-                    //DataSource.Config.stationIndex++;
-                    //return DataSource.Config.stationIndex - 1;
                 }
 
                 public static void addDrone(Drone Flyboy)
                 {
                     DataSource.dronesList.Add(Flyboy);
-                    //Flyboy.ID = DataSource.Config.droneIndex;
-                    //DataSource.DronesArr[DataSource.Config.droneIndex] = Flyboy;
-                    //DataSource.Config.droneIndex++;
-                    //return DataSource.Config.droneIndex - 1;
                 }
 
                 public static void addCustomer(Customer me)
                 {
                     DataSource.customerList.Add(me);
-                    //DataSource.CustomerArr[DataSource.Config.customerIndex] = me;
-                    //DataSource.Config.customerIndex++;
-                    //return DataSource.Config.customerIndex - 1;
                 }
 
                 public static void addParcel(Parcel Fedex)
                 {
                     DataSource.parcelList.Add(Fedex);
-                    //Fedex.ID = DataSource.Config.parcelIndex;
-                    //DataSource.ParcelArr[DataSource.Config.parcelIndex] = Fedex;
-                    //DataSource.Config.parcelIndex++;
-                    //return DataSource.Config.parcelIndex - 1;
                 }
 
-                public static void ParcelDrone(int ParcelId)// we initilized the parcels with empty droneid so don't we need to add a drone id
+                public static void ParcelDrone(int ParcelId,int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
                 {
-                    int j,i;
-                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].Status != 0; j++) ;
-                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != ParcelId; i++) ;// find the index of the parcel
-                    Parcel temp = DataSource.parcelList[i];
-                    temp.DroneId = DataSource.dronesList[j].ID;
-                    DataSource.parcelList[i] = temp;
-                }
 
+                    DataSource.parcelList.ForEach(p => { if (p.ID == ParcelId) { p.DroneId = droneId; } p.requested = DateTime.Now; } );// looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
+                }
+                
+                
                 public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
-                    int i,j;
-                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != parcelId; i++) ;// find the index of the parcel
-                    Parcel temp = DataSource.parcelList[i];
-                    temp.PickedUp = day;
-                    DataSource.parcelList[i] = temp;
-                    int Droneid = DataSource.parcelList[i].DroneId;// finding the Id of the drone delivering the parel
-                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].ID != Droneid; j++) ;// find the index of the droneid
-                    Drone temp2= DataSource.dronesList[j];
-                    temp2.Status = DroneStatuses.delivery;//updating parcel status to delivery
-                    DataSource.dronesList[i] = temp2;
+  
+                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.DroneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.PickedUp = DateTime.Now; } });// chrcking if the drone is still available
                 }
 
                 public static void ParcelDelivered(int parcelId, DateTime day)
                 {
-                    int i,j;
-                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != parcelId; i++) ;// find the index of the parcel
-                    Parcel temp = DataSource.parcelList[i];
-                    temp.PickedUp = day;
-                    DataSource.parcelList[i] = temp;
-                    int Droneid = DataSource.parcelList[i].DroneId;// finding the Id of the drone delivering the parel
-                    for (j = 0; j < DataSource.dronesList.Count && DataSource.dronesList[j].ID != Droneid; j++) ;// find the index of the droneid
-                    Drone temp2 = DataSource.dronesList[j];
-                    temp2.Status = DroneStatuses.delivery;//updating parcel status to delivery
-                    DataSource.dronesList[i] = temp2;
+                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) {ChangeStatus(p.DroneId,DroneStatuses.available); p.requested = DateTime.Now; } });
                 }
 
-                public static DroneCharge SendToCharge(int DroneId, int StationId)
+                public static void ChangeStatus(int DroneId,DroneStatuses st)
                 {
-                    // making a new Dronecharge
+                    DataSource.dronesList.ForEach(d => { if (d.ID == DroneId) d.Status = st; });
+                }
+
+                public static void changeChargeSlots(int stationId,int n)
+                {
+                    DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
+                }
+
+                public static void SendToCharge(int DroneId, int StationId)
+                {
+                    //// making a new Dronecharge
                     DroneCharge DC = new DroneCharge();
                     DC.droneId = DroneId;
                     DC.stationId = StationId;
-                    int i,j;
-                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != DroneId; i++) ;// find the index of the droneid
-                    Drone temp = DataSource.dronesList[i];
-                    temp.Status = DroneStatuses.maintenance;
-                    DataSource.dronesList[i] = temp;
-                    for (j = 0; j < DataSource.stationList.Count && DataSource.stationList[j].ID != StationId; j++) ;
-                    Station temp2 = DataSource.stationList[j];
-                    temp2.ChargeSlots -= 1;
-                    DataSource.stationList[i] = temp2;
-
-                    return DC;
+                    ChangeStatus(DroneId, DroneStatuses.maintenance);
+                    changeChargeSlots(StationId, -1);
+                    DataSource.chargeList.Add(DC);
                 }
 
                 public static void BatteryCharged(DroneCharge Buzzer)
                 {
-                    int i,j = 0;
-                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != Buzzer.droneId; i++) ;
-                    Drone temp = DataSource.dronesList[i];
-                    temp.Status = DroneStatuses.available;
-                    DataSource.dronesList[i] = temp;
-                    for (j = 0; j < DataSource.stationList.Count && DataSource.stationList[j].ID != Buzzer.stationId; j++) ;
-                    Station temp2 = DataSource.stationList[j];
-                    temp2.ChargeSlots += 1;// there is a new chargeslot free
-                    DataSource.stationList[i] = temp2;
+                    ChangeStatus(Buzzer.droneId, DroneStatuses.available);
+                    changeChargeSlots(Buzzer.stationId, 1);
+                    DataSource.chargeList.ForEach(c => { if (c.droneId == Buzzer.droneId) { DataSource.chargeList.Remove(c); } });
 
                 }
 
@@ -145,65 +110,43 @@ namespace IDAL
                 }
 
                 // Print the list with all the stations
-                public static Station[] DisplayStationList()
+                public static List<Station> DisplayStationList()
                 {
-                    return DataSource.StationArr;
+                    
+                    return DataSource.stationList;
                 }
 
                 // Display the list with all the customers
-                public static Customer[] DisplayCustomerList()
+                public static List<Customer> DisplayCustomerList()
                 {
-                    return DataSource.CustomerArr;
+                    return DataSource.customerList;
                 }
 
-                public static Drone[] DisplayDroneList()
+                public static List<Drone> DisplayDroneList()
                 {
-                    return DataSource.DronesArr;
+                    return DataSource.dronesList;
                 }
 
-                public static Parcel[] DisplayParcelList()// Display all the parcels in the array
+                public static List<Parcel> DisplayParcelList()// Display all the parcels in the array
                 {
-                    return DataSource.ParcelArr;
+                    return DataSource.parcelList;
                 }
 
                 // print the parcels that have not been assigned to a drone
-                public static Parcel[] DisplayvacantParcel()
+                public static List<Parcel> DisplayvacantParcel()
                 {
-                    int counter = 0, size = DataSource.Config.parcelIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        if (DataSource.ParcelArr[i].DroneId == 0)// if the parcel was not assigned yet to a drone
-                            counter++;
-                    Parcel[] newList = new Parcel[counter];
-                    for (int i = 0, j = 0; i <= size; j++)
-                    {
-                        if (DataSource.ParcelArr[j].DroneId == 0)
-                        {
-                            newList[i] = new Parcel();
-                            newList[i] = DataSource.ParcelArr[j];
-                            i++;
-                        }
-                    }
-                    return newList;
+                   
+                    List<Parcel> temp = new List<Parcel>();
+                    DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) { temp.Add(p); } });
+                    return temp;
                 }
 
                 // prints the stations that have availble charging
-                public static Station[] StationWithCharging()
+                public static List<Station> StationWithCharging()
                 {
-                    int counter = 0, size = DataSource.Config.stationIndex;//getting amount of parcels in the array
-                    for (int i = 0; i <= size; i++)
-                        if (DataSource.StationArr[i].ChargeSlots > 0)// if the parcel was not assigned yet to a drone
-                            counter++;
-                    Station[] newList = new Station[counter];
-                    for (int i = 0, j = 0; i <= size; j++)
-                    {
-                        if (DataSource.StationArr[j].ChargeSlots > 0)
-                        {
-                            newList[i] = new Station();
-                            newList[i] = DataSource.StationArr[j];
-                            i++;
-                        }
-                    }
-                    return newList;
+                    List<Station> temp = new List<Station>();
+                    DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
+                    return temp;
                 }
 
                 //function receives coordinates 

@@ -19,24 +19,6 @@ namespace IDAL
                 internal static List<Customer> customerList = new List<Customer>(100);
                 internal static List<Parcel> parcelList = new List<Parcel>(1000);
                 internal static List<DroneCharge> chargeList = new List<DroneCharge>(10);
-
-                //internal static Drone[] DronesArr = new Drone[10];
-                //internal static Station[] StationArr = new IDAL.DO.Station[5];
-                //internal static Customer[] CustomerArr = new Customer[100];
-                //internal static Parcel[] ParcelArr = new Parcel[1000];
-                //internal static DroneCharge[] ChargeArr = new DroneCharge[10];
-
-                //internal class Config
-                //{
-                //    internal static int droneIndex { get; set; } = 0;
-                //    internal static int stationIndex { get; set; } = 0;
-                //    internal static int customerIndex { get; set; } = 0;
-                //    internal static int parcelIndex { get; set; } = 0;
-
-
-                //    // public int runnerID;
-
-                //}
                 static Random rand = new Random();
                 public static void Initialize()
                 {
@@ -52,7 +34,7 @@ namespace IDAL
                     {
                         dronesList[i] = new Drone()
                         {
-                            ID = 23,
+                            ID = rand.Next(1000,9999),
                             Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
                             MaxWeight = (WeightCategories)rand.Next(3),
                             Status = DroneStatuses.available,
@@ -77,7 +59,6 @@ namespace IDAL
                             Latitude = GetRandomNumber(29.55805, 33.20733),
                             Longitude = GetRandomNumber(34.57149, 35.57212)
                         };
-                       // Config.customerIndex++;
                     }
                 }
                 public static void createParcel()
@@ -87,14 +68,13 @@ namespace IDAL
                     {
                         parcelList[i] = new Parcel()
                         {
-                            ID = 34343,
+                            ID = rand.Next(10000, 99999),
                             Senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
                             Targetid = customerList[rand.Next(customerList.Count)].ID,
                             Weight = (WeightCategories)rand.Next(3),
                             Priority = (Priorities)rand.Next(3),
                             requested = temp.AddDays(Math.Pow(i, 2))//random date
                         };
-                        //Config.parcelIndex++;
                     }
                 }
                 public static void createStation()// maybe just one
@@ -103,13 +83,12 @@ namespace IDAL
                     {
                         stationList[i] = new Station
                         {
-                            ID = 543,
-                            Name = $"Station {Config.stationIndex}",
+                            ID = rand.Next(1000, 9999),
+                            Name = $"Station {'A' + rand.Next(10)}",
                             ChargeSlots = rand.Next(10),
                             Latitude = GetRandomNumber(29.55805, 33.20733),
                             Longitude = GetRandomNumber(34.57149, 35.57212)
                         };
-                        //Config.stationIndex++;
                     }
                 }
                 public static double GetRandomNumber(double minimum, double maximum)
