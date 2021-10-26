@@ -285,7 +285,7 @@ namespace ConsoleUI
                             double.Parse(Console.ReadLine(), out lonP);
                             Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
                             int ID = int.Parse(Console.ReadLine());
-                           Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(lonP, latP,ID + "KM");// calls the distance function to determine distance btween the points
+                           Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(lonP, latP,ID) + "KM");// calls the distance function to determine distance btween the points
                         }
                     case MenuOptions.Exit:
                         {

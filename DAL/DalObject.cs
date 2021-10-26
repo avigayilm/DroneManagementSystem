@@ -205,7 +205,7 @@ namespace IDAL
                 public static string Distance(int ID, double lonP, double latP)
                 {
                     if(ID > 9999)//if its a customer
-                        DataSource.customerList.ForEach(c => { if (c.ID == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
+                        DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
                     else//its a station
                         DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
                 }
