@@ -15,9 +15,9 @@ namespace IDAL
             public override string ToString()
             {
                 String result = " ";
-                result += $"ID is {id}, \n";
+                result += $"ID is {ID}, \n";
                 result += $"Name is {name}, \n";
-                result += $"Telephone is {Phone.Substring(0, 3) + '-' + phone.Substring(3)}, \n";
+                result += $"Telephone is {phone.Substring(0, 3) + '-' + phone.Substring(3)}, \n";
                 result += $"Latitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(latitude, 't'))}, \n";
                 result += $"longitude is{(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(longitude, 'n'))}, \n";
                 return result;

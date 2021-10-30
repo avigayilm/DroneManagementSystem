@@ -32,6 +32,7 @@ namespace IDAL
                 public static void addParcel(Parcel Fedex)
                 {
                     DataSource.parcelList.Add(Fedex);
+                    DataSource.PackageCounter++;
                 }
 
                 public static void ParcelDrone(int ParcelId,int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
@@ -114,7 +115,7 @@ namespace IDAL
                 {
                     
                     return DataSource.stationList;
-                }
+                } 
 
                 // Display the list with all the customers
                 public static List<Customer> DisplayCustomerList()
@@ -194,7 +195,6 @@ namespace IDAL
                 //receiving 2 points the haversine formula returns the distance (in km) between the 2
                 public static double Haversine(double lon1, double lat1, double lon2, double lat2)
                 {
-                    const double PI = Math.PI;//computes the value of PI 
                     const int RADIUS = 6371;//earths radius in KM
 
                     double radLon = Radians(lon2 - lon1);//converts differance btween the points to radians
@@ -203,18 +203,19 @@ namespace IDAL
                     double distance = 2 * RADIUS * Math.Asin(havd);
                     return distance;
                 }
-                public static string Distance(int ID, double lonP, double latP)
+                public static double Distance(int ID, double lonP, double latP)
                 {
-                    if(ID > 9999)//if its a customer
-                        foreach(customer in DataSource.customerList) { if (int.Parse(customer.ID) == ID)  return Haversine(lonP, latP, c.longitude, c.latitude); }
+                    if (ID > 9999)//if its a customer
+                        foreach (Customer cus in DataSource.customerList) { if (int.Parse(cus.ID) == ID) return Haversine(lonP, latP, cus.longitude, cus.latitude); }
 
-                       // DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
+                    // DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
                     else//its a station
                         //DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
-                }       foreach(station in DataSource.stationList) { if (station.ID == ID)  return Haversine(lonP, latP, station.longitude, station.latitude);
+                        foreach (Station Kingsx in DataSource.stationList)  { if (Kingsx.ID == ID) return Haversine(lonP, latP, Kingsx.Longitude, Kingsx.Latitude); }
+                    return 0.0;// default return
+                }
             }
-        }
-
         }
     }
 }
+   
