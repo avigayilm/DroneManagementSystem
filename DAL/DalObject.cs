@@ -14,25 +14,25 @@ namespace IDAL
         {
             public class DalObject
             {
-                public static void addStation(Station Victoria)
+                public static void AddStation(Station Victoria)
                 {
                     DataSource.stationList.Add(Victoria);
                 }
 
-                public static void addDrone(Drone Flyboy)
+                public static void AddDrone(Drone Flyboy)
                 {
                     DataSource.dronesList.Add(Flyboy);
                 }
 
-                public static void addCustomer(Customer me)
+                public static void AddCustomer(Customer me)
                 {
                     DataSource.customerList.Add(me);
                 }
 
-                public static void addParcel(Parcel Fedex)
+                public static void AddParcel(Parcel Fedex)
                 {
+                    Fedex.ID = ++DataSource.PackageCounter;
                     DataSource.parcelList.Add(Fedex);
-                    DataSource.PackageCounter++;
                 }
 
                 public static void ParcelDrone(int ParcelId,int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
@@ -58,7 +58,7 @@ namespace IDAL
                     DataSource.dronesList.ForEach(d => { if (d.ID == DroneId) d.Status = st; });
                 }
 
-                public static void changeChargeSlots(int stationId,int n)
+                public static void ChangeChargeSlots(int stationId,int n)
                 {
                     DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
                 }
@@ -70,14 +70,14 @@ namespace IDAL
                     DC.droneId = DroneId;
                     DC.stationId = StationId;
                     ChangeStatus(DroneId, DroneStatuses.maintenance);
-                    changeChargeSlots(StationId, -1);
+                    ChangeChargeSlots(StationId, -1);
                     DataSource.chargeList.Add(DC);
                 }
 
                 public static void BatteryCharged(DroneCharge Buzzer)
                 {
                     ChangeStatus(Buzzer.droneId, DroneStatuses.available);
-                    changeChargeSlots(Buzzer.stationId, 1);
+                    ChangeChargeSlots(Buzzer.stationId, 1);
                     DataSource.chargeList.ForEach(c => { if (c.droneId == Buzzer.droneId) { DataSource.chargeList.Remove(c); } });
 
                 }
@@ -152,28 +152,28 @@ namespace IDAL
                 }
 
                 //function receives coordinates 
-                public static string DecimalToSexagesimal(double coord, char latOrLot)// funciton receives char to decide wheter it is t=latitude and n=lonitude.
+                public static string DecimalToSexagesimal(double coord, char latOrLot)
                 {
-                    char direction;
+                    char direction;// funciton receives char to decide wheter it is t=latitude and n=longitude
                     if (latOrLot == 't')// if latitude
                         if (coord >= 0)//determines how many minutse norht or south 0 is the equator  larger then 0 is north smaller is south
-                            direction = 'N';
+                            direction = 'E';
                         else
                         {
-                            direction = 'S';
-                            coord = coord * -1;
+                            direction = 'W';
+                            coord *= -1;
                         }
                     else//if longitude
                         if (coord >= 0) //determines how many minutse east or west, 0 is Grinwich  larger then 0 is east smaller is west
-                         direction = 'E';
+                         direction = 'N';
                     else
                     {
-                        direction = 'W';
-                        coord = coord * -1; 
+                        direction = 'S';
+                        coord *= -1; 
                     }  
                     //determines the various sexagesimal factors
-                    int deg = (int)(coord / 1);
-                    int min = (int)((coord % 1) * 60) / 1;
+                    int deg = ((int)coord / 1);
+                    int min = (((int)coord % 1) * 60) / 1;
                     double sec = (((coord % 1) * 60) % 1) * 60;
                     const string quote = "\"";
                     string toReturn = deg + "° " + min + $"' " + sec + quote + direction;
@@ -203,6 +203,7 @@ namespace IDAL
                     double distance = 2 * RADIUS * Math.Asin(havd);
                     return distance;
                 }
+                //function determines the distance between a point and station/customer
                 public static double Distance(int ID, double lonP, double latP)
                 {
                     if (ID > 9999)//if its a customer
@@ -211,7 +212,7 @@ namespace IDAL
                     // DataSource.customerList.ForEach(c => { if (int.Parse(c.ID) == ID) { return Haversine(lonP, latP, c.longitude, c.latitude); });//returns in a string the distnace between the  customer and given point                   
                     else//its a station
                         //DataSource.stationsList.ForEach(s => { if (s.ID == ID) { return Haversine(lonP, latP, s.longitude, s.latitude); });//returns in a string the distnace between the  station and given point                   
-                        foreach (Station Kingsx in DataSource.stationList)  { if (Kingsx.ID == ID) return Haversine(lonP, latP, Kingsx.Longitude, Kingsx.Latitude); }
+                        foreach (Station KingsX in DataSource.stationList)  { if (KingsX.ID == ID) return Haversine(lonP, latP, KingsX.Longitude, KingsX.Latitude); }
                     return 0.0;// default return
                 }
             }
