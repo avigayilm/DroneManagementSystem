@@ -14,22 +14,22 @@ namespace IDAL
         {
             public class DataSource// the datasource class just initializes all the classes
             {
-                internal static List<Drone> dronesList = new List<Drone>(10);
-                internal static List<Station> stationList = new List<Station>(5);
-                internal static List<Customer> customerList = new List<Customer>(100);
-                internal static List<Parcel> parcelList = new List<Parcel>(1000);
-                internal static List<DroneCharge> chargeList = new List<DroneCharge>(10);
+                internal static List<Drone> dronesList = new(10);
+                internal static List<Station> stationList = new(5);
+                internal static List<Customer> customerList = new(100);
+                internal static List<Parcel> parcelList = new(1000);
+                internal static List<DroneCharge> chargeList = new(10);
                 public static int PackageCounter = 1000;
-                static Random rand = new Random();
+                internal static Random rand = new Random();
                 public static void Initialize()
                 {
-                    createDrone();
-                    createStation();
-                    createCustomer();
-                    createParcel();
+                    CreateDrone();
+                    CreateStation();
+                    CreateCustomer();
+                    CreateParcel();
 
                 }
-                public static void createDrone()
+                public static void CreateDrone()
                 {   //loop for updete 5 drone
                     for (int i = 0; i < 5; i++)
                     {
@@ -45,7 +45,7 @@ namespace IDAL
                     }
                 }
 
-                public static void createCustomer()
+                public static void CreateCustomer()
                 {
                     string[] customerNames = { "Frodo", "Sam", "Gloin", "Oin", "Sauron", "Saruman", "Elrond", "Galadriel", "Legolas", "Aragorn" };
                     //lop for 10 customer
@@ -62,14 +62,14 @@ namespace IDAL
                         };
                     }
                 }
-                public static void createParcel()
+                public static void CreateParcel()
                 {
                     DateTime temp = DateTime.Now;
                     for (int i = 0; i < 10; i++)
                     {
                         parcelList[i] = new Parcel()
                         {
-                            ID = DataSource.PackageCounter++,
+                            ID = ++DataSource.PackageCounter,
                             Senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
                             Targetid = customerList[rand.Next(customerList.Count)].ID,
                             Weight = (WeightCategories)rand.Next(3),
@@ -79,7 +79,7 @@ namespace IDAL
                         PackageCounter++;
                     }
                 }
-                public static void createStation()
+                public static void CreateStation()// maybe just one
                 {
                     for (int i = 0; i < 2; i++)
                     {

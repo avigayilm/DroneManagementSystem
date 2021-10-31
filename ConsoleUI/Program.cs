@@ -57,7 +57,7 @@ namespace ConsoleUI
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
                                         };
-                                        IDAL.DO.DalObject.DalObject.addStation(Victoria);
+                                        IDAL.DO.DalObject.DalObject.AddStation(Victoria);
                                         break;
                                     }
                                 case EntityOptions.Customer:
@@ -75,12 +75,12 @@ namespace ConsoleUI
                                             ID = inputId,
                                             name = inputname,
                                             phone = inputphone,
-                                            longitude = longtitudeInput,
+                                            longitude = longitudeInput,
                                             latitude = latitudeInput,
 
 
                                         };
-                                        IDAL.DO.DalObject.DalObject.addCustomer(newCustomer);
+                                        IDAL.DO.DalObject.DalObject.AddCustomer(newCustomer);
                                         break;
                                     }
                                 case EntityOptions.Drone:
@@ -102,15 +102,13 @@ namespace ConsoleUI
                                             Status = stat,
                                             Battery = batt
                                         };
-                                        IDAL.DO.DalObject.DalObject.addDrone(newDrone);
+                                        IDAL.DO.DalObject.DalObject.AddDrone(newDrone);
                                         break;
                                     }
                                 case EntityOptions.Parcel:
                                     {
 
-                                        Console.WriteLine("Enter the parcelId, senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
-                                        int parcelID;
-                                        int.TryParse(Console.ReadLine(), out parcelID);
+                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
                                         string inputSenderId = Console.ReadLine();
                                         string inputTargetId = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
@@ -121,7 +119,6 @@ namespace ConsoleUI
                                         DateTime.TryParse(Console.ReadLine(), out sched);
                                         Parcel newParcel = new Parcel()
                                         {
-                                            ID = parcelID,
                                             Senderid = inputSenderId,
                                             Targetid = inputTargetId,
                                             Weight = maxim,
@@ -129,7 +126,7 @@ namespace ConsoleUI
                                             requested = req,
                                             Scheduled = sched
                                         };
-                                        IDAL.DO.DalObject.DalObject.addParcel(newParcel);
+                                        IDAL.DO.DalObject.DalObject.AddParcel(newParcel);
                                         break;
                                     }
 
