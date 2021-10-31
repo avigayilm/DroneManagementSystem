@@ -79,7 +79,7 @@ namespace IDAL
                         PackageCounter++;
                     }
                 }
-                public static void createStation()// maybe just one
+                public static void createStation()
                 {
                     for (int i = 0; i < 2; i++)
                     {
@@ -88,12 +88,12 @@ namespace IDAL
                             ID = rand.Next(1000, 9999),
                             Name = $"Station {'A' + rand.Next(10)}",
                             ChargeSlots = rand.Next(10),
-                            Latitude = GetRandomNumber(29.55805, 33.20733),
+                            Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
                             Longitude = GetRandomNumber(34.57149, 35.57212)
                         };
                     }
                 }
-                public static double GetRandomNumber(double minimum, double maximum)
+                public static double GetRandomNumber(double minimum, double maximum)// gets a random decimal number between the 2 numbers
                 {
                     return rand.NextDouble() * (maximum - minimum) + minimum;
                 }
