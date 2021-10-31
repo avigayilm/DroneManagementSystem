@@ -172,10 +172,12 @@ namespace IDAL
                         coord *= -1; 
                     }  
                     //determines the various sexagesimal factors
-                    int deg = ((int)coord / 1);
-                    int min = (((int)coord % 1) * 60) / 1;
-                    double sec = (((coord % 1) * 60) % 1) * 60;
-                    const string quote = "\"";
+                    int deg = (int)coord;
+                    double minWDec = (coord - deg) * 60;
+                    int min = (int)minWDec;
+                    double decSec = (minWDec - min) * 60;
+                    double sec = Math.Round(decSec, 4, MidpointRounding.AwayFromZero);
+                    const string quote = "\"  ";
                     string toReturn = deg + "° " + min + $"' " + sec + quote + direction;
                     return toReturn;
                 }
