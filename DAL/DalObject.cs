@@ -45,15 +45,16 @@ namespace IDAL
                 public static void ParcelPickedUp(int parcelId, DateTime day)
                 {
   
-                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.DroneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.PickedUp = DateTime.Now; } });// chrcking if the drone is still available
+                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.DroneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.PickedUp = DateTime.Now; } });// checking if the drone is still available and then change the status of the drone to delivery
                 }
 
-                public static void ParcelDelivered(int parcelId, DateTime day)
+                public static void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
                 {
                     DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) {ChangeStatus(p.DroneId,DroneStatuses.available); p.requested = DateTime.Now; } });
                 }
-
-                public static void ChangeStatus(int DroneId,DroneStatuses st)
+                
+                // function that changes the status of the drone according to the given parameter.
+                public static void ChangeStatus(int DroneId,DroneStatuses st) 
                 {
                     DataSource.dronesList.ForEach(d => { if (d.ID == DroneId) d.Status = st; });
                 }
@@ -63,6 +64,7 @@ namespace IDAL
                     DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
                 }
 
+                // sending a drone to charge in a station, adding the drone to the dronechargelist
                 public static void SendToCharge(int DroneId, int StationId)
                 {
                     //// making a new Dronecharge
@@ -74,6 +76,7 @@ namespace IDAL
                     DataSource.chargeList.Add(DC);
                 }
 
+                //Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
                 public static void BatteryCharged(DroneCharge Buzzer)
                 {
                     ChangeStatus(Buzzer.droneId, DroneStatuses.available);
@@ -82,6 +85,7 @@ namespace IDAL
 
                 }
 
+                // The display functions return a string with all the information of the lists
                 public static string DisplayParcel(int ID)
                 {
                     int i;
@@ -110,14 +114,14 @@ namespace IDAL
                     return DataSource.stationList[i].ToString();
                 }
 
-                // Print the list with all the stations
+                // The Display list funcitons return the whole list
                 public static List<Station> DisplayStationList()
                 {
                     
                     return DataSource.stationList;
                 } 
 
-                // Display the list with all the customers
+                
                 public static List<Customer> DisplayCustomerList()
                 {
                     return DataSource.customerList;
@@ -128,12 +132,17 @@ namespace IDAL
                     return DataSource.dronesList;
                 }
 
-                public static List<Parcel> DisplayParcelList()// Display all the parcels in the array
+                public static List<Parcel> DisplayParcelList()
                 {
                     return DataSource.parcelList;
                 }
 
-                // print the parcels that have not been assigned to a drone
+                public static List<DroneCharge> DisplayDroneChargeList()// Display all the parcels in the array
+                {
+                    return DataSource.chargeList;
+                }
+
+                // returns a list with parcels that have not been assigned to a drone
                 public static List<Parcel> DisplayvacantParcel()
                 {
                    
@@ -142,7 +151,7 @@ namespace IDAL
                     return temp;
                 }
 
-                // prints the stations that have availble charging
+                // returns the list with the stations that have availble charging
                 public static List<Station> DisplayStationWithCharging()
                 {
                     List<Station> temp = new List<Station>();
