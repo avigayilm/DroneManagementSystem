@@ -19,7 +19,7 @@ namespace DAL
         public DalObject() => DataSource.Initialize();
 
         /// <summary>
-        /// 
+        /// adding the elements to the lists
         /// </summary>
         /// <param name="stat"></param>
         public void AddStation(Station stat)
@@ -42,7 +42,11 @@ namespace DAL
             pack.id = ++DataSource.Config.LastParcelNumber;
             DataSource.parcelList.Add(pack);
         }
-
+        /// <summary>
+        /// assigning a drone to a parcel
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="droneId"></param>
         public void ParcelDrone(int parcelId, int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
         {
             // looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
@@ -54,6 +58,11 @@ namespace DAL
             DataSource.parcelList[parcelIndex] = temp;
         }
 
+        /// <summary>
+        /// the drone picks up the parcel, therefore updating the drone's status to delivery 
+        /// and updating the picked up time
+        /// </summary>
+        /// <param name="parcelId"></param>
         public void ParcelPickedUp(int parcelId)
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
@@ -67,7 +76,7 @@ namespace DAL
         }
 
         /// <summary>
-        ///  funciton updated the parcel to delivered. It changes the drone to available
+        ///  funciton updated the parcel to delivered. It changes the drone's status to available
         ///  and updates the time of requested
         /// </summary>
         /// <param name="parcelId"></param>
@@ -84,9 +93,8 @@ namespace DAL
             DataSource.parcelList[parcelIndex] = temp;
         }
 
-        // function that changes the status of the drone according to the given parameter.
         /// <summary>
-        /// changes the Status of the drone according to the parameter given
+        /// function that changes the status of the drone according to the given parameter.
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="st"></param>
@@ -98,36 +106,52 @@ namespace DAL
             DataSource.dronesList[droneIndex] = temp;
         }
 
+        /// <summary>
+        /// funciton that changes the amount of chargeslots in a station according to the given parameter.
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <param name="n"></param>
         public void ChangeChargeSlots(int stationId, int n)
         {
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
             var temp = DataSource.stationList[stationIndex];
-            temp.ChargeSlots += n;
+            temp.chargeSlots += n;
             DataSource.stationList[stationIndex] = temp;
         }
 
-        // sending a drone to charge in a station, adding the drone to the dronechargelist
-        // seperate the function that are in the send to charge
-        public void SendToCharge(int DroneId, int StationId)
+        /// <summary>
+        /// sending a drone to charge in a station, adding the drone to the dronechargelist
+        /// </summary>
+        /// <param name="DroneId"></param>
+        /// <param name="StationId"></param>
+        public void SendToCharge(int droneId, int stationId)
         {
             //// making a new Dronecharge
             DroneCharge DC = new DroneCharge();
-            DC.droneId = DroneId;
-            DC.stationId = StationId;
+            DC.droneId = droneId;
+            DC.stationId = stationId;
             DataSource.chargeList.Add(DC);
         }
-
-        //Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
-        public void BatteryCharged(DroneCharge Buzzer)///should be seperated to fuctions each functin for each ישות
+        /// <summary>
+        /// Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
+        /// </summary>
+        /// <param name="Buzzer"></param>
+        public void BatteryCharged(int droneId, int stationId)
         {
-            ChangeDroneStatus(Buzzer.droneId, DroneStatuses.Available);
-            ChangeChargeSlots(Buzzer.stationId, 1);
-            DataSource.chargeList.ForEach(c => { if (c.droneId == Buzzer.droneId) { DataSource.chargeList.Remove(c); } });
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == droneId);// find the index of the dronecharge according to teh droneIndex
+            DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
+            var temp = DataSource.dronesList[droneIndex];
+            temp.battery = 100.00;// battery is full
+            DataSource.dronesList[droneIndex] = temp;
 
         }
 
-        // The display functions return a string with all the information of the lists
-        //all teh displays sho9uld realy just return the mofa itself like in customer
+
+        /// <summary>
+        /// The get functions return a string with all the information of the lists
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public Parcel GetParcel(int ID)
         {
             return DataSource.parcelList.Find(p => p.id == ID);
@@ -150,8 +174,10 @@ namespace DAL
         {
             return DataSource.stationList.Find(s => s.id == ID);
         }
-
-        // The Display list funcitons return the whole list
+        /// <summary>
+        /// The Display list funcitons return the whole list
+        /// </summary>
+        /// <returns></returns>
         public List<Station> DisplayStationList()
         {
             List<Station> list = new();

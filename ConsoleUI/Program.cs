@@ -5,9 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
 
-// trying to see if it works :)
-
-
 
 namespace ConsoleUI
 {
@@ -15,7 +12,7 @@ namespace ConsoleUI
     {
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
+        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge,ReleasefromCharge}
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
         private static void ShowMenu()
@@ -181,13 +178,25 @@ namespace ConsoleUI
                                     }
                                 case UpdateOptions.Recharge:
                                     {
-                                        Console.WriteLine("Enter the parcelid and the Datetime\n");
+                                        Console.WriteLine("Enter the droneId and the stationId\n");
                                         int droneId, stationId;
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
                                         dal.SendToCharge(droneId, stationId);
                                         dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
                                         dal.ChangeChargeSlots(stationId, -1);
+                                        break;
+                                    }
+
+                                case UpdateOptions.ReleasefromCharge:
+                                    {
+                                        Console.WriteLine("Enter the droneId and the stationId");
+                                        int droneId, stationId;
+                                        int.TryParse(Console.ReadLine(), out droneId);// gets the droneId and stationId from the user
+                                        int.TryParse(Console.ReadLine(), out stationId);
+                                        dal.BatteryCharged(droneId, stationId);// sets the battery to 100
+                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Available);// changes the dronestatus to available
+                                        dal.ChangeChargeSlots(stationId, 1);// one extra chargeslot is free.'
                                         break;
                                     }
                                 case UpdateOptions.Exit:
@@ -304,7 +313,6 @@ namespace ConsoleUI
                             double.TryParse(Console.ReadLine(), out lonP);
                             Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
                             int ID = int.Parse(Console.ReadLine());
-                            // Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(ID,lonP, latP) + "KM");// calls the distance function to determine distance btween the points
                             dynamic custOrStat = ID > 9999 ? dal.GetCustomer(string.Format($"{ID}")) : dal.GetStation(ID);
                             // calls the distance function to determine distance btween the points    
                             Console.WriteLine("The distance is: " + global::Bonus.Haversine(custOrStat.longitude, custOrStat.latitude, lonP, latP) + "KM");
