@@ -156,13 +156,12 @@ namespace ConsoleUI
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
                                         int id = int.Parse(Console.ReadLine());
                                         DateTime.TryParse(Console.ReadLine(), out DateTime time);
-                                        //IDAL.DO.DalObject.DalObject.ParcelPickedUp(ID, time);
                                         dal.ParcelPickedUp(id);
                                         break;
                                     }
                                 case UpdateOptions.Recharge://charges a drone using dronecharge entity
                                     {
-                                        Console.WriteLine("Enter the parcelid and the Datetime\n");
+                                        Console.WriteLine("Enter the droneId and the stationId\n");
                                         int droneId = int.Parse(Console.ReadLine());
                                         int stationId = int.Parse(Console.ReadLine());
                                         dal.SendToCharge(droneId, stationId);
