@@ -33,7 +33,7 @@ namespace IDAL
                 {   //loop for updete 5 drone
                     for (int i = 0; i < 5; i++)
                     {
-                        dronesList[i] = new Drone()
+                        Drone temp= new Drone()
                         {
                             ID = rand.Next(1000,9999),
                             Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
@@ -41,6 +41,7 @@ namespace IDAL
                             Status = DroneStatuses.available,
                             Battery = 100.0
                         };
+                        dronesList[i] = temp;
                        // Config.droneIndex++;
                     }
                 }

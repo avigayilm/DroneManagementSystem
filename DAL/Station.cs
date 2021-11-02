@@ -21,8 +21,8 @@ namespace IDAL
                 String result = " ";
                 result += $"ID is {ID}, \n";
                 result += $"Name is {Name}, \n";
-                result += $"Latitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(Latitude, 't'))}, \n";
-                result += $"longitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(Longitude, 'n'))}, \n";
+                result += $"Latitude is {(Bonus.DecimalToSexagesimal(Latitude, 't'))}, \n";
+                result += $"longitude is {(Bonus.DecimalToSexagesimal(Longitude, 'n'))}, \n";
                 result += $"There are {ChargeSlots} Chargeslots\n";
                 return result;
             }

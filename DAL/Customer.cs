@@ -1,4 +1,6 @@
 ﻿using System;
+using IDAL.DO;
+
 namespace IDAL
 {
     namespace DO
@@ -18,8 +20,9 @@ namespace IDAL
                 result += $"ID is {ID}, \n";
                 result += $"Name is {name}, \n";
                 result += $"Telephone is {phone.Substring(0, 3) + '-' + phone.Substring(3)}, \n";
-                result += $"Latitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(latitude, 't'))}, \n";
-                result += $"longitude is{(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(longitude, 'n'))}, \n";
+                //result += $"Latitude is {(IDAL.DO.DalObject.DalObject.DecimalToSexagesimal(latitude, 't'))}, \n";
+                result += $"Latitude is {Bonus.DecimalToSexagesimal(latitude, 't')}, \n";
+                result += $"longitude is{Bonus.DecimalToSexagesimal(longitude, 'n')}, \n";
                 return result;
             }
         }
