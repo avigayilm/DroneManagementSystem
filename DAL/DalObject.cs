@@ -169,7 +169,6 @@ namespace DAL
 
         }
 
-
         /// <summary>
         /// The get functions return a string with all the information of the lists
         /// </summary>
