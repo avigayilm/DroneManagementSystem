@@ -16,11 +16,11 @@ namespace ConsoleUI
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
         enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
-        enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge}
+        enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
         private static void ShowMenu()
         {
-            IDAL.DO.DalObject.DalObject obj = new IDAL.DO.DalObject.DalObject();
+            DAL.DalObject dal = new();
             //static public DalObject obj=new DalObject
             EntityOptions entityOption;
             MenuOptions menuOption;
@@ -42,8 +42,8 @@ namespace ConsoleUI
                                 case EntityOptions.Station:
                                     {
                                         Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
-                                        
-                                        
+
+
                                         int slots, stationID;
                                         int.TryParse(Console.ReadLine(), out stationID);
                                         string inputname = Console.ReadLine();
@@ -53,14 +53,14 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out slots);
                                         Station Victoria = new Station()
                                         {
-                                            ID=stationID,
+                                            ID = stationID,
                                             Name = inputname,
                                             ChargeSlots = slots,
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddStation(Victoria);
-                                        obj.AddStation(Victoria);
+                                        dal.AddStation(Victoria);
                                         break;
                                     }
                                 case EntityOptions.Customer:
@@ -84,7 +84,7 @@ namespace ConsoleUI
 
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddCustomer(newCustomer);
-                                        obj.AddCustomer(newCustomer);
+                                        dal.AddCustomer(newCustomer);
                                         break;
                                     }
                                 case EntityOptions.Drone:
@@ -100,14 +100,14 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out batt);
                                         Drone newDrone = new Drone()
                                         {
-                                            ID= droneID,
+                                            ID = droneID,
                                             Model = inputmodel,
                                             MaxWeight = maxim,
                                             Status = stat,
                                             Battery = batt
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddDrone(newDrone);
-                                        obj.AddDrone(newDrone);
+                                        dal.AddDrone(newDrone);
                                         break;
                                     }
                                 case EntityOptions.Parcel:
@@ -126,13 +126,13 @@ namespace ConsoleUI
                                         {
                                             senderid = inputSenderId,
                                             targetid = inputTargetId,
-                                            Weight = maxim,
-                                            Priority = prio,
+                                            weight = maxim,
+                                            priority = prio,
                                             requested = req,
                                             scheduled = sched
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddParcel(newParcel);
-                                        obj.AddParcel(newParcel);
+                                        dal.AddParcel(newParcel);
                                         break;
                                     }
 
@@ -153,7 +153,8 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out parcelId);
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         //IDAL.DO.DalObject.DalObject.ParcelDrone(parcelId,droneId);
-                                        obj.ParcelDrone(parcelId, droneId);
+                                        dal.ParcelDrone(parcelId, droneId);
+                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Delivery);
                                         break;
                                     }
                                 case UpdateOptions.Delivery:
@@ -164,7 +165,7 @@ namespace ConsoleUI
                                         DateTime time;
                                         DateTime.TryParse(Console.ReadLine(), out time);
                                         //IDAL.DO.DalObject.DalObject.ParcelDelivered(ID, time);
-                                        obj.ParcelDelivered(ID, time);
+                                        dal.ParcelDelivered(ID, time);
                                         break;
                                     }
                                 case UpdateOptions.Pickedup:
@@ -175,7 +176,7 @@ namespace ConsoleUI
                                         DateTime time;
                                         DateTime.TryParse(Console.ReadLine(), out time);
                                         //IDAL.DO.DalObject.DalObject.ParcelPickedUp(ID, time);
-                                        obj.ParcelPickedUp(ID, time);
+                                        dal.ParcelPickedUp(ID);
                                         break;
                                     }
                                 case UpdateOptions.Recharge:
@@ -185,7 +186,7 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
                                         //IDAL.DO.DalObject.DalObject.SendToCharge(droneId, stationId);
-                                        obj.SendToCharge(droneId, stationId);
+                                        dal.SendToCharge(droneId, stationId);
                                         break;
                                     }
                                 case UpdateOptions.Exit:
@@ -205,54 +206,49 @@ namespace ConsoleUI
                                 case ListOptions.Stations:
                                     {
                                         // List<Station> stationListTemp = IDAL.DO.DalObject.DalObject.DisplayStationList();
-                                        List<Station> stationListTemp=obj.DisplayStationList();
+                                        List<Station> stationListTemp = dal.DisplayStationList();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Parcels:
                                     {
                                         //List<Parcel> parcelListTemp = IDAL.DO.DalObject.DalObject.DisplayParcelList();
-                                        List<Parcel> parcelListTemp = obj.DisplayParcelList();
+                                        List<Parcel> parcelListTemp = dal.DisplayParcelList();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Drones:
                                     {
                                         // List<Drone> dronesListTemp= IDAL.DO.DalObject.DalObject.DisplayDroneList();
-                                        List<Drone> dronesListTemp = obj.DisplayDroneList();
+                                        List<Drone> dronesListTemp = dal.DisplayDroneList();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Customers:
                                     {
                                         //List<Customer> customerListTemp = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
-                                        List<Customer> customerListTemp = obj.DisplayCustomerList();
-                                        customerListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        List<Customer> customerListTemp = dal.GetAllCustomers();
+                                        customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels:
                                     {
                                         // List<Parcel> UnAssignmentListTemp = IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
-                                        List<Parcel> UnAssignmentListTemp = obj.DisplayvacantParcel();
+                                        List<Parcel> UnAssignmentListTemp = dal.DisplayvacantParcel();
                                         UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations:
-                                    {
-                                       // List<Station> stationChargingListTemp = IDAL.DO.DalObject.DalObject.DisplayStationWithCharging();
-                                        List<Station> stationChargingListTemp = obj.DisplayStationWithCharging();
-                                        
-                                        stationChargingListTemp.ForEach(p => Console.WriteLine(p.ToString()));
-                                        break;
-                                    }
+                                    dal.DisplayStationWithCharging().ForEach(p => Console.WriteLine(p));
+                                    break;
 
                                 case ListOptions.DroneCharge:
-                                {
+                                    {
                                         //List<DroneCharge> stationDroneChargeListTemp = IDAL.DO.DalObject.DalObject.DisplayDroneChargeList();
-                                        List<DroneCharge> stationDroneChargeListTemp = obj.DisplayDroneChargeList();
+                                        List<DroneCharge> stationDroneChargeListTemp = dal.DisplayDroneChargeList();
                                         stationDroneChargeListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
-                                }
+                                    }
                                 case ListOptions.Exit:
                                     {
                                         break;
@@ -270,11 +266,8 @@ namespace ConsoleUI
                                 case EntityOptions.Station:
                                     {
                                         Console.WriteLine("Enter the ID of the station you want to print\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        // Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayStation(ID));
-                                        Console.WriteLine(obj.DisplayStation(ID));
-
+                                        int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine(dal.GetStation(id));
                                         break;
                                     }
                                 case EntityOptions.Parcel:
@@ -283,7 +276,7 @@ namespace ConsoleUI
                                         int ID;
                                         int.TryParse(Console.ReadLine(), out ID);
                                         //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayParcel(ID));
-                                        Console.WriteLine(obj.DisplayParcel(ID));
+                                        Console.WriteLine(dal.GetParcel(ID));
                                         break;
                                     }
                                 case EntityOptions.Drone:
@@ -292,7 +285,7 @@ namespace ConsoleUI
                                         int ID;
                                         int.TryParse(Console.ReadLine(), out ID);
                                         //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayDrone(ID));
-                                        Console.WriteLine(obj.DisplayDrone(ID));
+                                        Console.WriteLine(dal.GetDrone(ID));
 
                                         break;
                                     }
@@ -301,7 +294,7 @@ namespace ConsoleUI
                                         Console.WriteLine("Enter the ID of the Customer you want to print\n");
                                         string ID = Console.ReadLine();
                                         //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayCustomer(ID));
-                                        Console.WriteLine(obj.DisplayCustomer(ID));
+                                        Console.WriteLine(dal.GetCustomer(ID));
                                         break;
                                     }
                                 case EntityOptions.Exit:
@@ -321,8 +314,10 @@ namespace ConsoleUI
                             double.TryParse(Console.ReadLine(), out lonP);
                             Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
                             int ID = int.Parse(Console.ReadLine());
-                          // Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(ID,lonP, latP) + "KM");// calls the distance function to determine distance btween the points
-                            Console.WriteLine("The distance is: " + Bonus.Distance(ID, lonP, latP) + "KM");// calls the distance function to determine distance btween the points
+                            // Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(ID,lonP, latP) + "KM");// calls the distance function to determine distance btween the points
+                            dynamic custOrStat = ID > 9999 ? dal.GetCustomer(string.Format($"{ID}")) : dal.GetStation(ID);
+                            // calls the distance function to determine distance btween the points    
+                            Console.WriteLine("The distance is: " + global::Bonus.Haversine(custOrStat.longitude, custOrStat.latitude, lonP, latP) + "KM");
 
                             break;
                         }
@@ -337,15 +332,15 @@ namespace ConsoleUI
 
 
 
-        }    
-   
-    
+        }
+
+
         static void Main(string[] args)
         {
 
 
             ShowMenu();
-            
+
         }
     }
 }

@@ -6,167 +6,184 @@ using System.Threading.Tasks;
 using IDAL.DO;
 
 
-namespace IDAL
+namespace DAL
 {
-    namespace DO
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DalObject
     {
-        namespace DalObject
+        /// <summary>
+        /// 
+        /// </summary>
+        public DalObject() => DataSource.Initialize();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stat"></param>
+        public void AddStation(Station stat)
         {
-            public class DalObject
-            {
-                public DalObject()// constructor for DalObject
-                {
-                    DataSource.Initialize();
-                }
-
-                public void AddStation(Station Victoria)
-                {
-                    DataSource.stationList.Add(Victoria);
-                }
-
-                public void AddDrone(Drone Flyboy)
-                {
-                    DataSource.dronesList.Add(Flyboy);
-                }
-
-                public void AddCustomer(Customer me)
-                {
-                    DataSource.customerList.Add(me);
-                }
-
-                public void AddParcel(Parcel Fedex)
-                {
-                    Fedex.ID = ++DataSource.PackageCounter;
-                    DataSource.parcelList.Add(Fedex);
-                }
-
-                public void ParcelDrone(int ParcelId,int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
-                {
-
-                    DataSource.parcelList.ForEach(p => { if (p.ID == ParcelId) { p.droneId = droneId; } p.requested = DateTime.Now; } );// looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
-                }
-                
-                
-                public void ParcelPickedUp(int parcelId, DateTime day)
-                {
-  
-                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.droneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.pickedUp = DateTime.Now; } });// checking if the drone is still available and then change the status of the drone to delivery
-                }
-
-                public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
-                {
-                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) {ChangeStatus(p.droneId,DroneStatuses.available); p.requested = DateTime.Now; } });
-                }
-                
-                // function that changes the status of the drone according to the given parameter.
-                public void ChangeStatus(int DroneId,DroneStatuses st) 
-                {
-                    DataSource.dronesList.ForEach(d => { if (d.ID == DroneId) d.Status = st; });
-                }
-
-                public void ChangeChargeSlots(int stationId,int n)
-                {
-                    DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
-                }
-
-                // sending a drone to charge in a station, adding the drone to the dronechargelist
-                public void SendToCharge(int DroneId, int StationId)
-                {
-                    //// making a new Dronecharge
-                    DroneCharge DC = new DroneCharge();
-                    DC.droneId = DroneId;
-                    DC.stationId = StationId;
-                    ChangeStatus(DroneId, DroneStatuses.maintenance);
-                    ChangeChargeSlots(StationId, -1);
-                    DataSource.chargeList.Add(DC);
-                }
-
-                //Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
-                public void BatteryCharged(DroneCharge Buzzer)
-                {
-                    ChangeStatus(Buzzer.droneId, DroneStatuses.available);
-                    ChangeChargeSlots(Buzzer.stationId, 1);
-                    DataSource.chargeList.ForEach(c => { if (c.droneId == Buzzer.droneId) { DataSource.chargeList.Remove(c); } });
-
-                }
-
-                // The display functions return a string with all the information of the lists
-                public string DisplayParcel(int ID)
-                {
-                    int i;
-                    for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].ID != ID; i++) ;
-                    return DataSource.parcelList[i].ToString();
-                }
-
-                public  string DisplayCustomer(string ID)
-                {
-                    int i;
-                    for (i = 0; i < DataSource.customerList.Count && DataSource.customerList[i].ID != ID; i++) ;
-                    return DataSource.customerList[i].ToString();
-                }
-
-                public string DisplayDrone(int ID)
-                {
-                    int i;
-                    for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].ID != ID; i++) ;
-                    return DataSource.dronesList[i].ToString();
-                }
-
-                public string DisplayStation(int ID)
-                {
-                    int i;
-                    for (i = 0; i < DataSource.stationList.Count && DataSource.stationList[i].ID != ID; i++) ;
-                    return DataSource.stationList[i].ToString();
-                }
-
-                // The Display list funcitons return the whole list
-                public List<Station> DisplayStationList()
-                {
-                    
-                    return DataSource.stationList;
-                } 
-
-                
-                public List<Customer> DisplayCustomerList()
-                {
-                    return DataSource.customerList;
-                }
-
-                public List<Drone> DisplayDroneList()
-                {
-                    return DataSource.dronesList;
-                }
-
-                public List<Parcel> DisplayParcelList()
-                {
-                    return DataSource.parcelList;
-                }
-
-                public List<DroneCharge> DisplayDroneChargeList()// Display all the parcels in the array
-                {
-                    return DataSource.chargeList;
-                }
-
-                // returns a list with parcels that have not been assigned to a drone
-                public List<Parcel> DisplayvacantParcel()
-                {
-                   
-                    List<Parcel> temp = new List<Parcel>();
-                    DataSource.parcelList.ForEach(p => { if (p.droneId == 0) { temp.Add(p); } });
-                    return temp;
-                }
-
-                // returns the list with the stations that have availble charging
-                public List<Station> DisplayStationWithCharging()
-                {
-                    List<Station> temp = new List<Station>();
-
-                    DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
-                    return temp;
-                }
-
-            }
+            DataSource.stationList.Add(stat);
         }
+
+        public void AddDrone(Drone dro)
+        {
+            DataSource.dronesList.Add(dro);
+        }
+
+        public void AddCustocusr(Customer cus)
+        {
+            DataSource.CustomerList.Add(cus);
+        }
+
+        public void AddParcel(Parcel pack)
+        {
+            pack.id = ++DataSource.Config.LastParcelNumber;
+            DataSource.parcelList.Add(pack);
+        }
+
+        public void ParcelDrone(int parcelId, int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
+        {
+            // looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
+            
+            var temp = DataSource.parcelList[parcelIndex];
+            temp.droneId = droneId;
+            temp.requested = DateTime.Now;
+            DataSource.parcelList[parcelIndex] = temp;
+        }
+
+        public void ParcelPickedUp(int parcelId)
+        {
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
+            var temp2 = DataSource.dronesList[droneIndex];
+            var temp = DataSource.parcelList[parcelIndex];
+            temp2.status = DroneStatuses.Delivery;
+            temp.pickedUp = DateTime.Now;
+            DataSource.dronesList[droneIndex] = temp2;
+            DataSource.parcelList[parcelIndex] = temp;
+        }
+
+        //changeee!!! cannot have for each
+        public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
+        {
+            DataSource.parcelList.ForEach(p => { if (p.id == parcelId) { ChangeDroneStatus(p.droneId, DroneStatuses.Available); p.requested = DateTime.Now; } });
+        }
+
+        // function that changes the status of the drone according to the given parameter.
+        /// <summary>
+        /// no for eachhhh
+        /// </summary>
+        /// <param name="DroneId"></param>
+        /// <param name="st"></param>
+        public void ChangeDroneStatus(int DroneId, DroneStatuses st)
+        {
+            DataSource.dronesList.ForEach(d => { if (d.id == DroneId) d.status = st; });
+        }
+
+        public void ChangeChargeSlots(int stationId, int n)
+        {
+            DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
+        }
+
+        // sending a drone to charge in a station, adding the drone to the dronechargelist
+        // seperate the function that are in the send to charge
+        public void SendToCharge(int DroneId, int StationId)
+        {
+            //// making a new Dronecharge
+            DroneCharge DC = new DroneCharge();
+            DC.droneId = DroneId;
+            DC.stationId = StationId;
+            ChangeDroneStatus(DroneId, DroneStatuses.maintenance);
+            ChangeChargeSlots(StationId, -1);
+            DataSource.chargeList.Add(DC);
+        }
+
+        //Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
+        public void BatteryCharged(DroneCharge Buzzer)///should be seperated to fuctions each functin for each ישות
+        {
+            ChangeDroneStatus(Buzzer.droneId, DroneStatuses.Available);
+            ChangeChargeSlots(Buzzer.stationId, 1);
+            DataSource.chargeList.ForEach(c => { if (c.droneId == Buzzer.droneId) { DataSource.chargeList.Remove(c); } });
+
+        }
+
+        // The display functions return a string with all the information of the lists
+        //all teh displays sho9uld realy just return the mofa itself like in customer
+        public string GetParcel(int ID)
+        {
+            int i;
+            for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].id != ID; i++) ;
+            return DataSource.parcelList[i].ToString();
+        }
+
+        public Customer GetCustomer(string ID)
+        {
+            return DataSource.CustomerList.Find(c => c.ID == ID); ;
+        }
+
+        public string GetDrone(int ID)
+        {
+            int i;
+            for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].id != ID; i++) ;
+            return DataSource.dronesList[i].ToString();
+        }
+
+        public Station GetStation(int ID)
+        {
+            return DataSource.stationList.Find(s => s.ID == ID);
+        }
+
+        // The Display list funcitons return the whole list
+        public List<Station> DisplayStationList()
+        {
+            List<Station> list = new();
+            DataSource.stationList.ForEach(s => list.Add(s));
+            return list;
+        }
+
+
+        public List<Customer> GetAllCustomers()
+        {
+            List<Customer> list = new();
+            DataSource.CustomerList.ForEach(c => list.Add(c));
+            return list;
+        }
+
+        public List<Drone> DisplayDroneList()
+        {
+            return DataSource.dronesList;
+        }
+
+        public List<Parcel> DisplayParcelList()
+        {
+            return DataSource.parcelList;
+        }
+
+        public List<DroneCharge> DisplayDroneChargeList()// Display all the parcels in the array
+        {
+            return DataSource.chargeList;
+        }
+
+        // returns a list with parcels that have not been assigned to a drone
+        public List<Parcel> DisplayvacantParcel()
+        {
+            List<Parcel> temp = new();
+            DataSource.parcelList.ForEach(p => { if (p.droneId == 0) temp.Add(p);  });
+            return temp;
+        }
+
+        // returns the list with the stations that have availble charging
+        public List<Station> DisplayStationWithCharging()
+        {
+            List<Station> temp = new();
+            DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
+            return temp;
+        }
+
     }
 }
-   
+
+
