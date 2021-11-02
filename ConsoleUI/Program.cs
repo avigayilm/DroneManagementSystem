@@ -12,7 +12,7 @@ namespace ConsoleUI
         //enums to determine updating, adding etc. choices
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
+        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge,ReleasefromCharge}
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
         //menu function wil go thorough all options for user
@@ -168,6 +168,18 @@ namespace ConsoleUI
                                         dal.SendToCharge(droneId, stationId);
                                         dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
                                         dal.ChangeChargeSlots(stationId, -1);
+                                        break;
+                                    }
+
+                                case UpdateOptions.ReleasefromCharge:
+                                    {
+                                        Console.WriteLine("Enter the droneId and the stationId");
+                                        int droneId, stationId;
+                                        int.TryParse(Console.ReadLine(), out droneId);// gets the droneId and stationId from the user
+                                        int.TryParse(Console.ReadLine(), out stationId);
+                                        dal.BatteryCharged(droneId, stationId);// sets the battery to 100
+                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Available);// changes the dronestatus to available
+                                        dal.ChangeChargeSlots(stationId, 1);// one extra chargeslot is free.'
                                         break;
                                     }
                                 case UpdateOptions.Exit:
