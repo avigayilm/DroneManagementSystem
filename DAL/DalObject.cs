@@ -66,26 +66,44 @@ namespace DAL
             DataSource.parcelList[parcelIndex] = temp;
         }
 
-        //changeee!!! cannot have for each
+        /// <summary>
+        ///  funciton updated the parcel to delivered. It changes the drone to available
+        ///  and updates the time of requested
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="day"></param>
         public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
         {
-            DataSource.parcelList.ForEach(p => { if (p.id == parcelId) { ChangeDroneStatus(p.droneId, DroneStatuses.Available); p.requested = DateTime.Now; } });
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);// finding the index of the parcel
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
+            var temp2 = DataSource.dronesList[droneIndex];
+            var temp = DataSource.parcelList[parcelIndex];
+            temp2.status = DroneStatuses.Available;
+            temp.requested = DateTime.Now;
+            DataSource.dronesList[droneIndex] = temp2;
+            DataSource.parcelList[parcelIndex] = temp;
         }
 
         // function that changes the status of the drone according to the given parameter.
         /// <summary>
-        /// no for eachhhh
+        /// changes the Status of the drone according to the parameter given
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="st"></param>
         public void ChangeDroneStatus(int DroneId, DroneStatuses st)
         {
-            DataSource.dronesList.ForEach(d => { if (d.id == DroneId) d.status = st; });
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
+            var temp = DataSource.dronesList[droneIndex];
+            temp.status = st;
+            DataSource.dronesList[droneIndex] = temp;
         }
 
         public void ChangeChargeSlots(int stationId, int n)
         {
-            DataSource.stationList.ForEach(s => { if (s.ID == stationId) { s.ChargeSlots += n; } });
+            int stationIndex = DataSource.stationList.FindIndex(s => s.ID == stationId);
+            var temp = DataSource.stationList[stationIndex];
+            temp.ChargeSlots +=n;
+            DataSource.stationList[stationIndex] = temp;
         }
 
         // sending a drone to charge in a station, adding the drone to the dronechargelist
@@ -96,8 +114,6 @@ namespace DAL
             DroneCharge DC = new DroneCharge();
             DC.droneId = DroneId;
             DC.stationId = StationId;
-            ChangeDroneStatus(DroneId, DroneStatuses.maintenance);
-            ChangeChargeSlots(StationId, -1);
             DataSource.chargeList.Add(DC);
         }
 

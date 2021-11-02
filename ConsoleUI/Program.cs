@@ -21,7 +21,7 @@ namespace ConsoleUI
         private static void ShowMenu()
         {
             DAL.DalObject dal = new();
-            //static public DalObject obj=new DalObject
+
             EntityOptions entityOption;
             MenuOptions menuOption;
             ListOptions listOption;
@@ -185,8 +185,9 @@ namespace ConsoleUI
                                         int droneId, stationId;
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
-                                        //IDAL.DO.DalObject.DalObject.SendToCharge(droneId, stationId);
                                         dal.SendToCharge(droneId, stationId);
+                                        dal.ChangeDroneStatus(droneId, DroneStatuses.maintenance);
+                                        dal.ChangeChargeSlots(stationId, -1);
                                         break;
                                     }
                                 case UpdateOptions.Exit:
