@@ -102,7 +102,7 @@ namespace DAL
         {
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
             var temp = DataSource.stationList[stationIndex];
-            temp.ChargeSlots += n;
+            temp.chargeSlots += n;
             DataSource.stationList[stationIndex] = temp;
         }
 

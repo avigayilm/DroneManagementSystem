@@ -9,6 +9,7 @@ namespace DAL
 {
     public class DataSource// the datasource class just initializes all the classes
     {
+        //indexer for parcel list
         internal class Config
         {
             internal static int LastParcelNumber = 1000;
@@ -28,6 +29,7 @@ namespace DAL
             CreateParcel();
 
         }
+        //initializes five drones
         public static void CreateDrone()
         {   //loop for updete 5 drone
             for (int i = 0; i < 5; i++)
@@ -44,28 +46,28 @@ namespace DAL
             }
         }
 
+        //initializes 10 customers
         static void CreateCustomer()
         {
             string[] customerNames = { "Frodo", "Sam", "Gloin", "Oin", "Sauron", "Saruman", "Elrond", "Galadriel", "Legolas", "Aragorn" };
-            //lop for 10 customer
+            //loop for 10 customer
             for (int i = 0; i < 10; i++)
             {
-                //customerList[i] = new Customer();
                 customerList.Add(new()
                 {
                     id = $"0{rand.Next(100000000, 999999999)}",
                     name = customerNames[i],
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
                     //Lat-long coorditates for cities in Israel are in range: Latitude from 29.55805 to 33.20733 and longitude from 34.57149 to 35.57212.
-                    latitude = GetRandomNumber(29.55805, 33.20733),
+                    latitude = GetRandomNumber(29.55805, 33.20733),//jerusalem range
                     longitude = GetRandomNumber(34.57149, 35.57212)
                 });
             }
         }
 
-        public static void CreateParcel()
+        public static void CreateParcel()//initializes 20 parcels
         {
-            DateTime startDate = new DateTime(2021, 1, 1);
+            DateTime startDate = new(2021, 1, 1);
             for (int i = 0; i < 20; i++)
             {
                 Parcel temp = new()
@@ -110,7 +112,7 @@ namespace DAL
                 DataSource.Config.LastParcelNumber++;
             }
         }
-        public static void CreateStation()// maybe just one
+        public static void CreateStation()// initializes 2 stations
         {
             for (int i = 0; i < 2; i++)
             {

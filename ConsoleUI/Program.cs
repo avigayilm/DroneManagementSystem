@@ -5,19 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
 
-// trying to see if it works :)
-
-
-
 namespace ConsoleUI
 {
     class Program
     {
+        //enums to determine updating, adding etc. choices
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
         enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge }
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
+        //menu function wil go thorough all options for user
         private static void ShowMenu()
         {
             DAL.DalObject dal = new();
@@ -37,21 +35,17 @@ namespace ConsoleUI
                         {
                             Console.WriteLine("what do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
                             entityOption = (EntityOptions)int.Parse(Console.ReadLine());
-                            switch (entityOption)
+                            switch (entityOption)//what entity to add
                             {
-                                case EntityOptions.Station:
+                                case EntityOptions.Station://add station
                                     {
                                         Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
-
-
-                                        int slots, stationID;
-                                        int.TryParse(Console.ReadLine(), out stationID);
+                                        int.TryParse(Console.ReadLine(), out int stationID);
                                         string inputname = Console.ReadLine();
-                                        double longitudeInput, latitudeInput;
-                                        double.TryParse(Console.ReadLine(), out latitudeInput);
-                                        double.TryParse(Console.ReadLine(), out longitudeInput);
-                                        int.TryParse(Console.ReadLine(), out slots);
-                                        Station Victoria = new Station()
+                                        double.TryParse(Console.ReadLine(), out double latitudeInput);
+                                        double.TryParse(Console.ReadLine(), out double longitudeInput);
+                                        int.TryParse(Console.ReadLine(), out int slots);
+                                        Station tempStat = new()// adds a new station
                                         {
                                             id = stationID,
                                             name = inputname,
@@ -59,11 +53,10 @@ namespace ConsoleUI
                                             longitude = longitudeInput,
                                             latitude = latitudeInput,
                                         };
-                                        //IDAL.DO.DalObject.DalObject.AddStation(Victoria);
-                                        dal.AddStation(Victoria);
+                                        dal.AddStation(tempStat);
                                         break;
                                     }
-                                case EntityOptions.Customer:
+                                case EntityOptions.Customer:// adds a new customer
                                     {
 
                                         Console.WriteLine("Enter the ID, name, phone, latitude,longtitude\n ");
@@ -87,18 +80,16 @@ namespace ConsoleUI
                                         dal.AddCustomer(newCustomer);
                                         break;
                                     }
-                                case EntityOptions.Drone:
+                                case EntityOptions.Drone://adds drone
                                     {
 
                                         Console.WriteLine("Enter the Id, model, weightcategory(0-2),status(0-2), battery percentage\n ");
-                                        int droneID;
-                                        int.TryParse(Console.ReadLine(), out droneID);
+                                        int.TryParse(Console.ReadLine(), out int droneID);
                                         string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
-                                        double batt;
-                                        double.TryParse(Console.ReadLine(), out batt);
-                                        Drone newDrone = new Drone()
+                                        double.TryParse(Console.ReadLine(), out double batt);
+                                        Drone newDrone = new()
                                         {
                                             id = droneID,
                                             model = inputmodel,
@@ -107,10 +98,10 @@ namespace ConsoleUI
                                             battery = batt
                                         };
 
-                                        dal.AddDrone(newDrone);
+                                        dal.AddDrone(newDrone);// add drone to dronelist
                                         break;
                                     }
-                                case EntityOptions.Parcel:
+                                case EntityOptions.Parcel://adds a prcel
                                     {
 
                                         Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
@@ -118,11 +109,9 @@ namespace ConsoleUI
                                         string inputTargetId = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         Priorities prio = (Priorities)int.Parse(Console.ReadLine());
-                                        DateTime req;
-                                        DateTime sched;
-                                        DateTime.TryParse(Console.ReadLine(), out req);
-                                        DateTime.TryParse(Console.ReadLine(), out sched);
-                                        Parcel newParcel = new Parcel()
+                                        DateTime.TryParse(Console.ReadLine(), out DateTime req);
+                                        DateTime.TryParse(Console.ReadLine(), out DateTime sched);
+                                        Parcel newParcel = new()
                                         {
                                             senderid = inputSenderId,
                                             targetid = inputTargetId,
@@ -131,8 +120,7 @@ namespace ConsoleUI
                                             requested = req,
                                             scheduled = sched
                                         };
-                                        //IDAL.DO.DalObject.DalObject.AddParcel(newParcel);
-                                        dal.AddParcel(newParcel);
+                                        dal.AddParcel(newParcel); 
                                         break;
                                     }
 
@@ -140,51 +128,43 @@ namespace ConsoleUI
                             }
                             break;
                         }
-                    case MenuOptions.Update:
+                    case MenuOptions.Update://update existing entities
                         {
                             Console.WriteLine("what do you want to update?\n  1-Assignment,\n 2-Pickedup\n 3-Delivery,\n 4-Recharge\n ");
                             updateOption = (UpdateOptions)int.Parse(Console.ReadLine());
                             switch (updateOption)
                             {
-                                case UpdateOptions.Assignment:
+                                case UpdateOptions.Assignment://assign drone to parcel
                                     {
                                         Console.WriteLine("Enter the parcelid for the assignment of the parcel and the droneid.\n");
-                                        int parcelId, droneId;
-                                        int.TryParse(Console.ReadLine(), out parcelId);
-                                        int.TryParse(Console.ReadLine(), out droneId);
-                                        //IDAL.DO.DalObject.DalObject.ParcelDrone(parcelId,droneId);
+                                        int parcelId = int.Parse(Console.ReadLine());
+                                        int droneId = int.Parse(Console.ReadLine());
                                         dal.ParcelDrone(parcelId, droneId);
                                         dal.ChangeDroneStatus(droneId, DroneStatuses.Delivery);
                                         break;
                                     }
-                                case UpdateOptions.Delivery:
+                                case UpdateOptions.Delivery://adds a delivery of parcel by drone
                                     {
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        DateTime time;
-                                        DateTime.TryParse(Console.ReadLine(), out time);
-                                        //IDAL.DO.DalObject.DalObject.ParcelDelivered(ID, time);
+                                        int.TryParse(Console.ReadLine(), out int ID);
+                                        DateTime.TryParse(Console.ReadLine(), out DateTime time);
                                         dal.ParcelDelivered(ID, time);
                                         break;
                                     }
-                                case UpdateOptions.Pickedup:
+                                case UpdateOptions.Pickedup://changes drone and parcel accordingly
                                     {
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        DateTime time;
-                                        DateTime.TryParse(Console.ReadLine(), out time);
+                                        int id = int.Parse(Console.ReadLine());
+                                        DateTime.TryParse(Console.ReadLine(), out DateTime time);
                                         //IDAL.DO.DalObject.DalObject.ParcelPickedUp(ID, time);
-                                        dal.ParcelPickedUp(ID);
+                                        dal.ParcelPickedUp(id);
                                         break;
                                     }
-                                case UpdateOptions.Recharge:
+                                case UpdateOptions.Recharge://charges a drone using dronecharge entity
                                     {
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
-                                        int droneId, stationId;
-                                        int.TryParse(Console.ReadLine(), out droneId);
-                                        int.TryParse(Console.ReadLine(), out stationId);
+                                        int droneId = int.Parse(Console.ReadLine());
+                                        int stationId = int.Parse(Console.ReadLine());
                                         dal.SendToCharge(droneId, stationId);
                                         dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
                                         dal.ChangeChargeSlots(stationId, -1);
@@ -198,47 +178,47 @@ namespace ConsoleUI
                             break;
 
                         }
-                    case MenuOptions.Show_List:
+                    case MenuOptions.Show_List://displays the lists
                         {
                             Console.WriteLine("what List do you want to print?\n 1-Stations\n, 2-Drones\n, 3-Customers\n, 4-Parcels\n, 5-UnAssignmentParcels\n, 6-AvailableChargingStations\n, 7-DroneCharge");
                             listOption = (ListOptions)int.Parse(Console.ReadLine());
                             switch (listOption)
                             {
-                                case ListOptions.Stations:
+                                case ListOptions.Stations://display stations list
                                     {
                                         List<Station> stationListTemp = dal.DisplayStationList();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
-                                case ListOptions.Parcels:
+                                case ListOptions.Parcels://display parcels list
                                     {
                                         List<Parcel> parcelListTemp = dal.GetParcelList();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
-                                case ListOptions.Drones:
+                                case ListOptions.Drones://display drones list
                                     {
                                         List<Drone> dronesListTemp = dal.GetDroneList();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
-                                case ListOptions.Customers:
+                                case ListOptions.Customers://display customers list
                                     {
                                         List<Customer> customerListTemp = dal.GetAllCustomers();
                                         customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
-                                case ListOptions.UnAssignmentParcels:
+                                case ListOptions.UnAssignmentParcels://display unassigned parcels
                                     {
                                         List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel();
                                         UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
-                                case ListOptions.AvailableChargingStations:
+                                case ListOptions.AvailableChargingStations://diplay stations with available charging slots
                                     dal.GetStationWithCharging().ForEach(p => Console.WriteLine(p));
                                     break;
 
-                                case ListOptions.DroneCharge:
+                                case ListOptions.DroneCharge://display drone charge list
                                     {
 
                                         List<DroneCharge> stationDroneChargeListTemp = dal.GetDroneChargeList();
@@ -253,7 +233,7 @@ namespace ConsoleUI
                             break;
                         }
 
-                    case MenuOptions.Show_One:
+                    case MenuOptions.Show_One://displays a single entity
                         {
                             Console.WriteLine("what do you want to print?\n 1-Station,\n 2-Drone,\n 3-Customer,\n 4-Parcel\n");
                             entityOption = (EntityOptions)int.Parse(Console.ReadLine());
@@ -297,17 +277,15 @@ namespace ConsoleUI
                         }
                     case MenuOptions.Show_Distance://to show distance between a point and a station/cusomer
                         {
-                            double latP, lonP;
                             Console.WriteLine("Enter lattitude for required point");
-                            double.TryParse(Console.ReadLine(), out latP);
+                            double.TryParse(Console.ReadLine(), out double latP);
                             Console.WriteLine("Enter longitude for required point");
-                            double.TryParse(Console.ReadLine(), out lonP);
+                            double.TryParse(Console.ReadLine(), out double lonP);
                             Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
                             int ID = int.Parse(Console.ReadLine());
-                            // Console.WriteLine("The distance is: " + IDAL.DO.DalObject.DalObject.Distance(ID,lonP, latP) + "KM");// calls the distance function to determine distance btween the points
-                            dynamic custOrStat = ID > 9999 ? dal.GetCustomer(string.Format($"{ID}")) : dal.GetStation(ID);
+                            dynamic custOrStat = ID > 9999 ? dal.GetCustomer(string.Format($"{ID}")) : dal.GetStation(ID);//determines whether  a station or customer was entered
                             // calls the distance function to determine distance btween the points    
-                            Console.WriteLine("The distance is: " + global::Bonus.Haversine(custOrStat.longitude, custOrStat.latitude, lonP, latP) + "KM");
+                            Console.WriteLine("The distance is: " + global::Bonus.Haversine(custOrStat.longitude, custOrStat.latitude, lonP, latP) + "KM");//calls haversine function from bonus library
 
                             break;
                         }

@@ -32,7 +32,7 @@ public static class Bonus
     }
 
     // computes half a versine of the angle
-    public static double Hav(double radian)
+    public static double Half(double radian)
     {
         return Math.Sin(radian / 2) * Math.Sin(radian / 2);
     }
@@ -50,7 +50,7 @@ public static class Bonus
 
         double radLon = Radians(lon2 - lon1);//converts differance btween the points to radians
         double radLat = Radians(lat2 - lat1);
-        double havd = Hav(radLat) + (Math.Cos(Radians(lat2)) * Math.Cos(Radians(lat1)) * Hav(radLon));//haversine formula determines the spherical distance between the two points using given versine
+        double havd = Half(radLat) + (Math.Cos(Radians(lat2)) * Math.Cos(Radians(lat1)) * Half(radLon));//haversine formula determines the spherical distance between the two points using given versine
         double distance = 2 * RADIUS * Math.Asin(havd);
         return distance;
     }
