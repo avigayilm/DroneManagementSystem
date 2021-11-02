@@ -54,7 +54,7 @@ namespace DAL
                 //customerList[i] = new Customer();
                 customerList.Add(new()
                 {
-                    ID = $"0{rand.Next(100000000, 999999999)}",
+                    id = $"0{rand.Next(100000000, 999999999)}",
                     name = customerNames[i],
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
                     //Lat-long coorditates for cities in Israel are in range: Latitude from 29.55805 to 33.20733 and longitude from 34.57149 to 35.57212.
@@ -72,8 +72,8 @@ namespace DAL
                 Parcel temp = new()
                 {
                     id = ++DataSource.Config.LastParcelNumber,
-                    senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
-                    targetid = customerList[rand.Next(customerList.Count)].ID,
+                    senderid = customerList[rand.Next(customerList.Count)].id,// gets a random number of one of the customers
+                    targetid = customerList[rand.Next(customerList.Count)].id,
                     weight = (WeightCategories)rand.Next(3),
                     priority = (Priorities)rand.Next(3),
                     requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
@@ -96,7 +96,8 @@ namespace DAL
                     }
                     if (temp.droneId == 0)
                     {
-                        int dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
+                        int dIndex = 0;
+                        dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
                                                           && d.maxWeight <= temp.weight
                                                           && d.battery >= 30);
                         var drone = dronesList[dIndex];
@@ -114,14 +115,14 @@ namespace DAL
         {
             for (int i = 0; i < 2; i++)
             {
-                stationList[i] = new Station
+                stationList.Add(new()
                 {
-                    ID = rand.Next(1000, 9999),
-                    Name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
-                    ChargeSlots = rand.Next(2, 10),
-                    Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
-                    Longitude = GetRandomNumber(34.57149, 35.57212)
-                };
+                    id = rand.Next(1000, 9999),
+                    name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
+                    chargeSlots = rand.Next(2, 10),
+                    latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
+                    longitude = GetRandomNumber(34.57149, 35.57212)
+                });
             }
         }
         public static double GetRandomNumber(double minimum, double maximum)// gets a random decimal number between the 2 numbers

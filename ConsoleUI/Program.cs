@@ -53,11 +53,11 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out slots);
                                         Station Victoria = new Station()
                                         {
-                                            ID = stationID,
-                                            Name = inputname,
-                                            ChargeSlots = slots,
-                                            Longitude = longitudeInput,
-                                            Latitude = latitudeInput,
+                                            id = stationID,
+                                            name = inputname,
+                                            chargeSlots = slots,
+                                            longitude = longitudeInput,
+                                            latitude = latitudeInput,
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddStation(Victoria);
                                         dal.AddStation(Victoria);
@@ -75,7 +75,7 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new()
                                         {
-                                            ID = inputId,
+                                            id = inputId,
                                             name = inputname,
                                             phone = inputphone,
                                             longitude = longitudeInput,
@@ -186,7 +186,7 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
                                         dal.SendToCharge(droneId, stationId);
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.maintenance);
+                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
                                         dal.ChangeChargeSlots(stationId, -1);
                                         break;
                                     }
