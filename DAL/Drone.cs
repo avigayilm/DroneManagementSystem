@@ -5,19 +5,19 @@ namespace IDAL
     {
         public struct Drone
         {
-            public int ID { get; set; }
-            public string Model { get; set; }
-            public WeightCategories MaxWeight { get; set; }
-            public DroneStatuses Status { get; set; }
-            public double Battery { get; set;    }
+            public int id{ get; set; }
+            public string model { get; set; }
+            public WeightCategories maxWeight { get; set; }
+            public DroneStatuses status { get; set; }
+            public double battery { get; set;    }
 
             public override string ToString()
             {
                 String result = " ";
-                result += $"ID is {ID}, \n";
-                result += $"Model is {Model}, \n";
-                result += $"Maxweight{MaxWeight}";
-                result += $"Battery is {Battery}%, \n";// how many percent it is charged
+                result += $"ID is {id}, \n";
+                result += $"Model is {model}, \n";
+                result += $"Maxweight{maxWeight}";
+                result += $"Battery is {battery}%, \n";// how many percent it is charged
                 return result;
             }
 

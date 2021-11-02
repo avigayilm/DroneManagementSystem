@@ -124,12 +124,12 @@ namespace ConsoleUI
                                         DateTime.TryParse(Console.ReadLine(), out sched);
                                         Parcel newParcel = new Parcel()
                                         {
-                                            Senderid = inputSenderId,
-                                            Targetid = inputTargetId,
+                                            senderid = inputSenderId,
+                                            targetid = inputTargetId,
                                             Weight = maxim,
                                             Priority = prio,
                                             requested = req,
-                                            Scheduled = sched
+                                            scheduled = sched
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddParcel(newParcel);
                                         obj.AddParcel(newParcel);

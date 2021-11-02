@@ -43,19 +43,19 @@ namespace IDAL
                 public void ParcelDrone(int ParcelId,int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
                 {
 
-                    DataSource.parcelList.ForEach(p => { if (p.ID == ParcelId) { p.DroneId = droneId; } p.requested = DateTime.Now; } );// looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
+                    DataSource.parcelList.ForEach(p => { if (p.ID == ParcelId) { p.droneId = droneId; } p.requested = DateTime.Now; } );// looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
                 }
                 
                 
                 public void ParcelPickedUp(int parcelId, DateTime day)
                 {
   
-                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.DroneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.PickedUp = DateTime.Now; } });// checking if the drone is still available and then change the status of the drone to delivery
+                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) { DataSource.dronesList.ForEach(d => { if (d.ID == p.droneId && d.Status == DroneStatuses.available) d.Status = DroneStatuses.delivery; }); p.pickedUp = DateTime.Now; } });// checking if the drone is still available and then change the status of the drone to delivery
                 }
 
                 public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
                 {
-                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) {ChangeStatus(p.DroneId,DroneStatuses.available); p.requested = DateTime.Now; } });
+                    DataSource.parcelList.ForEach(p => { if (p.ID == parcelId) {ChangeStatus(p.droneId,DroneStatuses.available); p.requested = DateTime.Now; } });
                 }
                 
                 // function that changes the status of the drone according to the given parameter.
@@ -152,7 +152,7 @@ namespace IDAL
                 {
                    
                     List<Parcel> temp = new List<Parcel>();
-                    DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) { temp.Add(p); } });
+                    DataSource.parcelList.ForEach(p => { if (p.droneId == 0) { temp.Add(p); } });
                     return temp;
                 }
 

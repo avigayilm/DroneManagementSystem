@@ -35,11 +35,11 @@ namespace IDAL
                     {
                         Drone temp= new Drone()
                         {
-                            ID = rand.Next(1000,9999),
-                            Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
-                            MaxWeight = (WeightCategories)rand.Next(3),
-                            Status = DroneStatuses.available,
-                            Battery = 100.0
+                            id = rand.Next(1000,9999),
+                            model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
+                            maxWeight = (WeightCategories)rand.Next(3),
+                            status = DroneStatuses.available,
+                            battery = 100.0
                         };
                         dronesList[i] = temp;
                        // Config.droneIndex++;
@@ -71,8 +71,8 @@ namespace IDAL
                         parcelList[i] = new Parcel()
                         {
                             ID = ++DataSource.PackageCounter,
-                            Senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
-                            Targetid = customerList[rand.Next(customerList.Count)].ID,
+                            senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
+                            targetid = customerList[rand.Next(customerList.Count)].ID,
                             Weight = (WeightCategories)rand.Next(3),
                             Priority = (Priorities)rand.Next(3),
                             requested = temp.AddDays(Math.Pow(i, 2))//random date
