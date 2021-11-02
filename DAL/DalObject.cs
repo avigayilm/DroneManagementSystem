@@ -51,11 +51,13 @@ namespace DAL
         {
             // looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
-            
-            var temp = DataSource.parcelList[parcelIndex];
-            temp.droneId = droneId;
-            temp.requested = DateTime.Now;
-            DataSource.parcelList[parcelIndex] = temp;
+            if (parcelIndex >= 0)
+            {
+                var temp = DataSource.parcelList[parcelIndex];
+                temp.droneId = droneId;
+                temp.requested = DateTime.Now;
+                DataSource.parcelList[parcelIndex] = temp;
+            }
         }
 
         /// <summary>
@@ -66,13 +68,19 @@ namespace DAL
         public void ParcelPickedUp(int parcelId)
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-            var temp2 = DataSource.dronesList[droneIndex];
-            var temp = DataSource.parcelList[parcelIndex];
-            temp2.status = DroneStatuses.Delivery;
-            temp.pickedUp = DateTime.Now;
-            DataSource.dronesList[droneIndex] = temp2;
-            DataSource.parcelList[parcelIndex] = temp;
+            if (parcelIndex >= 0)// check if it's a valid indez
+            {
+                int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
+                if (droneIndex >= 0)
+                {
+                    var temp2 = DataSource.dronesList[droneIndex];
+                    temp2.status = DroneStatuses.Delivery;
+                    var temp = DataSource.parcelList[parcelIndex];
+                    temp.pickedUp = DateTime.Now;
+                    DataSource.dronesList[droneIndex] = temp2;
+                    DataSource.parcelList[parcelIndex] = temp;
+                }
+            }
         }
 
         /// <summary>
@@ -84,13 +92,19 @@ namespace DAL
         public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);// finding the index of the parcel
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-            var temp2 = DataSource.dronesList[droneIndex];
-            var temp = DataSource.parcelList[parcelIndex];
-            temp2.status = DroneStatuses.Available;
-            temp.requested = DateTime.Now;
-            DataSource.dronesList[droneIndex] = temp2;
-            DataSource.parcelList[parcelIndex] = temp;
+            if (parcelIndex >= 0)
+            {
+                int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
+                if (droneIndex >= 0)
+                {
+                    var temp2 = DataSource.dronesList[droneIndex];
+                    var temp = DataSource.parcelList[parcelIndex];
+                    temp2.status = DroneStatuses.Available;
+                    temp.requested = DateTime.Now;
+                    DataSource.dronesList[droneIndex] = temp2;
+                    DataSource.parcelList[parcelIndex] = temp;
+                }
+            }
         }
 
         /// <summary>
@@ -101,9 +115,12 @@ namespace DAL
         public void ChangeDroneStatus(int DroneId, DroneStatuses st)
         {
             int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
-            var temp = DataSource.dronesList[droneIndex];
-            temp.status = st;
-            DataSource.dronesList[droneIndex] = temp;
+            if (droneIndex >= 0)
+            {
+                var temp = DataSource.dronesList[droneIndex];
+                temp.status = st;
+                DataSource.dronesList[droneIndex] = temp;
+            }
         }
 
         /// <summary>
@@ -114,9 +131,12 @@ namespace DAL
         public void ChangeChargeSlots(int stationId, int n)
         {
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
-            var temp = DataSource.stationList[stationIndex];
-            temp.chargeSlots += n;
-            DataSource.stationList[stationIndex] = temp;
+            if (stationIndex >= 0)
+            {
+                var temp = DataSource.stationList[stationIndex];
+                temp.chargeSlots += n;
+                DataSource.stationList[stationIndex] = temp;
+            }
         }
 
         /// <summary>
@@ -138,11 +158,14 @@ namespace DAL
         /// <param name="Buzzer"></param>
         public void BatteryCharged(int droneId, int stationId)
         {
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == droneId);// find the index of the dronecharge according to teh droneIndex
-            DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
-            var temp = DataSource.dronesList[droneIndex];
-            temp.battery = 100.00;// battery is full
-            DataSource.dronesList[droneIndex] = temp;
+            int droneIndex = DataSource.chargeList.FindIndex(d => d.droneId == droneId);// find the index of the dronecharge according to teh droneIndex
+            if (droneIndex >= 0)
+            {
+                DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
+                var temp = DataSource.dronesList[droneIndex];
+                temp.battery = 100.00;// battery is full
+                DataSource.dronesList[droneIndex] = temp;
+            }
 
         }
 
@@ -160,14 +183,12 @@ namespace DAL
 
         public Customer GetCustomer(string ID)
         {
-            return DataSource.customerList.Find(c => c.id == ID); ;
+            return DataSource.customerList.Find(c => c.id == ID);
         }
 
-        public string GetDrone(int ID)
+        public Drone GetDrone(int ID)
         {
-            int i;
-            for (i = 0; i < DataSource.dronesList.Count && DataSource.dronesList[i].id != ID; i++) ;
-            return DataSource.dronesList[i].ToString();
+            return DataSource.dronesList.Find(d => d.id == ID);
         }
 
         public Station GetStation(int ID)

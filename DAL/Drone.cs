@@ -16,7 +16,7 @@ namespace IDAL
                 String result = " ";
                 result += $"ID is {id}, \n";
                 result += $"Model is {model}, \n";
-                result += $"Maxweight{maxWeight}";
+                result += $"Maxweight is {maxWeight}\n";
                 result += $"Battery is {battery}%, \n";// how many percent it is charged
                 return result;
             }

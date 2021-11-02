@@ -76,7 +76,6 @@ namespace ConsoleUI
 
 
                                         };
-                                        //IDAL.DO.DalObject.DalObject.AddCustomer(newCustomer);
                                         dal.AddCustomer(newCustomer);
                                         break;
                                     }
@@ -130,7 +129,7 @@ namespace ConsoleUI
                         }
                     case MenuOptions.Update://update existing entities
                         {
-                            Console.WriteLine("what do you want to update?\n  1-Assignment,\n 2-Pickedup\n 3-Delivery,\n 4-Recharge\n ");
+                            Console.WriteLine("what do you want to update?\n  1-Assignment,\n 2-Pickedup\n 3-Delivery,\n 4-Recharge\n 5-ReleasefromCharge\n ");
                             updateOption = (UpdateOptions)int.Parse(Console.ReadLine());
                             switch (updateOption)
                             {
@@ -162,7 +161,7 @@ namespace ConsoleUI
                                     }
                                 case UpdateOptions.Recharge://charges a drone using dronecharge entity
                                     {
-                                        Console.WriteLine("Enter the parcelid and the Datetime\n");
+                                        Console.WriteLine("Enter the droneId and the stationId\n");
                                         int droneId = int.Parse(Console.ReadLine());
                                         int stationId = int.Parse(Console.ReadLine());
                                         dal.SendToCharge(droneId, stationId);

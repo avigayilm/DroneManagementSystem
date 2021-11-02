@@ -96,15 +96,17 @@ namespace DAL
                         }
                     }
                     if (temp.droneId == 0)
-                    {
-                        int dIndex = 0;
-                        dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
+                    { 
+                        int dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
                                                           && d.maxWeight <= temp.weight
                                                           && d.battery >= 30);
-                        var drone = dronesList[dIndex];
-                        temp.droneId = drone.id;
-                        drone.status = DroneStatuses.Delivery;
-                        dronesList[dIndex] = drone;
+                        if (dIndex >= 0)
+                        {
+                            var drone = dronesList[dIndex];
+                            temp.droneId = drone.id;
+                            drone.status = DroneStatuses.Delivery;
+                            dronesList[dIndex] = drone;
+                        }
                     }
                 }
 
