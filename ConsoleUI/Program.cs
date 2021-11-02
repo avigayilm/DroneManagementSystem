@@ -155,7 +155,6 @@ namespace ConsoleUI
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
                                         int id = int.Parse(Console.ReadLine());
                                         DateTime.TryParse(Console.ReadLine(), out DateTime time);
-                                        //IDAL.DO.DalObject.DalObject.ParcelPickedUp(ID, time);
                                         dal.ParcelPickedUp(id);
                                         break;
                                     }
