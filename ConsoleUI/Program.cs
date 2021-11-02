@@ -100,11 +100,11 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out batt);
                                         Drone newDrone = new Drone()
                                         {
-                                            ID = droneID,
-                                            Model = inputmodel,
-                                            MaxWeight = maxim,
-                                            Status = stat,
-                                            Battery = batt
+                                            id = droneID,
+                                            model = inputmodel,
+                                            maxWeight = maxim,
+                                            status = stat,
+                                            battery = batt
                                         };
                                         //IDAL.DO.DalObject.DalObject.AddDrone(newDrone);
                                         dal.AddDrone(newDrone);
@@ -185,7 +185,6 @@ namespace ConsoleUI
                                         int droneId, stationId;
                                         int.TryParse(Console.ReadLine(), out droneId);
                                         int.TryParse(Console.ReadLine(), out stationId);
-                                        //IDAL.DO.DalObject.DalObject.SendToCharge(droneId, stationId);
                                         dal.SendToCharge(droneId, stationId);
                                         break;
                                     }
@@ -205,47 +204,42 @@ namespace ConsoleUI
                             {
                                 case ListOptions.Stations:
                                     {
-                                        // List<Station> stationListTemp = IDAL.DO.DalObject.DalObject.DisplayStationList();
                                         List<Station> stationListTemp = dal.DisplayStationList();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Parcels:
                                     {
-                                        //List<Parcel> parcelListTemp = IDAL.DO.DalObject.DalObject.DisplayParcelList();
-                                        List<Parcel> parcelListTemp = dal.DisplayParcelList();
+                                        List<Parcel> parcelListTemp = dal.GetParcelList();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Drones:
                                     {
-                                        // List<Drone> dronesListTemp= IDAL.DO.DalObject.DalObject.DisplayDroneList();
-                                        List<Drone> dronesListTemp = dal.DisplayDroneList();
+                                        List<Drone> dronesListTemp = dal.GetDroneList();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Customers:
                                     {
-                                        //List<Customer> customerListTemp = IDAL.DO.DalObject.DalObject.DisplayCustomerList();
                                         List<Customer> customerListTemp = dal.GetAllCustomers();
                                         customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels:
                                     {
-                                        // List<Parcel> UnAssignmentListTemp = IDAL.DO.DalObject.DalObject.DisplayvacantParcel();
-                                        List<Parcel> UnAssignmentListTemp = dal.DisplayvacantParcel();
+                                        List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel();
                                         UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations:
-                                    dal.DisplayStationWithCharging().ForEach(p => Console.WriteLine(p));
+                                    dal.GetStationWithCharging().ForEach(p => Console.WriteLine(p));
                                     break;
 
                                 case ListOptions.DroneCharge:
                                     {
-                                        //List<DroneCharge> stationDroneChargeListTemp = IDAL.DO.DalObject.DalObject.DisplayDroneChargeList();
-                                        List<DroneCharge> stationDroneChargeListTemp = dal.DisplayDroneChargeList();
+
+                                        List<DroneCharge> stationDroneChargeListTemp = dal.GetDroneChargeList();
                                         stationDroneChargeListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
@@ -273,28 +267,22 @@ namespace ConsoleUI
                                 case EntityOptions.Parcel:
                                     {
                                         Console.WriteLine("Enter the ID of the parcel you want to print\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayParcel(ID));
-                                        Console.WriteLine(dal.GetParcel(ID));
+                                        int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine(dal.GetParcel(id));
                                         break;
                                     }
                                 case EntityOptions.Drone:
                                     {
                                         Console.WriteLine("Enter the ID of the drone you want to print\n");
-                                        int ID;
-                                        int.TryParse(Console.ReadLine(), out ID);
-                                        //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayDrone(ID));
-                                        Console.WriteLine(dal.GetDrone(ID));
-
+                                        int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine(dal.GetDrone(id));
                                         break;
                                     }
                                 case EntityOptions.Customer:
                                     {
                                         Console.WriteLine("Enter the ID of the Customer you want to print\n");
-                                        string ID = Console.ReadLine();
-                                        //Console.WriteLine(IDAL.DO.DalObject.DalObject.DisplayCustomer(ID));
-                                        Console.WriteLine(dal.GetCustomer(ID));
+                                        string id = Console.ReadLine();
+                                        Console.WriteLine(dal.GetCustomer(id)); 
                                         break;
                                     }
                                 case EntityOptions.Exit:

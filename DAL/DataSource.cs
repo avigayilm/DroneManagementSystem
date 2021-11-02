@@ -16,7 +16,7 @@ namespace DAL
 
         internal static List<Drone> dronesList = new();
         internal static List<Station> stationList = new();
-        internal static List<Customer> CustomerList = new();
+        internal static List<Customer> customerList = new();
         internal static List<Parcel> parcelList = new();
         internal static List<DroneCharge> chargeList = new();       
         internal static Random rand = new Random();
@@ -52,7 +52,7 @@ namespace DAL
             for (int i = 0; i < 10; i++)
             {
                 //customerList[i] = new Customer();
-                CustomerList.Add(new()
+                customerList.Add(new()
                 {
                     ID = $"0{rand.Next(100000000, 999999999)}",
                     name = customerNames[i],
@@ -72,8 +72,8 @@ namespace DAL
                 Parcel temp = new()
                 {
                     id = ++DataSource.Config.LastParcelNumber,
-                    senderid = CustomerList[rand.Next(CustomerList.Count)].ID,// gets a random number of one of the customers
-                    targetid = CustomerList[rand.Next(CustomerList.Count)].ID,
+                    senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
+                    targetid = customerList[rand.Next(customerList.Count)].ID,
                     weight = (WeightCategories)rand.Next(3),
                     priority = (Priorities)rand.Next(3),
                     requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),

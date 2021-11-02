@@ -32,9 +32,9 @@ namespace DAL
             DataSource.dronesList.Add(dro);
         }
 
-        public void AddCustocusr(Customer cus)
+        public void AddCustomer(Customer cus)
         {
-            DataSource.CustomerList.Add(cus);
+            DataSource.customerList.Add(cus);
         }
 
         public void AddParcel(Parcel pack)
@@ -112,16 +112,15 @@ namespace DAL
 
         // The display functions return a string with all the information of the lists
         //all teh displays sho9uld realy just return the mofa itself like in customer
-        public string GetParcel(int ID)
+        public Parcel GetParcel(int ID)
         {
-            int i;
-            for (i = 0; i < DataSource.parcelList.Count && DataSource.parcelList[i].id != ID; i++) ;
-            return DataSource.parcelList[i].ToString();
+            return DataSource.parcelList.Find(p => p.id == ID);
         }
+    
 
         public Customer GetCustomer(string ID)
         {
-            return DataSource.CustomerList.Find(c => c.ID == ID); ;
+            return DataSource.customerList.Find(c => c.ID == ID); ;
         }
 
         public string GetDrone(int ID)
@@ -148,27 +147,33 @@ namespace DAL
         public List<Customer> GetAllCustomers()
         {
             List<Customer> list = new();
-            DataSource.CustomerList.ForEach(c => list.Add(c));
+            DataSource.customerList.ForEach(c => list.Add(c));
             return list;
         }
 
-        public List<Drone> DisplayDroneList()
+        public List<Drone> GetDroneList()
         {
-            return DataSource.dronesList;
+            List<Drone> list = new();
+            DataSource.dronesList.ForEach(d => list.Add(d));
+            return list;
         }
 
-        public List<Parcel> DisplayParcelList()
+        public List<Parcel> GetParcelList()
         {
-            return DataSource.parcelList;
+            List<Parcel> list = new();
+            DataSource.parcelList.ForEach(p => list.Add(p));
+            return list;
         }
 
-        public List<DroneCharge> DisplayDroneChargeList()// Display all the parcels in the array
+        public List<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
-            return DataSource.chargeList;
+            List<DroneCharge> list = new();
+            DataSource.chargeList.ForEach(dc => list.Add(dc));
+            return list;
         }
 
         // returns a list with parcels that have not been assigned to a drone
-        public List<Parcel> DisplayvacantParcel()
+        public List<Parcel> GetvacantParcel()
         {
             List<Parcel> temp = new();
             DataSource.parcelList.ForEach(p => { if (p.droneId == 0) temp.Add(p);  });
@@ -176,7 +181,7 @@ namespace DAL
         }
 
         // returns the list with the stations that have availble charging
-        public List<Station> DisplayStationWithCharging()
+        public List<Station> GetStationWithCharging()
         {
             List<Station> temp = new();
             DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
