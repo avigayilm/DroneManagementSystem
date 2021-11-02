@@ -75,7 +75,7 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new()
                                         {
-                                            ID = inputId,
+                                            id = inputId,
                                             name = inputname,
                                             phone = inputphone,
                                             longitude = longitudeInput,
@@ -106,7 +106,7 @@ namespace ConsoleUI
                                             status = stat,
                                             battery = batt
                                         };
-                                        //IDAL.DO.DalObject.DalObject.AddDrone(newDrone);
+
                                         dal.AddDrone(newDrone);
                                         break;
                                     }

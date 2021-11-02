@@ -32,7 +32,6 @@ namespace DAL
         {   //loop for updete 5 drone
             for (int i = 0; i < 5; i++)
             {
-                //dronesList[i] = new Drone();
                 dronesList.Add(new Drone()
                 {
                     id = rand.Next(1000, 9999),
@@ -54,7 +53,7 @@ namespace DAL
                 //customerList[i] = new Customer();
                 customerList.Add(new()
                 {
-                    ID = $"0{rand.Next(100000000, 999999999)}",
+                    id = $"0{rand.Next(100000000, 999999999)}",
                     name = customerNames[i],
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
                     //Lat-long coorditates for cities in Israel are in range: Latitude from 29.55805 to 33.20733 and longitude from 34.57149 to 35.57212.
@@ -72,8 +71,8 @@ namespace DAL
                 Parcel temp = new()
                 {
                     id = ++DataSource.Config.LastParcelNumber,
-                    senderid = customerList[rand.Next(customerList.Count)].ID,// gets a random number of one of the customers
-                    targetid = customerList[rand.Next(customerList.Count)].ID,
+                    senderid = customerList[rand.Next(customerList.Count)].id,// gets a random number of one of the customers
+                    targetid = customerList[rand.Next(customerList.Count)].id,
                     weight = (WeightCategories)rand.Next(3),
                     priority = (Priorities)rand.Next(3),
                     requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
