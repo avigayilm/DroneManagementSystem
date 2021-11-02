@@ -10,7 +10,7 @@ namespace IDAL
     {
         public enum DroneStatuses
         {
-            Available, maintenance, Delivery
+            Available, Maintenance, Delivery
         }
 
         public enum WeightCategories

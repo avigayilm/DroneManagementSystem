@@ -100,7 +100,7 @@ namespace DAL
 
         public void ChangeChargeSlots(int stationId, int n)
         {
-            int stationIndex = DataSource.stationList.FindIndex(s => s.ID == stationId);
+            int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
             var temp = DataSource.stationList[stationIndex];
             temp.ChargeSlots += n;
             DataSource.stationList[stationIndex] = temp;
@@ -136,7 +136,7 @@ namespace DAL
 
         public Customer GetCustomer(string ID)
         {
-            return DataSource.customerList.Find(c => c.ID == ID); ;
+            return DataSource.customerList.Find(c => c.id == ID); ;
         }
 
         public string GetDrone(int ID)
@@ -148,7 +148,7 @@ namespace DAL
 
         public Station GetStation(int ID)
         {
-            return DataSource.stationList.Find(s => s.ID == ID);
+            return DataSource.stationList.Find(s => s.id == ID);
         }
 
         // The Display list funcitons return the whole list
@@ -200,7 +200,7 @@ namespace DAL
         public List<Station> GetStationWithCharging()
         {
             List<Station> temp = new();
-            DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
+            DataSource.stationList.ForEach(p => { if (p.chargeSlots > 0) { temp.Add(p); } });
             return temp;
         }
 
