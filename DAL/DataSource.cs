@@ -34,7 +34,7 @@ namespace DAL
         {   //loop for updete 5 drone
             for (int i = 0; i < 5; i++)
             {
-                dronesList.Add(new Drone()
+                dronesList.Add(new()
                 {
                     id = rand.Next(1000, 9999),
                     model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
