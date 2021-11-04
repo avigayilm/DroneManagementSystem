@@ -13,6 +13,15 @@ namespace DAL
         internal class Config
         {
             internal static int LastParcelNumber = 1000;
+            /// <summary>
+            /// battery usage per km of flying- battery life is 20 hours of flying empty and takes 3+ hours to charge
+            /// </summary>
+            internal static double pwrUsgEmpty = 5;
+            internal static double pwrUsgLight= 15;
+            internal static double pwrUsgMedium = 25;
+            internal static double pwrUsgHeavy = 35;
+            internal static double chargePH = 30;
+
         }
 
         internal static List<Drone> dronesList = new();
@@ -39,8 +48,8 @@ namespace DAL
                     id = rand.Next(1000, 9999),
                     model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
                     maxWeight = (WeightCategories)rand.Next(3),
-                    status = DroneStatuses.Available,
-                    battery = GetRandomNumber(20, 100)
+                    //status = DroneStatuses.Available,
+                    //battery = GetRandomNumber(20, 100)
                 });
                 // Config.droneIndex++;
             }

@@ -1,9 +1,13 @@
-﻿using System;
+﻿//avigayil Mandel 959033
+//Yehudis Flax 323946996
+//we did both bonuses
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+using IDAL;
 
 namespace ConsoleUI
 {
@@ -18,7 +22,9 @@ namespace ConsoleUI
         //menu function wil go thorough all options for user
         private static void ShowMenu()
         {
+
             DAL.DalObject dal = new();
+            IDal idal1 = new DAL.DalObject();
 
             EntityOptions entityOption;
             MenuOptions menuOption;
@@ -117,7 +123,8 @@ namespace ConsoleUI
                                             weight = maxim,
                                             priority = prio,
                                             requested = req,
-                                            scheduled = sched
+                                            scheduled = sched,
+                                            delivered = DateTime.MinValue;
                                         };
                                         dal.AddParcel(newParcel); 
                                         break;
@@ -196,7 +203,7 @@ namespace ConsoleUI
                             {
                                 case ListOptions.Stations://display stations list
                                     {
-                                        List<Station> stationListTemp = dal.DisplayStationList();
+                                        List<Station> stationListTemp = dal.GetAllStations();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
@@ -208,7 +215,7 @@ namespace ConsoleUI
                                     }
                                 case ListOptions.Drones://display drones list
                                     {
-                                        List<Drone> dronesListTemp = dal.GetDroneList();
+                                        List<Drone> dronesListTemp = dal.GetAllDrones();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
-
+using IDAL;
 
 namespace DAL
 {
     /// <summary>
     /// 
     /// </summary>
-    public class DalObject
+    public class DalObject:IDal
     {
         /// <summary>
         /// 
@@ -198,7 +198,7 @@ namespace DAL
         /// The Display list funcitons return the whole list
         /// </summary>
         /// <returns></returns>
-        public List<Station> DisplayStationList()
+        public IEnumerable<Station> GetAllStations()
         {
             List<Station> list = new();
             DataSource.stationList.ForEach(s => list.Add(s));
@@ -206,28 +206,28 @@ namespace DAL
         }
 
 
-        public List<Customer> GetAllCustomers()
+        public IEnumerable<Customer> GetAllCustomers()
         {
             List<Customer> list = new();
             DataSource.customerList.ForEach(c => list.Add(c));
             return list;
         }
 
-        public List<Drone> GetDroneList()
+        public IEnumerable<Drone> GetAllDrones()
         {
             List<Drone> list = new();
             DataSource.dronesList.ForEach(d => list.Add(d));
             return list;
         }
 
-        public List<Parcel> GetParcelList()
+        public IEnumerable<Parcel> GetParcelList()
         {
             List<Parcel> list = new();
             DataSource.parcelList.ForEach(p => list.Add(p));
             return list;
         }
 
-        public List<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
+        public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
             List<DroneCharge> list = new();
             DataSource.chargeList.ForEach(dc => list.Add(dc));
@@ -235,7 +235,7 @@ namespace DAL
         }
 
         // returns a list with parcels that have not been assigned to a drone
-        public List<Parcel> GetvacantParcel()
+        public IEnumerable<Parcel> GetvacantParcel()
         {
             List<Parcel> temp = new();
             DataSource.parcelList.ForEach(p => { if (p.droneId == 0) temp.Add(p);  });
@@ -243,12 +243,38 @@ namespace DAL
         }
 
         // returns the list with the stations that have availble charging
-        public List<Station> GetStationWithCharging()
+        public IEnumerable<Station> GetStationWithCharging()
         {
             List<Station> temp = new();
             DataSource.stationList.ForEach(p => { if (p.chargeSlots > 0) { temp.Add(p); } });
             return temp;
         }
+
+        public double[] DronePwrUsg()
+        {
+            double[] pwrUsg = { DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH};
+            return pwrUsg;
+        }
+        /// <summary>
+        /// returns a new list with the undelivered parcels
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Parcel>UndeliveredParcels()
+        {
+            List<Parcel> undelivered = new();
+            DataSource.parcelList.ForEach(p => { if (p.delivered == DateTime.MinValue) undelivered.Add(p); });// if he parcel is not delivered add it to the list
+            return undelivered;
+
+        }
+
+        public Station smallestDistance(string cusId)
+        {
+            Customer temp = GetCustomer(cusId);
+            double minDistance = double.PositiveInfinity;
+            DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
+            
+        }
+
 
     }
 }
