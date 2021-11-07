@@ -122,7 +122,7 @@ namespace ConsoleUI
                                             targetid = inputTargetId,
                                             weight = maxim,
                                             priority = prio,
-                                            requested = req //does this have to be filled in 
+                                            requested = req, //does this have to be filled in 
                                             scheduled = sched,
                                             delivered = DateTime.MinValue,
                                             //requested = DateTime.MinValue,

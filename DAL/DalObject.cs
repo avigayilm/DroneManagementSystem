@@ -24,23 +24,58 @@ namespace DAL
         /// <param name="stat"></param>
         public void AddStation(Station stat)
         {
-            DataSource.stationList.Add(stat);
+            int index = DataSource.parcelList.FindIndex(s => s.id == stat.id);
+            if (index != -1)
+            {
+                throw new ParcelException("Id exists already\n");
+            }
+            else
+            {
+                DataSource.stationList.Add(stat);
+            } 
         }
 
         public void AddDrone(Drone dro)// check if the drone lready exists
         {
-            DataSource.dronesList.Add(dro);
+            int index = DataSource.parcelList.FindIndex(d => d.id == dro.id);
+            if (index != -1)
+            {
+                throw new DroneException("Id exists already\n");
+            }
+            else
+            {
+                DataSource.dronesList.Add(dro);
+            }
         }
 
         public void AddCustomer(Customer cus)
         {
-            DataSource.customerList.Add(cus);
+            int index = DataSource.customerList.FindIndex(c => c.id == cus.id);
+            if (index != -1)
+            {
+                throw new CustomerException("Id exists already\n");
+            }
+            else
+            {
+                DataSource.customerList.Add(cus);
+            }
         }
 
         public void AddParcel(Parcel pack)
         {
-            pack.id = ++DataSource.Config.LastParcelNumber;
-            DataSource.parcelList.Add(pack);
+            int index = DataSource.parcelList.FindIndex(p => p.id == pack.id);
+            if (index != -1)
+            {
+                throw new ParcelException("Id exists already\n");
+            }
+            else
+            {
+                DataSource.parcelList.Add(pack);
+                pack.id = ++DataSource.Config.LastParcelNumber;
+            }
+
+            
+            
         }
         /// <summary>
         /// assigning a drone to a parcel
