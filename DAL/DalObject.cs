@@ -103,18 +103,20 @@ namespace DAL
         public void ParcelPickedUp(int parcelId)
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
-            if (parcelIndex >= 0)// check if it's a valid indez
+            if(parcelIndex == -1)
+            {
+                throw new ParcelException("Id not found\n");
+            }
+            else// check if it's a valid index
             {
                 int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-                if (droneIndex >= 0)
-                {
-                    var temp2 = DataSource.dronesList[droneIndex];
-                    temp2.status = DroneStatuses.Delivery;
-                    var temp = DataSource.parcelList[parcelIndex];
-                    temp.pickedUp = DateTime.Now;
-                    DataSource.dronesList[droneIndex] = temp2;
-                    DataSource.parcelList[parcelIndex] = temp;
-                }
+                var temp2 = DataSource.dronesList[droneIndex];
+                temp2.status = DroneStatuses.Delivery;
+                var temp = DataSource.parcelList[parcelIndex];
+                temp.pickedUp = DateTime.Now;
+                DataSource.dronesList[droneIndex] = temp2;
+                DataSource.parcelList[parcelIndex] = temp;
+                
             }
         }
 
@@ -127,18 +129,19 @@ namespace DAL
         public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);// finding the index of the parcel
-            if (parcelIndex >= 0)
+            if (parcelIndex == -1)
+            {
+                throw new ParcelException("Id not found\n");
+            }
+            else
             {
                 int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-                if (droneIndex >= 0)
-                {
-                    var temp2 = DataSource.dronesList[droneIndex];
-                    var temp = DataSource.parcelList[parcelIndex];
-                    temp2.status = DroneStatuses.Available;
-                    temp.requested = DateTime.Now;
-                    DataSource.dronesList[droneIndex] = temp2;
-                    DataSource.parcelList[parcelIndex] = temp;
-                }
+                var temp2 = DataSource.dronesList[droneIndex];
+                var temp = DataSource.parcelList[parcelIndex];
+                temp2.status = DroneStatuses.Available;
+                temp.requested = DateTime.Now;
+                DataSource.dronesList[droneIndex] = temp2;
+                DataSource.parcelList[parcelIndex] = temp;
             }
         }
 
@@ -150,7 +153,9 @@ namespace DAL
         public void ChangeDroneStatus(int DroneId, DroneStatuses st)
         {
             int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
-            if (droneIndex >= 0)
+            if (droneIndex ==-1)
+                throw new DroneException("Id not found\n");
+            else
             {
                 var temp = DataSource.dronesList[droneIndex];
                 temp.status = st;
@@ -166,7 +171,9 @@ namespace DAL
         public void ChangeChargeSlots(int stationId, int n)
         {
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
-            if (stationIndex >= 0)
+            if (stationIndex == -1)
+                throw new StationException("Id not found\n");
+            else
             {
                 var temp = DataSource.stationList[stationIndex];
                 temp.chargeSlots += n;
@@ -181,11 +188,21 @@ namespace DAL
         /// <param name="StationId"></param>
         public void SendToCharge(int droneId, int stationId)
         {
-            //// making a new Dronecharge
-            DroneCharge DC = new DroneCharge();
-            DC.droneId = droneId;
-            DC.stationId = stationId;
-            DataSource.chargeList.Add(DC);
+            int droneIndex= DataSource.dronesList.FindIndex(d => d.id == droneId);
+            int stationIndex= DataSource.stationList.FindIndex(s => s.id == stationId);
+            if (stationIndex == -1)
+                throw new StationException("id is not found \n");
+            if(droneIndex==-1)
+                throw new DroneException("id is not found \n");
+            else
+            {
+                //// making a new Dronecharge
+                DroneCharge DC = new DroneCharge();
+                DC.droneId = droneId;
+                DC.stationId = stationId;
+                DataSource.chargeList.Add(DC);
+            }
+           
         }
         /// <summary>
         /// Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
@@ -194,7 +211,9 @@ namespace DAL
         public void BatteryCharged(int droneId, int stationId)
         {
             int droneIndex = DataSource.chargeList.FindIndex(d => d.droneId == droneId);// find the index of the dronecharge according to teh droneIndex
-            if (droneIndex >= 0)
+            if (droneIndex == -1)
+                throw new DroneException("id is not found \n");
+            else
             {
                 DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
                 var temp = DataSource.dronesList[droneIndex];
