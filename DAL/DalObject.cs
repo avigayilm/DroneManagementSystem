@@ -176,23 +176,60 @@ namespace DAL
         /// <returns></returns>
         public Parcel GetParcel(int ID)
         {
-            return DataSource.parcelList.Find(p => p.id == ID);
+            int index= DataSource.parcelList.FindIndex(p => p.id == ID);
+            if(index==-1)
+            {
+                throw new ParcelException("Id not found\n");
+            }
+            else
+            {
+                return DataSource.parcelList[index];
+            }
         }
     
 
         public Customer GetCustomer(string ID)
         {
-            return DataSource.customerList.Find(c => c.id == ID);
+            int index = DataSource.customerList.FindIndex(c => c.id == ID);
+            if (index == -1)
+            {
+                throw new CustomerException("Id not found\n");
+            }
+            else
+            {
+                return DataSource.customerList[index];
+            }
+            //return DataSource.customerList.Find(c => c.id == ID);
         }
 
         public Drone GetDrone(int ID)
         {
-            return DataSource.dronesList.Find(d => d.id == ID);
+            int index = DataSource.dronesList.FindIndex(d => d.id == ID);
+            if (index == -1)
+            {
+                throw new DroneException("Id not found\n");
+            }
+            else
+            {
+                return DataSource.dronesList[index];
+            }
+
+            // return DataSource.dronesList.Find(d => d.id == ID);
         }
 
         public Station GetStation(int ID)
         {
-            return DataSource.stationList.Find(s => s.id == ID);
+
+            int index = DataSource.stationList.FindIndex(s => s.id == ID);
+            if (index == -1)
+            {
+                throw new StationException("Id not found\n");
+            }
+            else
+            {
+                return DataSource.stationList[index];
+            }
+            // return DataSource.stationList.Find(s => s.id == ID);
         }
         /// <summary>
         /// The Display list funcitons return the whole list
@@ -297,7 +334,6 @@ namespace DAL
 }
 
 
-//if()
-// throw new ParcelException("od not found')
+
 
 

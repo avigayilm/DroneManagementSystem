@@ -1,4 +1,5 @@
 ﻿using System;
+using BL;
 
 namespace ConsoleUI_BL
 {
