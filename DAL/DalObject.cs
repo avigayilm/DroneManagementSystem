@@ -27,7 +27,7 @@ namespace DAL
             DataSource.stationList.Add(stat);
         }
 
-        public void AddDrone(Drone dro)
+        public void AddDrone(Drone dro)// check if the drone lready exists
         {
             DataSource.dronesList.Add(dro);
         }
@@ -264,19 +264,40 @@ namespace DAL
             List<Parcel> undelivered = new();
             DataSource.parcelList.ForEach(p => { if (p.delivered == DateTime.MinValue) undelivered.Add(p); });// if he parcel is not delivered add it to the list
             return undelivered;
+            //put the drone state in delivery
 
         }
 
-        public Station smallestDistance(string cusId)
+        public Station smallestDistanceStation(string cusId)
         {
             Customer temp = GetCustomer(cusId);
-            double minDistance = double.PositiveInfinity;
-            DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
+            double minDistance = double.PositiveInfinity;//starting with unlimited
+            double distancekm;
+            int index = -1;
+            IEnumerator<Station> iter = DataSource.stationList.GetEnumerator();
+            for(int i=0;i<DataSource.stationList.Count;i++)
+            {
+               distancekm= Bonus.Haversine(DataSource.stationList[i].longitude, DataSource.stationList[i].latitude, temp.longitude, temp.latitude);
+                if (distancekm < minDistance)
+                {
+                    minDistance = distancekm;
+                    index = i;// the new index is the index with the smallest distance
+                }
+            }
+            return DataSource.stationList[index];// returns the station with the smallest distance to customer
+            //while(iter.MoveNext())
+            //    distancekm = Bonus.Haversine(iter.Current.longitude, iter.Current.latitude, temp.longitude, temp.latitude);
+            //if (distancekm < minDistance) ;
+            //DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
             
         }
 
 
     }
 }
+
+
+//if()
+// throw new ParcelException("od not found')
 
 

@@ -109,7 +109,7 @@ namespace ConsoleUI
                                 case EntityOptions.Parcel://adds a prcel
                                     {
 
-                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2), date requested, scheduled time\n ");
+                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2),\n ");// date requested, scheduled time\n ");
                                         string inputSenderId = Console.ReadLine();
                                         string inputTargetId = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
@@ -122,9 +122,11 @@ namespace ConsoleUI
                                             targetid = inputTargetId,
                                             weight = maxim,
                                             priority = prio,
-                                            requested = req,
+                                            requested = req //does this have to be filled in 
                                             scheduled = sched,
-                                            delivered = DateTime.MinValue;
+                                            delivered = DateTime.MinValue,
+                                            //requested = DateTime.MinValue,
+                                            //scheduled = DateTime.MinValue
                                         };
                                         dal.AddParcel(newParcel); 
                                         break;

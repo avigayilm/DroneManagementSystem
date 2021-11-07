@@ -35,6 +35,6 @@ namespace IDAL
         public double[] DronePwrUsg();
         public IEnumerable<Station> GetStationWithCharging();
         public IEnumerable<Parcel> UndeliveredParcels();
-        public Station smallestDistance(string cusId);
+        public Station smallestDistanceStation(string cusId);
     }
 }

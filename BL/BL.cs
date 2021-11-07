@@ -22,22 +22,49 @@ namespace BL
             double pwrUsgHeavy = tempArray[3];
             double chargePH = tempArray[4];
             List<Drone> tempDroneList = (List<Drone>)idal1.GetAllDrones();
-
-            foreach()
-            tempDroneList.ForEach(Drone d in tempDroneList)
+            List<Parcel> undeliveredParcel = (List<Parcel>)idal1.UndeliveredParcels();
+            foreach(Parcel p in undeliveredParcel)
             {
-                if()
-                    d.
+                if(p.delivered==DateTime.MinValue)// package is not yet delivered
+                {
+                        int DroneId = p.droneId;
+                        int droneIndex = tempDroneList.FindIndex(d => d.id == DroneId);
+                    if (droneIndex >= 0)
+                    {
+                        var temp = tempDroneList[droneIndex];
+                        //status of drone
+                        temp.status = st;
+                        //location of drone
+                        if (p.requested != DateTime.MinValue && p.pickedUp == DateTime.MinValue)//if assigned but not yet collected)
+                        {
+                            //location of deone will be in  station closed to the sender
+                            temp.
+
+
+                            }
+                        if (p.requested != DateTime.MinValue && p.pickedUp != DateTime.MinValue)// if pakage is assigned and picked up
+                        {
+                            //location wull be at the sender
+
+                        }
+                        // battery will be random between mnim and 100 so it can deliver
+                    }
+                }
+                else// if the drone is not delivering
+                {
+
+                }
+            }
+            foreach(Drone d in tempDroneList)
+            {
+
             }
 
         }
 
-        Station smallestDistance(Station st,Customer cs)
-        {
-            int distanc
-            List<Drone> tempStationList= (List<Station>)idal1.GetAllStation();
+        //functions used in the main menu
 
 
-        }
+
     }
 }
