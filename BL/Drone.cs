@@ -14,9 +14,9 @@ namespace IBL
             public string model;
             public WeightCategories weight;
             public double battery;
-            //status
-            DeliveryInTransfer delintrans;
-            Location loc;
+            public DroneStatuses status;
+            public DeliveryInTransfer delintrans;
+            public Location loc;
         }
     }
  

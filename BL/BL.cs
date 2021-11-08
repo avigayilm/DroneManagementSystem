@@ -7,10 +7,14 @@ using IBL;
 using IDAL.DO;
 using IDAL;
 
+
 namespace BL
 {
     partial class BL:IBL.IBL
     {
+        internal static Random rand = new Random();
+        internal static  List<IBL.BO.Drone> droneBL =new();
+
         BL()
         {
             //DAL.DalObject dal2 = new();
@@ -21,45 +25,65 @@ namespace BL
             double pwrUsgMedium = tempArray[2];
             double pwrUsgHeavy = tempArray[3];
             double chargePH = tempArray[4];
-            List<Drone> tempDroneList = (List<Drone>)idal1.GetAllDrones();
+            List<Drone> tempDroneList = (List<Drone>)idal1.GetAllDrones();// what type of drone is it using...
+
             List<Parcel> undeliveredParcel = (List<Parcel>)idal1.UndeliveredParcels();
             foreach(Parcel p in undeliveredParcel)
             {
-                if(p.delivered==DateTime.MinValue)// package is not yet delivered
-                {
                         int DroneId = p.droneId;
                         int droneIndex = tempDroneList.FindIndex(d => d.id == DroneId);
-                    if (droneIndex >= 0)
-                    {
-                        var temp = tempDroneList[droneIndex];
-                        //status of drone
-                        temp.status = st;
-                        //location of drone
-                        if (p.requested != DateTime.MinValue && p.pickedUp == DateTime.MinValue)//if assigned but not yet collected)
-                        {
-                            //location of deone will be in  station closed to the sender
-                            temp.
-
-
-                            }
-                        if (p.requested != DateTime.MinValue && p.pickedUp != DateTime.MinValue)// if pakage is assigned and picked up
-                        {
-                            //location wull be at the sender
-
-                        }
-                        // battery will be random between mnim and 100 so it can deliver
-                    }
+                if (droneIndex == -1)// if there is no drone assigned to the parcel
+                {
+                    //throw exceptionnnn
                 }
+                else if (droneIndex > 0)// if there is a drown assigned to the parcel
+                {
+                    var temp = tempDroneList[droneIndex];
+                    IBL.BO.Drone tempBl = new();
+                    tempBl.id = droneIndex;
+                    tempBl.model = temp.model;
+                    // weight= (WeightCategories)temp.maxWeight,
+                    //status of drone
+                    tempBl.status = IBL.BO.DroneStatuses.Delivery;
+                    //location of drone
+                    if (p.requested != DateTime.MinValue && p.pickedUp == DateTime.MinValue)//if assigned but not yet collected)
+                    {
+                        var stationTemp = idal1.smallestDistanceStation(p.senderid);
+                        //location of deone will be in  station closed to the sender
+                        tempBl.loc.longitude = stationTemp.longitude;
+                        tempBl.loc.latitude = stationTemp.latitude;
+                    }
+                    if (p.requested != DateTime.MinValue && p.pickedUp != DateTime.MinValue)// if pakage is assigned and picked up
+                    {
+                        //location wull be at the sender
+                        List<Customer> tempCustomerList = (List<Customer>)idal1.GetAllCustomers();
+                        int customerIndex = tempCustomerList.FindIndex(c => c.id == p.senderid);
+                        if (customerIndex == -1)
+                        {//throw
+                        }
+                        else
+                        {
+                            tempBl.loc.longitude = tempCustomerList[customerIndex].longitude;
+                            tempBl.loc.latitude = tempCustomerList[customerIndex].latitude;
+                        }
+                    }
+                    tempBl.battery = rand.Next(40, 100);// random battery level so that the drone can still fly
+                }
+            }
+
+                        // battery will be random between mnim and 100 so it can deliver
+        }
+                
                 else// if the drone is not delivering
                 {
 
                 }
-            }
+            
             foreach(Drone d in tempDroneList)
             {
 
             }
-
+            droneBL.Add(tempBl)
         }
 
         //functions used in the main menu
