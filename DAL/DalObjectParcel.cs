@@ -16,7 +16,7 @@ namespace DAL
             int index = DataSource.parcelList.FindIndex(p => p.id == pack.id);
             if (index != -1)
             {
-                throw new ParcelException("Id exists already\n");
+                throw new DuplicateIdException("Parcel already exists\n");
             }
             else
             {
@@ -36,7 +36,7 @@ namespace DAL
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
             if (parcelIndex == -1)
             {
-                throw new ParcelException("Id not found\n");
+                throw new MissingIdException("No such parcel exists in list\n");
             }
             else// check if it's a valid index
             {
@@ -63,7 +63,7 @@ namespace DAL
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);// finding the index of the parcel
             if (parcelIndex == -1)
             {
-                throw new ParcelException("Id not found\n");
+                throw new MissingIdException("No such parcel\n");
             }
             else
             {
@@ -87,7 +87,7 @@ namespace DAL
             int index = DataSource.parcelList.FindIndex(p => p.id == ID);
             if (index == -1)
             {
-                throw new ParcelException("Id not found\n");
+                throw new MissingIdException("No such parcel in list\n");
             }
             else
             {
@@ -117,7 +117,7 @@ namespace DAL
         public IEnumerable<Parcel> UndeliveredParcels()
         {
             List<Parcel> undelivered = new();
-            DataSource.parcelList.ForEach(p => { if (p.delivered == DateTime.MinValue) undelivered.Add(p); });// if he parcel is not delivered add it to the list
+            DataSource.parcelList.ForEach(p => { if (p.delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
             return undelivered;
             //put the drone state in delivery
 

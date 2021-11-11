@@ -29,7 +29,7 @@ namespace DAL
         internal static List<Customer> customerList = new();
         internal static List<Parcel> parcelList = new();
         internal static List<DroneCharge> chargeList = new();       
-        internal static Random rand = new Random();
+        internal static Random rand = new();
         public static void Initialize()
         {
             CreateDrone();

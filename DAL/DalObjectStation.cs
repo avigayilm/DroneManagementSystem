@@ -21,7 +21,7 @@ namespace DAL
             int index = DataSource.parcelList.FindIndex(s => s.id == stat.id);
             if (index != -1)
             {
-                throw new ParcelException("Id exists already\n");
+                throw new DuplicateIdException("Station already exists in list\n");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace DAL
         {
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
             if (stationIndex == -1)
-                throw new StationException("Id not found\n");
+                throw new MissingIdException("No such station exists in list\n");
             else
             {
                 var temp = DataSource.stationList[stationIndex];
@@ -53,7 +53,7 @@ namespace DAL
             int index = DataSource.stationList.FindIndex(s => s.id == ID);
             if (index == -1)
             {
-                throw new StationException("Id not found\n");
+                throw new MissingIdException("No such station\n");
             }
             else
             {

@@ -21,9 +21,10 @@ namespace DAL
             int droneIndex = DataSource.dronesList.FindIndex(d => d.id == droneId);
             int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
             if (stationIndex == -1)
-                throw new StationException("id is not found \n");
+                throw new MissingIdException(" No such station in list\n");
             if (droneIndex == -1)
-                throw new DroneException("id is not found \n");
+                throw new MissingIdException("NO such drone in list" +
+                    " \n");
             else
             {
                 //// making a new Dronecharge
@@ -43,7 +44,7 @@ namespace DAL
         {
             int droneIndex = DataSource.chargeList.FindIndex(d => d.droneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (droneIndex == -1)
-                throw new DroneException("id is not found \n");
+                throw new MissingIdException("No such drone \n");
             else
             {
                 DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist

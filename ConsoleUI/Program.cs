@@ -124,7 +124,7 @@ namespace ConsoleUI
                                             priority = prio,
                                             requested = req, //does this have to be filled in 
                                             scheduled = sched,
-                                            delivered = DateTime.MinValue,
+                                            delivered = null,
                                             //requested = DateTime.MinValue,
                                             //scheduled = DateTime.MinValue
                                         };
@@ -205,42 +205,42 @@ namespace ConsoleUI
                             {
                                 case ListOptions.Stations://display stations list
                                     {
-                                        List<Station> stationListTemp = dal.GetAllStations();
+                                        List<Station> stationListTemp = dal.GetAllStations().ToList();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Parcels://display parcels list
                                     {
-                                        List<Parcel> parcelListTemp = dal.GetParcelList();
+                                        List<Parcel> parcelListTemp = dal.GetParcelList().ToList();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Drones://display drones list
                                     {
-                                        List<Drone> dronesListTemp = dal.GetAllDrones();
+                                        List<Drone> dronesListTemp = dal.GetAllDrones().ToList();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Customers://display customers list
                                     {
-                                        List<Customer> customerListTemp = dal.GetAllCustomers();
+                                        List<Customer> customerListTemp = dal.GetAllCustomers().ToList();
                                         customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels://display unassigned parcels
                                     {
-                                        List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel();
+                                        List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel().ToList();
                                         UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations://diplay stations with available charging slots
-                                    dal.GetStationWithCharging().ForEach(p => Console.WriteLine(p));
+                                    dal.GetStationWithCharging().ToList().ForEach(p => Console.WriteLine(p));
                                     break;
 
                                 case ListOptions.DroneCharge://display drone charge list
                                     {
 
-                                        List<DroneCharge> stationDroneChargeListTemp = dal.GetDroneChargeList();
+                                        List<DroneCharge> stationDroneChargeListTemp = dal.GetDroneChargeList().ToList();
                                         stationDroneChargeListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }

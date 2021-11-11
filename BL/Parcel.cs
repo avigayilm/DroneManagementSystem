@@ -16,10 +16,10 @@ namespace IBL
             public WeightCategories weight;
             public Priorities priority;
             public Drone dr;
-            public DateTime creation;
-            public DateTime assigning;
-            public DateTime collecting;
-            public DateTime delivering;
+            public DateTime? requested;
+            public DateTime? scheduled;
+            public DateTime? pickedUp;
+            public DateTime? delivered;
 
         }
     }
