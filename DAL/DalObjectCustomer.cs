@@ -16,7 +16,7 @@ namespace DAL
             int index = DataSource.customerList.FindIndex(c => c.id == cus.id);
             if (index != -1)
             {
-                throw new CustomerException("Id exists already\n");
+                throw new DuplicateIdException("Customer already exists\n");
             }
             else
             {
@@ -29,7 +29,7 @@ namespace DAL
             int index = DataSource.customerList.FindIndex(c => c.id == ID);
             if (index == -1)
             {
-                throw new CustomerException("Id not found\n");
+                throw new DuplicateIdException("No such Customer exists in list\n");
             }
             else
             {
@@ -45,5 +45,7 @@ namespace DAL
             DataSource.customerList.ForEach(c => list.Add(c));
             return (IEnumerable<Customer>)list;
         }
+
+       
     }
 }

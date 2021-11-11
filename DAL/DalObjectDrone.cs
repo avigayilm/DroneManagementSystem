@@ -16,7 +16,7 @@ namespace DAL
             int index = DataSource.parcelList.FindIndex(d => d.id == dro.id);
             if (index != -1)
             {
-                throw new DroneException("Id exists already\n");
+                throw new MissingIdException("Id exists already\n");
             }
             else
             {
@@ -36,7 +36,7 @@ namespace DAL
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
             if (parcelIndex == -1)
             {
-                throw new ParcelException("Id not found\n");
+                throw new MissingIdException("No such parcel\n");
             }
             else
             {
@@ -56,7 +56,7 @@ namespace DAL
         {
             int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
             if (droneIndex == -1)
-                throw new DroneException("Id not found\n");
+                throw new MissingIdException("No such drone\n");
             else
             {
                 var temp = DataSource.dronesList[droneIndex];
@@ -71,7 +71,7 @@ namespace DAL
             int index = DataSource.dronesList.FindIndex(d => d.id == ID);
             if (index == -1)
             {
-                throw new DroneException("Id not found\n");
+                throw new MissingIdException("No such drone\n");
             }
             else
             {
