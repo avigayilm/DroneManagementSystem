@@ -13,7 +13,7 @@ namespace IBL
             public string id;
             public string name;
             public string phoneNumber;
-            public Location ImHere;
+            public Location loc;
             public List<Parcel> receivedParcels = new();
             public List<Parcel> sentParcels = new();
         }

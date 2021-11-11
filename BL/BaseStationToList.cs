@@ -10,7 +10,7 @@ namespace IBL
     {
         public class BaseStationToList
         {
-            public int id;
+            public int id { get; set; }
             public string name;
             public int availableSlots;
             public int occupiedSlots;

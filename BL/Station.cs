@@ -9,7 +9,7 @@ namespace IBL
 {
     namespace BO
     {
-        public class BaseStation
+        public class Station
         {
             public int id;
             public string name;

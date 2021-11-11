@@ -10,16 +10,16 @@ using IDAL;
 
 namespace BL
 {
-    partial class BL:IBL.IBL
+    public partial class BL : Ibl
     {
         internal static Random rand = new Random();
-        internal static  List<IBL.BO.Drone> droneBL =new();
+        internal static List<IBL.BO.Drone> droneBL = new();
 
-        BL()
+        public BL()
         {
             //DAL.DalObject dal2 = new();
             IDal idal1 = new DAL.DalObject();
-            double[]tempArray= idal1.DronePwrUsg();
+            double[] tempArray = idal1.DronePwrUsg();
             double pwrUsgEmpty = tempArray[0];
             double pwrUsgLight = tempArray[1];
             double pwrUsgMedium = tempArray[2];
@@ -28,10 +28,10 @@ namespace BL
             List<Drone> tempDroneList = (List<Drone>)idal1.GetAllDrones();// what type of drone is it using...
 
             List<Parcel> undeliveredParcel = (List<Parcel>)idal1.UndeliveredParcels();
-            foreach(Parcel p in undeliveredParcel)
+            foreach (Parcel p in undeliveredParcel)
             {
-                        int DroneId = p.droneId;
-                        int droneIndex = tempDroneList.FindIndex(d => d.id == DroneId);
+                int DroneId = p.droneId;
+                int droneIndex = tempDroneList.FindIndex(d => d.id == DroneId);
                 if (droneIndex == -1)// if there is no drone assigned to the parcel
                 {
                     //throw exceptionnnn
@@ -72,23 +72,35 @@ namespace BL
             }
 
                         // battery will be random between mnim and 100 so it can deliver
-        }
-                
-                else// if the drone is not delivering
-                {
 
-                }
-            
-            foreach(Drone d in tempDroneList)
+
+            else// if the drone is not delivering
+            {
+
+            }
+
+            foreach (Drone d in tempDroneList)
             {
 
             }
             droneBL.Add(tempBl)
+         }
+        public void AddStation(Station stat)
+        {
+            int index = DataSource.parcelList.FindIndex(s => s.id == stat.id);
+            if (index != -1)
+            {
+                throw new ParcelException("Id exists already\n");
+            }
+            else
+            {
+                DataSource.stationList.Add(stat);
+            }
         }
-
-        //functions used in the main menu
-
-
-
     }
+    //functions used in the main menu
+
+
+
 }
+

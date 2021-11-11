@@ -8,9 +8,7 @@ using IDAL;
 
 namespace DAL
 {
-    /// <summary>
-    /// 
-    /// </summary>
+
      public partial class DalObject:IDal
     {
         /// <summary>

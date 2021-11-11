@@ -17,7 +17,6 @@ namespace IBL
             public int NumPackSentDel;
             public int NumPackSentUnDel;
             public int NumPackExp;
-
         }
     }
 }

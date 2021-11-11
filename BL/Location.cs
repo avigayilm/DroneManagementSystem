@@ -10,8 +10,9 @@ namespace IBL
     {
         public class Location
         {
-            public double longitude;
-            public double latitude;
+            public double longitude { get; init; }//we can't chage location, set it only when we initilize
+            public double latitude { get; init; }
+            
         }
     }
 }
