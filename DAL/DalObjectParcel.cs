@@ -120,6 +120,5 @@ namespace DAL
             DataSource.parcelList.ForEach(p => { if (p.delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
             return undelivered;
             //put the drone state in delivery
-
         }
     }

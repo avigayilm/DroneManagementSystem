@@ -10,11 +10,11 @@ namespace IBL
     {
         public class DeliveryAtCustomer
         {
-            public string id;
-            public Priorities priority;
-            public CustomerInDelivery sender;
-            public CustomerInDelivery receiver;
-            
+            public string Id { get; set; }
+            public Priorities Prioirty { get; set; }
+            public CustomerInDelivery Sender { get; set; }
+            public CustomerInDelivery Reiceiver { get; set; }
+
 
         }
     }

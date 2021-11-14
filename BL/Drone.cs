@@ -10,13 +10,13 @@ namespace IBL
     {
         public class Drone
         {
-            public int id;
-            public string model;
-            public WeightCategories weight;
-            public double battery;
-            public DroneStatuses status;
-            public DeliveryInTransfer delintrans;
-            public Location loc;
+            public int Id { get; set; }
+            public string Model { get; set; }
+            public WeightCategories Weight { get; set; }
+            public double Battery { get; set; }
+            public DroneStatuses Status { get; set; }
+            public DeliveryInTransfer Delintrans { get; set; }
+            public Location Loc { get; set; }
         }
     }
  

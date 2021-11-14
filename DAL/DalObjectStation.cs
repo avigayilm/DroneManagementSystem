@@ -62,17 +62,6 @@ namespace DAL
             // return DataSource.stationList.Find(s => s.id == ID);
         }
 
-        /// <summary>
-        /// The Display list funcitons return the whole list
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Station> GetAllStations()
-        {
-            List<Station> list = new();
-            DataSource.stationList.ForEach(s => list.Add(s));
-            return (IEnumerable<Station>)list;
-        }
-
         // returns the list with the stations that have availble charging
         public IEnumerable<Station> GetStationWithCharging()
         {
@@ -81,7 +70,18 @@ namespace DAL
             return (IEnumerable<Station>)temp;
         }
 
-        public Station smallestDistanceStation(string cusId)
+        /// <summary>
+        /// The Display list funcitons return the whole list
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Station> GetAllStations()
+        {
+            List<Station> tempStationList = new();
+            DataSource.stationList.ForEach(s => tempStationList.Add(s));
+            return (IEnumerable<Station>)tempStationList;
+        }
+
+        public Station SmallestDistanceStation(string cusId)
         {
             Customer temp = GetCustomer(cusId);
             double minDistance = double.PositiveInfinity;//starting with unlimited
@@ -104,6 +104,26 @@ namespace DAL
             //if (distancekm < minDistance) ;
             //DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
 
+        }
+
+        public void UpdateStation(int stationId, string name,int chargeSlots)
+        {
+            int index = DataSource.stationList.FindIndex(s => s.id == stationId);
+            if (index == -1)
+            {
+                throw new MissingIdException("No such station\n");
+            }
+            else
+            {
+                Station tempStation = DataSource.stationList[index];
+                if(name!="\n")
+                    tempStation.name = name;
+                if (chargeSlots != 10)// chekc if a phone was entere
+                    tempStation.chargeSlots = chargeSlots;
+                DataSource.stationList[index] = tempStation;
+            }
+
+         
         }
 
     }

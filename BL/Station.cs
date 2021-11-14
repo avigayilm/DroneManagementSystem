@@ -11,11 +11,11 @@ namespace IBL
     {
         public class Station
         {
-            public int id;
-            public string name;
-            public Location loc;
-            public int chargeslots;
-            public List<Drone> charging;
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Chargeslots { get; set; }
+            public Location Loc { get; set; }
+            public List<Drone> Charging { get; set; }
         }
     }
 }

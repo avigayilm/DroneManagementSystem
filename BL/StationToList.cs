@@ -8,10 +8,13 @@ namespace IBL
 {
     namespace BO
     {
-        public class DroneInCharge
+        public class StationToList
         {
             public int Id { get; set; }
-            public double Battery { get; set; }
+            public string Name { get; set; }
+            public int AvailableSlots { get; set; }
+            public int OccupiedSlots { get; set; }
         }
     }
+
 }

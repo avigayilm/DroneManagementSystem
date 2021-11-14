@@ -87,6 +87,25 @@ namespace DAL
             DataSource.dronesList.ForEach(d => list.Add(d));
             return (IEnumerable<Drone>)list;
         }
+        /// <summary>
+        /// updates the model of the drone, used in BL
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="model"></param>
+        public void UpdateDrone(int droneId,string model)
+        {
+            int index = DataSource.dronesList.FindIndex(d => d.id ==droneId );
+            if (index == -1)
+            {
+                throw new MissingIdException("No such drone\n");
+            }
+            else
+            {
+                Drone tempDrone=DataSource.dronesList[index];
+                tempDrone.model = model;
+                DataSource.dronesList[index] = tempDrone;
+            }
+        }
 
     }
 }

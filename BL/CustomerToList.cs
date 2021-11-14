@@ -10,13 +10,13 @@ namespace IBL
     {
         class CustomerToList
         {
-            public string id;
-            public string name;
-            public string phoneNumber;
-            public int NumPacksReceived;
-            public int NumPackSentDel;
-            public int NumPackSentUnDel;
-            public int NumPackExp;
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string PhoneNumber { get; set; }
+            public int NumPacksReceived { get; set; }
+            public int NumPackSentDel { get; set; }
+            public int NumPackSentUnDel { get; set; }
+            public int NumPackExp { get; set; }
         }
     }
 }

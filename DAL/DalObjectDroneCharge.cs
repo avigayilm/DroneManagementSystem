@@ -54,8 +54,6 @@ namespace DAL
             }
 
         }
-
-
         public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
             List<DroneCharge> list = new();

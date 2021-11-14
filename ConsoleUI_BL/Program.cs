@@ -9,7 +9,7 @@ namespace ConsoleUI_BL
         //enums to determine updating, adding etc. choices
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge, ReleasefromCharge }
+        enum UpdateOptions { Exit, Drone, Parcel, Customer, Station,Assignment, Pickedup, Delivery, Recharge, ReleasefromCharge }
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
         //menu function wil go thorough all options for user
@@ -45,35 +45,31 @@ namespace ConsoleUI_BL
                                         int.TryParse(Console.ReadLine(), out int slots);
                                         Station tempStat = new()// adds a new station
                                         {
-                                            id = stationID,
-                                            name = inputname,
-                                            chargeslots = slots,
-                                            loc.latitude=latitudeInput,
-                                            loc.longitude=longitudeInput
-                                            
-                                            //loc.longitude = longitudeInput,
-                                            //loc.latitude = latitudeInput,
+                                            Id = stationID,
+                                            Name = inputname,
+                                            Chargeslots = slots,
+                                            Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
+                                            Charging = new()
                                         };
                                         ibl1.AddStation(tempStat);
                                         break;
-                                    }
+                                    };
                                 case EntityOptions.Customer:// adds a new customer
                                     {
 
-                                        Console.WriteLine("Enter the ID, name, phone, latitude,longtitude\n ");
+                                        Console.WriteLine("Enter the ID, name, phone.\n ");
                                         string inputId = Console.ReadLine();
                                         string inputname = Console.ReadLine();
                                         string inputphone = Console.ReadLine();
-                                        double longitudeInput, latitudeInput;
-                                        double.TryParse(Console.ReadLine(), out longitudeInput);
-                                        double.TryParse(Console.ReadLine(), out latitudeInput);
+                                        //double longitudeInput, latitudeInput;
+                                        //double.TryParse(Console.ReadLine(), out longitudeInput);
+                                        //double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new()
                                         {
-                                            id = inputId,
-                                            name = inputname, 
-                                            phoneNumber = inputphone,
-                                            loc.latitude=latitudeInput,
-                                            loc.longitude=longitudeInput,
+                                            Id = inputId,
+                                            Name = inputname, 
+                                            PhoneNumber = inputphone,
+                                            //Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
 
                                         };
                                         ibl1.AddCustomer(newCustomer);
@@ -82,22 +78,23 @@ namespace ConsoleUI_BL
                                 case EntityOptions.Drone://adds drone
                                     {
 
-                                        Console.WriteLine("Enter the Id, model, weightcategory(0-2),status(0-2), battery percentage\n ");
+                                        Console.WriteLine("Enter the Id,stationId,model, weightcategory(0-2),status(0-2)");
                                         int.TryParse(Console.ReadLine(), out int droneID);
+                                        int.TryParse(Console.ReadLine(), out int stationID);
                                         string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
                                         double.TryParse(Console.ReadLine(), out double batt);
                                         Drone newDrone = new()
                                         {
-                                            id = droneID,
-                                            model = inputmodel,
-                                            weight = maxim,
-                                            status = stat,
-                                            battery = batt
+                                            Id = droneID,
+                                            Model = inputmodel,
+                                            Weight = maxim,
+                                            Status = stat,
+                                            Battery = batt
                                         };
 
-                                        ibl1.AddDrone(newDrone);// add drone to dronelist
+                                        ibl1.AddDrone(newDrone,stationID);// add drone to dronelist
                                         break;
                                     }
                                 case EntityOptions.Parcel://adds a prcel
@@ -112,17 +109,12 @@ namespace ConsoleUI_BL
                                         DateTime.TryParse(Console.ReadLine(), out DateTime sched);
                                         Parcel newParcel = new()
                                         {
-                                            senderid = inputSenderId,
-                                            targetid = inputTargetId,
-                                            weight = maxim,
-                                            priority = prio,
-                                            requested = req, //does this have to be filled in 
-                                            scheduled = sched,
-                                            delivered = DateTime.MinValue,
-                                            //requested = DateTime.MinValue,
-                                            //scheduled = DateTime.MinValue
+                                            SenderId = inputSenderId,
+                                            ReceiverId = inputTargetId,
+                                            Weight = maxim,
+                                            Priority = prio,
                                         };
-                                        dal.AddParcel(newParcel);
+                                        ibl1.AddParcel(newParcel);
                                         break;
                                     }
 
@@ -132,10 +124,31 @@ namespace ConsoleUI_BL
                         }
                     case MenuOptions.Update://update existing entities
                         {
-                            Console.WriteLine("what do you want to update?\n  1-Assignment,\n 2-Pickedup\n 3-Delivery,\n 4-Recharge\n 5-ReleasefromCharge\n ");
+                            Console.WriteLine("what do you want to update?\n 1-Drone\n 2-Parcel\n 3-Customer\n 4-Station\n 5-Assignment,\n 6-Pickedup\n 7-Delivery,\n 8-Recharge\n 9-ReleasefromCharge\n ");
                             updateOption = (UpdateOptions)int.Parse(Console.ReadLine());
                             switch (updateOption)
                             {
+                                case UpdateOptions.Drone:
+                                    {
+                                        Console.WriteLine("Enter the ID and the model\n");
+                                        int droneId = int.Parse(Console.ReadLine());
+                                        string model = Console.ReadLine();
+                                        ibl1.updateDrone(droneId, model);
+                                        break;
+                                    }
+                                case UpdateOptions.Station:
+                                    {
+                                        Console.WriteLine("Enter the ID and the name or\and chargeslots\n");
+                                        break;
+                                    }
+                                case UpdateOptions.Parcel:
+                                    {
+                                        break;
+                                    }
+                                case UpdateOptions.Customer:
+                                    {
+                                        break;
+                                    }
                                 case UpdateOptions.Assignment://assign drone to parcel
                                     {
                                         Console.WriteLine("Enter the parcelid for the assignment of the parcel and the droneid.\n");

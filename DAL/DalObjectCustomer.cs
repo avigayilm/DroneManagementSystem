@@ -46,6 +46,25 @@ namespace DAL
             return (IEnumerable<Customer>)list;
         }
 
+        public void UpdateCustomer(string customerId, string name, string phone)
+        {
+            int index = DataSource.customerList.FindIndex(c => c.id == customerId);
+            if (index == -1)
+            {
+                throw new MissingIdException("No such station\n");
+            }
+            else
+            {
+                Customer tempCustomer = DataSource.customerList[index];
+                if (name != "\n")
+                    tempCustomer.name = name;
+                if (phone != "\n")
+                    tempCustomer.phone = phone;
+                DataSource.customerList[index] = tempCustomer;
+            }
+
+        }
+
        
     }
 }
