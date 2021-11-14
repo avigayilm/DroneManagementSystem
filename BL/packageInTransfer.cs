@@ -10,10 +10,14 @@ namespace IBL
     {
         public class packageInTransfer
         {
-            public int ID { get; set; }
-            public Priorities Priority { get; set; }
-            public CustomerInDelivery Sender { get; set; }
-            public CustomerInDelivery Receiver { get; set; }
+            public int ID;
+            public Priorities priority;
+            public CustomerInDelivery sender;
+            public CustomerInDelivery receiver;
+            public WeightCategories weight;
+            public Location pickedUp;
+            public Location DeliverdTo;
+            public double distance;
         }
     }
 }

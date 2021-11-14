@@ -13,11 +13,8 @@ namespace DAL
     {
         public void AddParcel(Parcel pack)
         {
-            int index = DataSource.parcelList.FindIndex(p => p.id == pack.id);
-            if (index != -1)
-            {
-                throw new DuplicateIdException("Parcel already exists\n");
-            }
+            if (DataSource.parcelList.Exists(p => p.id == pack.id))
+                throw new DuplicateIdException($"Parcel with {pack.id} id already exists\n");
             else
             {
                 DataSource.parcelList.Add(pack);
@@ -60,11 +57,9 @@ namespace DAL
         /// <param name="day"></param>
         public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
         {
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);// finding the index of the parcel
-            if (parcelIndex == -1)
-            {
-                throw new MissingIdException("No such parcel\n");
-            }
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
+            if (parcelIndex == -1)           
+                throw new MissingIdException("No such parcel exists in list\n");           
             else
             {
                 int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
@@ -84,13 +79,11 @@ namespace DAL
         /// <returns></returns>
         public Parcel GetParcel(int ID)
         {
-            int index = DataSource.parcelList.FindIndex(p => p.id == ID);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such parcel in list\n");
-            }
+            if (!DataSource.parcelList.Exists(p => p.id == ID))
+                throw new MissingIdException($"No parcel with {ID} id exists\n");
             else
             {
+                int index = DataSource.parcelList.FindIndex(p => p.id == ID);
                 return DataSource.parcelList[index];
             }
         }
