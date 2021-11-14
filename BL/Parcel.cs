@@ -10,16 +10,16 @@ namespace IBL
     {
         public class Parcel
         {
-            public int id;
-            public Customer sender;
-            public Customer receiver;
-            public WeightCategories weight;
-            public Priorities priority;
-            public Drone dr;
-            public DateTime? requested;
-            public DateTime? scheduled;
-            public DateTime? pickedUp;
-            public DateTime? delivered;
+            public int id { get; set; }
+            public Customer sender { get; set; }
+            public Customer receiver { get; set; }
+            public WeightCategories weight { get; set; }
+            public Priorities priority { get; set; }
+            public Drone dr {get; set;}
+            public DateTime? requested { get; set; }
+            public DateTime? scheduled{get; set;}
+            public DateTime? pickedUp{get; set;}
+            public DateTime? delivered{get; set;}
 
         }
     }

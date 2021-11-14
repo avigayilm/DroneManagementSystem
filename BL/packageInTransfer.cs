@@ -14,6 +14,10 @@ namespace IBL
             public Priorities priority;
             public CustomerInDelivery sender;
             public CustomerInDelivery receiver;
+            public WeightCategories weight;
+            public Location pickedUp;
+            public Location DeliverdTo;
+            public double distance;
         }
     }
 }

@@ -7,8 +7,8 @@ namespace IDAL
         public struct Parcel
         {
             public int id { get; set; }
-            public string senderid { get; set; }
-            public String targetid { get; set; }
+            public string sender { get; set; }
+            public String target { get; set; }
             public WeightCategories weight { get; set; }
             public Priorities priority { get; set; }
 

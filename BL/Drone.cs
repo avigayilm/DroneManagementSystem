@@ -12,7 +12,7 @@ namespace IBL
         {
             public int id;
             public string model;
-            public WeightCategories weight;
+            public WeightCategories maxwWeight;
             public double battery;
             public DroneStatuses status;
             public DeliveryInTransfer delintrans;
