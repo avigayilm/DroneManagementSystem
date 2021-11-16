@@ -6,32 +6,32 @@ namespace IDAL
     {
         public struct Parcel
         {
-            public int id { get; set; }
-            public string sender { get; set; }
-            public String target { get; set; }
-            public WeightCategories weight { get; set; }
-            public Priorities priority { get; set; }
+            public int Id { get; set; }
+            public string Sender { get; set; }
+            public String Target { get; set; }
+            public WeightCategories Weight { get; set; }
+            public Priorities Priority { get; set; }
 
-            public DateTime? requested { get; set; }
+            public DateTime? Requested { get; set; }
 
-            public int droneId { get; set; }
-            public DateTime? scheduled { get; set; }
-            public DateTime? pickedUp { get; set; }
-            public DateTime? delivered { get; set; }
+            public int DroneId { get; set; }
+            public DateTime? Scheduled { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
 
             public override string ToString()
             {
                 String result = " ";
-                result += $"ID is #{id}, \n";
-                result += $"Senderid is {senderid}, \n";
-                result += $"Targetid is {targetid}, \n";
-                result += $"Weight is {weight},\n";
-                result += $"Priority is {priority}\n";
-                result += $"The parcel was requested at {requested},\n";
-                result += $"Droneid is {droneId}, \n";
-                result += $" The Parcel is scheduled for {scheduled},\n";
-                result += $"The Parcel was picked up at{pickedUp},\n";
-                result += $"The parcel was delivered at { delivered},\n";
+                result += $"ID is #{Id}, \n";
+                result += $"Senderid is {Sender}, \n";
+                result += $"Targetid is {Target}, \n";
+                result += $"Weight is {Weight},\n";
+                result += $"Priority is {Priority}\n";
+                result += $"The parcel was requested at {Requested},\n";
+                result += $"Droneid is {DroneId}, \n";
+                result += $" The Parcel is scheduled for {Scheduled},\n";
+                result += $"The Parcel was picked up at{PickedUp},\n";
+                result += $"The parcel was delivered at { Delivered},\n";
                 return result;
             }
         }

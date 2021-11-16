@@ -11,12 +11,18 @@ namespace DAL
 {
     public partial class DalObject
     {
+
+        /// <summary>
+        /// adds a drone to the dronlist
+        /// </summary>
+        /// <param name="dro"></param>
         public void AddDrone(Drone dro)// check if the drone lready exists
         {
-            int index = DataSource.parcelList.FindIndex(d => d.id == dro.id);
-            if (index != -1)
+            // int index = DataSource.parcelList.FindIndex(d => d.id == dro.id);
+            bool exists = DataSource.dronesList.Exists(d => d.Id == dro.Id);
+            if (exists)
             {
-                throw new MissingIdException("Id exists already\n");
+                throw new DuplicateIdException("Id exists already\n");
             }
             else
             {
@@ -30,10 +36,10 @@ namespace DAL
         /// </summary>
         /// <param name="parcelId"></param>
         /// <param name="droneId"></param>
-        public void ParcelDrone(int parcelId, int droneId)// we initilized the parcels with empty droneid so don't we need to add a drone id
+        public void ParcelDrone(int parcelId, int droneId)
         {
-            // looking for an avialable drone and setting the Id of that drone, to be the DroneId of hte parcel
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
+            // looking for an avialable drone and setting the Id of that drone, to be the DroneId of the parcel
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
             if (parcelIndex == -1)
             {
                 throw new MissingIdException("No such parcel\n");
@@ -41,34 +47,38 @@ namespace DAL
             else
             {
                 var temp = DataSource.parcelList[parcelIndex];
-                temp.droneId = droneId;
-                temp.requested = DateTime.Now;
+                temp.DroneId = droneId;
+                temp.Requested = DateTime.Now;
                 DataSource.parcelList[parcelIndex] = temp;
             }
         }
 
+        ///// <summary>
+        ///// function that changes the status of the drone according to the given parameter.
+        ///// </summary>
+        ///// <param name="DroneId"></param>
+        ///// <param name="st"></param>
+        //public void ChangeDroneStatus(int DroneId, DroneStatuses st)
+        //{
+        //    int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
+        //    if (droneIndex == -1)
+        //        throw new MissingIdException("No such drone\n");
+        //    else
+        //    {
+        //        var temp = DataSource.dronesList[droneIndex];
+        //        temp.status = st;
+        //        DataSource.dronesList[droneIndex] = temp;
+        //    }
+        //}
+
         /// <summary>
-        /// function that changes the status of the drone according to the given parameter.
+        /// returns the drone according to the given Id
         /// </summary>
-        /// <param name="DroneId"></param>
-        /// <param name="st"></param>
-        public void ChangeDroneStatus(int DroneId, DroneStatuses st)
-        {
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
-            if (droneIndex == -1)
-                throw new MissingIdException("No such drone\n");
-            else
-            {
-                var temp = DataSource.dronesList[droneIndex];
-                temp.status = st;
-                DataSource.dronesList[droneIndex] = temp;
-            }
-        }
-
-
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public Drone GetDrone(int ID)
         {
-            int index = DataSource.dronesList.FindIndex(d => d.id == ID);
+            int index = DataSource.dronesList.FindIndex(d => d.Id == ID);
             if (index == -1)
             {
                 throw new MissingIdException("No such drone\n");
@@ -77,10 +87,12 @@ namespace DAL
             {
                 return DataSource.dronesList[index];
             }
-
-            // return DataSource.dronesList.Find(d => d.id == ID);
         }
 
+        /// <summary>
+        /// returns the list of all drones as Ienumerable
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Drone> GetAllDrones()
         {
             List<Drone> list = new();
@@ -94,7 +106,7 @@ namespace DAL
         /// <param name="model"></param>
         public void UpdateDrone(int droneId,string model)
         {
-            int index = DataSource.dronesList.FindIndex(d => d.id ==droneId );
+            int index = DataSource.dronesList.FindIndex(d => d.Id ==droneId );
             if (index == -1)
             {
                 throw new MissingIdException("No such drone\n");
@@ -102,7 +114,7 @@ namespace DAL
             else
             {
                 Drone tempDrone=DataSource.dronesList[index];
-                tempDrone.model = model;
+                tempDrone.Model = model;
                 DataSource.dronesList[index] = tempDrone;
             }
         }

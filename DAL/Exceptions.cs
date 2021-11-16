@@ -9,10 +9,10 @@ namespace IDAL
 {
     namespace DO
     {
-        //class Exceptions
-        //{
-        //}
-       
+        /// <summary>
+        /// class Exceptions
+        /// </summary>
+
         [Serializable]
         internal class DuplicateIdException : Exception
         {
@@ -32,7 +32,7 @@ namespace IDAL
             {
             }
         }
-
+        [Serializable]
         internal class MissingIdException : Exception
         {
             public MissingIdException() : base()
@@ -50,6 +50,7 @@ namespace IDAL
             protected MissingIdException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
-        }     }
+        }
+    }
 }
 

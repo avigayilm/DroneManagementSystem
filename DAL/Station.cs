@@ -10,20 +10,20 @@ namespace IDAL
     {
         public struct Station 
         {
-            public int id { get; set; }
-            public string name { get; set; }
-            public double longitude { get; set; }
-            public double latitude { get; set; }
-            public int chargeSlots { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public double Longitude { get; set; }
+            public double Latitude { get; set; }
+            public int ChargeSlots { get; set; }
 
             public override string ToString()
             {
                 String result = " ";
-                result += $"ID is {id}, \n";
-                result += $"Name is {name}, \n";
-                result += $"Latitude is {(Bonus.DecimalToSexagesimal(latitude, 't'))}, \n";
-                result += $"longitude is {(Bonus.DecimalToSexagesimal(longitude, 'n'))}, \n";
-                result += $"There are {chargeSlots} Chargeslots\n";
+                result += $"ID is {Id}, \n";
+                result += $"Name is {Name}, \n";
+                result += $"Latitude is {(Bonus.DecimalToSexagesimal(Latitude, 't'))}, \n";
+                result += $"longitude is {(Bonus.DecimalToSexagesimal(Longitude, 'n'))}, \n";
+                result += $"There are {ChargeSlots} Chargeslots\n";
                 return result;
             }
         }

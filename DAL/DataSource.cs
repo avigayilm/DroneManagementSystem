@@ -45,9 +45,9 @@ namespace DAL
             {
                 dronesList.Add(new()
                 {
-                    id = rand.Next(1000, 9999),
-                    model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
-                    maxWeight = (WeightCategories)rand.Next(3),
+                    Id = rand.Next(1000, 9999),
+                    Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
+                    MaxWeight = (WeightCategories)rand.Next(3),
                     //status = DroneStatuses.Available,
                     //battery = GetRandomNumber(20, 100)
                 });
@@ -64,12 +64,12 @@ namespace DAL
             {
                 customerList.Add(new()
                 {
-                    id = $"0{rand.Next(100000000, 999999999)}",
-                    name = customerNames[i],
-                    phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
+                    Id = $"0{rand.Next(100000000, 999999999)}",
+                    Name = customerNames[i],
+                    Phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
                     //Lat-long coorditates for cities in Israel are in range: Latitude from 29.55805 to 33.20733 and longitude from 34.57149 to 35.57212.
-                    latitude = GetRandomNumber(29.55805, 33.20733),//jerusalem range
-                    longitude = GetRandomNumber(34.57149, 35.57212)
+                    Latitude = GetRandomNumber(29.55805, 33.20733),//jerusalem range
+                    Longitude = GetRandomNumber(34.57149, 35.57212)
                 });
             }
         }
@@ -81,38 +81,38 @@ namespace DAL
             {
                 Parcel temp = new()
                 {
-                    id = ++DataSource.Config.LastParcelNumber,
-                    senderid = customerList[rand.Next(customerList.Count)].id,// gets a random number of one of the customers
-                    targetid = customerList[rand.Next(customerList.Count)].id,
-                    weight = (WeightCategories)rand.Next(3),
-                    priority = (Priorities)rand.Next(3),
-                    requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
-                    droneId = 0
+                    Id = ++DataSource.Config.LastParcelNumber,
+                    Sender = customerList[rand.Next(customerList.Count)].Id,// gets a random number of one of the customers
+                    Target = customerList[rand.Next(customerList.Count)].Id,
+                    Weight = (WeightCategories)rand.Next(3),
+                    Priority = (Priorities)rand.Next(3),
+                    Requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
+                    DroneId = 0
                 };
 
                 int statusStats = rand.Next(100);
                 if (statusStats >= 10) // scheduled
                 {
-                    temp.scheduled = temp.requested.AddMinutes(180);
+                    temp.Scheduled = temp.Requested.AddMinutes(180);
 
                     if (statusStats >= 20) // picked up
                     {
-                        temp.pickedUp = temp.scheduled.AddMinutes(60);
+                        temp.PickedUp = temp.Scheduled.AddMinutes(60);
                         if (statusStats >= 30) // delivered
                         {
-                            temp.delivered = temp.pickedUp.AddMinutes(60);
-                            temp.droneId = dronesList[rand.Next(dronesList.Count)].id;
+                            temp.Delivered = temp.PickedUp.AddMinutes(60);
+                            temp.DroneId = dronesList[rand.Next(dronesList.Count)].Id;
                         }
                     }
-                    if (temp.droneId == 0)
+                    if (temp.DroneId == 0)
                     { 
                         int dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
-                                                          && d.maxWeight <= temp.weight
+                                                          && d.MaxWeight <= temp.Weight
                                                           && d.battery >= 30);
                         if(dIndex >= 0)
                         {
                             var drone = dronesList[dIndex];
-                            temp.droneId = drone.id;
+                            temp.DroneId = drone.Id;
                             drone.status = DroneStatuses.Delivery;
                             dronesList[dIndex] = drone;
                         }
@@ -130,11 +130,11 @@ namespace DAL
             {
                 stationList.Add(new()
                 {
-                    id = rand.Next(1000, 9999),
-                    name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
-                    chargeSlots = rand.Next(2, 10),
-                    latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
-                    longitude = GetRandomNumber(34.57149, 35.57212)
+                    Id = rand.Next(1000, 9999),
+                    Name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
+                    ChargeSlots = rand.Next(2, 10),
+                    Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
+                    Longitude = GetRandomNumber(34.57149, 35.57212)
                 });
             }
         }

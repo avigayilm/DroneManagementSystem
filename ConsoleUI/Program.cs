@@ -53,11 +53,11 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out int slots);
                                         Station tempStat = new()// adds a new station
                                         {
-                                            id = stationID,
-                                            name = inputname,
-                                            chargeSlots = slots,
-                                            longitude = longitudeInput,
-                                            latitude = latitudeInput,
+                                            Id = stationID,
+                                            Name = inputname,
+                                            ChargeSlots = slots,
+                                            Longitude = longitudeInput,
+                                            Latitude = latitudeInput,
                                         };
                                         dal.AddStation(tempStat);
                                         break;
@@ -74,11 +74,11 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new()
                                         {
-                                            id = inputId,
-                                            name = inputname,
-                                            phone = inputphone,
-                                            longitude = longitudeInput,
-                                            latitude = latitudeInput,
+                                            Id = inputId,
+                                            Name = inputname,
+                                            Phone = inputphone,
+                                            Longitude = longitudeInput,
+                                            Latitude = latitudeInput,
 
 
                                         };
@@ -96,9 +96,9 @@ namespace ConsoleUI
                                         double.TryParse(Console.ReadLine(), out double batt);
                                         Drone newDrone = new()
                                         {
-                                            id = droneID,
-                                            model = inputmodel,
-                                            maxWeight = maxim,
+                                            Id = droneID,
+                                            Model = inputmodel,
+                                            MaxWeight = maxim,
                                             status = stat,
                                             battery = batt
                                         };
@@ -120,11 +120,11 @@ namespace ConsoleUI
                                         {
                                             senderid = inputSenderId,
                                             targetid = inputTargetId,
-                                            weight = maxim,
-                                            priority = prio,
-                                            requested = req, //does this have to be filled in 
-                                            scheduled = sched,
-                                            delivered = null,
+                                            Weight = maxim,
+                                            Priority = prio,
+                                            Requested = req, //does this have to be filled in 
+                                            Scheduled = sched,
+                                            Delivered = null,
                                             //requested = DateTime.MinValue,
                                             //scheduled = DateTime.MinValue
                                         };
@@ -211,7 +211,7 @@ namespace ConsoleUI
                                     }
                                 case ListOptions.Parcels://display parcels list
                                     {
-                                        List<Parcel> parcelListTemp = dal.GetParcelList().ToList();
+                                        List<Parcel> parcelListTemp = dal.GetAllParcels().ToList();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
