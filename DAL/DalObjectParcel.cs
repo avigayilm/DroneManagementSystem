@@ -38,11 +38,11 @@ namespace DAL
             else// check if it's a valid index
             {
                 int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-                var temp2 = DataSource.dronesList[droneIndex];
-                temp2.status = DroneStatuses.Delivery;
+                //var temp2 = DataSource.dronesList[droneIndex];
+               // temp2.status = DroneStatuses.Delivery;
                 var temp = DataSource.parcelList[parcelIndex];
                 temp.pickedUp = DateTime.Now;
-                DataSource.dronesList[droneIndex] = temp2;
+                //DataSource.dronesList[droneIndex] = temp2;
                 DataSource.parcelList[parcelIndex] = temp;
 
             }

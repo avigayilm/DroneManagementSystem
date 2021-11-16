@@ -42,7 +42,7 @@ namespace BL
         //    }
         //}
 
-        private static void CopyPropertiestoIDAL<Source, Target>(Source source, Target target)//from bl to idal
+        public static void CopyPropertiestoIDAL<Source, Target>(this Source source, Target target)//from bl to idal
         {
             foreach (var targetProp in target.GetType().GetProperties())//goes over all source props
             {
@@ -76,7 +76,7 @@ namespace BL
             //return target;
         }
 
-        private static void CopyPropertiestoIBL<Source, Target>(Source source, Target target)//from idal to bl
+        private static void CopyPropertiestoIBL<Source, Target>(this Source source, Target target)//from idal to bl
         {
             foreach (var sProp in source.GetType().GetProperties())//goes over all source props
             {
@@ -221,5 +221,5 @@ namespace BL
 
 
 
-//}
+}
 //}

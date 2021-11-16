@@ -23,8 +23,8 @@ namespace IDAL
             {
                 String result = " ";
                 result += $"ID is #{id}, \n";
-                result += $"Senderid is {senderid}, \n";
-                result += $"Targetid is {targetid}, \n";
+                result += $"Senderid is {sender}, \n";
+                result += $"Targetid is {target}, \n";
                 result += $"Weight is {weight},\n";
                 result += $"Priority is {priority}\n";
                 result += $"The parcel was requested at {requested},\n";
