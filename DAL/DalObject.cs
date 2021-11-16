@@ -12,7 +12,7 @@ namespace DAL
      public partial class DalObject:IDal
     {
         /// <summary>
-        /// 
+        /// constructor to initialize the dalobject
         /// </summary>
         public DalObject() => DataSource.Initialize();
 

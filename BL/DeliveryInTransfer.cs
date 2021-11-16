@@ -12,11 +12,12 @@ namespace IBL
         {
             public int Id { get; set; }
             public WeightCategories Weight { get; set; }
-            public Priorities Priority { get; set; 
-            public bool stat { get; set; }
+            public Priorities Priority { get; set; }
+            public bool Stat { get; set; }
             public Location collecting { get; set; }
             public Location delivering { get; set; }
             double deliveryDistance { get; set; }
+
 
 
 

@@ -18,19 +18,18 @@ namespace DAL
         /// <param name="StationId"></param>
         public void SendToCharge(int droneId, int stationId)
         {
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.id == droneId);
-            int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == droneId);
+            int stationIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
             if (stationIndex == -1)
                 throw new MissingIdException(" No such station in list\n");
             if (droneIndex == -1)
-                throw new MissingIdException("NO such drone in list" +
-                    " \n");
+                throw new MissingIdException("No  such drone in list \n");
             else
             {
                 //// making a new Dronecharge
                 DroneCharge DC = new DroneCharge();
-                DC.droneId = droneId;
-                DC.stationId = stationId;
+                DC.DroneId = droneId;
+                DC.StationId = stationId;
                 DataSource.chargeList.Add(DC);
             }
 
@@ -42,18 +41,23 @@ namespace DAL
         /// <param name="Buzzer"></param>
         public void BatteryCharged(int droneId, int stationId)
         {
-            int droneIndex = DataSource.chargeList.FindIndex(d => d.droneId == droneId);// find the index of the dronecharge according to teh droneIndex
+            int droneIndex = DataSource.chargeList.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (droneIndex == -1)
                 throw new MissingIdException("No such drone \n");
             else
             {
                 DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
                 var temp = DataSource.dronesList[droneIndex];
-                temp.battery = 100.00;// battery is full
+                ///temp.battery = 100.00;// battery is full
                 DataSource.dronesList[droneIndex] = temp;
             }
 
         }
+
+        /// <summary>
+        /// returns a list of Dronecharge
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
             List<DroneCharge> list = new();

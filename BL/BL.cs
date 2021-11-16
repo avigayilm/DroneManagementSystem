@@ -8,6 +8,7 @@ using DAL;
 using IDAL;
 
 
+
 namespace BL
 {
     public partial class BL : IBL.Ibl
@@ -18,22 +19,22 @@ namespace BL
         internal Location DroneLocation(IDAL.DO.Parcel p, droneToList tempBl)
         {
             Location locTemp = new();
-            if (p.requested != null && p.pickedUp == null)//if assigned but not yet collected
+            if (p.Requested != null && p.PickedUp == null)//if assigned but not yet collected
             {
                 //location of deone will be in  station closed to the sender
-                var stationTemp = idal1.smallestDistanceStation(p.senderid);
-                locTemp.Longitude = stationTemp.longitude;
-                locTemp.Latitude = stationTemp.latitude;
+                var stationTemp = idal1.SmallestDistanceStation(p.Sender);
+                locTemp.Longitude = stationTemp.Longitude;
+                locTemp.Latitude = stationTemp.Latitude;
             }
-            if (p.requested != null && p.pickedUp != null)// if pakage is assigned and picked up
+            if (p.Requested != null && p.PickedUp != null)// if pakage is assigned and picked up
             {
                 //location wIll be at the sender
                 List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();
-                int customerIndex = tempCustomerList.FindIndex(c => c.id == p.senderid);
+                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.Sender);
                 if (customerIndex != -1)
                 {
-                    locTemp.Longitude = tempCustomerList[customerIndex].longitude;
-                    locTemp.Latitude = tempCustomerList[customerIndex].latitude;
+                    locTemp.Longitude = tempCustomerList[customerIndex].Longitude;
+                    locTemp.Latitude = tempCustomerList[customerIndex].Latitude;
                 }
 
             }
@@ -56,7 +57,7 @@ namespace BL
 
             foreach (IDAL.DO.Parcel p in undeliveredParcel)
             {
-                int DroneId = p.droneId;
+                int DroneId = p.DroneId;
                 int droneIndex = droneBL.FindIndex(d => d.Id == DroneId);
                 if (droneIndex > 0)// if there is a drone assigned to the parcel
                 {
@@ -115,8 +116,8 @@ namespace BL
             newDrone.Status = DroneStatuses.Maintenance;
             //location of station id
             List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-            int index = tempStat.FindIndex(d => d.id == stationId);
-            newDrone.Loc = new() { Longitude = tempStat[index].longitude, Latitude = tempStat[index].latitude };
+            int index = tempStat.FindIndex(d => d.Id == stationId);
+            newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
             idal1.AddStation(tempStat);
         }
         public void AddParcel(Parcel newParcel)
@@ -153,17 +154,17 @@ namespace BL
                 List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
                 IDAL.DO.Station tempStation = FindPossibleStation(tempStWithCharging, droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
                 droneToList tempDrone = droneBL[index];
-                if (droneBL[index].Status == DroneStatuses.Available && tempStation.id != 0)//if it's available and there is enough battery
+                if (droneBL[index].Status == DroneStatuses.Available && tempStation.Id != 0)//if it's available and there is enough battery
                 {
                     //update the drone
-                    tempDrone.Loc.Longitude = tempStation.longitude;
-                    tempDrone.Loc.Latitude = tempStation.latitude;
+                    tempDrone.Loc.Longitude = tempStation.Longitude;
+                    tempDrone.Loc.Latitude = tempStation.Latitude;
                     UpdateBattery();
                     tempDrone.Status = DroneStatuses.Maintenance;
                     //update the station
-                    idal1.ChangeChargeSlots(tempStation.id, -1);
+                    idal1.ChangeChargeSlots(tempStation.Id, -1);
                     //update dronecharge
-                    idal1.SendToCharge(droneId, tempStation.id);
+                    idal1.SendToCharge(droneId, tempStation.Id);
 
                 }
                 else
@@ -202,19 +203,31 @@ namespace BL
         {
 
         }
+
+        /// <summary>
+        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// </summary>
+        /// <param name="withCharging"></param>
+        /// <param name="dr"></param>
+        /// <returns></returns>
         public IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, droneToList dr)
         {
             foreach (IDAL.DO.Station st in withCharging)
             {
-                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.longitude, st.latitude);
+                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
                 if (EnoughBattery(distance, dr.Battery))
                     return st;
             }
-            IDAL.DO.Station temp = new() { id = 0 };
+            IDAL.DO.Station temp = new() { Id = 0 };
             return temp;
 
         }
 
+        /// <summary>
+        /// release teh drone from charge, updates the battery according to the charging time
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="chargingTime"></param>
         public void releasingDroneFromCharge(int droneId, double chargingTime)
         {
             int index = droneBL.FindIndex(d => d.Id == droneId);
@@ -226,7 +239,7 @@ namespace BL
                 {
                     List<IDAL.DO.DroneCharge> tempStWithCharging = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = droneBL.FindIndex(d => d.Id == droneId);// finding the index of drone to get the station id
-                    int stationId = tempStWithCharging[droneChargeIndex].stationId;
+                    int stationId = tempStWithCharging[droneChargeIndex].StationId;
                     droneToList tempDrone = droneBL[index];
                     // update drone
                     UpdateBattery();
@@ -326,24 +339,42 @@ namespace BL
 
         }
 
-        public void DeliverParcelByDrone()
+        public void DeliverParcelByDrone(int droneId)
         {
 
         }
 
-        public void GetStation()
+        /// <summary>
+        /// returning a station from BL gettting it from dalObject
+        /// </summary>
+        /// <param name="stationId"></param>
+        public Station GetStation(int stationId)
         {
+            Station station = new();
+            idal1.GetStation(stationId).CopyPropertiestoIDAL(station);
+            return station;
+            //Station st=station.
+        }
+
+        public Drone getDrone(int droneId)
+        {
+            int index = droneBL.FindIndex(d => d.Id == droneId);
+            if (index == -1)
+                throw new MissingIdException("No such drone\n");
+            else
+                return droneBL[index];
+
 
         }
 
-        public void getDrone()
+        public Customer getCustomer(string customerId)
         {
-
-        }
-
-        public void getCustomer()
-        {
-
+            Customer customer = new();
+            idal1.GetCustomer(customerId).CopyPropertiestoIDAL(customer);
+            customer.ReceivedParcels = new();
+            customer.SentParcels = new();
+            customer.
+            return customer;
         }
 
         public void getParcel()
@@ -377,6 +408,10 @@ namespace BL
         }
 
         public void getAllUnassignedParcels()
+        {
+        }
+
+        public void getAllStationsWithCharging()
         {
 
         }

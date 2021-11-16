@@ -28,17 +28,17 @@ namespace IDAL
         public Drone GetDrone(int ID);
         public Station GetStation(int ID);
         public IEnumerable<Customer> GetAllCustomers();
+        public IEnumerable<Customer> GetAllStations();
         public IEnumerable<Drone> GetAllDrones();
-        public IEnumerable<Parcel> GetParcelList();
-        //public IEnumerable<DroneCharge> GetDroneChargeList);
+        public IEnumerable<Parcel> GetAllParcels();
+        public IEnumerable<DroneCharge> GetDroneChargeList();
         public IEnumerable<Parcel> GetvacantParcel();
         public double[] DronePwrUsg();
         public IEnumerable<Station> GetStationWithCharging();
         public IEnumerable<Parcel> UndeliveredParcels();
         public void UpdateDrone(int droneId, string model);
         public void UpdateStation(int stationId, string name, int chargeSlots);
-        public void UpdateCustomer(string customerId, string name, string phone)
-
+        public void UpdateCustomer(string customerId, string name, string phone);
         public Station SmallestDistanceStation(string cusId);
     }
 }

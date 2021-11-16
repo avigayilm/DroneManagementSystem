@@ -13,8 +13,16 @@ namespace IBL
             public string Id { get; set; }
             public Priorities Prioirty { get; set; }
             public CustomerInDelivery Sender { get; set; }
-            public CustomerInDelivery Reiceiver { get; set; }
-
+            public CustomerInDelivery Receiver { get; set; }
+            public override string ToString()
+            {
+                String result = " ";
+                result += $"ID is {Id}, \n";
+                result += $"Priority is {Prioirty}, \n";
+                result += $"Customer in Delivery {Sender.ToString()}, \n";
+                result += $"Customer in Delivery {Receiver.ToString()}, \n";
+                return result;
+            }
 
         }
     }

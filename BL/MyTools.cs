@@ -76,7 +76,7 @@ namespace BL
             //return target;
         }
 
-        private static void CopyPropertiestoIBL<Source, Target>(this Source source, Target target)//from idal to bl
+        public static void CopyPropertiestoIBL<Source, Target>(this Source source, Target target)//from idal to bl
         {
             foreach (var sProp in source.GetType().GetProperties())//goes over all source props
             {
@@ -109,6 +109,7 @@ namespace BL
             //return target;
         }
     }
+}
 
 //        public static void CopyPropertiesToIEnumerable<T, S>(this IEnumerable<S> from, List<T> to)
 //        where T : new()

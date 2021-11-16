@@ -17,6 +17,18 @@ namespace IBL
             public int NumPackSentDel { get; set; }
             public int NumPackSentUnDel { get; set; }
             public int NumPackExp { get; set; }
+            public override string ToString()
+            {
+                String result = " ";
+                result += $"ID is {Id}, \n";
+                result += $"Name is {Name}, \n";
+                result += $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}, \n";
+                result += $"number of Packages received{NumPacksReceived}, \n";
+                result += $"number of Packages sent delivered{NumPackSentDel}, \n";
+                result += $"number of packages sent undelivered{NumPackSentUnDel}, \n";
+                result += $"number of Packages expected{NumPackExp}, \n";
+                return result;
+            }
         }
     }
 }

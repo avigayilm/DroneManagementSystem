@@ -22,9 +22,9 @@ namespace BL
         {
             Drone BLDrone = new()
             {
-                Id = dro.id,
-                Model = dro.model,
-                Weight = (WeightCategories)dro.maxWeight,
+                Id = dro.Id,
+                Model = dro.Model,
+                Weight = (WeightCategories)dro.MaxWeight,
             };
             return BLDrone;
         }

@@ -13,13 +13,13 @@ namespace DAL
     {
 
         /// <summary>
-        /// adding the elements to the lists
+        /// adding the station to the lists
         /// </summary>
         /// <param name="stat"></param>
         public void AddStation(Station stat)
         {
-            int index = DataSource.parcelList.FindIndex(s => s.id == stat.id);
-            if (index != -1)
+            bool exists = DataSource.stationList.Exists(s => s.Id == stat.Id);
+            if (exists)
             {
                 throw new DuplicateIdException("Station already exists in list\n");
             }
@@ -36,21 +36,25 @@ namespace DAL
         /// <param name="n"></param>
         public void ChangeChargeSlots(int stationId, int n)
         {
-            int stationIndex = DataSource.stationList.FindIndex(s => s.id == stationId);
+            int stationIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
             if (stationIndex == -1)
                 throw new MissingIdException("No such station exists in list\n");
             else
             {
                 var temp = DataSource.stationList[stationIndex];
-                temp.chargeSlots += n;
+                temp.ChargeSlots += n;
                 DataSource.stationList[stationIndex] = temp;
             }
         }
-
+        /// <summary>
+        /// returns a station according to the given Id
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public Station GetStation(int ID)
         {
 
-            int index = DataSource.stationList.FindIndex(s => s.id == ID);
+            int index = DataSource.stationList.FindIndex(s => s.Id == ID);
             if (index == -1)
             {
                 throw new MissingIdException("No such station\n");
@@ -59,19 +63,20 @@ namespace DAL
             {
                 return DataSource.stationList[index];
             }
-            // return DataSource.stationList.Find(s => s.id == ID);
         }
-
-        // returns the list with the stations that have availble charging
+        /// <summary>
+        ///  returns the list with the stations that have availble charging
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Station> GetStationWithCharging()
         {
             List<Station> temp = new();
-            DataSource.stationList.ForEach(p => { if (p.chargeSlots > 0) { temp.Add(p); } });
+            DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
             return (IEnumerable<Station>)temp;
         }
 
         /// <summary>
-        /// The Display list funcitons return the whole list
+        /// returns the whole list of stations
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Station> GetAllStations()
@@ -80,7 +85,11 @@ namespace DAL
             DataSource.stationList.ForEach(s => tempStationList.Add(s));
             return (IEnumerable<Station>)tempStationList;
         }
-
+        /// <summary>
+        /// returns the nearest station to a customer
+        /// </summary>
+        /// <param name="cusId"></param>
+        /// <returns></returns>
         public Station SmallestDistanceStation(string cusId)
         {
             Customer temp = GetCustomer(cusId);
@@ -90,7 +99,7 @@ namespace DAL
             IEnumerator<Station> iter = DataSource.stationList.GetEnumerator();
             for (int i = 0; i < DataSource.stationList.Count; i++)
             {
-                distancekm = Bonus.Haversine(DataSource.stationList[i].longitude, DataSource.stationList[i].latitude, temp.longitude, temp.latitude);
+                distancekm = Bonus.Haversine(DataSource.stationList[i].Longitude, DataSource.stationList[i].Latitude, temp.Longitude, temp.Latitude);
                 if (distancekm < minDistance)
                 {
                     minDistance = distancekm;
@@ -108,7 +117,7 @@ namespace DAL
 
         public void UpdateStation(int stationId, string name,int chargeSlots)
         {
-            int index = DataSource.stationList.FindIndex(s => s.id == stationId);
+            int index = DataSource.stationList.FindIndex(s => s.Id == stationId);
             if (index == -1)
             {
                 throw new MissingIdException("No such station\n");
@@ -116,10 +125,10 @@ namespace DAL
             else
             {
                 Station tempStation = DataSource.stationList[index];
-                if(name!="\n")
-                    tempStation.name = name;
+                if(name!=("\n")
+                    tempStation.Name = name;
                 if (chargeSlots != 10)// chekc if a phone was entere
-                    tempStation.chargeSlots = chargeSlots;
+                    tempStation.ChargeSlots = chargeSlots;
                 DataSource.stationList[index] = tempStation;
             }
 

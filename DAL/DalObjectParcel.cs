@@ -11,14 +11,18 @@ namespace DAL
 {
     public partial class DalObject
     {
+        /// <summary>
+        /// adds a parcel to the parcellist
+        /// </summary>
+        /// <param name="pack"></param>
         public void AddParcel(Parcel pack)
         {
-            if (DataSource.parcelList.Exists(p => p.id == pack.id))
-                throw new DuplicateIdException($"Parcel with {pack.id} id already exists\n");
+            if (DataSource.parcelList.Exists(p => p.Id == pack.Id))
+                throw new DuplicateIdException($"Parcel with {pack.Id} id already exists\n");
             else
             {
                 DataSource.parcelList.Add(pack);
-                pack.id = ++DataSource.Config.LastParcelNumber;
+                pack.Id = ++DataSource.Config.LastParcelNumber;
             }
 
         }
@@ -30,7 +34,7 @@ namespace DAL
         /// <param name="parcelId"></param>
         public void ParcelPickedUp(int parcelId)
         {
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
             if (parcelIndex == -1)
             {
                 throw new MissingIdException("No such parcel exists in list\n");
@@ -57,16 +61,16 @@ namespace DAL
         /// <param name="day"></param>
         public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
         {
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.id == parcelId);
-            if (parcelIndex == -1)           
-                throw new MissingIdException("No such parcel exists in list\n");           
+            int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
+            if (parcelIndex == -1)
+                throw new MissingIdException("No such parcel exists in list\n");
             else
             {
-                int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
+                int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
                 var temp2 = DataSource.dronesList[droneIndex];
                 var temp = DataSource.parcelList[parcelIndex];
-                temp2.status = DroneStatuses.Available;
-                temp.requested = DateTime.Now;
+                //temp2.status = DroneStatuses.Available;
+                temp.Requested = DateTime.Now;
                 DataSource.dronesList[droneIndex] = temp2;
                 DataSource.parcelList[parcelIndex] = temp;
             }
@@ -79,16 +83,19 @@ namespace DAL
         /// <returns></returns>
         public Parcel GetParcel(int ID)
         {
-            if (!DataSource.parcelList.Exists(p => p.id == ID))
+            if (!DataSource.parcelList.Exists(p => p.Id == ID))
                 throw new MissingIdException($"No parcel with {ID} id exists\n");
             else
             {
-                int index = DataSource.parcelList.FindIndex(p => p.id == ID);
+                int index = DataSource.parcelList.FindIndex(p => p.Id == ID);
                 return DataSource.parcelList[index];
             }
         }
-
-        public IEnumerable<Parcel> GetParcelList()
+        /// <summary>
+        /// returns a parcellist
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Parcel> GetAllParcels()
         {
             List<Parcel> list = new();
             DataSource.parcelList.ForEach(p => list.Add(p));
@@ -99,7 +106,7 @@ namespace DAL
         public IEnumerable<Parcel> GetvacantParcel()
         {
             List<Parcel> temp = new();
-            DataSource.parcelList.ForEach(p => { if (p.droneId == 0) temp.Add(p); });
+            DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) temp.Add(p); });
             return (IEnumerable<Parcel>)temp;
         }
 
@@ -110,8 +117,8 @@ namespace DAL
         public IEnumerable<Parcel> UndeliveredParcels()
         {
             List<Parcel> undelivered = new();
-            DataSource.parcelList.ForEach(p => { if (p.delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
+            DataSource.parcelList.ForEach(p => { if (p.Delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
             return undelivered;
-            //put the drone state in delivery
         }
     }
+}

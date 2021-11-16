@@ -12,6 +12,13 @@ namespace IBL
         {
             public string Id { get; set; }
             public string Name { get; set; }
+            public override string ToString()
+            {
+                String result = " ";
+                result += $"ID is {Id}, \n";
+                result += $"Name is {Name}, \n";
+                return result;
+            }
         }
     }
 }
