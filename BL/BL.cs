@@ -90,28 +90,79 @@ namespace BL
 
 
         //functions used in the main menu
-        public void AddStation(Station tempStat)
-        {
-            idal1.AddStation(tempStat);
-            tempStat.Charging = new();
 
-            //List<IDAL.DO.Station> stat = (List<IDAL.DO.Station>)idal1.GetAllCustomers();
-            //int index = stat.FindIndex(c => c.id == tempStat.Id);
-            //if (index != -1)
-            //{
-            //    throw new DuplicateIdException("Customer already exists\n");
-            //}
-            //else
-            //{
-            //    DataSource.customerList.Add(cus);
-            //}
+        /// <summary>
+        /// adding a station to the list in the Datalayer
+        /// </summary>
+        /// <param name="station"></param>
+        public void AddStation(Station station)
+        {
+            try
+            {
+                if (station.Chargeslots < 0)
+                    throw new InvalidInputException("The number of charging slots is less than 0 \n");
+                if (station.Id <= 0)// maybe I have to check that it is 3 digits
+                    throw new InvalidInputException("The Id is less than zero \n");
+                if (station.Loc.Latitude <= -90 || station.Loc.Latitude >= 90)// out of range of latitude
+                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+                if (station.Loc.Longitude <= -180 || station.Loc.Longitude >= 180)// out of range of latitude
+                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
+                IDAL.DO.Station st = new();
+                station.CopyPropertiestoIDAL(st);
+                idal1.AddStation(st);
+                station.Charging = new();
+            }
+            catch(IDAL.DO.DuplicateIdException ex)
+            {
+                throw new DuplicateIdException("The Station already exists.\n,",ex);
+            }
         }
+
+        /// <summary>
+        /// adding a customer in the list of the datalayer
+        /// </summary>
+        /// <param name="newCustomer"></param>
         public void AddCustomer(Customer newCustomer)
         {
-            idal1.AddCustomer(newCusomter)
+            try
+            {
+                if (newCustomer.Id == "\n")
+                    throw new InvalidInputException("invalid Id input");
+                if (newCustomer.Loc.Latitude <= -90 || newCustomer.Loc.Latitude >= 90)// out of range of latitude
+                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+                if (newCustomer.Loc.Longitude <= -180 || newCustomer.Loc.Longitude >= 180)// out of range of latitude
+                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
+                if (newCustomer.PhoneNumber == "\n")
+                    throw new InvalidInputException("invalid phonenumber");
+                IDAL.DO.Customer customer = new();
+                newCustomer.CopyPropertiestoIDAL(customer);
+                idal1.AddCustomer(customer);
+            }
+            catch (IDAL.DO.DuplicateIdException ex)
+            {
+                throw new DuplicateIdException("The Customer already exists.\n,", ex);
+            }
+
+
         }
+
+        /// <summary>
+        /// adding a drone to the list of the datalayer
+        /// </summary>
+        /// <param name="newDrone"></param>
+        /// <param name="stationId"></param>
         public void AddDrone(Drone newDrone, int stationId)
         {
+            if (newDrone.Id < 0)
+                throw new InvalidInputException("invalid Id input \n");
+            if (newDrone.Loc.Latitude <= -90 || newDrone.Loc.Latitude >= 90)// out of range of latitude
+                throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+            if (newDrone.Loc.Longitude <= -180 || newDrone.Loc.Longitude >= 180)// out of range of latitude
+                throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
+            if (newDrone.Weight != WeightCategories.heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
+                throw new InvalidInputException("Invalid weightCategory \n");
+            if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery) 
+                throw new InvalidInputException("Invalid status \n");
             newDrone.Battery = rand.Next(20, 40);
             newDrone.Status = DroneStatuses.Maintenance;
             //location of station id
@@ -128,17 +179,32 @@ namespace BL
             newParcel.Dr = null;
             idal1.AddParcel(newParcel);
         }
-
+        /// <summary>
+        /// updates the drone's model
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="model"></param>
         public void updateDrone(int droneId, string model)
         {
             idal1.UpdateDrone(droneId, model);
         }
-
+        /// <summary>
+        /// updates the name and amount of chargingslots of the station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <param name="name"></param>
+        /// <param name="chargingSlots"></param>
         public void updateStation(int stationId, string name, int chargingSlots)
         {
             idal1.UpdateStation(stationId, name, chargingSlots);
         }
 
+        /// <summary>
+        /// updates the name and phone of the customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
         public void updateCustomer(int customerId, string name, string phone)
         {
             updateCustomer(customerId, name, phone);

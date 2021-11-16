@@ -48,5 +48,47 @@ namespace IBL
             {
             }
         }
+
+            [Serializable]
+            internal class InvalidInputException : Exception
+            {
+                public InvalidInputException() : base()
+                {
+                }
+
+                public InvalidInputException(string message) : base("Invalid input: " + message)
+                {
+                }
+
+                public InvalidInputException(string message, Exception innerException) : base(message, innerException)
+                {
+                }
+
+                protected InvalidInputException(SerializationInfo info, StreamingContext context) : base(info, context)
+                {
+                }
+            }
+
+
+        [Serializable]
+        internal class DeliveryIssueException : Exception
+        {
+            public DeliveryIssueException() : base()
+            {
+            }
+
+            public DeliveryIssueException(string message) : base("Delivery Issue: " + message)
+            {
+            }
+
+            public DeliveryIssueException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected DeliveryIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
+
     }
 }
