@@ -503,7 +503,7 @@ namespace BL
             idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
             List<IDAL.DO.Parcel>tempReceivedParcelList= (List< IDAL.DO.Parcel >)idal1.GetCustomerReceivedParcels(customerId);
             List<IDAL.DO.Parcel>tempSentParcelList= (List<IDAL.DO.Parcel>)idal1.GetCustomerSentParcels(customerId);
-            customer.ReceivedParcels = 
+            customer.ReceivedParcels = tempReceivedParcelList.CopyPropertyListtoIBLList();
             customer.SentParcels = new();
             return customer;
         }
