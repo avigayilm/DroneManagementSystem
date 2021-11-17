@@ -122,16 +122,15 @@ namespace BL
         /// <typeparam name="Target"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static  IEnumerable<Target> CopyPropertyListtoIBLList<Source, Target>(this List<Source> source)//from idal to bl
+        public static  void CopyPropertyListtoIBLList<Source, Target>(this List<Source> source, List<Target> target)//from idal to bl
         {
-            List<Target> tempTarget = new();
             Target T = default;
             foreach(Source idalElement in source)
             {
                 idalElement.CopyPropertiestoIBL(T);
-                tempTarget.Add(T);
+                target.Add(T);
             }
-            return (IEnumerable<Target>)tempTarget;
+            
         }
     }
 }
