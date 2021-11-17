@@ -311,10 +311,10 @@ namespace BL
         {
             return idal1.DronePwrUsg()[pwrIndex] * distance;
         }
-        public bool EnoughBattery(double distance, double battery, WeightCategories weight)
-        {
+        //public bool EnoughBattery(double distance, double battery, WeightCategories weight)
+        //{
 
-        }
+        //}
 
         public void UpdateBattery()
         {
@@ -555,29 +555,61 @@ namespace BL
             chargingListIdal.CopyPropertyListtoIBLList(station.Charging);
         }
 
-        public void getAllStation()
+        public IEnumerable<StationToList> GetAllStation()
         {
-
-
+            List<StationToList> tempList = new();
+            int[] slots;
+            idal1.GetAllStations().CopyPropertyListtoIBLList(tempList);
+            for(int i = 0; i< tempList.Count(); i++)
+            {
+                StationToList temp = tempList[i];
+                slots = idal1.AvailableAndEmptySlots(temp.Id);
+                temp.OccupiedSlots = slots[0];
+                temp.AvailableSlots = slots[1];
+                tempList[i] = temp;
+            }
+            return tempList;
         }
 
-        public void getAllDrones()
+        public IEnumerable<DroneToList> GetAllDrones()
         {
-
+            return droneBL;
         }
 
-        public void getAllCustomers()
+        public IEnumerable<CustomerToList> GetAllCustomers()
         {
-
+            List<CustomerToList> tempList = new();
+            idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
+            CustomerToList cus;
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                cus= tempList[i];
+                cus.NumPacksReceived = idal1.DeliveredParcels().Where(p => p.Target == cus.Id).Count();
+                cus.NumPackSentDel = idal1.DeliveredParcels().Where(p => p.Sender == cus.Id).Count();
+                cus.NumPackExp = idal1.UndeliveredParcels().Where(p => p.Target == cus.Id).Count();
+                cus.NumPackSentDel = idal1.UndeliveredParcels().Where(p => p.Sender == cus.Id).Count();
+            }
+            return tempList;
         }
-
-        public void getAllParcels()
+        /// <summary>
+        /// returns all parcels
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> GetAllParcels()
         {
-
+            List<PackageToList> tempList = new();
+            idal1.GetAllParcels().CopyPropertyListtoIBLList(tempList);
+            return tempList;
         }
-
-        public void getAllUnassignedParcels()
+        /// <summary>
+        /// returns all unassigned parcels
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PackageToList> GetAllUnassignedParcels()
         {
+            List<PackageToList> tempList = new();
+            idal1.UnAssignedParcels().CopyPropertyListtoIBLList(tempList);
+            return tempList;
         }
 
         public void getAllStationsWithCharging()

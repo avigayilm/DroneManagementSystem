@@ -125,7 +125,7 @@ namespace DAL
             else
             {
                 Station tempStation = DataSource.stationList[index];
-                if(name!=("\n")
+                if(name!=("\n"))
                     tempStation.Name = name;
                 if (chargeSlots != 10)// chekc if a phone was entere
                     tempStation.ChargeSlots = chargeSlots;
@@ -133,6 +133,15 @@ namespace DAL
             }
 
          
+        }
+
+        public int[] AvailableAndEmptySlots(int id)
+        {
+            Station st = GetStation(id);
+            int[] slots = new int [2];
+            slots[0] = DataSource.chargeList.Where(s => s.StationId == st.Id).Count();
+            slots[1] = st.ChargeSlots - slots[0];
+            return slots;
         }
 
     }
