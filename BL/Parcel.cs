@@ -11,11 +11,11 @@ namespace IBL
         public class Parcel
         {
             public int Id { get; set; }
-            public Customer Sender { get; set; }
-            public Customer Receiver { get; set; }
+            public CustomerInDelivery Sender { get; set; }
+            public CustomerInDelivery Receiver { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public Drone Dr? {get; set;}
+            public Drone? Dr {get; set;}
             public DateTime? Requested { get; set; }
             public DateTime? Scheduled{get; set;}
             public DateTime? PickedUp{get; set;}

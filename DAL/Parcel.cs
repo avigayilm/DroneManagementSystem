@@ -8,7 +8,7 @@ namespace IDAL
         {
             public int Id { get; set; }
             public string Sender { get; set; }
-            public String Target { get; set; }
+            public string Target { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
 

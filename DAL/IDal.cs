@@ -40,5 +40,10 @@ namespace IDAL
         public void UpdateStation(int stationId, string name, int chargeSlots);
         public void UpdateCustomer(string customerId, string name, string phone);
         public Station SmallestDistanceStation(string cusId);
+        public IEnumerable<Customer> GetCustomerReceivedParcels(string customerId);
+        public IEnumerable<Customer> GetCustomerSentParcels(string customerId);
+        public int CheckExistingCustomer(string customerId);
+        public void CheckDuplicateCustomer(string customerId);
+
     }
 }

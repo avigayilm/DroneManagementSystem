@@ -17,15 +17,8 @@ namespace DAL
         /// <param name="cus"></param>
         public void AddCustomer(Customer cus)
         {
-            int index = DataSource.customerList.FindIndex(c => c.Id == cus.Id);
-            if (index != -1)
-            {
-                throw new DuplicateIdException("Customer already exists\n");
-            }
-            else
-            {
-                DataSource.customerList.Add(cus);
-            }
+            CheckDuplicateCustomer(cus.Id)
+            DataSource.customerList.Add(cus);
         }
 
         /// <summary>
@@ -33,18 +26,10 @@ namespace DAL
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public Customer GetCustomer(string ID)
+        public Customer GetCustomer(string customerId)
         {
-            int index = DataSource.customerList.FindIndex(c => c.Id == ID);
-            if (index == -1)
-            {
-                throw new DuplicateIdException("No such Customer exists in list\n");
-            }
-            else
-            {
-                return DataSource.customerList[index];
-            }
-            //return DataSource.customerList.Find(c => c.id == ID);
+            int index = CheckExistingCustomer(customerId);
+            return DataSource.customerList[index];
         }
 
         /// <summary>
@@ -66,23 +51,64 @@ namespace DAL
         /// <param name="phone"></param>
         public void UpdateCustomer(string customerId, string name, string phone)
         {
+            int index = CheckExistingCustomer(customerId);
+            Customer tempCustomer = DataSource.customerList[index];
+            if (name != "\n")
+                 tempCustomer.Name = name;
+            if (phone !="\n")
+                 tempCustomer.Phone = phone;
+            DataSource.customerList[index] = tempCustomer;
+        }
+        /// <summary>
+        /// makes a list of all the parcels a certain customer sent
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public IEnumerable<Customer> GetCustomerSentParcels(string customerId)
+        {
+            int index = CheckExistingCustomer(customerId);
+            List<Parcel> list = new();
+            DataSource.parcelList.ForEach(p => { if (p.Sender == customerId && p.PickedUp != null) list.Add(p); });
+            return (IEnumerable<Customer>)list;
+        }
+
+        /// <summary>
+        /// makes a list with all the parcels a customer received
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public IEnumerable<Customer> GetCustomerReceivedParcels(string customerId)
+        {
+            int index = CheckExistingCustomer(customerId);
+            List<Parcel> list = new();
+            DataSource.parcelList.ForEach(p => { if (p.Sender == customerId && p.Delivered != null) list.Add(p); });
+            return (IEnumerable<Customer>)list;
+        }
+        /// <summary>
+        /// checks if a customer exists in the customerlist, if it doesn't it throws a MissingIdException
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public int CheckExistingCustomer(string customerId)
+        {
             int index = DataSource.customerList.FindIndex(c => c.Id == customerId);
             if (index == -1)
             {
-                throw new MissingIdException("No such station\n");
+                throw new MissingIdException("No such Customer exists\n");
             }
-            else
-            {
-                Customer tempCustomer = DataSource.customerList[index];
-                if (name != "\n")
-                    tempCustomer.Name = name;
-                if (phone !="\n")
-                    tempCustomer.Phone = phone;
-                DataSource.customerList[index] = tempCustomer;
-            }
-
+            return index;
         }
 
-       
+        /// <summary>
+        /// checks if a customer already exists, if it does it throws a duplicateIdException
+        /// </summary>
+        /// <param name="customerId"></param>
+        public void CheckDuplicateCustomer(string customerId)
+        {
+            if (DataSource.customerList.Exists(c => c.Id == customerId))
+            {
+                throw new DuplicateIdException("Customer already exists\n");
+            }
+        }
     }
 }

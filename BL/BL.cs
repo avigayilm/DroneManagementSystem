@@ -7,6 +7,7 @@ using IBL.BO;
 using DAL;
 using IDAL;
 
+//file:///C:/Users/aviga/Downloads/%D7%AA%D7%A8%D7%92%D7%99%D7%9C%202%20%D7%91%D7%AA%20%D7%A9%D7%91%D7%A2.pdf
 
 
 namespace BL
@@ -14,9 +15,9 @@ namespace BL
     public partial class BL : IBL.Ibl
     {
         internal static Random rand = new Random();
-        internal List<IBL.BO.droneToList> droneBL = new();
+        internal List<IBL.BO.DroneToList> droneBL = new();
         IDal idal1 = new DAL.DalObject();
-        internal Location DroneLocation(IDAL.DO.Parcel p, droneToList tempBl)
+        internal Location DroneLocation(IDAL.DO.Parcel p, DroneToList tempBl)
         {
             Location locTemp = new();
             if (p.Requested != null && p.PickedUp == null)//if assigned but not yet collected
@@ -52,7 +53,7 @@ namespace BL
             double chargePH = tempArray[4];
 
             List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
-            droneBL = (List<IBL.BO.droneToList>)tempDroneList.ToBLDroneList();// converts the dronelist to IBL
+            droneBL = (List<IBL.BO.DroneToList>)tempDroneList.ToBLDroneList();// converts the dronelist to IBL
             List<IDAL.DO.Parcel> undeliveredParcel = (List<IDAL.DO.Parcel>)idal1.UndeliveredParcels();
 
             foreach (IDAL.DO.Parcel p in undeliveredParcel)
@@ -153,6 +154,8 @@ namespace BL
         /// <param name="stationId"></param>
         public void AddDrone(Drone newDrone, int stationId)
         {
+            try 
+            {
             if (newDrone.Id < 0)
                 throw new InvalidInputException("invalid Id input \n");
             if (newDrone.Loc.Latitude <= -90 || newDrone.Loc.Latitude >= 90)// out of range of latitude
@@ -161,7 +164,7 @@ namespace BL
                 throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
             if (newDrone.Weight != WeightCategories.heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
                 throw new InvalidInputException("Invalid weightCategory \n");
-            if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery) 
+            if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery)
                 throw new InvalidInputException("Invalid status \n");
             newDrone.Battery = rand.Next(20, 40);
             newDrone.Status = DroneStatuses.Maintenance;
@@ -169,15 +172,40 @@ namespace BL
             List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
             int index = tempStat.FindIndex(d => d.Id == stationId);
             newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
-            idal1.AddStation(tempStat);
+            droneBL.Add(newDrone);// adding a droneToList
+            //adding the drone to the dalObject list
+            IDAL.DO.Drone droneTemp = new();
+            newDrone.CopyPropertiestoIDAL(droneTemp);
+            idal1.AddDrone(droneTemp);
+            }
+            catch (IDAL.DO.DuplicateIdException ex)
+            {
+                throw new DuplicateIdException("The Drone already exists.\n,", ex);
+            }
+
         }
-        public void AddParcel(Parcel newParcel)
+        public void AddParcel(Parcel newParcel)// do I have to check customer and receiver
         {
-            newParcel.Delivered = null;
-            newParcel.Scheduled = null;
-            newParcel.PickedUp = null;
-            newParcel.Dr = null;
-            idal1.AddParcel(newParcel);
+            try
+            {
+                if (newParcel.Id < 0)
+                    throw new InvalidInputException("invalid Id input \n");
+                if (newParcel.Priority != Priorities.emergency && newParcel.Priority != Priorities.fast && newParcel.Priority != Priorities.normal)
+                    throw new InvalidInputException("Invalid weightCategory \n");
+                if (newParcel.Weight != WeightCategories.heavy && newParcel.Weight != WeightCategories.light && newParcel.Weight != WeightCategories.medium)
+                    throw new InvalidInputException("Invalid weightCategory \n");
+                newParcel.Delivered = null;
+                newParcel.Scheduled = null;
+                newParcel.PickedUp = null;
+                newParcel.Dr = null;
+                IDAL.DO.Parcel parcelTemp = new();
+                newParcel.CopyPropertiestoIDAL(parcelTemp);
+                idal1.AddParcel(parcelTemp);
+            }
+            catch (IDAL.DO.DuplicateIdException ex)
+            {
+                throw new DuplicateIdException("The Parcel already exists.\n,", ex);
+            }
         }
         /// <summary>
         /// updates the drone's model
@@ -186,7 +214,14 @@ namespace BL
         /// <param name="model"></param>
         public void updateDrone(int droneId, string model)
         {
-            idal1.UpdateDrone(droneId, model);
+            try
+            {
+                idal1.UpdateDrone(droneId, model);
+            }
+            catch(IDAL.DO.MissingIdException ex)
+            {
+                throw new MissingIdException("Invalid ID.\n,", ex);
+            }
         }
         /// <summary>
         /// updates the name and amount of chargingslots of the station
@@ -194,9 +229,18 @@ namespace BL
         /// <param name="stationId"></param>
         /// <param name="name"></param>
         /// <param name="chargingSlots"></param>
-        public void updateStation(int stationId, string name, int chargingSlots)
+        public void UpdateStation(int stationId, string name, int chargingSlots)
         {
-            idal1.UpdateStation(stationId, name, chargingSlots);
+            try
+            {
+                idal1.UpdateStation(stationId, name, chargingSlots);
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new MissingIdException("Invalid ID.\n,", ex);
+            }
+
+
         }
 
         /// <summary>
@@ -205,12 +249,19 @@ namespace BL
         /// <param name="customerId"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void updateCustomer(int customerId, string name, string phone)
+        public void UpdateCustomer(int customerId, string name, string phone)
         {
-            updateCustomer(customerId, name, phone);
+            try
+            {
+                UpdateCustomer(customerId, name, phone);
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new MissingIdException("Invalid ID.\n,", ex);
+            }
         }
 
-        public void sendingDroneToCharge(int droneId)
+        public void SendingDroneToCharge(int droneId)
         {
             int index = droneBL.FindIndex(d => d.Id == droneId);
             if (index == -1)
@@ -219,7 +270,7 @@ namespace BL
             {
                 List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
                 IDAL.DO.Station tempStation = FindPossibleStation(tempStWithCharging, droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
-                droneToList tempDrone = droneBL[index];
+                DroneToList tempDrone = droneBL[index];
                 if (droneBL[index].Status == DroneStatuses.Available && tempStation.Id != 0)//if it's available and there is enough battery
                 {
                     //update the drone
@@ -276,7 +327,7 @@ namespace BL
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        public IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, droneToList dr)
+        public IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, DroneToList dr)
         {
             foreach (IDAL.DO.Station st in withCharging)
             {
@@ -306,7 +357,7 @@ namespace BL
                     List<IDAL.DO.DroneCharge> tempStWithCharging = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = droneBL.FindIndex(d => d.Id == droneId);// finding the index of drone to get the station id
                     int stationId = tempStWithCharging[droneChargeIndex].StationId;
-                    droneToList tempDrone = droneBL[index];
+                    DroneToList tempDrone = droneBL[index];
                     // update drone
                     UpdateBattery();
                     tempDrone.Status = DroneStatuses.Available;
@@ -320,7 +371,7 @@ namespace BL
             }
         }
 
-        public double DroneDistanceFromParcel(IBL.BO.droneToList dr, IDAL.DO.Parcel par)
+        public double DroneDistanceFromParcel(IBL.BO.DroneToList dr, IDAL.DO.Parcel par)
         {
             double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, idal1.GetCustomer(par.Sender).Longitude, idal1.GetCustomer(par.Sender).Latitude);
             return distance;
@@ -347,7 +398,7 @@ namespace BL
         /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId)
         {
-            List<IBL.BO.droneToList> tempDroneList = droneBL;
+            List<IBL.BO.DroneToList> tempDroneList = droneBL;
             List<IDAL.DO.Parcel> tempParcelList = (List<IDAL.DO.Parcel>)idal1.GetParcelList();//data layer parcel list
             int maxW = 0, maxPri = 0;
             double minDis = 0.0;
@@ -390,7 +441,7 @@ namespace BL
         public void CollectingParcelByDrone(int droneId)
         {
             int index = GetDroneIndex(droneId);
-            droneToList tempDro = droneBL[index];
+            DroneToList tempDro = droneBL[index];
             IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.PackageNumber);
             if (!(droneBL[index].Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
                 throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
@@ -439,14 +490,15 @@ namespace BL
         public Customer getCustomer(string customerId)
         {
             Customer customer = new();
-            idal1.GetCustomer(customerId).CopyPropertiestoIDAL(customer);
-            customer.ReceivedParcels = new();
+            idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
+            List<IDAL.DO.Parcel>tempReceivedParcelList= (List< IDAL.DO.Parcel >)idal1.GetCustomerReceivedParcels(customerId);
+            List<IDAL.DO.Parcel>tempSentParcelList= (List<IDAL.DO.Parcel>)idal1.GetCustomerSentParcels(customerId);
+            customer.ReceivedParcels = 
             customer.SentParcels = new();
-            customer.
             return customer;
         }
 
-        public void getParcel()
+        public void getParcel(int parcelD)
         {
 
         }
