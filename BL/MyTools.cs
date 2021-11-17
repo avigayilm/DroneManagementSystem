@@ -76,6 +76,13 @@ namespace BL
             //return target;
         }
 
+        /// <summary>
+        /// copies all fields from an idal object to a bl object in deep copy
+        /// </summary>
+        /// <typeparam name="Source"></typeparam>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
         public static void CopyPropertiestoIBL<Source, Target>(this Source source, Target target)//from idal to bl
         {
             foreach (var sProp in source.GetType().GetProperties())//goes over all source props
@@ -98,7 +105,7 @@ namespace BL
                             PropertyInfo propInf = tProp.GetType().GetProperty(sProp.Name);//the wanted property 
                             if (propInf == null)//if not found in this class
                                 continue;
-                            var value = propInf.GetValue(sProp);//get the value from inner class insource
+                            var value = propInf.GetValue(source);//get the value from inner class insource
                             propInf.SetValue(tProp, value);
                             break;
                         }
@@ -107,6 +114,24 @@ namespace BL
                 }
             }
             //return target;
+        }
+        /// <summary>
+        /// converts a DalList to a BlList
+        /// </summary>
+        /// <typeparam name="Source"></typeparam>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static  IEnumerable<Target> CopyPropertyListtoIBLList<Source, Target>(this List<Source> source)//from idal to bl
+        {
+            List<Target> tempTarget = new();
+            Target T = default;
+            foreach(Source idalElement in source)
+            {
+                idalElement.CopyPropertiestoIBL(T);
+                tempTarget.Add(T);
+            }
+            return (IEnumerable<Target>)tempTarget;
         }
     }
 }

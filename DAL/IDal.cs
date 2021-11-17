@@ -18,7 +18,7 @@ namespace IDAL
         public void AddParcel(Parcel pack);
         public void ParcelDrone(int parcelId, int droneId);
         public void ParcelPickedUp(int parcelId);
-        public void ParcelDelivered(int parcelId, DateTime day);
+        public void ParcelDelivered(int parcelId);
         //public void ChangeDroneStatus(int DroneId, DroneStatuses st);
         public void ChangeChargeSlots(int stationId, int n);
         public void SendToCharge(int droneId, int stationId);
