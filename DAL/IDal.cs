@@ -44,6 +44,7 @@ namespace IDAL
         public IEnumerable<Customer> GetCustomerSentParcels(string customerId);
         public int CheckExistingCustomer(string customerId);
         public void CheckDuplicateCustomer(string customerId);
+        public IEnumerable<Drone> DronesChargingAtStation(int stationId);
 
     }
 }

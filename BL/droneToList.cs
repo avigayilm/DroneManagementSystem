@@ -16,7 +16,7 @@ namespace IBL
             public double Battery { get; set; }
             public DroneStatuses Status { get; set; }
             public Location Loc { get; set; }
-            public int PackageNumber { get; set; }
+            public int ParcelId { get; set; }
         }
     }
 }

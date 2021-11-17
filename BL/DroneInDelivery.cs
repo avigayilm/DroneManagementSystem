@@ -12,7 +12,7 @@ namespace IBL
         {
             public int Id { get; set; }
             public double Battery { get; set; }
-            public Location CurrentLocation { get; set; }
+            public Location Loc { get; set; }
         }
     }
 }

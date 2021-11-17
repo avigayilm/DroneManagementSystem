@@ -15,7 +15,7 @@ namespace IBL
             public CustomerInDelivery Receiver { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public Drone? Dr {get; set;}
+            public DroneInDelivery? Dr {get; set;}
             public DateTime? Requested { get; set; }
             public DateTime? Scheduled{get; set;}
             public DateTime? PickedUp{get; set;}

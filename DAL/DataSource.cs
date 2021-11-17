@@ -83,7 +83,7 @@ namespace DAL
                 {
                     Id = ++DataSource.Config.LastParcelNumber,
                     Sender = customerList[rand.Next(customerList.Count)].Id,// gets a random number of one of the customers
-                    Target = customerList[rand.Next(customerList.Count)].Id,
+                    Receiver = customerList[rand.Next(customerList.Count)].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),

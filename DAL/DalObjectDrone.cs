@@ -119,5 +119,12 @@ namespace DAL
             }
         }
 
+        public IEnumerable<Drone> DronesChargingAtStation(int stationId)
+        {
+            List<Drone> charging = new();
+            DataSource.chargeList.ForEach(c => { if (c.StationId == stationId) charging.Add(GetDrone(c.DroneId));});
+            return charging;
+        }
+
     }
 }

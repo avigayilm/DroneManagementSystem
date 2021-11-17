@@ -15,7 +15,7 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public double Battery { get; set; }
             public DroneStatuses Status { get; set; }
-            public DeliveryInTransfer Delintrans { get; set; }
+            public ParcelInTransfer parcelInTrans { get; set; }
             public Location Loc { get; set; }
         }
     }
