@@ -120,5 +120,19 @@ namespace DAL
             DataSource.parcelList.ForEach(p => { if (p.Delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
             return undelivered;
         }
+
+        public IEnumerable<Parcel> DeliveredParcels()
+        {
+            List<Parcel> delivered = new();
+            DataSource.parcelList.ForEach(p => { if (p.Delivered != null) delivered.Add(p); });// if the parcel is not delivered add it to the list
+            return delivered;
+        }
+
+        public IEnumerable<Parcel> UnAssignedParcels()
+        {
+            List<Parcel> unassigned = new();
+            DataSource.parcelList.ForEach(p => { if (p.Requested == null) unassigned.Add(p); });// if the parcel is not delivered add it to the list
+            return unassigned;
+        } 
     }
 }

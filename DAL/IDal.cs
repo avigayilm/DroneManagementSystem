@@ -19,8 +19,12 @@ namespace IDAL
         public void ParcelDrone(int parcelId, int droneId);
         public void ParcelPickedUp(int parcelId);
         public void ParcelDelivered(int parcelId);
+        public IEnumerable<Parcel> DeliveredParcels();
         //public void ChangeDroneStatus(int DroneId, DroneStatuses st);
+        public IEnumerable<Parcel> UnAssignedParcels();
+
         public void ChangeChargeSlots(int stationId, int n);
+        public int[] AvailableAndEmptySlots(int id);
         public void SendToCharge(int droneId, int stationId);
         public void BatteryCharged(int droneId, int stationId);
         public Parcel GetParcel(int ID);
