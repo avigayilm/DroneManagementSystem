@@ -14,7 +14,7 @@ namespace IDAL
         /// </summary>
 
         [Serializable]
-        internal class DuplicateIdException : Exception
+        public class DuplicateIdException : Exception
         {
             public DuplicateIdException() : base()
             {
@@ -33,7 +33,7 @@ namespace IDAL
             }
         }
         [Serializable]
-        internal class MissingIdException : Exception
+        public class MissingIdException : Exception
         {
             public MissingIdException() : base()
             {
