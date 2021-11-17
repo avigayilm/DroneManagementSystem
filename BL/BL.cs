@@ -614,7 +614,9 @@ namespace BL
 
         public void getAllStationsWithCharging()
         {
-
+            List<StationToList> tempList = new();
+            idal1.GetStationWithCharging().CopyPropertyListtoIBLList(tempList);
+            tempList.avai
         }
     }
 }
