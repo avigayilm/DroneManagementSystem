@@ -59,7 +59,7 @@ namespace DAL
         /// </summary>
         /// <param name="parcelId"></param>
         /// <param name="day"></param>
-        public void ParcelDelivered(int parcelId, DateTime day)//when the parcel is delivered, the drone will be available again
+        public void ParcelDelivered(int parcelId)//when the parcel is delivered, the drone will be available again
         {
             int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
             if (parcelIndex == -1)

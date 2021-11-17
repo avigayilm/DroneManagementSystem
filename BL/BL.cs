@@ -399,7 +399,7 @@ namespace BL
         public void AssignParcelToDrone(int droneId)
         {
             List<IBL.BO.DroneToList> tempDroneList = droneBL;
-            List<IDAL.DO.Parcel> tempParcelList = (List<IDAL.DO.Parcel>)idal1.GetParcelList();//data layer parcel list
+            List<IDAL.DO.Parcel> tempParcelList = (List<IDAL.DO.Parcel>)idal1.GetAllParcels();//data layer parcel list
             int maxW = 0, maxPri = 0;
             double minDis = 0.0;
             int index = GetDroneIndex(droneId);
@@ -413,7 +413,7 @@ namespace BL
                    
                     IDAL.DO.Parcel? fittingPack = null;//new null temp parcel
                     foreach (IDAL.DO.Parcel pack in tempParcelList)
-                       if((int)pack.priority >= maxPri && (int)pack.weight >= maxW && DroneDistanceFromParcel(droneBL[index], pack) < minDis )//pack is only eligible if its weight , distance and priority are bes
+                       if((int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && DroneDistanceFromParcel(droneBL[index], pack) < minDis )//pack is only eligible if its weight , distance and priority are bes
                        {
                             
                             double toCus = DroneDistanceFromParcel(droneBL[index], pack);//distance from drones current location to sending customer
@@ -452,7 +452,7 @@ namespace BL
                 Longitude = tempCus.Longitude,
                 Latitude =  tempCus.Latitude
             };
-            tempDro.Loc = tempLoc;
+            tempDro.Loc.Longitude = tempCus.Longitude;
             idal1.ParcelPickedUp(tempPack.Id);//update parcel to picked up in idal
             droneBL[index] = tempDro;//update drone in list to picked up
 
@@ -461,7 +461,17 @@ namespace BL
 
         public void DeliverParcelByDrone(int droneId)
         {
-
+            int index = GetDroneIndex(droneId);
+            DroneToList tempDro = droneBL[index];
+            IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.PackageNumber);
+            if (!(droneBL[index].Status == DroneStatuses.Delivery && tempPack.Delivered == null))
+                throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
+            IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.Target);
+            tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.Sender), tempCus),(int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package
+            tempDro.Loc.Longitude = tempCus.Longitude;
+            tempDro.Loc.Latitude = tempCus.Latitude;
+            tempDro.Status = DroneStatuses.Available;
+            idal1.ParcelDelivered(tempPack.Id);
         }
 
         /// <summary>
@@ -476,7 +486,7 @@ namespace BL
             //Station st=station.
         }
 
-        public Drone getDrone(int droneId)
+        public DroneToList getDrone(int droneId)
         {
             int index = droneBL.FindIndex(d => d.Id == droneId);
             if (index == -1)
