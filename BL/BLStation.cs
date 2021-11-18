@@ -34,7 +34,7 @@ namespace BL
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new DuplicateIdException("The Station already exists.\n,", ex);
+                throw new AddingException("Couldn'd add the station.\n,", ex);
             }
         }
 

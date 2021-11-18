@@ -33,7 +33,7 @@ namespace BL
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new DuplicateIdException("The Parcel already exists.\n,", ex);
+                throw new AddingException("Couldn't add the parcel.\n,", ex);
             }
         }
     }

@@ -27,6 +27,7 @@ namespace IDAL
         public int[] AvailableAndEmptySlots(int id);
         public void SendToCharge(int droneId, int stationId);
         public void BatteryCharged(int droneId, int stationId);
+        public int CheckExistingDrone(int droneId);
         public Parcel GetParcel(int ID);
         public Customer GetCustomer(string ID);
         public Drone GetDrone(int ID);

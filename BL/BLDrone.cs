@@ -45,7 +45,7 @@ namespace BL
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new DuplicateIdException("The Drone already exists.\n,", ex);
+                throw new AddingException("Couldn't add the drone.\n,", ex);
             }
 
         }
@@ -63,23 +63,21 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new MissingIdException("Invalid ID.\n,", ex);
+                throw new UpdateIssueException("Couldn't update the drone.\n,", ex);
             }
         }
 
-        public int GetDroneIndex(int ID)
+        public int GetDroneIndex(int droneId)
         {
-            int index = droneBL.FindIndex(d => d.Id == ID);
-            if (index == -1)
+            try
             {
-                throw new MissingIdException("No such drone\n");
-            }
-            else
-            {
+                int index = idal1.CheckExistingDrone(droneId);
                 return index;
             }
-
-            // return DataSource.dronesList.Find(d => d.id == ID);
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            }
         }
     }
 }

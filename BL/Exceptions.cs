@@ -9,45 +9,54 @@ namespace IBL
 {
     namespace BO
     {
-
+        /// <summary>
+        /// Exception for all the update funcitons
+        /// </summary>
         [Serializable]
-        internal class DuplicateIdException : Exception
+        internal class UpdateIssueException : Exception
         {
-            public DuplicateIdException() : base()
+            public UpdateIssueException() : base()
             {
             }
 
-            public DuplicateIdException(string message) : base("Duplicate Id Exception: " + message)
+            public UpdateIssueException(string message) : base("Update Issue Exception: " + message)
             {
             }
 
-            public DuplicateIdException(string message, Exception innerException) : base(message, innerException)
+            public UpdateIssueException(string message, Exception innerException) : base(message, innerException)
             {
             }
 
-            protected DuplicateIdException(SerializationInfo info, StreamingContext context) : base(info, context)
+            protected UpdateIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
         }
+        /// <summary>
+        ///Exception for all the getFuncitons
+        /// </summary>
         [Serializable]
-        internal class MissingIdException : Exception
+       
+        internal class RetrievalException : Exception
         {
-            public MissingIdException() : base()
+            public RetrievalException() : base()
             {
             }
 
-            public MissingIdException(string message) : base("Missing id exception: " + message)
+            public RetrievalException(string message) : base("Retrieval Exception: " + message)
             {
             }
 
-            public MissingIdException(string message, Exception innerException) : base(message, innerException)
+            public RetrievalException(string message, Exception innerException) : base(message, innerException)
             {
             }
 
-            protected MissingIdException(SerializationInfo info, StreamingContext context) : base(info, context)
+            protected RetrievalException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
         }
+        /// <summary>
+        /// Exception for all the invalid inputs
+        /// </summary>
 
             [Serializable]
             internal class InvalidInputException : Exception
@@ -69,7 +78,9 @@ namespace IBL
                 }
             }
 
-
+        /// <summary>
+        /// Exception for all teh delivery issues
+        /// </summary>
         [Serializable]
         internal class DeliveryIssueException : Exception
         {
@@ -86,6 +97,51 @@ namespace IBL
             }
 
             protected DeliveryIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
+        /// <summary>
+        /// Exception for all the batteryissues
+        /// </summary>
+        [Serializable]
+        internal class BatteryIssueException : Exception
+        {
+            public BatteryIssueException() : base()
+            {
+            }
+
+            public BatteryIssueException(string message) : base("Battery Issue: " + message)
+            {
+            }
+
+            public BatteryIssueException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected BatteryIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
+
+        /// <summary>
+        /// exception for all the adding funcitons
+        /// </summary>
+        [Serializable]
+        internal class AddingException : Exception
+        {
+            public AddingException() : base()
+            {
+            }
+
+            public AddingException(string message) : base("Adding Issue: " + message)
+            {
+            }
+
+            public AddingException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected AddingException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
         }

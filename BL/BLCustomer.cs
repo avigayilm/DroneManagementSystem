@@ -33,7 +33,7 @@ namespace BL
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new DuplicateIdException("The Customer already exists.\n,", ex);
+                throw new AddingException("Couldn't Add the Customer.\n,", ex);
             }
         }
 
@@ -52,7 +52,7 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new MissingIdException("Invalid ID.\n,", ex);
+                throw new UpdateIssueException("Couldn't Update the Drone.\n,", ex);
             }
         }
     }
