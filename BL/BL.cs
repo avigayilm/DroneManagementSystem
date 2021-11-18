@@ -107,7 +107,7 @@ namespace BL
                 throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
             if (newDrone.Loc.Longitude <= -180 || newDrone.Loc.Longitude >= 180)// out of range of latitude
                 throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
-            if (newDrone.Weight != WeightCategories.heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
+            if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
                 throw new InvalidInputException("Invalid weightCategory \n");
             if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery)
                 throw new InvalidInputException("Invalid status \n");
