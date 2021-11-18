@@ -14,6 +14,6 @@ using System.Threading.Tasks;
         void AddDrone(Drone newDrone, int stationId);
         void AddParcel(Parcel newParcel);
         void updateDrone(int droneId, string model);
-        public ParcelInTransfer GetParcelInTransfer(int parcelId)
+        public ParcelInTransfer GetParcelInTransfer(int parcelId);
     }
 }

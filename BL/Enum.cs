@@ -8,18 +8,23 @@ namespace IBL
 {
     namespace BO
     {
-            public enum DroneStatuses
-            {
-                Available, Maintenance, Delivery
-            }
-            public enum WeightCategories
-            {
-                light = 0, medium, heavy
-            }
+        public enum DroneStatuses
+        {
+            Available, Maintenance, Delivery
+        }
+        public enum WeightCategories
+        {
+            Light = 0, Medium, Heavy
+        }
 
-            public enum Priorities
-            {
-                normal = 0, fast, emergency
-            }
+        public enum Priorities
+        {
+            Normal = 0, Fast, Emergency
+        }
+        public enum ParcelStatuses
+        {
+            Created, Assigned, PickedUp,Delivered
+        }
+
     }
 }

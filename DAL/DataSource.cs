@@ -86,18 +86,18 @@ namespace DAL
                     Receiver = customerList[rand.Next(customerList.Count)].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
-                    Requested = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
+                    Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
                     DroneId = 0
                 };
 
                 int statusStats = rand.Next(100);
                 if (statusStats >= 10) // scheduled
                 {
-                    temp.Scheduled = temp.Requested.AddMinutes(180);
+                    temp.Assigned = temp.Created.AddMinutes(180);
 
                     if (statusStats >= 20) // picked up
                     {
-                        temp.PickedUp = temp.Scheduled.AddMinutes(60);
+                        temp.PickedUp = temp.Assigned.AddMinutes(60);
                         if (statusStats >= 30) // delivered
                         {
                             temp.Delivered = temp.PickedUp.AddMinutes(60);
@@ -132,7 +132,7 @@ namespace DAL
                 {
                     Id = rand.Next(1000, 9999),
                     Name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
-                    ChargeSlots = rand.Next(2, 10),
+                    AvailableChargeSlots = rand.Next(2, 10),
                     Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
                     Longitude = GetRandomNumber(34.57149, 35.57212)
                 });

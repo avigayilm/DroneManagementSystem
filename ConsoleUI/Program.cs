@@ -55,7 +55,7 @@ namespace ConsoleUI
                                         {
                                             Id = stationID,
                                             Name = inputname,
-                                            ChargeSlots = slots,
+                                            AvailableChargeSlots = slots,
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
                                         };
@@ -122,8 +122,8 @@ namespace ConsoleUI
                                             targetid = inputTargetId,
                                             Weight = maxim,
                                             Priority = prio,
-                                            Requested = req, //does this have to be filled in 
-                                            Scheduled = sched,
+                                            Created = req, //does this have to be filled in 
+                                            Assigned = sched,
                                             Delivered = null,
                                             //requested = DateTime.MinValue,
                                             //scheduled = DateTime.MinValue

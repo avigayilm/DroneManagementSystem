@@ -17,14 +17,9 @@ namespace DAL
         /// <param name="pack"></param>
         public void AddParcel(Parcel pack)
         {
-            if (DataSource.parcelList.Exists(p => p.Id == pack.Id))
-                throw new DuplicateIdException($"Parcel with {pack.Id} id already exists\n");
-            else
-            {
-                DataSource.parcelList.Add(pack);
-                pack.Id = ++DataSource.Config.LastParcelNumber;
-            }
-
+            CheckDuplicateParcel(pack.Id);
+            DataSource.parcelList.Add(pack);
+            pack.Id = ++DataSource.Config.LastParcelNumber;
         }
 
         /// <summary>
@@ -34,22 +29,14 @@ namespace DAL
         /// <param name="parcelId"></param>
         public void ParcelPickedUp(int parcelId)
         {
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
-            if (parcelIndex == -1)
-            {
-                throw new MissingIdException("No such parcel exists in list\n");
-            }
-            else// check if it's a valid index
-            {
-                int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DataSource.parcelList[parcelIndex].droneId);
-                //var temp2 = DataSource.dronesList[droneIndex];
-               // temp2.status = DroneStatuses.Delivery;
-                var temp = DataSource.parcelList[parcelIndex];
-                temp.pickedUp = DateTime.Now;
-                //DataSource.dronesList[droneIndex] = temp2;
-                DataSource.parcelList[parcelIndex] = temp;
-
-            }
+            int parcelIndex = CheckExistingParcel(parcelId);
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].droneId);
+            //var temp2 = DataSource.dronesList[droneIndex];
+            // temp2.status = DroneStatuses.Delivery;
+            var temp = DataSource.parcelList[parcelIndex];
+            temp.PickedUp = DateTime.Now;
+            //DataSource.dronesList[droneIndex] = temp2;
+            DataSource.parcelList[parcelIndex] = temp;
         }
 
 
@@ -61,19 +48,29 @@ namespace DAL
         /// <param name="day"></param>
         public void ParcelDelivered(int parcelId)//when the parcel is delivered, the drone will be available again
         {
-            int parcelIndex = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
-            if (parcelIndex == -1)
-                throw new MissingIdException("No such parcel exists in list\n");
-            else
-            {
-                int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
-                var temp2 = DataSource.dronesList[droneIndex];
-                var temp = DataSource.parcelList[parcelIndex];
-                //temp2.status = DroneStatuses.Available;
-                temp.Requested = DateTime.Now;
-                DataSource.dronesList[droneIndex] = temp2;
-                DataSource.parcelList[parcelIndex] = temp;
-            }
+            int parcelIndex = CheckExistingParcel(parcelId);
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
+            var temp2 = DataSource.dronesList[droneIndex];
+            var temp = DataSource.parcelList[parcelIndex];
+            //temp2.status = DroneStatuses.Available;
+            temp.Created = DateTime.Now;
+            DataSource.dronesList[droneIndex] = temp2;
+            DataSource.parcelList[parcelIndex] = temp;
+        }
+
+        /// <summary>
+        /// assigning a drone to a parcel
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="droneId"></param>
+        public void ParcelDrone(int parcelId, int droneId)
+        {
+            int parcelIndex = CheckExistingParcel(parcelId);
+            var temp = DataSource.parcelList[parcelIndex];
+            temp.DroneId = droneId;
+            temp.Created = DateTime.Now;
+            DataSource.parcelList[parcelIndex] = temp;
+
         }
 
         /// <summary>
@@ -81,15 +78,10 @@ namespace DAL
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public Parcel GetParcel(int ID)
+        public Parcel GetParcel(int parcelId)
         {
-            if (!DataSource.parcelList.Exists(p => p.Id == ID))
-                throw new MissingIdException($"No parcel with {ID} id exists\n");
-            else
-            {
-                int index = DataSource.parcelList.FindIndex(p => p.Id == ID);
-                return DataSource.parcelList[index];
-            }
+            int index = CheckExistingParcel(parcelId);
+            return DataSource.parcelList[index];
         }
         /// <summary>
         /// returns a parcellist
@@ -131,8 +123,36 @@ namespace DAL
         public IEnumerable<Parcel> UnAssignedParcels()
         {
             List<Parcel> unassigned = new();
-            DataSource.parcelList.ForEach(p => { if (p.Requested == null) unassigned.Add(p); });// if the parcel is not delivered add it to the list
+            DataSource.parcelList.ForEach(p => { if (p.Created == null) unassigned.Add(p); });// if the parcel is not delivered add it to the list
             return unassigned;
-        } 
+        }
+
+
+        /// <summary>
+        /// checks if a Parcel exists in the Parcellist, if it doesn't it throws a MissingIdException
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <returns></returns>
+        public int CheckExistingParcel(int parcelId)
+        {
+            int index = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
+            if (index == -1)
+            {
+                throw new MissingIdException($"No parcel with { parcelId } id exists\n");
+            }
+            return index;
+        }
+
+        /// <summary>
+        /// checks if a station already exists, if it does it throws a duplicateIdException
+        /// </summary>
+        /// <param name="stationId"></param>
+        public void CheckDuplicateParcel(int parcelId)
+        {
+            if (DataSource.parcelList.Exists(s => s.Id == parcelId))
+            {
+                throw new DuplicateIdException($"Parcel with { parcelId } id already exists\n");
+            }
+        }
     }
 }

@@ -12,8 +12,8 @@ namespace IBL
         {
             public string Id { get; set; }
             public Priorities Prioirty { get; set; }
-            public CustomerInDelivery Sender { get; set; }
-            public CustomerInDelivery Receiver { get; set; }
+            public CustomerInParcel Sender { get; set; }
+            public CustomerInParcel Receiver { get; set; }
             public override string ToString()
             {
                 String result = " ";
