@@ -85,53 +85,29 @@ namespace BL
         }
 
 
-        /// <summary>
-        /// adding a drone to the list of the datalayer
-        /// </summary>
-        /// <param name="newDrone"></param>
-        /// <param name="stationId"></param>
-        public void AddDrone(DroneToList newDrone, int stationId)
-        {
-            try
-            {
-                if (newDrone.Id < 0)
-                    throw new InvalidInputException("invalid Id input \n");
-                if (newDrone.Loc.Latitude <= -90 || newDrone.Loc.Latitude >= 90)// out of range of latitude
-                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
-                if (newDrone.Loc.Longitude <= -180 || newDrone.Loc.Longitude >= 180)// out of range of latitude
-                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
-                if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
-                    throw new InvalidInputException("Invalid weightCategory \n");
-                if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery)
-                    throw new InvalidInputException("Invalid status \n");
-                newDrone.Battery = rand.Next(20, 40);
-                newDrone.Status = DroneStatuses.Maintenance;
-                //location of station id
-                List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                int index = tempStat.FindIndex(d => d.Id == stationId);
-                newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
-                droneBL.Add(newDrone);// adding a droneToList
-                                      //adding the drone to the dalObject list
-                IDAL.DO.Drone droneTemp = new();
-                newDrone.CopyPropertiestoIDAL(droneTemp);
-                idal1.AddDrone(droneTemp);
-            }
-            catch (IDAL.DO.DuplicateIdException ex)
-            {
-                throw new AddingException("Couldn't add the drone.\n,", ex);
-            }
 
-            public double BatteryUsage(double distance, int pwrIndex)
-            {
-                return idal1.DronePwrUsg()[pwrIndex] * distance;
-            }
-            //public bool EnoughBattery(double distance, double battery, WeightCategories weight)
-            //{
+
+
+
+
+
+
+    
+
+
+
+
+        double BatteryUsage(double distance, int pwrIndex )
+        {
+            return idal1.DronePwrUsg()[pwrIndex] * distance;
+        }
+        //public bool EnoughBattery(double distance, double battery, WeightCategories weight)
+        //{
 
             //}
 
-            public void UpdateBattery()
-            {
+         void UpdateBattery()
+        {
 
             }
 
@@ -318,35 +294,35 @@ namespace BL
                 }
             }
 
-            public ParcelInTransfer GetParcelInTransfer(int parcelId)
-            {
-                Parcel parcel = new();
-                ParcelInTransfer parcelInTrans = new();
-                parcel = getParcel(parcelId);
-                parcel.CopyPropertiestoIBL(parcelInTrans);
-                parcelInTrans.DeliverdTo = getCustomer(parcel.Receiver.Id).Loc;
-                parcelInTrans.PickedUp = getCustomer(parcel.Sender.Id).Loc;
-                parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
-                if (parcel.PickedUp == null)
-                    parcelInTrans.status = true;
-                else
-                    parcelInTrans.status = false;
-                return parcelInTrans;
-            }
+        public ParcelInTransfer GetParcelInTransfer(int parcelId)
+        {
+            Parcel parcel = new();
+            ParcelInTransfer parcelInTrans = new();
+            parcel = GetParcel(parcelId);
+            parcel.CopyPropertiestoIBL(parcelInTrans);
+            parcelInTrans.DeliverdTo= GetCustomer(parcel.Receiver.Id).Loc;
+            parcelInTrans.PickedUp = GetCustomer(parcel.Sender.Id).Loc;
+            parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
+            if (parcel.PickedUp == null)
+                parcelInTrans.status = true;
+            else
+                parcelInTrans.status = false;
+            return parcelInTrans;
+        }
 
-            public ParcelAtCustomer GetParcelAtCustomer(int parcelId)
-            {
-                Parcel parcel = new();
-                ParcelAtCustomer parcelAtCustomer = new();
-                parcel = getParcel(parcelId);
-                parcel.CopyPropertiestoIBL(parcelAtCustomer);
-                parcelAtCustomer.ParcelStatus = GetParcelStatus(parcel);
-                if (parcel.Dr.Loc == getCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
-                    parcelAtCustomer.CustomerInP = parcel.Receiver;
-                else
-                    parcelAtCustomer.CustomerInP = parcel.Sender;
-                return parcelAtCustomer;
-            }
+        public ParcelAtCustomer GetParcelAtCustomer(int parcelId)
+        {
+            Parcel parcel = new();
+            ParcelAtCustomer parcelAtCustomer = new();
+            parcel = GetParcel(parcelId);
+            parcel.CopyPropertiestoIBL(parcelAtCustomer);
+            parcelAtCustomer.ParcelStatus = GetParcelStatus(parcel);
+            if (parcel.Dr.Loc == GetCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
+                parcelAtCustomer.CustomerInP = parcel.Receiver;
+            else
+                parcelAtCustomer.CustomerInP = parcel.Sender;
+            return parcelAtCustomer;
+        }
 
             public ParcelStatuses GetParcelStatus(Parcel parcel)
             {
@@ -361,7 +337,7 @@ namespace BL
 
             }
 
-            public Drone getDrone(int droneId)
+            public Drone GetDrone(int droneId)
             {
                 DroneToList droneToList = getDroneToList(droneId);
                 Drone drone = new();
@@ -374,7 +350,7 @@ namespace BL
 
             }
 
-            public Customer getCustomer(string customerId)
+            public Customer GetCustomer(string customerId)
             {
                 try
                 {
@@ -392,7 +368,7 @@ namespace BL
                 }
             }
 
-            public Parcel getParcel(int parcelId)
+            public Parcel GetParcel(int parcelId)
             {
                 try
                 {
@@ -410,15 +386,17 @@ namespace BL
                 }
             }
 
-            public Station getStation(int stationId)
-            {
-                try
-                {
-                    Station station = new();
-                    IDAL.DO.Station stationDal = idal1.GetStation(stationId);
-                    stationDal.CopyPropertiestoIBL(station);
-                    List<IDAL.DO.Station> chargingListIdal = (List<IDAL.DO.Station>)idal1.DronesChargingAtStation(stationId);
-                    chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists
+        public Station GetStation(int stationId)
+        {
+            try
+            { 
+            Station station = new();
+            IDAL.DO.Station stationDal = idal1.GetStation(stationId);
+            stationDal.CopyPropertiestoIBL(station);
+            List<IDAL.DO.Station> chargingListIdal=(List<IDAL.DO.Station>)idal1.DronesChargingAtStation(stationId);
+            chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists
+            return station;
+             }
                     return station;
                 }
                 catch (IDAL.DO.MissingIdException ex)
