@@ -17,7 +17,7 @@ namespace DAL
         /// <param name="cus"></param>
         public void AddCustomer(Customer cus)
         {
-            CheckDuplicateCustomer(cus.Id)
+            CheckDuplicateCustomer(cus.Id);
             DataSource.customerList.Add(cus);
         }
 

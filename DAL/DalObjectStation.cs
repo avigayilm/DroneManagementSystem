@@ -18,15 +18,8 @@ namespace DAL
         /// <param name="stat"></param>
         public void AddStation(Station stat)
         {
-            bool exists = DataSource.stationList.Exists(s => s.Id == stat.Id);
-            if (exists)
-            {
-                throw new DuplicateIdException("Station already exists in list\n");
-            }
-            else
-            {
-                DataSource.stationList.Add(stat);
-            }
+            CheckDuplicateStation(stat.Id);
+            DataSource.stationList.Add(stat);
         }
 
         /// <summary>
@@ -36,33 +29,22 @@ namespace DAL
         /// <param name="n"></param>
         public void ChangeChargeSlots(int stationId, int n)
         {
-            int stationIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
-            if (stationIndex == -1)
-                throw new MissingIdException("No such station exists in list\n");
-            else
-            {
-                var temp = DataSource.stationList[stationIndex];
-                temp.ChargeSlots += n;
-                DataSource.stationList[stationIndex] = temp;
-            }
+            int stationIndex = CheckExistingStation(stationId);
+            var temp = DataSource.stationList[stationIndex];
+            temp.AvailableChargeSlots += n;
+            DataSource.stationList[stationIndex] = temp;
+
         }
         /// <summary>
         /// returns a station according to the given Id
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="stationId"></param>
         /// <returns></returns>
-        public Station GetStation(int ID)
+        public Station GetStation(int stationId)
         {
 
-            int index = DataSource.stationList.FindIndex(s => s.Id == ID);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such station\n");
-            }
-            else
-            {
-                return DataSource.stationList[index];
-            }
+            int index = CheckExistingStation(stationId);
+            return DataSource.stationList[index];
         }
         /// <summary>
         ///  returns the list with the stations that have availble charging
@@ -71,7 +53,7 @@ namespace DAL
         public IEnumerable<Station> GetStationWithCharging()
         {
             List<Station> temp = new();
-            DataSource.stationList.ForEach(p => { if (p.ChargeSlots > 0) { temp.Add(p); } });
+            DataSource.stationList.ForEach(p => { if (p.AvailableChargeSlots > 0) { temp.Add(p); } });
             return (IEnumerable<Station>)temp;
         }
 
@@ -109,28 +91,28 @@ namespace DAL
             return DataSource.stationList[index];
             // returns the station with the smallest distance to customer
             //while(iter.MoveNext())
-               //    distancekm = Bonus.Haversine(iter.Current.longitude, iter.Current.latitude, temp.longitude, temp.latitude);
+            //    distancekm = Bonus.Haversine(iter.Current.longitude, iter.Current.latitude, temp.longitude, temp.latitude);
             //if (distancekm < minDistance) ;
             //DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
 
         }
-
-        public void UpdateStation(int stationId, string name,int chargeSlots)
+        /// <summary>
+        /// updates the station with chargeslots and name.
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <param name="name"></param>
+        /// <param name="chargeSlots"></param>
+        public void UpdateStation(int stationId, string name, int chargeSlots)
         {
-            int index = DataSource.stationList.FindIndex(s => s.Id == stationId);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such station\n");
-            }
-            else
-            {
-                Station tempStation = DataSource.stationList[index];
-                if(name!=("\n"))
-                    tempStation.Name = name;
-                if (chargeSlots != 10)// chekc if a phone was entere
-                    tempStation.ChargeSlots = chargeSlots;
-                DataSource.stationList[index] = tempStation;
-            }
+            int index = CheckExistingStation(stationId);
+            DataSource.stationList.FindIndex(s => s.Id == stationId);
+            Station tempStation = DataSource.stationList[index];
+            if (name != ("\n"))
+                tempStation.Name = name;
+            if (chargeSlots != 0)// chekc if a phone was entere
+                tempStation.AvailableChargeSlots = chargeSlots - AvailableAndEmptySlots(stationId)[0];// input=total chargeslots, we only save the availablechargeslots
+            DataSource.stationList[index] = tempStation;
+        }
 
          
         }
@@ -142,10 +124,37 @@ namespace DAL
         public int[] AvailableAndEmptySlots(int id)
         {
             Station st = GetStation(id);
-            int[] slots = new int [2];
+            int[] slots = new int[2];
             slots[0] = DataSource.chargeList.Where(s => s.StationId == st.Id).Count();
             slots[1] = st.ChargeSlots;
             return slots;
+        }
+
+        /// <summary>
+        /// checks if a station exists in the customerlist, if it doesn't it throws a MissingIdException
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
+        public int CheckExistingStation(int stationId)
+        {
+            int index = DataSource.stationList.FindIndex(s => s.Id == stationId);
+            if (index == -1)
+            {
+                throw new MissingIdException("No such Station exists\n");
+            }
+            return index;
+        }
+
+        /// <summary>
+        /// checks if a station already exists, if it does it throws a duplicateIdException
+        /// </summary>
+        /// <param name="stationId"></param>
+        public void CheckDuplicateStation(int stationId)
+        {
+            if (DataSource.stationList.Exists(s => s.Id == stationId))
+            {
+                throw new DuplicateIdException("station already exists\n");
+            }
         }
 
     }

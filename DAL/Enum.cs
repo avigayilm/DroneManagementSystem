@@ -9,7 +9,6 @@ namespace IDAL
     namespace DO
     {
 
-
         public enum WeightCategories
         {
             light = 0, medium, heavy

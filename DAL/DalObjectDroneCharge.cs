@@ -41,6 +41,7 @@ namespace DAL
         /// <param name="Buzzer"></param>
         public void BatteryCharged(int droneId, int stationId)
         {
+           
             int droneIndex = DataSource.chargeList.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (droneIndex == -1)
                 throw new MissingIdException("No such drone \n");

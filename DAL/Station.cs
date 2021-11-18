@@ -14,7 +14,7 @@ namespace IDAL
             public string Name { get; set; }
             public double Longitude { get; set; }
             public double Latitude { get; set; }
-            public int ChargeSlots { get; set; }
+            public int AvailableChargeSlots { get; set; }
 
             public override string ToString()
             {
@@ -23,7 +23,7 @@ namespace IDAL
                 result += $"Name is {Name}, \n";
                 result += $"Latitude is {(Bonus.DecimalToSexagesimal(Latitude, 't'))}, \n";
                 result += $"longitude is {(Bonus.DecimalToSexagesimal(Longitude, 'n'))}, \n";
-                result += $"There are {ChargeSlots} Chargeslots\n";
+                result += $"There are {AvailableChargeSlots} Chargeslots\n";
                 return result;
             }
         }

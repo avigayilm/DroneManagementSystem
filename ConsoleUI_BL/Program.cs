@@ -47,7 +47,7 @@ namespace ConsoleUI_BL
                                         {
                                             Id = stationID,
                                             Name = inputname,
-                                            Chargeslots = slots,
+                                            AvailableChargeSlots = slots,
                                             Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
                                             Charging = new()
                                         };
