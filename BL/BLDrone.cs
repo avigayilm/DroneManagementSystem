@@ -17,7 +17,7 @@ namespace BL
         /// </summary>
         /// <param name="newDrone"></param>
         /// <param name="stationId"></param>
-        public void AddDrone(Drone newDrone, int stationId)
+        public void AddDrone(DroneToList newDrone, int stationId)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace BL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="model"></param>
-        public void updateDrone(int droneId, string model)
+        public void UpdateDrone(int droneId, string model)
         {
             try
             {

@@ -92,47 +92,12 @@ namespace BL
 
 
 
-        /// <summary>
-        /// adding a drone to the list of the datalayer
-        /// </summary>
-        /// <param name="newDrone"></param>
-        /// <param name="stationId"></param>
-        public void AddDrone(DroneToList newDrone, int stationId)
-        {
-            try 
-            {
-            if (newDrone.Id < 0)
-                throw new InvalidInputException("invalid Id input \n");
-            if (newDrone.Loc.Latitude <= -90 || newDrone.Loc.Latitude >= 90)// out of range of latitude
-                throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
-            if (newDrone.Loc.Longitude <= -180 || newDrone.Loc.Longitude >= 180)// out of range of latitude
-                throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
-            if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.light && newDrone.Weight != WeightCategories.medium)
-                throw new InvalidInputException("Invalid weightCategory \n");
-            if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery)
-                throw new InvalidInputException("Invalid status \n");
-            newDrone.Battery = rand.Next(20, 40);
-            newDrone.Status = DroneStatuses.Maintenance;
-            //location of station id
-            List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-            int index = tempStat.FindIndex(d => d.Id == stationId);
-            newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
-            droneBL.Add(newDrone);// adding a droneToList
-            //adding the drone to the dalObject list
-            IDAL.DO.Drone droneTemp = new();
-            newDrone.CopyPropertiestoIDAL(droneTemp);
-            idal1.AddDrone(droneTemp);
-            }
-            catch (IDAL.DO.DuplicateIdException ex)
-            {
-                throw new DuplicateIdException("The Drone already exists.\n,", ex);
-            }
+    
 
 
 
 
-
-        public double BatteryUsage(double distance, int pwrIndex )
+        double BatteryUsage(double distance, int pwrIndex )
         {
             return idal1.DronePwrUsg()[pwrIndex] * distance;
         }
@@ -141,7 +106,7 @@ namespace BL
 
         //}
 
-        public void UpdateBattery()
+         void UpdateBattery()
         {
 
         }
@@ -302,18 +267,6 @@ namespace BL
             idal1.ParcelDelivered(tempPack.Id);
         }
 
-        /// <summary>
-        /// returning a station from BL gettting it from dalObject
-        /// </summary>
-        /// <param name="stationId"></param>
-        public Station GetStation(int stationId)
-        {
-            Station station = new();
-            idal1.GetStation(stationId).CopyPropertiestoIDAL(station);
-            return station;
-            //Station st=station.
-        }
-
         public DroneToList getDroneToList(int droneId)
         {
             int index = droneBL.FindIndex(d => d.Id == droneId);
@@ -327,10 +280,10 @@ namespace BL
         {
             Parcel parcel = new();
             ParcelInTransfer parcelInTrans = new();
-            parcel = getParcel(parcelId);
+            parcel = GetParcel(parcelId);
             parcel.CopyPropertiestoIBL(parcelInTrans);
-            parcelInTrans.DeliverdTo= getCustomer(parcel.Receiver.Id).Loc;
-            parcelInTrans.PickedUp = getCustomer(parcel.Sender.Id).Loc;
+            parcelInTrans.DeliverdTo= GetCustomer(parcel.Receiver.Id).Loc;
+            parcelInTrans.PickedUp = GetCustomer(parcel.Sender.Id).Loc;
             parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
             if (parcel.PickedUp == null)
                 parcelInTrans.status = true;
@@ -343,10 +296,10 @@ namespace BL
         {
             Parcel parcel = new();
             ParcelAtCustomer parcelAtCustomer = new();
-            parcel = getParcel(parcelId);
+            parcel = GetParcel(parcelId);
             parcel.CopyPropertiestoIBL(parcelAtCustomer);
             parcelAtCustomer.ParcelStatus = GetParcelStatus(parcel);
-            if (parcel.Dr.Loc == getCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
+            if (parcel.Dr.Loc == GetCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else
                 parcelAtCustomer.CustomerInP = parcel.Sender;
@@ -379,7 +332,7 @@ namespace BL
 
         }
 
-        public Customer getCustomer(string customerId)
+        public Customer GetCustomer(string customerId)
         {
             Customer customer = new();
             idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
@@ -390,7 +343,7 @@ namespace BL
             return customer;
         }
 
-        public Parcel getParcel(int parcelId)
+        public Parcel GetParcel(int parcelId)
         {
             Parcel parcel = new();
             IDAL.DO.Parcel parcelDal = idal1.GetParcel(parcelId);
@@ -401,7 +354,7 @@ namespace BL
             return parcel;
         }
 
-        public Station getStation(int stationId)
+        public Station GetStation(int stationId)
         {
             Station station = new();
             IDAL.DO.Station stationDal = idal1.GetStation(stationId);
