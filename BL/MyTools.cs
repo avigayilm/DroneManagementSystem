@@ -132,6 +132,15 @@ namespace BL
             }
             
         }
+
+        public static T SmallestDistance<T>(this Location current, List<T> toFindIn)
+        {
+            double minDis = double.MaxValue;
+            foreach(T cur in toFindIn )
+            {
+                Location temp = typeof(T).GetProperty(typeof(Location).Name).GetValue(cur);
+            }
+        }
     }
 }
 
