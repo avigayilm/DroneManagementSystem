@@ -52,8 +52,8 @@ namespace BL
             double pwrUsgHeavy = tempArray[3];
             double chargePH = tempArray[4];
 
-            List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
-            droneBL = (List<IBL.BO.DroneToList>)tempDroneList.ToBLDroneList();// converts the dronelist to IBL
+            //List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
+            ((List<IDAL.DO.Drone>)idal1.GetAllDrones()).CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<IDAL.DO.Parcel> undeliveredParcel = (List<IDAL.DO.Parcel>)idal1.UndeliveredParcels();
 
             foreach (IDAL.DO.Parcel p in undeliveredParcel)
@@ -68,12 +68,11 @@ namespace BL
                     tempBl.Loc = DroneLocation(p, tempBl);//location of drone
                 }
             }
-            foreach (Drone dr in droneBL)
+            foreach (DroneToList dr in droneBL)
             {
                 if (dr.Status != DroneStatuses.Delivery)
                 {
-                    Drone tempDr = dr;
-                    tempDr.Status = (DroneStatuses)rand.Next(1);
+                    dr.Status = (DroneStatuses)rand.Next(1);
                     if (dr.Status == DroneStatuses.Available)
                     {
 
@@ -152,7 +151,7 @@ namespace BL
         /// </summary>
         /// <param name="newDrone"></param>
         /// <param name="stationId"></param>
-        public void AddDrone(Drone newDrone, int stationId)
+        public void AddDrone(DroneToList newDrone, int stationId)
         {
             try 
             {
@@ -329,15 +328,18 @@ namespace BL
         /// <returns></returns>
         public IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, DroneToList dr)
         {
+            double minDistance = double.MaxValue;IDAL.DO.Station temp = new();
             foreach (IDAL.DO.Station st in withCharging)
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
-                if (EnoughBattery(distance, dr.Battery))
-                    return st;
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    temp = st;
+                }                     
             }
-            IDAL.DO.Station temp = new() { Id = 0 };
-            return temp;
-
+            if (BatteryUsage(minDistance, 0) < dr.Battery) return temp;
+            throw new catgettochargeException;
         }
 
         /// <summary>
@@ -345,7 +347,7 @@ namespace BL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
-        public void releasingDroneFromCharge(int droneId, double chargingTime)
+        public void ReleasingDroneFromCharge(int droneId, double chargingTime)
         {
             int index = droneBL.FindIndex(d => d.Id == droneId);
             if (index == -1)
@@ -560,13 +562,11 @@ namespace BL
             List<StationToList> tempList = new();
             int[] slots;
             idal1.GetAllStations().CopyPropertyListtoIBLList(tempList);
-            for(int i = 0; i< tempList.Count(); i++)
+            foreach(StationToList temp in tempList)
             {
-                StationToList temp = tempList[i];
                 slots = idal1.AvailableAndEmptySlots(temp.Id);
                 temp.OccupiedSlots = slots[0];
                 temp.AvailableSlots = slots[1];
-                tempList[i] = temp;
             }
             return tempList;
         }
@@ -580,13 +580,11 @@ namespace BL
         {
             List<CustomerToList> tempList = new();
             idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
-            CustomerToList cus;
-            for (int i = 0; i < tempList.Count(); i++)
+            foreach (CustomerToList cus in tempList)
             {
-                cus= tempList[i];
-                cus.NumPacksReceived = idal1.DeliveredParcels().Where(p => p.Target == cus.Id).Count();
+                cus.NumPacksReceived = idal1.DeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
                 cus.NumPackSentDel = idal1.DeliveredParcels().Where(p => p.Sender == cus.Id).Count();
-                cus.NumPackExp = idal1.UndeliveredParcels().Where(p => p.Target == cus.Id).Count();
+                cus.NumPackExp = idal1.UndeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
                 cus.NumPackSentDel = idal1.UndeliveredParcels().Where(p => p.Sender == cus.Id).Count();
             }
             return tempList;
@@ -611,10 +609,14 @@ namespace BL
             idal1.UnAssignedParcels().CopyPropertyListtoIBLList(tempList);
             return tempList;
         }
-
-        public void getAllStationsWithCharging()
+        /// <summary>
+        /// returns all stations with available charging slots
+        /// </summary>
+        public IEnumerable<StationToList> GetAllStationsWithCharging()
         {
-
+            List<StationToList> tempList = new();
+            idal1.GetStationWithCharging().CopyPropertyListtoIBLList(tempList);
+            return tempList;
         }
     }
 }
