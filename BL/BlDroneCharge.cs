@@ -43,5 +43,36 @@ namespace BL
 
 
         }
+
+        /// <summary>
+        /// release teh drone from charge, updates the battery according to the charging time
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="chargingTime"></param>
+        public void ReleasingDroneFromCharge(int droneId, double chargingTime)
+        {
+            int index = droneBL.FindIndex(d => d.Id == droneId);
+            if (index == -1)
+                throw new MissingIdException("No such drone\n");
+            else
+            {
+                if (droneBL[index].Status == DroneStatuses.Maintenance)
+                {
+                    List<IDAL.DO.DroneCharge> tempStWithCharging = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
+                    int droneChargeIndex = droneBL.FindIndex(d => d.Id == droneId);// finding the index of drone to get the station id
+                    int stationId = tempStWithCharging[droneChargeIndex].StationId;
+                    DroneToList tempDrone = droneBL[index];
+                    // update drone
+                    UpdateBattery();
+                    tempDrone.Status = DroneStatuses.Available;
+                    //update station
+                    idal1.ChangeChargeSlots(stationId, 1);
+                    //update dronecharge
+                    idal1.BatteryCharged(droneId, stationId);
+                }
+                else
+                    throw new MissingIdException("No such drone\n");// throw approptate acception
+            }
+        }
     }
 }

@@ -79,5 +79,64 @@ namespace BL
                 throw new RetrievalException("Couldn't get the Drone.\n,", ex);
             }
         }
+
+        internal Location DroneLocation(IDAL.DO.Parcel p, DroneToList tempBl)
+        {
+            Location locTemp = new();
+            if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
+            {
+                //location of deone will be in  station closed to the sender
+                var stationTemp = idal1.SmallestDistanceStation(p.Sender);
+                locTemp.Longitude = stationTemp.Longitude;
+                locTemp.Latitude = stationTemp.Latitude;
+            }
+            if (p.Created != null && p.PickedUp != null)// if pakage is assigned and picked up
+            {
+                //location wIll be at the sender
+                List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();
+                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.Sender);
+                if (customerIndex != -1)
+                {
+                    locTemp.Longitude = tempCustomerList[customerIndex].Longitude;
+                    locTemp.Latitude = tempCustomerList[customerIndex].Latitude;
+                }
+
+            }
+            return locTemp;
+        }
+
+        public DroneToList getDroneToList(int droneId)
+        {
+            try
+            {
+                int index = idal1.CheckExistingDrone(droneId);
+                return droneBL[index];
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            }
+        }
+
+        public Drone GetDrone(int droneId)
+        {
+            DroneToList droneToList = getDroneToList(droneId);
+            Drone drone = new();
+            droneToList.CopyPropertiestoIBL(drone);
+            if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
+                drone.parcelInTrans = null;
+            else
+                drone.parcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+            return drone;
+
+        }
+
+
+        public IEnumerable<DroneToList> GetAllDrones()
+        {
+            return droneBL;
+        }
+
+
     }
 }

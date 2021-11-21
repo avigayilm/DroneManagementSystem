@@ -59,5 +59,70 @@ namespace BL
 
 
         }
+
+        /// <summary>
+        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// </summary>
+        /// <param name="withCharging"></param>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, DroneToList dr)
+        {
+            double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
+            foreach (IDAL.DO.Station st in withCharging)
+            {
+                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    temp = st;
+                }
+            }
+            if (BatteryUsage(minDistance, 0) < dr.Battery) return temp;
+            throw new catgettochargeException;
+        }
+
+        public Station GetStation(int stationId)
+        {
+            try
+            {
+                Station station = new();
+                IDAL.DO.Station stationDal = idal1.GetStation(stationId);
+                stationDal.CopyPropertiestoIBL(station);
+                List<IDAL.DO.Station> chargingListIdal = (List<IDAL.DO.Station>)idal1.DronesChargingAtStation(stationId);
+                chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists
+                return station;
+            }
+
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Station.\n,", ex);
+            }
+        }
+
+
+        public IEnumerable<StationToList> GetAllStation()
+        {
+            List<StationToList> tempList = new();
+            int[] slots;
+            idal1.GetAllStations().CopyPropertyListtoIBLList(tempList);
+            foreach (StationToList temp in tempList)
+            {
+                slots = idal1.AvailableAndEmptySlots(temp.Id);
+                temp.OccupiedSlots = slots[0];
+                temp.AvailableSlots = slots[1];
+            }
+            return tempList;
+        }
+
+        /// <summary>
+        /// returns all stations with available charging slots
+        /// </summary>
+        public IEnumerable<StationToList> GetAllStationsWithCharging()
+        {
+            List<StationToList> tempList = new();
+            idal1.GetStationWithCharging().CopyPropertyListtoIBLList(tempList);
+            return tempList;
+        }
     }
 }
