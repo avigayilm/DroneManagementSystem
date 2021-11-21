@@ -79,6 +79,7 @@ namespace DAL
             DateTime startDate = new(2021, 1, 1);
             for (int i = 0; i < 20; i++)
             {
+
                 Parcel temp = new()
                 {
                     Id = ++DataSource.Config.LastParcelNumber,
@@ -93,27 +94,25 @@ namespace DAL
                 int statusStats = rand.Next(100);
                 if (statusStats >= 10) // scheduled
                 {
-                    temp.Assigned = temp.Created.AddMinutes(180);
+                    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
 
                     if (statusStats >= 20) // picked up
                     {
-                        temp.PickedUp = temp.Assigned.AddMinutes(60);
+                        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
                         if (statusStats >= 30) // delivered
                         {
-                            temp.Delivered = temp.PickedUp.AddMinutes(60);
+                            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
                             temp.DroneId = dronesList[rand.Next(dronesList.Count)].Id;
                         }
                     }
                     if (temp.DroneId == 0)
                     { 
-                        int dIndex = dronesList.FindIndex(d => d.status == DroneStatuses.Available
-                                                          && d.MaxWeight <= temp.Weight
-                                                          && d.battery >= 30);
+                        int dIndex = dronesList.FindIndex(d =>  d.MaxWeight <= temp.Weight);//a possible random parcel 
                         if(dIndex >= 0)
                         {
                             var drone = dronesList[dIndex];
                             temp.DroneId = drone.Id;
-                            drone.status = DroneStatuses.Delivery;
+                            //drone.status = DroneStatuses.Delivery;
                             dronesList[dIndex] = drone;
                         }
                         

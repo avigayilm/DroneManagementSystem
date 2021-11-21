@@ -110,5 +110,16 @@ namespace DAL
                 throw new DuplicateIdException("Customer already exists\n");
             }
         }
+        /// <summary>
+        /// returns the list of customers having received a parcel
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> CustomersDeliverdTo()
+        {
+            List<Customer> temp = new();
+            foreach (Parcel p in DeliveredParcels())
+                temp.Add(GetCustomer(p.Receiver));
+            return temp;
+        }
     }
 }
