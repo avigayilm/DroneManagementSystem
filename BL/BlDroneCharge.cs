@@ -16,8 +16,8 @@ namespace BL
             try
             {
                 int index = idal1.CheckExistingDrone(droneId);
-                List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
-                IDAL.DO.Station tempStation = FindPossibleStation(tempStWithCharging, droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
+                //List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
+                IDAL.DO.Station tempStation = FindClosestPossibleStation( droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
                 DroneToList tempDrone = droneBL[index];
                 if (droneBL[index].Status == DroneStatuses.Available && tempStation.Id != 0)//if it's available and there is enough battery
                 {

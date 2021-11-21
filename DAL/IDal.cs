@@ -34,7 +34,7 @@ namespace IDAL
         public Drone GetDrone(int ID);
         public Station GetStation(int ID);
         public IEnumerable<Customer> GetAllCustomers();
-        public IEnumerable<Customer> GetAllStations();
+        public IEnumerable<Station> GetAllStations();
         public IEnumerable<Drone> GetAllDrones();
         public IEnumerable<Parcel> GetAllParcels();
         public IEnumerable<DroneCharge> GetDroneChargeList();
