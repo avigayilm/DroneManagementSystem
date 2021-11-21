@@ -61,15 +61,11 @@ namespace ConsoleUI_BL
                                         string inputId = Console.ReadLine();
                                         string inputname = Console.ReadLine();
                                         string inputphone = Console.ReadLine();
-                                        //double longitudeInput, latitudeInput;
-                                        //double.TryParse(Console.ReadLine(), out longitudeInput);
-                                        //double.TryParse(Console.ReadLine(), out latitudeInput);
                                         Customer newCustomer = new()
                                         {
                                             Id = inputId,
                                             Name = inputname, 
                                             PhoneNumber = inputphone,
-                                            //Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
 
                                         };
                                         ibl1.AddCustomer(newCustomer);
@@ -78,20 +74,14 @@ namespace ConsoleUI_BL
                                 case EntityOptions.Drone://adds drone
                                     {
 
-                                        Console.WriteLine("Enter the Id,stationId,model, weightcategory(0-2),status(0-2)");
+                                        Console.WriteLine("Enter the Id,stationId,weightcategory(0=light,1=medium,2=heavy),stationId for first charging");
                                         int.TryParse(Console.ReadLine(), out int droneID);
                                         int.TryParse(Console.ReadLine(), out int stationID);
-                                        string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
-                                        DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
-                                        double.TryParse(Console.ReadLine(), out double batt);
                                         Drone newDrone = new()
                                         {
                                             Id = droneID,
-                                            Model = inputmodel,
                                             Weight = maxim,
-                                            Status = stat,
-                                            Battery = batt
                                         };
 
                                         ibl1.AddDrone(newDrone,stationID);// add drone to dronelist
@@ -100,17 +90,15 @@ namespace ConsoleUI_BL
                                 case EntityOptions.Parcel://adds a prcel
                                     {
 
-                                        Console.WriteLine("Enter the senderId, the targetId, weightcatergory(0-2), priority(0,2),\n ");// date requested, scheduled time\n ");
+                                        Console.WriteLine("Enter the senderId, the targetId, weightcategory(0=light,1=medium,2=heavy), priority(0=normal,1=fast,2=emergency),\n ");// date requested, scheduled time\n ");
                                         string inputSenderId = Console.ReadLine();
                                         string inputTargetId = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
                                         Priorities prio = (Priorities)int.Parse(Console.ReadLine());
-                                        DateTime.TryParse(Console.ReadLine(), out DateTime req);
-                                        DateTime.TryParse(Console.ReadLine(), out DateTime sched);
                                         Parcel newParcel = new()
                                         {
-                                            SenderId = inputSenderId,
-                                            ReceiverId = inputTargetId,
+                                            Sender = new() { Id = inputSenderId },
+                                            Receiver = new() { Id = inputTargetId },
                                             Weight = maxim,
                                             Priority = prio,
                                         };
@@ -133,12 +121,16 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("Enter the ID and the model\n");
                                         int droneId = int.Parse(Console.ReadLine());
                                         string model = Console.ReadLine();
-                                        ibl1.updateDrone(droneId, model);
+                                        ibl1.UpdateDrone(droneId, model);
                                         break;
                                     }
                                 case UpdateOptions.Station:
                                     {
                                         Console.WriteLine("Enter the ID and the name or\and chargeslots\n");
+                                        int stationId = int.Parse(Console.ReadLine());
+                                        string name = Console.ReadLine();
+                                        int availableChargeSlots= int.Parse(Console.ReadLine());
+                                        ibl1.UpdateStation(stationId, name, availableChargeSlots);
                                         break;
                                     }
                                 case UpdateOptions.Parcel:

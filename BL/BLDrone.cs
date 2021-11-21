@@ -17,7 +17,7 @@ namespace BL
         /// </summary>
         /// <param name="newDrone"></param>
         /// <param name="stationId"></param>
-        public void AddDrone(DroneToList newDrone, int stationId)
+        public void AddDrone(Drone newDrone, int stationId)
         {
             try
             {
@@ -37,7 +37,9 @@ namespace BL
                 List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
                 int index = tempStat.FindIndex(d => d.Id == stationId);
                 newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
-                droneBL.Add(newDrone);// adding a droneToList
+                DroneToList newDroneToList = new();
+                newDrone.CopyPropertiestoIBL(newDroneToList);
+                droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 IDAL.DO.Drone droneTemp = new();
                 newDrone.CopyPropertiestoIDAL(droneTemp);
