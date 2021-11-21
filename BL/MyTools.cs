@@ -245,15 +245,4 @@ namespace BL
 //        };
 //        return dalCustomer;
 //    }
-
-
-
-
-
-
-
-
-
-
-}
 //}
