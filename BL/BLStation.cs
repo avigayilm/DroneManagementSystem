@@ -66,13 +66,14 @@ namespace BL
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        IDAL.DO.Station FindPossibleStation(List<IDAL.DO.Station> withCharging, DroneToList dr)
+        internal IDAL.DO.Station FindClosestPossibleStation(DroneToList dr)
         {
+
             double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            foreach (IDAL.DO.Station st in withCharging)
+            foreach (IDAL.DO.Station st in idal1.GetAllStations())
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
-                if (distance < minDistance)
+                if (distance < minDistance && st.AvailableChargeSlots > 0)
                 {
                     minDistance = distance;
                     temp = st;

@@ -53,10 +53,14 @@ namespace BL
                        IDAL.DO.Customer tempCus = cus[rand.Next(cus.Count())];
                         dr.Loc.Longitude = tempCus.Longitude;
                         dr.Loc.Longitude = tempCus.Latitude;
+                        int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestPossibleStation(dr)), 0);//calculates battery usage of flying to closest station to drone
+                        dr.Battery = rand.Next(minBat, 100);
                     }
-                    else
+                    else//it is in maintenance
                     {
-                        tempBl.battery = rand.Next(20);// random battery level so that the drone can still fly
+                        dr.Battery = rand.Next(20);// random battery level so that the drone can still fly
+                        List<StationToList> tempList = (List<StationToList>)GetAllStation();
+                        dr.Loc = tempList[rand.Next(tempList.Count())];
                     }
                 }
             }
@@ -76,6 +80,10 @@ namespace BL
         public double StationDistanceFromCustomer(IDAL.DO.Customer cus, IDAL.DO.Station st)
         {
             return Bonus.Haversine(cus.Longitude, cus.Latitude, st.Longitude, st.Latitude);
+        }
+        public double DroneDistanceFromStation(DroneToList dr, IDAL.DO.Station st)
+        {
+            return Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
         }
     }
 }

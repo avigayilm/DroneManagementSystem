@@ -8,9 +8,9 @@ namespace BL
 {
     public partial class BL
     {
-        double BatteryUsage(double distance, int pwrIndex)
+        int BatteryUsage(double distance, int pwrIndex)
         {
-            return idal1.DronePwrUsg()[pwrIndex] * distance;
+            return (int)(idal1.DronePwrUsg()[pwrIndex] * distance);
         }
         //public bool EnoughBattery(double distance, double battery, WeightCategories weight)
         //{
