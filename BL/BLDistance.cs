@@ -10,6 +10,10 @@ namespace BL
     public partial class BL
     {
 
+        public double DistanceBetweenCustomers(IDAL.DO.Customer cus1, IDAL.DO.Customer cus2)
+        {
+            return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
+        }
 
         public double DroneDistanceFromParcel(IBL.BO.DroneToList dr, IDAL.DO.Parcel par)
         {
@@ -26,10 +30,9 @@ namespace BL
         {
             return Bonus.Haversine(cus.Longitude, cus.Latitude, st.Longitude, st.Latitude);
         }
-
-        public double DistanceBetweenCustomers(IDAL.DO.Customer cus1, IDAL.DO.Customer cus2)
+        public double DroneDistanceFromStation(IBL.BO.DroneToList dr, IDAL.DO.Station st)
         {
-            return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
+            return Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
         }
     }
 }
