@@ -92,15 +92,12 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out int droneID);
                                         string inputmodel = Console.ReadLine();
                                         WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
-                                        DroneStatuses stat = (DroneStatuses)int.Parse(Console.ReadLine());
                                         double.TryParse(Console.ReadLine(), out double batt);
                                         Drone newDrone = new()
                                         {
                                             Id = droneID,
                                             Model = inputmodel,
                                             MaxWeight = maxim,
-                                            status = stat,
-                                            battery = batt
                                         };
 
                                         dal.AddDrone(newDrone);// add drone to dronelist
@@ -118,8 +115,8 @@ namespace ConsoleUI
                                         DateTime.TryParse(Console.ReadLine(), out DateTime sched);
                                         Parcel newParcel = new()
                                         {
-                                            senderid = inputSenderId,
-                                            targetid = inputTargetId,
+                                            Sender = inputSenderId,
+                                            Receiver = inputTargetId,
                                             Weight = maxim,
                                             Priority = prio,
                                             Created = req, //does this have to be filled in 
@@ -148,7 +145,7 @@ namespace ConsoleUI
                                         int parcelId = int.Parse(Console.ReadLine());
                                         int droneId = int.Parse(Console.ReadLine());
                                         dal.ParcelDrone(parcelId, droneId);
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Delivery);
+                                        ///dal.ChangeDroneStatus(droneId, DroneStatuses.Delivery);
                                         break;
                                     }
                                 case UpdateOptions.Delivery://adds a delivery of parcel by drone
@@ -156,7 +153,7 @@ namespace ConsoleUI
                                         Console.WriteLine("Enter the parcelid and the Datetime\n");
                                         int.TryParse(Console.ReadLine(), out int ID);
                                         DateTime.TryParse(Console.ReadLine(), out DateTime time);
-                                        dal.ParcelDelivered(ID, time);
+                                        dal.ParcelDelivered(ID);
                                         break;
                                     }
                                 case UpdateOptions.Pickedup://changes drone and parcel accordingly
@@ -173,7 +170,7 @@ namespace ConsoleUI
                                         int droneId = int.Parse(Console.ReadLine());
                                         int stationId = int.Parse(Console.ReadLine());
                                         dal.SendToCharge(droneId, stationId);
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
+                                        //dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
                                         dal.ChangeChargeSlots(stationId, -1);
                                         break;
                                     }
@@ -185,7 +182,7 @@ namespace ConsoleUI
                                         int.TryParse(Console.ReadLine(), out droneId);// gets the droneId and stationId from the user
                                         int.TryParse(Console.ReadLine(), out stationId);
                                         dal.BatteryCharged(droneId, stationId);// sets the battery to 100
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Available);// changes the dronestatus to available
+                                        //dal.ChangeDroneStatus(droneId, DroneStatuses.Available);// changes the dronestatus to available
                                         dal.ChangeChargeSlots(stationId, 1);// one extra chargeslot is free.'
                                         break;
                                     }

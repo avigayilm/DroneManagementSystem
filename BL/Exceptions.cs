@@ -146,5 +146,24 @@ namespace IBL
             }
         }
 
+        internal class DroneChargeException : Exception
+        {
+            public DroneChargeException() : base()
+            {
+            }
+
+            public DroneChargeException(string message) : base("DroneCharge Issue: " + message)
+            {
+            }
+
+            public DroneChargeException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected DroneChargeException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
+
     }
 }

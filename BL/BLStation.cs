@@ -81,7 +81,7 @@ namespace BL
             }
             if (BatteryUsage(minDistance, 0) < dr.Battery)
                 return temp;
-            throw new catgettochargeException;
+            throw new catgettochargeException();
         }
 
         public Station GetStation(int stationId)

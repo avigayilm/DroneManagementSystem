@@ -17,7 +17,7 @@ namespace BL
             {
                 int index = idal1.CheckExistingDrone(droneId);
                 //List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
-                IDAL.DO.Station tempStation = FindClosestPossibleStation( droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
+                IDAL.DO.Station tempStation = FindClosestPossibleStation(droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
                 DroneToList tempDrone = droneBL[index];
                 if (droneBL[index].Status == DroneStatuses.Available && tempStation.Id != 0)//if it's available and there is enough battery
                 {
@@ -33,13 +33,13 @@ namespace BL
 
                 }
                 else
-                    throw new MissingIdException("No such drone\n");// throw approptate acception
+                    throw new DroneChargeException("Can't send the drone to charge\n");// throw approptate acception
             }
-            catch(IDAL.DO.MissingIdException ex)
+            catch (IDAL.DO.MissingIdException ex)
             {
                 throw new RetrievalException("Couldn't get drone\n", ex);
             }
-            
+
 
 
         }
@@ -51,11 +51,9 @@ namespace BL
         /// <param name="chargingTime"></param>
         public void ReleasingDroneFromCharge(int droneId, double chargingTime)
         {
-            int index = droneBL.FindIndex(d => d.Id == droneId);
-            if (index == -1)
-                throw new MissingIdException("No such drone\n");
-            else
+            try
             {
+                int index = GetDroneIndex(droneId);
                 if (droneBL[index].Status == DroneStatuses.Maintenance)
                 {
                     List<IDAL.DO.DroneCharge> tempStWithCharging = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
@@ -71,8 +69,13 @@ namespace BL
                     idal1.BatteryCharged(droneId, stationId);
                 }
                 else
-                    throw new MissingIdException("No such drone\n");// throw approptate acception
+                    throw new DroneChargeException("Couldn't release the drone from charge\n");// throw approptate acception
             }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            }
+
         }
     }
 }

@@ -30,7 +30,7 @@ namespace DAL
         public void ParcelPickedUp(int parcelId)
         {
             int parcelIndex = CheckExistingParcel(parcelId);
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].droneId);
+            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
             //var temp2 = DataSource.dronesList[droneIndex];
             // temp2.status = DroneStatuses.Delivery;
             var temp = DataSource.parcelList[parcelIndex];
