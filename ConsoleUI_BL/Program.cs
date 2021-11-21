@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using IBL.BO;
 using IBL;
 
@@ -9,8 +13,8 @@ namespace ConsoleUI_BL
         //enums to determine updating, adding etc. choices
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOptions { Exit, Drone, Parcel, Customer, Station,Assignment, Pickedup, Delivery, Recharge, ReleasefromCharge }
-        enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
+        enum UpdateOptions { Exit, Drone, Customer, Station,Assignment, Pickedup, Delivery, Recharge, ReleasefromCharge }
+        enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, }
 
         //menu function wil go thorough all options for user
         private static void ShowMenu()
@@ -112,7 +116,7 @@ namespace ConsoleUI_BL
                         }
                     case MenuOptions.Update://update existing entities
                         {
-                            Console.WriteLine("what do you want to update?\n 1-Drone\n 2-Parcel\n 3-Customer\n 4-Station\n 5-Assignment,\n 6-Pickedup\n 7-Delivery,\n 8-Recharge\n 9-ReleasefromCharge\n ");
+                            Console.WriteLine("what do you want to update?\n 1-Drone\n 2-Customer\n 3-Station\n 4-Assignment,\n 5-Pickedup\n 6-Delivery,\n 7-Recharge\n 8-ReleasefromCharge\n ");
                             updateOption = (UpdateOptions)int.Parse(Console.ReadLine());
                             switch (updateOption)
                             {
@@ -133,59 +137,49 @@ namespace ConsoleUI_BL
                                         ibl1.UpdateStation(stationId, name, availableChargeSlots);
                                         break;
                                     }
-                                case UpdateOptions.Parcel:
-                                    {
-                                        break;
-                                    }
                                 case UpdateOptions.Customer:
                                     {
+                                        Console.WriteLine("Enter the ID\n");
+                                        int customerId= int.Parse(Console.ReadLine());
+                                        Console.WriteLine("Do you want to add a name answer Y or N");
+                                        Console.WriteLine("Do you want to add a phone number answer Y or N\n");
+
+                                        break;
+                                    }
+                                case UpdateOptions.Recharge:
+                                    {
+                                        Console.WriteLine("Enter the droneId\n");
+                                        int droneId = int.Parse(Console.ReadLine());
+                                        ibl1.SendingDroneToCharge(droneId);
+                                        break;
+                                    }
+                                case UpdateOptions.ReleasefromCharge:
+                                    {
+                                        Console.WriteLine("Enter the droneId\n and the charging time");
+                                        int droneId = int.Parse(Console.ReadLine());
+                                        double chargeTime = double.Parse(Console.ReadLine());
+                                        ibl1.ReleasingDroneFromCharge(droneId,chargeTime);
                                         break;
                                     }
                                 case UpdateOptions.Assignment://assign drone to parcel
                                     {
-                                        Console.WriteLine("Enter the parcelid for the assignment of the parcel and the droneid.\n");
-                                        int parcelId = int.Parse(Console.ReadLine());
+                                        Console.WriteLine("Enter the droneId.\n");
                                         int droneId = int.Parse(Console.ReadLine());
-                                        dal.ParcelDrone(parcelId, droneId);
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Delivery);
+                                        ibl1.AssignParcelToDrone(droneId);
                                         break;
                                     }
                                 case UpdateOptions.Delivery://adds a delivery of parcel by drone
                                     {
-                                        Console.WriteLine("Enter the parcelid and the Datetime\n");
-                                        int.TryParse(Console.ReadLine(), out int ID);
-                                        DateTime.TryParse(Console.ReadLine(), out DateTime time);
-                                        dal.ParcelDelivered(ID, time);
+                                        Console.WriteLine("Enter the droneId\n");
+                                        int.TryParse(Console.ReadLine(), out int droneId);
+                                        ibl1.DeliverParcelByDrone(droneId);
                                         break;
                                     }
                                 case UpdateOptions.Pickedup://changes drone and parcel accordingly
                                     {
-                                        Console.WriteLine("Enter the parcelid and the Datetime\n");
-                                        int id = int.Parse(Console.ReadLine());
-                                        DateTime.TryParse(Console.ReadLine(), out DateTime time);
-                                        dal.ParcelPickedUp(id);
-                                        break;
-                                    }
-                                case UpdateOptions.Recharge://charges a drone using dronecharge entity
-                                    {
-                                        Console.WriteLine("Enter the droneId and the stationId\n");
-                                        int droneId = int.Parse(Console.ReadLine());
-                                        int stationId = int.Parse(Console.ReadLine());
-                                        dal.SendToCharge(droneId, stationId);
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Maintenance);
-                                        dal.ChangeChargeSlots(stationId, -1);
-                                        break;
-                                    }
-
-                                case UpdateOptions.ReleasefromCharge:
-                                    {
-                                        Console.WriteLine("Enter the droneId and the stationId");
-                                        int droneId, stationId;
-                                        int.TryParse(Console.ReadLine(), out droneId);// gets the droneId and stationId from the user
-                                        int.TryParse(Console.ReadLine(), out stationId);
-                                        dal.BatteryCharged(droneId, stationId);// sets the battery to 100
-                                        dal.ChangeDroneStatus(droneId, DroneStatuses.Available);// changes the dronestatus to available
-                                        dal.ChangeChargeSlots(stationId, 1);// one extra chargeslot is free.'
+                                        Console.WriteLine("Enter the droneId\n");
+                                        int.TryParse(Console.ReadLine(), out int droneId);
+                                        ibl1.CollectingParcelByDrone(droneId);
                                         break;
                                     }
                                 case UpdateOptions.Exit:
@@ -204,45 +198,36 @@ namespace ConsoleUI_BL
                             {
                                 case ListOptions.Stations://display stations list
                                     {
-                                        List<Station> stationListTemp = dal.GetAllStations();
+                                        List<StationToList> stationListTemp = (List<StationToList>)ibl1.GetAllStation();
                                         stationListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Parcels://display parcels list
                                     {
-                                        List<Parcel> parcelListTemp = dal.GetParcelList();
+                                        List<ParcelToList> parcelListTemp = (List<ParcelToList>)ibl1.GetAllParcels();
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Drones://display drones list
                                     {
-                                        List<Drone> dronesListTemp = dal.GetAllDrones();
+                                        List<DroneToList> dronesListTemp = (List<DroneToList>)ibl1.GetAllDrones();
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Customers://display customers list
                                     {
-                                        List<Customer> customerListTemp = dal.GetAllCustomers();
+                                        List<CustomerToList> customerListTemp = (List<CustomerToList>)ibl1.GetAllCustomers();
                                         customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels://display unassigned parcels
                                     {
-                                        List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel();
-                                        UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
+                                        ((List<ParcelToList>)ibl1.GetAllUnassignedParcels()).ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations://diplay stations with available charging slots
-                                    dal.GetStationWithCharging().ForEach(p => Console.WriteLine(p));
+                                    ((List<StationToList>)ibl1.GetAllStationsWithCharging()).ForEach(p => Console.WriteLine(p));
                                     break;
-
-                                case ListOptions.DroneCharge://display drone charge list
-                                    {
-
-                                        List<DroneCharge> stationDroneChargeListTemp = dal.GetDroneChargeList();
-                                        stationDroneChargeListTemp.ForEach(p => Console.WriteLine(p.ToString()));
-                                        break;
-                                    }
                                 case ListOptions.Exit:
                                     {
                                         break;
@@ -261,28 +246,28 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("Enter the ID of the station you want to print\n");
                                         int.TryParse(Console.ReadLine(), out int id);
-                                        Console.WriteLine(dal.GetStation(id));
+                                        Console.WriteLine(ibl1.GetStation(id));
                                         break;
                                     }
                                 case EntityOptions.Parcel:
                                     {
                                         Console.WriteLine("Enter the ID of the parcel you want to print\n");
                                         int.TryParse(Console.ReadLine(), out int id);
-                                        Console.WriteLine(dal.GetParcel(id));
+                                        Console.WriteLine(ibl1.GetParcel(id));
                                         break;
                                     }
                                 case EntityOptions.Drone:
                                     {
                                         Console.WriteLine("Enter the ID of the drone you want to print\n");
                                         int.TryParse(Console.ReadLine(), out int id);
-                                        Console.WriteLine(dal.GetDrone(id));
+                                        Console.WriteLine(ibl1.GetDrone(id));
                                         break;
                                     }
                                 case EntityOptions.Customer:
                                     {
                                         Console.WriteLine("Enter the ID of the Customer you want to print\n");
                                         string id = Console.ReadLine();
-                                        Console.WriteLine(dal.GetCustomer(id));
+                                        Console.WriteLine(ibl1.GetCustomer(id));
                                         break;
                                     }
                                 case EntityOptions.Exit:
@@ -291,20 +276,6 @@ namespace ConsoleUI_BL
                                     }
 
                             }
-                            break;
-                        }
-                    case MenuOptions.Show_Distance://to show distance between a point and a station/cusomer
-                        {
-                            Console.WriteLine("Enter lattitude for required point");
-                            double.TryParse(Console.ReadLine(), out double latP);
-                            Console.WriteLine("Enter longitude for required point");
-                            double.TryParse(Console.ReadLine(), out double lonP);
-                            Console.WriteLine("Enter ID, for station 4 digits , for customer 9 ");
-                            int ID = int.Parse(Console.ReadLine());
-                            dynamic custOrStat = ID > 9999 ? dal.GetCustomer(string.Format($"{ID}")) : dal.GetStation(ID);//determines whether  a station or customer was entered
-                            // calls the distance function to determine distance btween the points    
-                            Console.WriteLine("The distance is: " + global::Bonus.Haversine(custOrStat.longitude, custOrStat.latitude, lonP, latP) + "KM");//calls haversine function from bonus library
-
                             break;
                         }
                     case MenuOptions.Exit:
@@ -323,10 +294,7 @@ namespace ConsoleUI_BL
 
         static void Main(string[] args)
         {
-
-
             ShowMenu();
-
         }
     }
 }

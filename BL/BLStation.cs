@@ -54,7 +54,7 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new MissingIdException("Invalid ID.\n,", ex);
+                throw new UpdateIssueException("Invalid ID.\n,", ex);
             }
 
 
@@ -78,7 +78,8 @@ namespace BL
                     temp = st;
                 }
             }
-            if (BatteryUsage(minDistance, 0) < dr.Battery) return temp;
+            if (BatteryUsage(minDistance, 0) < dr.Battery)
+                return temp;
             throw new catgettochargeException;
         }
 

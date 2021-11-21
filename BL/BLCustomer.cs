@@ -44,11 +44,11 @@ namespace BL
         /// <param name="customerId"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int customerId, string name, string phone)
+        public void UpdateCustomer(string customerId, string name, string phone)
         {
             try
             {
-                UpdateCustomer(customerId, name, phone);
+                idal1.UpdateCustomer(customerId, name, phone);
             }
             catch (IDAL.DO.MissingIdException ex)
             {
@@ -86,11 +86,6 @@ namespace BL
                 cus.NumPackSentDel = idal1.UndeliveredParcels().Where(p => p.Sender == cus.Id).Count();
             }
             return tempList;
-        }
-
-        public double DistanceBetweenCustomers(IDAL.DO.Customer cus1, IDAL.DO.Customer cus2)
-        {
-            return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
         }
     }
 }

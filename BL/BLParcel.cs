@@ -194,9 +194,9 @@ namespace BL
         /// returns all parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> GetAllParcels()
+        public IEnumerable<ParcelToList> GetAllParcels()
         {
-            List<PackageToList> tempList = new();
+            List<ParcelToList> tempList = new();
             idal1.GetAllParcels().CopyPropertyListtoIBLList(tempList);
             return tempList;
         }
@@ -206,9 +206,9 @@ namespace BL
         /// returns all unassigned parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<PackageToList> GetAllUnassignedParcels()
+        public IEnumerable<ParcelToList> GetAllUnassignedParcels()
         {
-            List<PackageToList> tempList = new();
+            List<ParcelToList> tempList = new();
             idal1.UnAssignedParcels().CopyPropertyListtoIBLList(tempList);
             /// add state
             return tempList;
