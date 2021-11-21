@@ -18,7 +18,7 @@ namespace DAL
 
         public double[] DronePwrUsg()
         {
-            double[] pwrUsg = { DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH };
+            double[] pwrUsg = { DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight,DataSource.Config.pwrUsgMedium, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH };
             return pwrUsg;
         }
     }

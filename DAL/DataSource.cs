@@ -48,7 +48,7 @@ namespace DAL
                 {
                     id = rand.Next(1000, 9999);
                 }
-                while (!dronesList.Exists(d => d.Id == id));
+                while (dronesList.Exists(d => d.Id == id));
 
                 dronesList.Add(new()
                 {
@@ -71,12 +71,12 @@ namespace DAL
                 {
                     id = $"0{rand.Next(100000000, 999999999)}";
                 }
-                while (!customerList.Exists(d => d.Id == id));
+                while (customerList.Exists(d => d.Id == id));
                 do
                 {
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}";
                 }
-                while (!customerList.Exists(d => d.Phone==phone ));
+                while (customerList.Exists(d => d.Phone==phone ));
 
                 customerList.Add(new()
                 {
@@ -148,7 +148,7 @@ namespace DAL
                 {
                     id = rand.Next(1000, 9999);
                 }
-                while (!stationList.Exists(d => d.Id == id));
+                while (stationList.Exists(d => d.Id == id));
                 stationList.Add(new()
                 {
                     Id = rand.Next(1000, 9999),

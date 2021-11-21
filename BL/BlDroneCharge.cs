@@ -16,21 +16,23 @@ namespace BL
             try
             {
                 int index = idal1.CheckExistingDrone(droneId);
-                //List<IDAL.DO.Station> tempStWithCharging = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
-                IDAL.DO.Station tempStation = FindClosestPossibleStation(droneBL[index]);// returns a station that the drone can fly to. if id=-1 there is no such station
-                DroneToList tempDrone = droneBL[index];
-                if (droneBL[index].Status == DroneStatuses.Available && tempStation.Id != 0)//if it's available and there is enough battery
+                if (droneBL[index].Status == DroneStatuses.Available)
                 {
-                    //update the drone
-                    tempDrone.Loc.Longitude = tempStation.Longitude;
-                    tempDrone.Loc.Latitude = tempStation.Latitude;
-                    UpdateBattery();
-                    tempDrone.Status = DroneStatuses.Maintenance;
-                    //update the station
-                    idal1.ChangeChargeSlots(tempStation.Id, -1);
-                    //update dronecharge
-                    idal1.SendToCharge(droneId, tempStation.Id);
+                    IDAL.DO.Station tempStation = FindClosestPossibleStation(droneBL[index]);// returns a station that the drone can fly to.
+                    DroneToList tempDrone = droneBL[index];
+                    if (tempStation.Id != 0)//if it's available and there is enough battery
+                    {
+                        //update the drone
+                        tempDrone.Loc.Longitude = tempStation.Longitude;
+                        tempDrone.Loc.Latitude = tempStation.Latitude;
+                        UpdateBattery();
+                        tempDrone.Status = DroneStatuses.Maintenance;
+                        //update the station
+                        idal1.ChangeChargeSlots(tempStation.Id, -1);
+                        //update dronecharge
+                        idal1.SendToCharge(droneId, tempStation.Id);
 
+                    }
                 }
                 else
                     throw new DroneChargeException("Can't send the drone to charge\n");// throw approptate acception
@@ -56,9 +58,9 @@ namespace BL
                 int index = GetDroneIndex(droneId);
                 if (droneBL[index].Status == DroneStatuses.Maintenance)
                 {
-                    List<IDAL.DO.DroneCharge> tempStWithCharging = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
+                    List<IDAL.DO.DroneCharge> tempDroneChargeList = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = droneBL.FindIndex(d => d.Id == droneId);// finding the index of drone to get the station id
-                    int stationId = tempStWithCharging[droneChargeIndex].StationId;
+                    int stationId = tempDroneChargeList[droneChargeIndex].StationId;
                     DroneToList tempDrone = droneBL[index];
                     // update drone
                     UpdateBattery();
@@ -67,6 +69,7 @@ namespace BL
                     idal1.ChangeChargeSlots(stationId, 1);
                     //update dronecharge
                     idal1.BatteryCharged(droneId, stationId);
+                    droneBL[index] = tempDrone;
                 }
                 else
                     throw new DroneChargeException("Couldn't release the drone from charge\n");// throw approptate acception

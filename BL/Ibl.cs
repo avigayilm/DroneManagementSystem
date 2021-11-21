@@ -16,7 +16,6 @@ using System.Threading.Tasks;
         public void UpdateDrone(int droneId, string model);
         public ParcelInTransfer GetParcelInTransfer(int parcelId);
         public void UpdateStation(int stationId, string name, int chargingSlots);
-        public void UpdateCustomer(int customerId, string name, string phone);
         public void ReleasingDroneFromCharge(int droneId, double chargingTime);
         public void SendingDroneToCharge(int droneId);
         public void AssignParcelToDrone(int droneId);
@@ -25,8 +24,6 @@ using System.Threading.Tasks;
         public Customer GetCustomer(string customerId);
         public IEnumerable<CustomerToList> GetAllCustomers();
         public int GetDroneIndex(int droneId);
-        internal Location DroneLocation(IDAL.DO.Parcel p, DroneToList tempBl);
-
         public DroneToList getDroneToList(int droneId);
         public Drone GetDrone(int droneId);
         public IEnumerable<DroneToList> GetAllDrones();
@@ -38,6 +35,7 @@ using System.Threading.Tasks;
         public Station GetStation(int stationId);
         public IEnumerable<StationToList> GetAllStation();
         public IEnumerable<StationToList> GetAllStationsWithCharging();
+        public void UpdateCustomer(string customerId, string name, string phone);
 
     }
 }

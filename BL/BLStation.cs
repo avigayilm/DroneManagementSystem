@@ -70,10 +70,11 @@ namespace BL
         {
 
             double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            foreach (IDAL.DO.Station st in idal1.GetAllStations())
+            List<IDAL.DO.Station> tempList =(List<IDAL.DO.Station>) idal1.GetStationWithCharging();
+            foreach (IDAL.DO.Station st in tempList)
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
-                if (distance < minDistance && st.AvailableChargeSlots > 0)
+                if (distance < minDistance)
                 {
                     minDistance = distance;
                     temp = st;
@@ -81,7 +82,7 @@ namespace BL
             }
             if (BatteryUsage(minDistance, 0) < dr.Battery)
                 return temp;
-            throw new catgettochargeException();
+            throw new BatteryIssueException("Not enough battery to fly to closest station\n");
         }
 
         public Station GetStation(int stationId)

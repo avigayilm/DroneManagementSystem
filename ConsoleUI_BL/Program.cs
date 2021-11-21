@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using IBL.BO;
 using IBL;
 
+// need to finish empty input by update
+//update battery for the droneCharge functions
+//check the adding with all the exceptions
+
 namespace ConsoleUI_BL
 {
     class Program
@@ -17,7 +21,7 @@ namespace ConsoleUI_BL
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, }
 
         //menu function wil go thorough all options for user
-        private static void ShowMenu()
+        private static void ShowMenuBL()
         {
 
             Ibl ibl1 = new BL.BL();
@@ -292,9 +296,9 @@ namespace ConsoleUI_BL
         }
 
 
-        static void Main(string[] args)
+       static void Main(string[] args)
         {
-            ShowMenu();
+            ShowMenuBL();
         }
     }
 }

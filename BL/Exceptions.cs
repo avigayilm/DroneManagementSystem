@@ -163,6 +163,25 @@ namespace IBL
             protected DroneChargeException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
+
+            internal class BatteryIssueException : Exception
+            {
+                public BatteryIssueException() : base()
+                {
+                }
+
+                public BatteryIssueException(string message) : base("Battery Issue: " + message)
+                {
+                }
+
+                public BatteryIssueException(string message, Exception innerException) : base(message, innerException)
+                {
+                }
+
+                protected BatteryIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+                {
+                }
+            }
         }
 
     }
