@@ -114,8 +114,8 @@ namespace DAL
             DataSource.stationList[index] = tempStation;
         }
 
-         
-        }
+
+
         /// <summary>
         /// returns an array with number of empty slots in index 1 and occupied slots in index 2 in a station
         /// </summary>
@@ -126,7 +126,7 @@ namespace DAL
             Station st = GetStation(id);
             int[] slots = new int[2];
             slots[0] = DataSource.chargeList.Where(s => s.StationId == st.Id).Count();
-            slots[1] = st.ChargeSlots;
+            slots[1] = st.AvailableChargeSlots;
             return slots;
         }
 
@@ -156,6 +156,6 @@ namespace DAL
                 throw new DuplicateIdException("station already exists\n");
             }
         }
-
+    
     }
 }

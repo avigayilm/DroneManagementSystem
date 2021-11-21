@@ -11,7 +11,7 @@ using System.Threading.Tasks;
     {
         public void AddStation(Station tempStat);
         public void AddCustomer(Customer newCustomer);
-        public void AddDrone(DroneToList newDrone, int stationId);
+        public void AddDrone(Drone newDrone, int stationId);
         public void AddParcel(Parcel newParcel);
         public void UpdateDrone(int droneId, string model);
         public ParcelInTransfer GetParcelInTransfer(int parcelId);

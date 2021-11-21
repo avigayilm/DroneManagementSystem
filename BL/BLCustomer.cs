@@ -56,7 +56,41 @@ namespace BL
             }
         }
 
-       
+        public Customer GetCustomer(string customerId)
+        {
+            try
+            {
+                Customer customer = new();
+                idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
+                List<IDAL.DO.Parcel> ReceivedParcelListDal = (List<IDAL.DO.Parcel>)idal1.GetCustomerReceivedParcels(customerId);
+                List<IDAL.DO.Parcel> SentParcelListDal = (List<IDAL.DO.Parcel>)idal1.GetCustomerSentParcels(customerId);
+                ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
+                SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
+                return customer;
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Customer.\n,", ex);
+            }
+        }
 
+        public IEnumerable<CustomerToList> GetAllCustomers()
+        {
+            List<CustomerToList> tempList = new();
+            idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
+            foreach (CustomerToList cus in tempList)
+            {
+                cus.NumPacksReceived = idal1.DeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
+                cus.NumPackSentDel = idal1.DeliveredParcels().Where(p => p.Sender == cus.Id).Count();
+                cus.NumPackExp = idal1.UndeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
+                cus.NumPackSentDel = idal1.UndeliveredParcels().Where(p => p.Sender == cus.Id).Count();
+            }
+            return tempList;
+        }
+
+        public double DistanceBetweenCustomers(IDAL.DO.Customer cus1, IDAL.DO.Customer cus2)
+        {
+            return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
+        }
     }
 }

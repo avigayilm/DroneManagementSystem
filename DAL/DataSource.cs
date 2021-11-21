@@ -43,15 +43,19 @@ namespace DAL
         {   //loop for updete 5 drone
             for (int i = 0; i < 5; i++)
             {
+                int id;// checking if the random Id exists already
+                do
+                {
+                    id = rand.Next(1000, 9999);
+                }
+                while (!dronesList.Exists(d => d.Id == id));
+
                 dronesList.Add(new()
                 {
                     Id = rand.Next(1000, 9999),
                     Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
                     MaxWeight = (WeightCategories)rand.Next(3),
-                    //status = DroneStatuses.Available,
-                    //battery = GetRandomNumber(20, 100)
                 });
-                // Config.droneIndex++;
             }
         }
 
@@ -62,6 +66,18 @@ namespace DAL
             //loop for 10 customer
             for (int i = 0; i < 10; i++)
             {
+                string id,phone;// checking if the random Id exists
+                do
+                {
+                    id = $"0{rand.Next(100000000, 999999999)}";
+                }
+                while (!customerList.Exists(d => d.Id == id));
+                do
+                {
+                    phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}";
+                }
+                while (!customerList.Exists(d => d.Phone==phone ));
+
                 customerList.Add(new()
                 {
                     Id = $"0{rand.Next(100000000, 999999999)}",
@@ -127,6 +143,12 @@ namespace DAL
         {
             for (int i = 0; i < 2; i++)
             {
+                int id;// checking if the random Id exists already
+                do
+                {
+                    id = rand.Next(1000, 9999);
+                }
+                while (!stationList.Exists(d => d.Id == id));
                 stationList.Add(new()
                 {
                     Id = rand.Next(1000, 9999),
