@@ -59,8 +59,10 @@ namespace BL
                     else//it is in maintenance
                     {
                         dr.Battery = rand.Next(20);// random battery level so that the drone can still fly
-                        List<StationToList> tempList = (List<StationToList>)GetAllStation();
-                        dr.Loc = tempList[rand.Next(tempList.Count())];
+                        List<IDAL.DO.Station> tempList = (List<IDAL.DO.Station>)idal1.GetAllStations();
+                        IDAL.DO.Station tempSt = tempList[rand.Next(tempList.Count())];
+                        dr.Loc.Latitude = tempSt.Latitude;
+                        dr.Loc.Longitude = tempSt.Longitude;
                     }
                 }
             }
