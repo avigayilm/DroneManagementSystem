@@ -19,11 +19,11 @@ namespace BL
         {
             try
             {
-                if (!string.IsNullOrEmpty(newCustomer.Id))
+                if (string.IsNullOrEmpty(newCustomer.Id))
                     throw new InvalidInputException("invalid Id input");
-                if (!string.IsNullOrEmpty(newCustomer.Name))
+                if (string.IsNullOrEmpty(newCustomer.Name))
                     throw new InvalidInputException("invalid name input");
-                if (!string.IsNullOrEmpty(newCustomer.PhoneNumber))
+                if (string.IsNullOrEmpty(newCustomer.PhoneNumber))
                     throw new InvalidInputException("invalid phonenumber");
                 IDAL.DO.Customer customer = new();
                 newCustomer.CopyPropertiestoIDAL(customer);
@@ -57,6 +57,11 @@ namespace BL
                 throw new UpdateIssueException("Couldn't Update the Drone.\n,", ex);
             }
         }
+        /// <summary>
+        /// returns a customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
 
         public Customer GetCustomer(string customerId)
         {
@@ -75,7 +80,10 @@ namespace BL
                 throw new RetrievalException("Couldn't get the Customer.\n,", ex);
             }
         }
-
+        /// <summary>
+        /// returns a list of customers
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CustomerToList> GetAllCustomers()
         {
             List<CustomerToList> tempList = new();

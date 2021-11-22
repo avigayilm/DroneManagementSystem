@@ -50,6 +50,7 @@ namespace IDAL
             protected MissingIdException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
+            
         }
     }
 }

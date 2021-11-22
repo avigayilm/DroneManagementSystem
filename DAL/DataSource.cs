@@ -99,12 +99,12 @@ namespace DAL
                 Parcel temp = new()
                 {
                     Id = ++DataSource.Config.LastParcelNumber,
-                    Sender = customerList[rand.Next(customerList.Count)].Id,// gets a random number of one of the customers
-                    Receiver = customerList[rand.Next(customerList.Count)].Id,
+                    Sender = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
+                    Receiver = customerList[rand.Next((customerList.Count-1))].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
-                    DroneId = 0
+                    DroneId = dronesList[i%5].Id
                 };
 
                 int statusStats = rand.Next(100);
@@ -118,7 +118,7 @@ namespace DAL
                         if (statusStats >= 30) // delivered
                         {
                             temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
-                            temp.DroneId = dronesList[rand.Next(dronesList.Count)].Id;
+                            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
                         }
                     }
                     if (temp.DroneId == 0)

@@ -12,14 +12,5 @@ namespace BL
         {
             return (int)(idal1.DronePwrUsg()[pwrIndex] * distance);
         }
-        //public bool EnoughBattery(double distance, double battery, WeightCategories weight)
-        //{
-
-        //}
-
-        //void UpdateBattery()
-        //{
-
-        //}
     }
 }

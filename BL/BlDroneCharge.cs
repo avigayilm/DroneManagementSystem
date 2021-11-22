@@ -43,6 +43,10 @@ namespace BL
             {
                 throw new RetrievalException("Couldn't get drone\n", ex);
             }
+            catch(BatteryIssueException)
+            {
+                throw new DroneChargeException("Can't send the drone to charge")
+            }
 
 
 
@@ -57,7 +61,7 @@ namespace BL
         {
             try
             {
-                int index = GetDroneIndex(droneId);
+                int index = idal1.CheckExistingDrone(droneId);
                 if (droneBL[index].Status == DroneStatuses.Maintenance)
                 {
                     List<IDAL.DO.DroneCharge> tempDroneChargeList = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();

@@ -23,7 +23,6 @@ using System.Threading.Tasks;
         public void CollectingParcelByDrone(int droneId);
         public Customer GetCustomer(string customerId);
         public IEnumerable<CustomerToList> GetAllCustomers();
-        public int GetDroneIndex(int droneId);
         public DroneToList getDroneToList(int droneId);
         public Drone GetDrone(int droneId);
         public IEnumerable<DroneToList> GetAllDrones();

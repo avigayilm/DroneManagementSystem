@@ -71,19 +71,12 @@ namespace BL
             }
         }
 
-        public int GetDroneIndex(int droneId)
-        {
-            try
-            {
-                int index = idal1.CheckExistingDrone(droneId);
-                return index;
-            }
-            catch (IDAL.DO.MissingIdException ex)
-            {
-                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
-            }
-        }
-
+        /// <summary>
+        /// returns the location of the drone
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="tempBl"></param>
+        /// <returns></returns>
         internal Location DroneLocation(IDAL.DO.Parcel p, DroneToList tempBl)
         {
             Location locTemp = new();
@@ -109,19 +102,12 @@ namespace BL
             return locTemp;
         }
 
-        public DroneToList getDroneToList(int droneId)
-        {
-            try
-            {
-                int index = idal1.CheckExistingDrone(droneId);
-                return droneBL[index];
-            }
-            catch (IDAL.DO.MissingIdException ex)
-            {
-                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
-            }
-        }
 
+        /// <summary>
+        /// returns a drone according to the droneId
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
             DroneToList droneToList = getDroneToList(droneId);
@@ -135,11 +121,33 @@ namespace BL
 
         }
 
+        /// <summary>
+        /// returns a DroneToList
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
+        public DroneToList getDroneToList(int droneId)
+        {
+            try
+            {
+                int index = idal1.CheckExistingDrone(droneId);
+                return droneBL[index];
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            }
+        }
 
+        /// <summary>
+        /// returns a list of drones
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneToList> GetAllDrones()
         {
             return droneBL;
         }
+
 
 
     }
