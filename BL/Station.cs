@@ -16,6 +16,17 @@ namespace IBL
             public int AvailableChargeSlots { get; set; }
             public Location Loc { get; set; }
             public List<DroneInCharge> Charging { get; set; }
+
+            public override string ToString()
+            {
+                return (String.Join(" ", Charging) 
+                    + "$Station id: {ID}\n"
+                    + "$Station Name:{Name}\n" 
+                    + "$Stations available Slots:{AvailableVHargeSlots}\n" 
+                    + "$Station location:{Loc}\n ")
+                    ;
+            }
+            
         }
     }
 }

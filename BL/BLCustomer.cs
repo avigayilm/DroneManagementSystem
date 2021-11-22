@@ -62,8 +62,8 @@ namespace BL
             {
                 Customer customer = new();
                 idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
-                List<IDAL.DO.Parcel> ReceivedParcelListDal = (List<IDAL.DO.Parcel>)idal1.GetCustomerReceivedParcels(customerId);
-                List<IDAL.DO.Parcel> SentParcelListDal = (List<IDAL.DO.Parcel>)idal1.GetCustomerSentParcels(customerId);
+                List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.Delivered != null).ToList();
+                List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.PickedUp != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
                 SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
                 return customer;
@@ -80,10 +80,10 @@ namespace BL
             idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
             foreach (CustomerToList cus in tempList)
             {
-                cus.NumPacksReceived = idal1.DeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
-                cus.NumPackSentDel = idal1.DeliveredParcels().Where(p => p.Sender == cus.Id).Count();
-                cus.NumPackExp = idal1.UndeliveredParcels().Where(p => p.Receiver == cus.Id).Count();
-                cus.NumPackSentDel = idal1.UndeliveredParcels().Where(p => p.Sender == cus.Id).Count();
+                cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.Receiver == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.Sender == cus.Id).Count();
+                cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.Receiver == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.Sender == cus.Id).Count();
             }
             return tempList;
         }

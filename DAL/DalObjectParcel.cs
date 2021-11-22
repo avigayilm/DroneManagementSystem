@@ -87,45 +87,43 @@ namespace DAL
         /// returns a parcellist
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> GetAllParcels()
-        {
-            List<Parcel> list = new();
-            DataSource.parcelList.ForEach(p => list.Add(p));
-            return (IEnumerable<Parcel>)list;
+        public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null)
+        { 
+            return DataSource.parcelList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         // returns a list with parcels that have not been assigned to a drone
-        public IEnumerable<Parcel> GetvacantParcel()
-        {
-            List<Parcel> temp = new();
-            DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) temp.Add(p); });
-            return (IEnumerable<Parcel>)temp;
-        }
+        //public IEnumerable<Parcel> GetvacantParcel()
+        //{
+        //    List<Parcel> temp = new();
+        //    DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) temp.Add(p); });
+        //    return (IEnumerable<Parcel>)temp;
+        //}
 
         /// <summary>
         /// returns a new list with the undelivered parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> UndeliveredParcels()
-        {
-            List<Parcel> undelivered = new();
-            DataSource.parcelList.ForEach(p => { if (p.Delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
-            return undelivered;
-        }
+        //public IEnumerable<Parcel> UndeliveredParcels()
+        //{
+        //    List<Parcel> undelivered = new();
+        //    DataSource.parcelList.ForEach(p => { if (p.Delivered == null) undelivered.Add(p); });// if the parcel is not delivered add it to the list
+        //    return undelivered;
+        //}
 
-        public IEnumerable<Parcel> DeliveredParcels()
-        {
-            List<Parcel> delivered = new();
-            DataSource.parcelList.ForEach(p => { if (p.Delivered != null) delivered.Add(p); });// if the parcel is not delivered add it to the list
-            return delivered;
-        }
+        //public IEnumerable<Parcel> DeliveredParcels()
+        //{
+        //    List<Parcel> delivered = new();
+        //    DataSource.parcelList.ForEach(p => { if (p.Delivered != null) delivered.Add(p); });// if the parcel is not delivered add it to the list
+        //    return delivered;
+        //}
 
-        public IEnumerable<Parcel> UnAssignedParcels()
-        {
-            List<Parcel> unassigned = new();
-            DataSource.parcelList.ForEach(p => { if (p.Created == null) unassigned.Add(p); });// if the parcel is not delivered add it to the list
-            return unassigned;
-        }
+        //public IEnumerable<Parcel> UnAssignedParcels()
+        //{
+        //    List<Parcel> unassigned = new();
+        //    DataSource.parcelList.ForEach(p => { if (p.Created == null) unassigned.Add(p); });// if the parcel is not delivered add it to the list
+        //    return unassigned;
+        //}
 
 
         /// <summary>

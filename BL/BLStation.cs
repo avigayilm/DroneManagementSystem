@@ -85,6 +85,25 @@ namespace BL
             throw new BatteryIssueException("Not enough battery to fly to closest station\n");
         }
 
+        internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
+        {
+
+            double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
+            List<IDAL.DO.Station> tempList = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
+            foreach (IDAL.DO.Station st in tempList)
+            {
+                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    temp = st;
+                }
+            }
+            if (BatteryUsage(minDistance, 0) < dr.Battery)
+                return temp, minDistance);
+            throw new BatteryIssueException("Not enough battery to fly to closest station\n");
+        }
+
         public Station GetStation(int stationId)
         {
             try
@@ -92,8 +111,8 @@ namespace BL
                 Station station = new();
                 IDAL.DO.Station stationDal = idal1.GetStation(stationId);
                 stationDal.CopyPropertiestoIBL(station);
-                List<IDAL.DO.Station> chargingListIdal = (List<IDAL.DO.Station>)idal1.DronesChargingAtStation(stationId);
-                chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists
+                List<IDAL.DO.Drone> chargingListIdal = idal1.DronesChargingAtStation(stationId).ToList();
+                chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists and copies it to teh drone list in station
                 return station;
             }
 

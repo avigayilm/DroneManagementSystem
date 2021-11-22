@@ -35,7 +35,7 @@ namespace BL
                 newDrone.Status = DroneStatuses.Maintenance;
                 //location of station id
                 List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                int index = tempStat.FindIndex(d => d.Id == stationId);
+                int index = tempStat.FindIndex(d => d.Id == stationId);//no need to get the whole list change!!! + reduce charge slots in right station
                 newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
                 DroneToList newDroneToList = new();
                 newDrone.CopyPropertiestoIBL(newDroneToList);
