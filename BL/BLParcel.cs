@@ -54,7 +54,7 @@ namespace BL
             {
                 int index = idal1.CheckExistingDrone(droneId);
                 List<IBL.BO.DroneToList> tempDroneList = droneBL;
-                List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels(i => (int)i.Weight <= (int)droneBL[index].Weight).ToList();//data layer parcel list
+                List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)droneBL[index].Weight).ToList();//data layer parcel list
                 int maxW = 0, maxPri = 0;
                 double minDis = 0.0;
 
@@ -62,17 +62,20 @@ namespace BL
                 {
                     IDAL.DO.Parcel? fittingPack = null;//new null temp parcel
                     foreach (IDAL.DO.Parcel pack in tempParcelList)
-                        if ((int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && DroneDistanceFromParcel(droneBL[index], pack) < minDis)//pack is only eligible if its weight , distance and priority are bes
+                    {
+                        double droneDisFromPack = DroneDistanceFromParcel(droneBL[index], pack);
+                        if ((int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && droneDisFromPack < minDis)//pack is only eligible if its weight , distance and priority are bes
                         {
-                            double toCus = DroneDistanceFromParcel(droneBL[index], pack);//distance from drones current location to sending customer
+                            
                             double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.Sender), idal1.SmallestDistanceStation(pack.Sender));//distance from receiver of package to closest charging station
                             double betweenCus = DistanceBetweenCustomers(idal1.GetCustomer(pack.Sender), idal1.GetCustomer(pack.Receiver));//distance between sender to receiver
-                            if (BatteryUsage(toCus, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < droneBL[index].Battery)//enough battery to make the trip
+                            if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < droneBL[index].Battery)//enough battery to make the trip
                                 fittingPack = pack;//so far this is the most fitting pack for the drone.
                             maxPri = (int)pack.Priority;
                             maxW = (int)pack.Weight;
-                            minDis = DroneDistanceFromParcel(droneBL[index], pack);
+                            minDis = droneDisFromPack;
                         }
+                    }
                     if (fittingPack != null)//if indeed a fitting package has been found
                     {
                         droneBL[index].Status = DroneStatuses.Delivery;//update drone list in BL
