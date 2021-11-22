@@ -42,7 +42,7 @@ namespace BL
                             if (propInf2 == null)//if not found in this class
                                 continue;
                             var value = propInf2.GetValue(sProp);//get the value from inner class insource
-                            propInf.SetValue(target, value);
+                            sProp.SetValue(target, value);
                         }
                     }
 
