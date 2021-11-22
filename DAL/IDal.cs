@@ -41,7 +41,7 @@ namespace IDAL
        // public IEnumerable<Parcel> GetvacantParcel();
         public double[] DronePwrUsg();
 
-        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
+       // public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
         //public IEnumerable<Station> GetStationWithCharging();
        // public IEnumerable<Parcel> UndeliveredParcels();
         public void UpdateDrone(int droneId, string model);

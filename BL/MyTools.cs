@@ -44,36 +44,39 @@ namespace BL
 
         public static void CopyPropertiestoIDAL<Source, Target>(this Source source, Target target)//from bl to idal
         {
-            foreach (var targetProp in target.GetType().GetProperties())//goes over all source props
+            PropertyInfo[] propertyInfos = target.GetType().GetProperties();
+
+            foreach (var targetProp in propertyInfos)//goes over all source props
             {
-                bool isMatched = source.GetType().GetProperties().Any(sourceProp => sourceProp.Name == targetProp.Name && sourceProp.GetType() == targetProp.GetType());
-                if (isMatched)
+                //bool isMatched = source.GetType().GetProperties().Any(sourceProp => sourceProp.Name == targetProp.Name && sourceProp.GetType() == targetProp.GetType());
+                PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);
+                if (propInf != null)
                 {
-                    PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property
-                    var value = propInf.GetValue(source);//get the value of this property
-                    //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
-                    propInf.SetValue(target, value);
+                    //PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property
+                    object value = propInf.GetValue(source);//get the value of this property
+                                                            //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
+                    if (value is ValueType || value is string)
+                        targetProp.SetValue(target, value);
                 }
                 else
                 {
-                    foreach (PropertyInfo sProp in source.GetType().GetProperties())//each propret thats a class
+                    PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
+                    foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class
                     { //isMatched = sProp.GetType().IsClass;
 
-                        if (/*isMatched*/sProp.GetType().IsClass)//is a class
+                        if (sProp.GetType().IsClass)//is a class
                         {
-                            //object obj = tProp.GetValue();
-                            //var value = sProp.GetValue(source);
-                            //object obj = tProp;
-                            //var value = sProp.GetValue(source);
-                            PropertyInfo propInf = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
-                            var value = propInf.GetValue(sProp);//get the value from inner class insource
+                            PropertyInfo propInf2 = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
+                            if (propInf2 == null)//if not found in this class
+                                continue;
+                            var value = propInf2.GetValue(sProp);//get the value from inner class insource
                             propInf.SetValue(target, value);
                         }
                     }
 
                 }
             }
-            //return target;
+                //return target;
         }
 
         /// <summary>
