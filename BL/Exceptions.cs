@@ -35,7 +35,7 @@ namespace IBL
         ///Exception for all the getFuncitons
         /// </summary>
         [Serializable]
-       
+
         public class RetrievalException : Exception
         {
             public RetrievalException() : base()
@@ -58,25 +58,25 @@ namespace IBL
         /// Exception for all the invalid inputs
         /// </summary>
 
-            [Serializable]
-            public class InvalidInputException : Exception
+        [Serializable]
+        public class InvalidInputException : Exception
+        {
+            public InvalidInputException() : base()
             {
-                public InvalidInputException() : base()
-                {
-                }
-
-                public InvalidInputException(string message) : base("Invalid input: " + message)
-                {
-                }
-
-                public InvalidInputException(string message, Exception innerException) : base(message, innerException)
-                {
-                }
-
-                protected InvalidInputException(SerializationInfo info, StreamingContext context) : base(info, context)
-                {
-                }
             }
+
+            public InvalidInputException(string message) : base("Invalid input: " + message)
+            {
+            }
+
+            public InvalidInputException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected InvalidInputException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
 
         /// <summary>
         /// Exception for all teh delivery issues
@@ -146,6 +146,7 @@ namespace IBL
             }
         }
 
+        [Serializable]
         public class DroneChargeException : Exception
         {
             public DroneChargeException() : base()
@@ -163,26 +164,48 @@ namespace IBL
             protected DroneChargeException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
+        }
 
-            public class BatteryIssueException : Exception
+        [Serializable]
+        public class ConstructorIssueException : Exception
+        {
+            public ConstructorIssueException() : base()
             {
-                public BatteryIssueException() : base()
-                {
-                }
+            }
 
-                public BatteryIssueException(string message) : base("Battery Issue: " + message)
-                {
-                }
+            public ConstructorIssueException(string message) : base("Constructor Issue exception: " + message)
+            {
+            }
 
-                public BatteryIssueException(string message, Exception innerException) : base(message, innerException)
-                {
-                }
+            public ConstructorIssueException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
 
-                protected BatteryIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
-                {
-                }
+            protected ConstructorIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
             }
         }
+
+        [Serializable]
+        public class AssignIssueException : Exception
+        {
+            public AssignIssueException() : base()
+            {
+            }
+
+            public AssignIssueException(string message) : base("AssignIssueException: " + message)
+            {
+            }
+
+            public AssignIssueException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected ConstructorIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
+
 
     }
 }

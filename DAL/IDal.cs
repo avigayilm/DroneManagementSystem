@@ -21,7 +21,7 @@ namespace IDAL
         public void ParcelDelivered(int parcelId);
        //public IEnumerable<Parcel> DeliveredParcels();
         //public void ChangeDroneStatus(int DroneId, DroneStatuses st);
-        public IEnumerable<Parcel> UnAssignedParcels();
+        //public IEnumerable<Parcel> UnAssignedParcels();
         public List<Customer> CustomersDeliverdTo();
 
         public void ChangeChargeSlots(int stationId, int n);
@@ -34,7 +34,6 @@ namespace IDAL
         public Drone GetDrone(int ID);
         public Station GetStation(int ID);
         public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null);
-        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null);
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null);
         public IEnumerable<DroneCharge> GetDroneChargeList();

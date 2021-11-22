@@ -42,6 +42,10 @@ namespace BL
             {
                 throw new AddingException("Couldn't add the station.\n,", ex);
             }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new AddingException("Couldn't add the station.\n,", ex);
+            }
         }
 
 
@@ -67,12 +71,12 @@ namespace BL
         }
 
         /// <summary>
-        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// returns a the closest station
         /// </summary>
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        internal IDAL.DO.Station FindClosestPossibleStation(DroneToList dr)
+        internal IDAL.DO.Station FindClosestStation(DroneToList dr)
         {
 
             double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
@@ -86,30 +90,47 @@ namespace BL
                     temp = st;
                 }
             }
-            if (BatteryUsage(minDistance, 0) < dr.Battery)
-                return temp;
-            throw new BatteryIssueException("Not enough battery to fly to closest station\n");
+          return temp;
         }
 
-        internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
+        /// <summary>
+        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// </summary>
+        /// <param name="withCharging"></param>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        internal IDAL.DO.Station FindClosestPossibleStation(DroneToList dr)
         {
-
-            double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            List<IDAL.DO.Station> AvailableChargeList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
-            foreach (IDAL.DO.Station st in AvailableChargeList)
-            {
-                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    temp = st;
-                }
-            }
-            if (BatteryUsage(minDistance, 0) < dr.Battery)
-                return (temp, minDistance);
+            IDAL.DO.Station closestStation = FindClosestStation(dr);
+            if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude,dr.Loc.Latitude,closestStation.Longitude,closestStation.Latitude), 0) < dr.Battery)
+                return closestStation;
             throw new BatteryIssueException("Not enough battery to fly to closest station\n");
         }
 
+        //internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
+        //{
+
+        //    double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
+        //    List<IDAL.DO.Station> AvailableChargeList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
+        //    foreach (IDAL.DO.Station st in AvailableChargeList)
+        //    {
+        //        double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
+        //        if (distance < minDistance)
+        //        {
+        //            minDistance = distance;
+        //            temp = st;
+        //        }
+        //    }
+        //    if (BatteryUsage(minDistance, 0) < dr.Battery)
+        //        return (temp, minDistance);
+        //    throw new BatteryIssueException("Not enough battery to fly to closest station\n");
+        //}
+
+        /// <summary>
+        /// returns a station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public Station GetStation(int stationId)
         {
             try
@@ -128,7 +149,10 @@ namespace BL
             }
         }
 
-
+        /// <summary>
+        /// returns a list with all stations
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<StationToList> GetAllStation()
         {
             List<StationToList> tempList = new();

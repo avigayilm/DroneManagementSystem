@@ -132,9 +132,10 @@ namespace BL
         public static  void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
             where Target : new()//from idal to bl 
         {
-            Target T = new();
+            Target T;
             foreach(Source idalElement in source)
             {
+                T = new();
                 idalElement.CopyPropertiestoIBL(T);
                 target.Add(T);
             }
