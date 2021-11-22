@@ -201,7 +201,7 @@ namespace IBL
             {
             }
 
-            protected ConstructorIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
+            protected AssignIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
         }

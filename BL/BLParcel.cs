@@ -168,8 +168,9 @@ namespace BL
         /// </summary>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        public ParcelStatuses GetParcelStatus(Parcel parcel)
+        public ParcelStatuses GetParcelStatus(int parcelId)
         {
+            Parcel parcel=GetParcel(parcelId);
             if (parcel.Delivered != null)
                 return ParcelStatuses.Delivered;
             if (parcel.PickedUp != null)
@@ -191,7 +192,7 @@ namespace BL
             ParcelAtCustomer parcelAtCustomer = new();
             parcel = GetParcel(parcelId);
             parcel.CopyPropertiestoIBL(parcelAtCustomer);
-            parcelAtCustomer.ParcelStatus = GetParcelStatus(parcel);
+            parcelAtCustomer.ParcelStatus = GetParcelStatus(parcelId);
             if (parcel.Dr.Loc == GetCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else
@@ -240,7 +241,10 @@ namespace BL
         {
             List<ParcelToList> tempList = new();
             idal1.GetAllParcels(p => p.Assigned == null).CopyPropertyListtoIBLList(tempList);
-            /// add state
+            foreach(ParcelToList p in tempList)
+            {
+                p.parcelStatus = GetParcelStatus(p.Id);
+            }
             return tempList;
         }
 

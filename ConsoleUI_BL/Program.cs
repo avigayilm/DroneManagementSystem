@@ -272,7 +272,7 @@ namespace ConsoleUI_BL
                             }
                             catch(RetrievalException ex)
                             {
-
+                                Console.WriteLine(ex);
                             }
                             break;
                         }
@@ -326,7 +326,7 @@ namespace ConsoleUI_BL
                             }
                             catch(RetrievalException ex)
                             {
-
+                                Console.WriteLine(ex);
                             }
                             break;
                         }

@@ -55,5 +55,8 @@ namespace IDAL
         public void CheckDuplicateStation(int stationId);
         public int CheckExistingStation(int stationId);
 
+        public int CheckExistingParcel(int parcelId);
+        public void CheckDuplicateParcel(int parcelId);
+
     }
 }

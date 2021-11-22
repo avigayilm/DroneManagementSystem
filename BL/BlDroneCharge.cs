@@ -45,10 +45,8 @@ namespace BL
             }
             catch(BatteryIssueException)
             {
-                throw new DroneChargeException("Can't send the drone to charge")
+                throw new DroneChargeException("Can't send the drone to charge");
             }
-
-
 
         }
 
