@@ -17,9 +17,9 @@ namespace BL
 
         //}
 
-        void UpdateBattery()
-        {
+        //void UpdateBattery()
+        //{
 
-        }
+        //}
     }
 }

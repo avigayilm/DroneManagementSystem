@@ -19,17 +19,19 @@ namespace BL
         {
             try
             {
-                if (newCustomer.Id == "\n")
+                if (!string.IsNullOrEmpty(newCustomer.Id))
                     throw new InvalidInputException("invalid Id input");
-                if (newCustomer.Loc.Latitude <= -90 || newCustomer.Loc.Latitude >= 90)// out of range of latitude
-                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
-                if (newCustomer.Loc.Longitude <= -180 || newCustomer.Loc.Longitude >= 180)// out of range of latitude
-                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
-                if (newCustomer.PhoneNumber == "\n")
+                if (!string.IsNullOrEmpty(newCustomer.Name))
+                    throw new InvalidInputException("invalid name input");
+                if (!string.IsNullOrEmpty(newCustomer.PhoneNumber))
                     throw new InvalidInputException("invalid phonenumber");
                 IDAL.DO.Customer customer = new();
                 newCustomer.CopyPropertiestoIDAL(customer);
                 idal1.AddCustomer(customer);
+            }
+            catch (InvalidInputException ex)
+            {
+                throw new AddingException("Couldn't Add the Customer.\n,", ex);
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {

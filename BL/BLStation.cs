@@ -21,8 +21,10 @@ namespace BL
             {
                 if (station.AvailableChargeSlots < 0)
                     throw new InvalidInputException("The number of charging slots is less than 0 \n");
-                if (station.Id <= 0)// maybe I have to check that it is 3 digits
+                if (station.Id <= 0)
                     throw new InvalidInputException("The Id is less than zero \n");
+                if (string.IsNullOrEmpty(station.Name))
+                    throw new InvalidInputException("The name is\n");
                 if (station.Loc.Latitude <= -90 || station.Loc.Latitude >= 90)// out of range of latitude
                     throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
                 if (station.Loc.Longitude <= -180 || station.Loc.Longitude >= 180)// out of range of latitude
@@ -32,9 +34,13 @@ namespace BL
                 idal1.AddStation(st);
                 station.Charging = new();
             }
+            catch(InvalidInputException ex)
+            {
+                throw new AddingException("Couldn't add the station.\n,", ex);
+            }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new AddingException("Couldn'd add the station.\n,", ex);
+                throw new AddingException("Couldn't add the station.\n,", ex);
             }
         }
 
@@ -70,7 +76,7 @@ namespace BL
         {
 
             double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            List<IDAL.DO.Station> tempList =(List<IDAL.DO.Station>) idal1.GetStationWithCharging();
+            List<IDAL.DO.Station> tempList =idal1.GetAllStations(s=>s.AvailableChargeSlots>0).ToList();
             foreach (IDAL.DO.Station st in tempList)
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
@@ -89,8 +95,8 @@ namespace BL
         {
 
             double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            List<IDAL.DO.Station> tempList = (List<IDAL.DO.Station>)idal1.GetStationWithCharging();
-            foreach (IDAL.DO.Station st in tempList)
+            List<IDAL.DO.Station> AvailableChargeList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
+            foreach (IDAL.DO.Station st in AvailableChargeList)
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
                 if (distance < minDistance)
@@ -100,7 +106,7 @@ namespace BL
                 }
             }
             if (BatteryUsage(minDistance, 0) < dr.Battery)
-                return temp, minDistance);
+                return (temp, minDistance);
             throw new BatteryIssueException("Not enough battery to fly to closest station\n");
         }
 
@@ -143,7 +149,7 @@ namespace BL
         public IEnumerable<StationToList> GetAllStationsWithCharging()
         {
             List<StationToList> tempList = new();
-            idal1.GetStationWithCharging().CopyPropertyListtoIBLList(tempList);
+            idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList().CopyPropertyListtoIBLList(tempList);
             return tempList;
         }
     }

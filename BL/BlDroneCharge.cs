@@ -25,7 +25,9 @@ namespace BL
                         //update the drone
                         tempDrone.Loc.Longitude = tempStation.Longitude;
                         tempDrone.Loc.Latitude = tempStation.Latitude;
-                        UpdateBattery();
+                        double distance = Bonus.Haversine(tempDrone.Loc.Longitude, tempDrone.Loc.Latitude, tempDrone.Loc.Longitude, tempDrone.Loc.Latitude);
+                        double batteryusage = BatteryUsage(distance, 0);// when sending the drone to charge the drone is empty
+                        tempDrone.Battery += batteryusage;
                         tempDrone.Status = DroneStatuses.Maintenance;
                         //update the station
                         idal1.ChangeChargeSlots(tempStation.Id, -1);
@@ -63,7 +65,8 @@ namespace BL
                     int stationId = tempDroneChargeList[droneChargeIndex].StationId;
                     DroneToList tempDrone = droneBL[index];
                     // update drone
-                    UpdateBattery();
+                    double batteryFilled = (chargingTime/60) * idal1.DronePwrUsg()[4];
+                    tempDrone.Battery += batteryFilled;
                     tempDrone.Status = DroneStatuses.Available;
                     //update station
                     idal1.ChangeChargeSlots(stationId, 1);
@@ -78,7 +81,6 @@ namespace BL
             {
                 throw new RetrievalException("Couldn't get the Drone.\n,", ex);
             }
-
         }
     }
 }

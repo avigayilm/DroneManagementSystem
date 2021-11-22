@@ -13,7 +13,7 @@ namespace IBL
         /// Exception for all the update funcitons
         /// </summary>
         [Serializable]
-        internal class UpdateIssueException : Exception
+        public class UpdateIssueException : Exception
         {
             public UpdateIssueException() : base()
             {
@@ -36,7 +36,7 @@ namespace IBL
         /// </summary>
         [Serializable]
        
-        internal class RetrievalException : Exception
+        public class RetrievalException : Exception
         {
             public RetrievalException() : base()
             {
@@ -59,7 +59,7 @@ namespace IBL
         /// </summary>
 
             [Serializable]
-            internal class InvalidInputException : Exception
+            public class InvalidInputException : Exception
             {
                 public InvalidInputException() : base()
                 {
@@ -82,7 +82,7 @@ namespace IBL
         /// Exception for all teh delivery issues
         /// </summary>
         [Serializable]
-        internal class DeliveryIssueException : Exception
+        public class DeliveryIssueException : Exception
         {
             public DeliveryIssueException() : base()
             {
@@ -104,7 +104,7 @@ namespace IBL
         /// Exception for all the batteryissues
         /// </summary>
         [Serializable]
-        internal class BatteryIssueException : Exception
+        public class BatteryIssueException : Exception
         {
             public BatteryIssueException() : base()
             {
@@ -127,7 +127,7 @@ namespace IBL
         /// exception for all the adding funcitons
         /// </summary>
         [Serializable]
-        internal class AddingException : Exception
+        public class AddingException : Exception
         {
             public AddingException() : base()
             {
@@ -146,7 +146,7 @@ namespace IBL
             }
         }
 
-        internal class DroneChargeException : Exception
+        public class DroneChargeException : Exception
         {
             public DroneChargeException() : base()
             {
@@ -164,7 +164,7 @@ namespace IBL
             {
             }
 
-            internal class BatteryIssueException : Exception
+            public class BatteryIssueException : Exception
             {
                 public BatteryIssueException() : base()
                 {

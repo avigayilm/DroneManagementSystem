@@ -50,22 +50,26 @@ namespace DAL
         ///  returns the list with the stations that have availble charging
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetStationWithCharging()
-        {
-            List<Station> temp = new();
-            DataSource.stationList.ForEach(p => { if (p.AvailableChargeSlots > 0) { temp.Add(p); } });
-            return (IEnumerable<Station>)temp;
-        }
+        //public IEnumerable<Station> GetStationWithCharging()
+        //{
+        //    List<Station> temp = new();
+        //    DataSource.stationList.ForEach(p => { if (p.AvailableChargeSlots > 0) { temp.Add(p); } });
+        //    return (IEnumerable<Station>)temp;
+        //}
 
         /// <summary>
         /// returns the whole list of stations
-        /// </summary>
+        /// <summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetAllStations()
+        //public IEnumerable<Station> GetAllStations()
+        //{
+        //    List<Station> tempStationList = new();
+        //    DataSource.stationList.ForEach(s => tempStationList.Add(s));
+        //    return (IEnumerable<Station>)tempStationList;
+        //}
+        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
-            List<Station> tempStationList = new();
-            DataSource.stationList.ForEach(s => tempStationList.Add(s));
-            return (IEnumerable<Station>)tempStationList;
+            return DataSource.stationList.FindAll(x => predicate == null ? true : predicate(x));
         }
         /// <summary>
         /// returns the nearest station to a customer
@@ -107,9 +111,9 @@ namespace DAL
             int index = CheckExistingStation(stationId);
             DataSource.stationList.FindIndex(s => s.Id == stationId);
             Station tempStation = DataSource.stationList[index];
-            if (name != ("\n"))
+            if (name != null)
                 tempStation.Name = name;
-            if (chargeSlots != 0)// chekc if a phone was entere
+            if (chargeSlots != -1)// chekc if chargeslots was enetered
                 tempStation.AvailableChargeSlots = chargeSlots - AvailableAndEmptySlots(stationId)[0];// input=total chargeslots, we only save the availablechargeslots
             DataSource.stationList[index] = tempStation;
         }
