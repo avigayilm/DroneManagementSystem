@@ -85,32 +85,39 @@ namespace BL
         /// <param name="target"></param>
         public static void CopyPropertiestoIBL<Source, Target>(this Source source, Target target)//from idal to bl
         {
-            foreach (var sProp in source.GetType().GetProperties())//goes over all source props
+            PropertyInfo[] propertyInfos = target.GetType().GetProperties();
+            foreach (var sProp in propertyInfos)//goes over all source props
             {
-                bool isMatched = target.GetType().GetProperties().Any(targetProp => targetProp.Name == sProp.Name && targetProp.GetType() == sProp.GetType());
-                if (isMatched)//such a propety does indeed exist in target
+
+                //bool isMatched = target.GetType().GetProperties().Any(targetProp => targetProp!= null && targetProp.Name == sProp.Name && targetProp.GetType() == sProp.GetType());
+                PropertyInfo propInf = typeof(Source).GetProperty(sProp.Name);//get my wanted property - has the same name in sprop and targetprop so will work anyhow
+
+                if (propInf != null)//such a propety does indeed exist in target
                 {
-                    PropertyInfo propInf = typeof(Source).GetProperty(sProp.Name);//get my wanted property - has the same name in sprop and targetprop so will work anyhow
-                    var value = propInf.GetValue(source);//get the value of this property
+                    
+                    object value = propInf.GetValue(source);//get the value of this property
                     //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
-                    if (value is ValueType) propInf.SetValue(target, value);//copy it to target
+                    if (value is ValueType || value is string)
+                        sProp.SetValue(target, value);//copy it to target
                 }
+
+             
                 else //doesnt exist
                 {
-                    foreach (PropertyInfo tProp in target.GetType().GetProperties())//each propret thats a class
+                    PropertyInfo[] propertyInfos1 = target.GetType().GetProperties();
+                    foreach (PropertyInfo tProp in propertyInfos1)//each propret thats a class
                     { //isMatched = sProp.GetType().IsClass;
 
                         if (/*isMatched*/tProp.GetType().IsClass)//is a class
                         {
-                            PropertyInfo propInf = tProp.GetType().GetProperty(sProp.Name);//the wanted property 
-                            if (propInf == null)//if not found in this class
+                            PropertyInfo propInf2 = tProp.GetType().GetProperty(sProp.Name);//the wanted property 
+                            if (propInf2 == null)//if not found in this class
                                 continue;
-                            var value = propInf.GetValue(source);//get the value from inner class insource
-                            propInf.SetValue(tProp, value);
+                            var value = propInf2.GetValue(source);//get the value from inner class insource
+                            propInf2.SetValue(tProp, value);
                             break;
                         }
                     }
-
                 }
             }
             //return target;
@@ -122,9 +129,10 @@ namespace BL
         /// <typeparam name="Target"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static  void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)//from idal to bl
+        public static  void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
+            where Target : new()//from idal to bl 
         {
-            Target T = default;
+            Target T = new();
             foreach(Source idalElement in source)
             {
                 idalElement.CopyPropertiestoIBL(T);
@@ -132,6 +140,18 @@ namespace BL
             }
             
         }
+
+        public static void CopyPropertyListtoIBLList1<Source, Target>(this IEnumerable<Source> source, List<Target> target)
+           where Target : struct//from idal to bl 
+        {
+            Target T = new();
+            foreach (Source idalElement in source)
+            {
+                idalElement.CopyPropertiestoIBL(T);
+                target.Add(T);
+            }
+        }
+
 
         //public static T SmallestDistance<T>(this Location current, List<T> toFindIn)
         //{

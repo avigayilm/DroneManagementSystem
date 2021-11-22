@@ -55,11 +55,9 @@ namespace DAL
         /// returns the list of all drones as Ienumerable
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Drone> GetAllDrones()
+        public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate =null)
         {
-            List<Drone> list = new();
-            DataSource.dronesList.ForEach(d => list.Add(d));
-            return (IEnumerable<Drone>)list;
+            return DataSource.dronesList.FindAll(d => predicate ==null ? true : predicate(d));
         }
         /// <summary>
         /// updates the model of the drone, used in BL
@@ -74,7 +72,11 @@ namespace DAL
             DataSource.dronesList[index] = tempDrone;
 
         }
-
+        /// <summary>
+        /// returns a list of all the droned chrging at a station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new();

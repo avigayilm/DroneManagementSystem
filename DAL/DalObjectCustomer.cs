@@ -36,11 +36,9 @@ namespace DAL
         /// returns the list of customers as Ienumerable
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Customer> GetAllCustomers()
+        public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null )
         {
-            List<Customer> list = new();
-            DataSource.customerList.ForEach(c => list.Add(c));
-            return (IEnumerable<Customer>)list;
+           return DataSource.customerList.FindAll(c => predicate == null?true: predicate(c));
         }
 
         /// <summary>
@@ -64,26 +62,20 @@ namespace DAL
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public IEnumerable<Customer> GetCustomerSentParcels(string customerId)
-        {
-            int index = CheckExistingCustomer(customerId);
-            List<Parcel> list = new();
-            DataSource.parcelList.ForEach(p => { if (p.Sender == customerId && p.PickedUp != null) list.Add(p); });
-            return (IEnumerable<Customer>)list;
-        }
+ 
 
         /// <summary>
         /// makes a list with all the parcels a customer received
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public IEnumerable<Customer> GetCustomerReceivedParcels(string customerId)
-        {
-            int index = CheckExistingCustomer(customerId);
-            List<Parcel> list = new();
-            DataSource.parcelList.ForEach(p => { if (p.Sender == customerId && p.Delivered != null) list.Add(p); });
-            return (IEnumerable<Customer>)list;
-        }
+        //public IEnumerable<Customer> GetCustomerReceivedParcels(string customerId)
+        //{
+        //    int index = CheckExistingCustomer(customerId);
+        //    List<Parcel> list = new();
+        //    DataSource.parcelList.ForEach(p => { if (p.Sender == customerId && p.Delivered != null) list.Add(p); });
+        //    return (IEnumerable<Customer>)list;
+        //}
         /// <summary>
         /// checks if a customer exists in the customerlist, if it doesn't it throws a MissingIdException
         /// </summary>
@@ -117,7 +109,7 @@ namespace DAL
         public List<Customer> CustomersDeliverdTo()
         {
             List<Customer> temp = new();
-            foreach (Parcel p in DeliveredParcels())
+            foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null))//for every delivered parcel add its customer to the list
                 temp.Add(GetCustomer(p.Receiver));
             return temp;
         }

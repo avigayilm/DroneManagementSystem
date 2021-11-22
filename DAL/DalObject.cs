@@ -9,7 +9,7 @@ using IDAL;
 namespace DAL
 {
 
-     public partial class DalObject:IDal
+     public partial class DalObject :IDal
     {
         /// <summary>
         /// constructor to initialize the dalobject
@@ -20,6 +20,11 @@ namespace DAL
         {
             double[] pwrUsg = { DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight,DataSource.Config.pwrUsgMedium, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH };
             return pwrUsg;
+        }
+        public ( double, double, double, double, double) DronePwrUsg1()
+        {
+            return (DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight, DataSource.Config.pwrUsgMedium, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH);
+          
         }
     }
 

@@ -226,7 +226,7 @@ namespace ConsoleUI
                                     }
                                 case ListOptions.UnAssignmentParcels://display unassigned parcels
                                     {
-                                        List<Parcel> UnAssignmentListTemp = dal.GetvacantParcel().ToList();
+                                        List<Parcel> UnAssignmentListTemp = dal.GetAllParcels(p => (p.DroneId == 0)).ToList();//returns all parcels unassigned to drones
                                         UnAssignmentListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }

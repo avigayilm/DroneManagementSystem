@@ -18,7 +18,7 @@ namespace BL
         public BL()
         {
             //DAL.DalObject dal2 = new();
-
+        
             double[] tempArray = idal1.DronePwrUsg();
             double pwrUsgEmpty = tempArray[0];
             double pwrUsgLight = tempArray[1];
@@ -27,7 +27,7 @@ namespace BL
             double chargePH = tempArray[4];
 
             //List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
-            ((List<IDAL.DO.Drone>)idal1.GetAllDrones()).CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
+            (idal1.GetAllDrones().ToList()).CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<IDAL.DO.Parcel> undeliveredParcel = (List<IDAL.DO.Parcel>)idal1.UndeliveredParcels();
 
             foreach (IDAL.DO.Parcel p in undeliveredParcel)
@@ -50,9 +50,12 @@ namespace BL
                     if (dr.Status == DroneStatuses.Available)
                     {
                         List<IDAL.DO.Customer> cus = idal1.CustomersDeliverdTo();
-                       IDAL.DO.Customer tempCus = cus[rand.Next(cus.Count())];
+                        //List<IDAL.DO.Parcel> tempList = idal1.GetAllParcels(p => p.Delivered != null).ToList();
+                        //List<IDAL.DO.Customer> cus = idal1.GetAllCustomers(c => tempList.Exists)).ToList();
+                        IDAL.DO.Customer tempCus = cus[rand.Next(cus.Count())];
                         dr.Loc.Longitude = tempCus.Longitude;
                         dr.Loc.Longitude = tempCus.Latitude;
+                       // int minBat = BatteryUsage(FindClosestPossibleStation1(dr).Item2, 0);
                         int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestPossibleStation(dr)), 0);//calculates battery usage of flying to closest station to drone
                         dr.Battery = rand.Next(minBat, 100);
                     }
