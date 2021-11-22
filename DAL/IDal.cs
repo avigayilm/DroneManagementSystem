@@ -40,7 +40,9 @@ namespace IDAL
         public IEnumerable<DroneCharge> GetDroneChargeList();
        // public IEnumerable<Parcel> GetvacantParcel();
         public double[] DronePwrUsg();
-        public IEnumerable<Station> GetStationWithCharging();
+
+        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
+        //public IEnumerable<Station> GetStationWithCharging();
        // public IEnumerable<Parcel> UndeliveredParcels();
         public void UpdateDrone(int droneId, string model);
         public void UpdateStation(int stationId, string name, int chargeSlots);
@@ -51,6 +53,8 @@ namespace IDAL
         public int CheckExistingCustomer(string customerId);
         public void CheckDuplicateCustomer(string customerId);
         public IEnumerable<Drone> DronesChargingAtStation(int stationId);
+        public void CheckDuplicateStation(int stationId);
+        public int CheckExistingStation(int stationId);
 
     }
 }

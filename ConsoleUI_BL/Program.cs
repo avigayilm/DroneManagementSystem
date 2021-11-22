@@ -39,82 +39,90 @@ namespace ConsoleUI_BL
                 {
                     case MenuOptions.Add:
                         {
-                            Console.WriteLine("What do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
-                            entityOption = (EntityOptions)int.Parse(Console.ReadLine());
-                            switch (entityOption)//what entity to add
+                            try
                             {
-                                case EntityOptions.Station://add station
-                                    {
-                                        Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
-                                        int.TryParse(Console.ReadLine(), out int stationID);
-                                        string inputname = Console.ReadLine();
-                                        double.TryParse(Console.ReadLine(), out double latitudeInput);
-                                        double.TryParse(Console.ReadLine(), out double longitudeInput);
-                                        int.TryParse(Console.ReadLine(), out int slots);
-                                        Station tempStat = new()// adds a new station
+                                Console.WriteLine("What do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
+                                entityOption = (EntityOptions)int.Parse(Console.ReadLine());
+                                switch (entityOption)//what entity to add
+                                {
+                                    case EntityOptions.Station://add station
                                         {
-                                            Id = stationID,
-                                            Name = inputname,
-                                            AvailableChargeSlots = slots,
-                                            Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
-                                            Charging = new()
+                                            Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
+                                            int.TryParse(Console.ReadLine(), out int stationID);
+                                            string inputname = Console.ReadLine();
+                                            double.TryParse(Console.ReadLine(), out double latitudeInput);
+                                            double.TryParse(Console.ReadLine(), out double longitudeInput);
+                                            int.TryParse(Console.ReadLine(), out int slots);
+                                            Station tempStat = new()// adds a new station
+                                            {
+                                                Id = stationID,
+                                                Name = inputname,
+                                                AvailableChargeSlots = slots,
+                                                Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
+                                                Charging = new()
+                                            };
+                                            ibl1.AddStation(tempStat);
+                                            break;
                                         };
-                                        ibl1.AddStation(tempStat);
-                                        break;
-                                    };
-                                case EntityOptions.Customer:// adds a new customer
-                                    {
-
-                                        Console.WriteLine("Enter the ID, name, phone.\n ");
-                                        string inputId = Console.ReadLine();
-                                        string inputname = Console.ReadLine();
-                                        string inputphone = Console.ReadLine();
-                                        Customer newCustomer = new()
+                                    case EntityOptions.Customer:// adds a new customer
                                         {
-                                            Id = inputId,
-                                            Name = inputname, 
-                                            PhoneNumber = inputphone,
 
-                                        };
-                                        ibl1.AddCustomer(newCustomer);
-                                        break;
-                                    }
-                                case EntityOptions.Drone://adds drone
-                                    {
+                                            Console.WriteLine("Enter the ID, name, phone.\n ");
+                                            string inputId = Console.ReadLine();
+                                            string inputname = Console.ReadLine();
+                                            string inputphone = Console.ReadLine();
+                                            Customer newCustomer = new()
+                                            {
+                                                Id = inputId,
+                                                Name = inputname,
+                                                PhoneNumber = inputphone,
 
-                                        Console.WriteLine("Enter the Id,stationId,weightcategory(0=light,1=medium,2=heavy),stationId for first charging");
-                                        int.TryParse(Console.ReadLine(), out int droneID);
-                                        int.TryParse(Console.ReadLine(), out int stationID);
-                                        WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
-                                        Drone newDrone = new()
+                                            };
+                                            ibl1.AddCustomer(newCustomer);
+                                            break;
+                                        }
+                                    case EntityOptions.Drone://adds drone
                                         {
-                                            Id = droneID,
-                                            Weight = maxim,
-                                        };
 
-                                        ibl1.AddDrone(newDrone,stationID);// add drone to dronelist
-                                        break;
-                                    }
-                                case EntityOptions.Parcel://adds a prcel
-                                    {
+                                            Console.WriteLine("Enter the Id,stationId,weightcategory(0=light,1=medium,2=heavy),stationId for first charging");
+                                            int.TryParse(Console.ReadLine(), out int droneID);
+                                            int.TryParse(Console.ReadLine(), out int stationID);
+                                            WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
+                                            Drone newDrone = new()
+                                            {
+                                                Id = droneID,
+                                                Weight = maxim,
+                                            };
 
-                                        Console.WriteLine("Enter the senderId, the targetId, weightcategory(0=light,1=medium,2=heavy), priority(0=normal,1=fast,2=emergency),\n ");// date requested, scheduled time\n ");
-                                        string inputSenderId = Console.ReadLine();
-                                        string inputTargetId = Console.ReadLine();
-                                        WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
-                                        Priorities prio = (Priorities)int.Parse(Console.ReadLine());
-                                        Parcel newParcel = new()
+                                            ibl1.AddDrone(newDrone, stationID);// add drone to dronelist
+                                            break;
+                                        }
+                                    case EntityOptions.Parcel://adds a prcel
                                         {
-                                            Sender = new() { Id = inputSenderId },
-                                            Receiver = new() { Id = inputTargetId },
-                                            Weight = maxim,
-                                            Priority = prio,
-                                        };
-                                        ibl1.AddParcel(newParcel);
-                                        break;
-                                    }
+
+                                            Console.WriteLine("Enter the senderId, the targetId, weightcategory(0=light,1=medium,2=heavy), priority(0=normal,1=fast,2=emergency),\n ");// date requested, scheduled time\n ");
+                                            string inputSenderId = Console.ReadLine();
+                                            string inputTargetId = Console.ReadLine();
+                                            WeightCategories maxim = (WeightCategories)int.Parse(Console.ReadLine());
+                                            Priorities prio = (Priorities)int.Parse(Console.ReadLine());
+                                            Parcel newParcel = new()
+                                            {
+                                                Sender = new() { Id = inputSenderId },
+                                                Receiver = new() { Id = inputTargetId },
+                                                Weight = maxim,
+                                                Priority = prio,
+                                            };
+                                            ibl1.AddParcel(newParcel);
+                                            break;
+                                        }
 
 
+                                }
+                                
+                            }
+                            catch(IBL.BO.AddingException ex)
+                            {
+                                Console.WriteLine(ex);
                             }
                             break;
                         }

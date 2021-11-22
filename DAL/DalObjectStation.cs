@@ -50,22 +50,26 @@ namespace DAL
         ///  returns the list with the stations that have availble charging
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetStationWithCharging()
-        {
-            List<Station> temp = new();
-            DataSource.stationList.ForEach(p => { if (p.AvailableChargeSlots > 0) { temp.Add(p); } });
-            return (IEnumerable<Station>)temp;
-        }
+        //public IEnumerable<Station> GetStationWithCharging()
+        //{
+        //    List<Station> temp = new();
+        //    DataSource.stationList.ForEach(p => { if (p.AvailableChargeSlots > 0) { temp.Add(p); } });
+        //    return (IEnumerable<Station>)temp;
+        //}
 
         /// <summary>
         /// returns the whole list of stations
-        /// </summary>
+        /// <summary>
         /// <returns></returns>
-        public IEnumerable<Station> GetAllStations()
+        //public IEnumerable<Station> GetAllStations()
+        //{
+        //    List<Station> tempStationList = new();
+        //    DataSource.stationList.ForEach(s => tempStationList.Add(s));
+        //    return (IEnumerable<Station>)tempStationList;
+        //}
+        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
-            List<Station> tempStationList = new();
-            DataSource.stationList.ForEach(s => tempStationList.Add(s));
-            return (IEnumerable<Station>)tempStationList;
+            return DataSource.stationList.FindAll(x => predicate == null ? true : predicate(x));
         }
         /// <summary>
         /// returns the nearest station to a customer

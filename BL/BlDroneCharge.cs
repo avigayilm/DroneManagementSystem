@@ -81,7 +81,6 @@ namespace BL
             {
                 throw new RetrievalException("Couldn't get the Drone.\n,", ex);
             }
-
         }
     }
 }

@@ -231,7 +231,7 @@ namespace ConsoleUI
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations://diplay stations with available charging slots
-                                    dal.GetStationWithCharging().ToList().ForEach(p => Console.WriteLine(p));
+                                    dal.GetAllStations(s => s.AvailableChargeSlots > 0).ToList().ForEach(p => Console.WriteLine(p));
                                     break;
 
                                 case ListOptions.DroneCharge://display drone charge list

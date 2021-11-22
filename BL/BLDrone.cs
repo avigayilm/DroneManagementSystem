@@ -23,19 +23,13 @@ namespace BL
             {
                 if (newDrone.Id < 0)
                     throw new InvalidInputException("invalid Id input \n");
-                if (newDrone.Loc.Latitude <= -90 || newDrone.Loc.Latitude >= 90)// out of range of latitude
-                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
-                if (newDrone.Loc.Longitude <= -180 || newDrone.Loc.Longitude >= 180)// out of range of latitude
-                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.Light && newDrone.Weight != WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory \n");
-                if (newDrone.Status != DroneStatuses.Available && newDrone.Status != DroneStatuses.Maintenance && newDrone.Status != DroneStatuses.Delivery)
-                    throw new InvalidInputException("Invalid status \n");
+                int index=idal1.CheckExistingStation(stationId);
                 newDrone.Battery = rand.Next(20, 40);
                 newDrone.Status = DroneStatuses.Maintenance;
                 //location of station id
                 List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                int index = tempStat.FindIndex(d => d.Id == stationId);//no need to get the whole list change!!! + reduce charge slots in right station
                 newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
                 DroneToList newDroneToList = new();
                 newDrone.CopyPropertiestoIBL(newDroneToList);
@@ -43,7 +37,15 @@ namespace BL
                                       //adding the drone to the dalObject list
                 IDAL.DO.Drone droneTemp = new();
                 newDrone.CopyPropertiestoIDAL(droneTemp);
-                idal1.AddDrone(droneTemp);
+                idal1.AddDrone(droneTemp);// adding the drone to the dallist
+            }
+            catch(InvalidInputException ex)
+            {
+                throw new AddingException("Couldn't add the drone.\n,", ex);
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new AddingException("Couldn't add the drone.\n,", ex);
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {

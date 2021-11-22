@@ -23,6 +23,10 @@ namespace BL
                     throw new InvalidInputException("Invalid weightCategory \n");
                 if (newParcel.Weight != WeightCategories.Heavy && newParcel.Weight != WeightCategories.Light && newParcel.Weight != WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory \n");
+                if (string.IsNullOrEmpty(newParcel.Sender.Id))
+                    throw new InvalidInputException("invalid senderId \n");
+                if (string.IsNullOrEmpty(newParcel.Receiver.Id))
+                    throw new InvalidInputException("invalid receiverId \n");
                 newParcel.Delivered = null;
                 newParcel.Assigned = null;
                 newParcel.PickedUp = null;
