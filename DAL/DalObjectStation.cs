@@ -107,9 +107,9 @@ namespace DAL
             int index = CheckExistingStation(stationId);
             DataSource.stationList.FindIndex(s => s.Id == stationId);
             Station tempStation = DataSource.stationList[index];
-            if (name != ("\n"))
+            if (name != null)
                 tempStation.Name = name;
-            if (chargeSlots != 0)// chekc if a phone was entere
+            if (chargeSlots != -1)// chekc if chargeslots was enetered
                 tempStation.AvailableChargeSlots = chargeSlots - AvailableAndEmptySlots(stationId)[0];// input=total chargeslots, we only save the availablechargeslots
             DataSource.stationList[index] = tempStation;
         }

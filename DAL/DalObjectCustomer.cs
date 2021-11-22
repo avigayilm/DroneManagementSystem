@@ -53,9 +53,9 @@ namespace DAL
         {
             int index = CheckExistingCustomer(customerId);
             Customer tempCustomer = DataSource.customerList[index];
-            if (name != "\n")
+            if (name != null)
                  tempCustomer.Name = name;
-            if (phone !="\n")
+            if (phone !=null)
                  tempCustomer.Phone = phone;
             DataSource.customerList[index] = tempCustomer;
         }

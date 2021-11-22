@@ -30,7 +30,7 @@ namespace ConsoleUI_BL
             MenuOptions menuOption;
             ListOptions listOption;
             UpdateOptions updateOption;
-            Console.WriteLine("Welcome to our Parcel service, please make your choice out of the following  ");
+            Console.WriteLine("Welcome to our Parcel service!\n Please make your choice out of the following  ");
             do
             {
                 Console.WriteLine("options:\n 1-Add, \n 2 Update,\n,3 Show Item,\n 4-show List\n, 5-Show distance between a point and a station or a customer\n 0-Exit");
@@ -39,7 +39,7 @@ namespace ConsoleUI_BL
                 {
                     case MenuOptions.Add:
                         {
-                            Console.WriteLine("what do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
+                            Console.WriteLine("What do you want to add?\n 1:Station,\n 2:Drone,\n 3:Customer\n,4:Parcel\n");
                             entityOption = (EntityOptions)int.Parse(Console.ReadLine());
                             switch (entityOption)//what entity to add
                             {
@@ -137,17 +137,27 @@ namespace ConsoleUI_BL
                                         Console.WriteLine("Enter the ID and the name or\and chargeslots\n");
                                         int stationId = int.Parse(Console.ReadLine());
                                         string name = Console.ReadLine();
-                                        int availableChargeSlots= int.Parse(Console.ReadLine());
+                                        if (!string.IsNullOrEmpty(name))// checks if there was a string entered
+                                            name =null;
+                                        int availableChargeSlots;
+                                        bool result = int.TryParse(Console.ReadLine(), out availableChargeSlots);
+                                        if (!result)
+                                            availableChargeSlots = -1;
                                         ibl1.UpdateStation(stationId, name, availableChargeSlots);
                                         break;
                                     }
                                 case UpdateOptions.Customer:
                                     {
                                         Console.WriteLine("Enter the ID\n");
-                                        int customerId= int.Parse(Console.ReadLine());
-                                        Console.WriteLine("Do you want to add a name answer Y or N");
-                                        Console.WriteLine("Do you want to add a phone number answer Y or N\n");
-
+                                        string customerId = Console.ReadLine();
+                                        if (!string.IsNullOrEmpty(customerId)) ;
+                                        string name = Console.ReadLine();
+                                        string phone = Console.ReadLine();
+                                        if (!string.IsNullOrEmpty(name))
+                                            name = null;
+                                        if (!string.IsNullOrEmpty(phone))
+                                            phone = null;
+                                        ibl1.UpdateCustomer(customerId, name, phone);
                                         break;
                                     }
                                 case UpdateOptions.Recharge:
@@ -209,27 +219,32 @@ namespace ConsoleUI_BL
                                 case ListOptions.Parcels://display parcels list
                                     {
                                         List<ParcelToList> parcelListTemp = (List<ParcelToList>)ibl1.GetAllParcels();
+                                        Console.WriteLine("----------DISPLAY PARCELLIST----------\n");
                                         parcelListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Drones://display drones list
                                     {
                                         List<DroneToList> dronesListTemp = (List<DroneToList>)ibl1.GetAllDrones();
+                                        Console.WriteLine("----------DISPLAY DRONELIST----------\n");
                                         dronesListTemp.ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.Customers://display customers list
                                     {
                                         List<CustomerToList> customerListTemp = (List<CustomerToList>)ibl1.GetAllCustomers();
+                                        Console.WriteLine("----------DISPLAY CUSTOMERLIST----------\n");
                                         customerListTemp.ForEach(p => Console.WriteLine(p));
                                         break;
                                     }
                                 case ListOptions.UnAssignmentParcels://display unassigned parcels
                                     {
+                                        Console.WriteLine("----------DISPLAY UNASSIGNMENTPARCELLIST----------\n");
                                         ((List<ParcelToList>)ibl1.GetAllUnassignedParcels()).ForEach(p => Console.WriteLine(p.ToString()));
                                         break;
                                     }
                                 case ListOptions.AvailableChargingStations://diplay stations with available charging slots
+                                    Console.WriteLine("----------DISPLAY AVAILABLECHARGINGSTATION----------\n");
                                     ((List<StationToList>)ibl1.GetAllStationsWithCharging()).ForEach(p => Console.WriteLine(p));
                                     break;
                                 case ListOptions.Exit:
@@ -248,8 +263,9 @@ namespace ConsoleUI_BL
                             {
                                 case EntityOptions.Station:
                                     {
-                                        Console.WriteLine("Enter the ID of the station you want to print\n");
+                                        Console.WriteLine("Enter the ID of the station you want to display\n");
                                         int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine("----------DISPLAY DRONE----------\n");
                                         Console.WriteLine(ibl1.GetStation(id));
                                         break;
                                     }
@@ -257,6 +273,7 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("Enter the ID of the parcel you want to print\n");
                                         int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine("----------DISPLAY PARCEL----------\n");
                                         Console.WriteLine(ibl1.GetParcel(id));
                                         break;
                                     }
@@ -264,6 +281,7 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("Enter the ID of the drone you want to print\n");
                                         int.TryParse(Console.ReadLine(), out int id);
+                                        Console.WriteLine("----------DISPLAY DRONE----------\n");
                                         Console.WriteLine(ibl1.GetDrone(id));
                                         break;
                                     }
@@ -271,6 +289,7 @@ namespace ConsoleUI_BL
                                     {
                                         Console.WriteLine("Enter the ID of the Customer you want to print\n");
                                         string id = Console.ReadLine();
+                                        Console.WriteLine("----------DISPLAY CUSTOMER----------\n");
                                         Console.WriteLine(ibl1.GetCustomer(id));
                                         break;
                                     }
