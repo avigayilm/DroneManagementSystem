@@ -28,7 +28,7 @@ namespace BL
 
             //List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
             (idal1.GetAllDrones().ToList()).CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
-            List<IDAL.DO.Parcel> undeliveredParcel = (List<IDAL.DO.Parcel>)idal1.UndeliveredParcels();
+            List<IDAL.DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
 
             foreach (IDAL.DO.Parcel p in undeliveredParcel)
             {
@@ -49,10 +49,10 @@ namespace BL
                     dr.Status = (DroneStatuses)rand.Next(1);
                     if (dr.Status == DroneStatuses.Available)
                     {
-                        List<IDAL.DO.Customer> cus = idal1.CustomersDeliverdTo();
+                        //List<IDAL.DO.Customer> cus = idal1.CustomersDeliverdTo();
                         //List<IDAL.DO.Parcel> tempList = idal1.GetAllParcels(p => p.Delivered != null).ToList();
-                        //List<IDAL.DO.Customer> cus = idal1.GetAllCustomers(c => tempList.Exists)).ToList();
-                        IDAL.DO.Customer tempCus = cus[rand.Next(cus.Count())];
+                        List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.Receiver ))).ToList();//returns a  list of all the customers that have received a parcel
+                        IDAL.DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
                         dr.Loc.Longitude = tempCus.Longitude;
                         dr.Loc.Longitude = tempCus.Latitude;
                        // int minBat = BatteryUsage(FindClosestPossibleStation1(dr).Item2, 0);

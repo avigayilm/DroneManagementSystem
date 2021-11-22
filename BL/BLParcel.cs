@@ -136,9 +136,9 @@ namespace BL
             parcelInTrans.PickedUp = GetCustomer(parcel.Sender.Id).Loc;
             parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
             if (parcel.PickedUp == null)
-                parcelInTrans.status = true;
+                parcelInTrans.Status = true;
             else
-                parcelInTrans.status = false;
+                parcelInTrans.Status = false;
             return parcelInTrans;
         }
 

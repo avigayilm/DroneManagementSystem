@@ -126,9 +126,9 @@ namespace BL
             Drone drone = new();
             droneToList.CopyPropertiestoIBL(drone);
             if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
-                drone.parcelInTrans = null;
+                drone.ParcelInTrans = null;
             else
-                drone.parcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+                drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
             return drone;
 
         }

@@ -34,7 +34,7 @@ namespace IDAL
         public Drone GetDrone(int ID);
         public Station GetStation(int ID);
         public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null);
-        public IEnumerable<Station> GetAllStations();
+        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null);
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null);
         public IEnumerable<DroneCharge> GetDroneChargeList();

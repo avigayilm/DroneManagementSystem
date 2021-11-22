@@ -14,11 +14,20 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public bool Stat { get; set; }
-            public Location collecting { get; set; }
-            public Location delivering { get; set; }
-            double deliveryDistance { get; set; }
+            public Location Collecting { get; set; }
+            public Location Delivering { get; set; }
+            double DeliveryDistance { get; set; }
 
-
+            public override string ToString()
+            {
+                return " "
+                + $"ID is: {Id}, \n"
+                + $"Priority is: {Priority}, \n"
+                + $"stat is: {Stat}, \n"
+                + $"Collecting location: {Collecting}, \n"
+                + $"Delivering location: {Delivering}, \n"
+                + $"Delivery distance: {DeliveryDistance}";
+            }
 
 
 

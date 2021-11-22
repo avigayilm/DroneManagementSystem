@@ -14,7 +14,17 @@ namespace IBL
             public string Name { get; set; }
             public int AvailableSlots { get; set; }
             public int OccupiedSlots { get; set; }
+
+            public override string ToString()
+            {
+                return " "
+                    + $"Station id: {Id}\n"
+                    + $"Station name: {Name}\n"
+                    + $"Station number of available slots: {AvailableSlots}\n"
+                    + $"Station number of occupied slots: {OccupiedSlots}\n"
+                    ;
+
+            }
         }
     }
-
 }

@@ -15,8 +15,21 @@ namespace IBL
             public WeightCategories Weight { get; set; }
             public double Battery { get; set; }
             public DroneStatuses Status { get; set; }
-            public ParcelInTransfer parcelInTrans { get; set; }
+            public ParcelInTransfer ParcelInTrans { get; set; }
             public Location Loc { get; set; }
+
+            public override string ToString()
+            {
+                return " "
+                + $"ID is {Id}, \n"
+                + $"Model is {Model}, \n"
+                + $"Maxweight is {Weight}\n"
+                + $"Battery is {Battery}%, \n"
+                + $"drone status is {Status} \n "
+                + $"parcel in transfer is {ParcelInTrans} \n"
+                + $"drone location {Loc} \n"
+                ;
+            }
         }
     }
  

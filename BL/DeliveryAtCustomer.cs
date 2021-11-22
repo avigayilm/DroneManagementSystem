@@ -16,12 +16,11 @@ namespace IBL
             public CustomerInParcel Receiver { get; set; }
             public override string ToString()
             {
-                String result = " ";
-                result += $"ID is {Id}, \n";
-                result += $"Priority is {Prioirty}, \n";
-                result += $"Customer in Delivery {Sender.ToString()}, \n";
-                result += $"Customer in Delivery {Receiver.ToString()}, \n";
-                return result;
+                return " "
+                + $"ID is {Id}, \n"
+                + $"Priority is {Prioirty}, \n"
+                + $"Customer in Delivery {Sender}, \n"
+                + $"Customer in Delivery {Receiver}, \n";
             }
 
         }

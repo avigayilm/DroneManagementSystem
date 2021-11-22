@@ -19,15 +19,14 @@ namespace IBL
             public int NumPackExp { get; set; }
             public override string ToString()
             {
-                String result = " ";
-                result += $"ID is {Id}, \n";
-                result += $"Name is {Name}, \n";
-                result += $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}, \n";
-                result += $"number of Packages received{NumPacksReceived}, \n";
-                result += $"number of Packages sent delivered{NumPackSentDel}, \n";
-                result += $"number of packages sent undelivered{NumPackSentUnDel}, \n";
-                result += $"number of Packages expected{NumPackExp}, \n";
-                return result;
+                return " "
+                + $"ID is {Id}, \n"
+                + $"Name is {Name}, \n"
+                + $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}, \n"
+                + $"number of Packages received{NumPacksReceived}, \n"
+                + $"number of Packages sent delivered{NumPackSentDel}, \n"
+                + $"number of packages sent undelivered{NumPackSentUnDel}, \n"
+                + $"number of Packages expected{NumPackExp}, \n";
             }
         }
     }
