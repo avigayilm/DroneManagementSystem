@@ -57,6 +57,7 @@ namespace IDAL
 
         public int CheckExistingParcel(int parcelId);
         public void CheckDuplicateParcel(int parcelId);
+        public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
 
     }
 }

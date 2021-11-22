@@ -27,7 +27,6 @@ using System.Threading.Tasks;
         public Drone GetDrone(int droneId);
         public IEnumerable<DroneToList> GetAllDrones();
         public ParcelAtCustomer GetParcelAtCustomer(int parcelId);
-        public ParcelStatuses GetParcelStatus(Parcel parcel);
         public Parcel GetParcel(int parcelId);
         public IEnumerable<ParcelToList> GetAllParcels();
         public IEnumerable<ParcelToList> GetAllUnassignedParcels();
@@ -35,6 +34,7 @@ using System.Threading.Tasks;
         public IEnumerable<StationToList> GetAllStation();
         public IEnumerable<StationToList> GetAllStationsWithCharging();
         public void UpdateCustomer(string customerId, string name, string phone);
+        public ParcelStatuses GetParcelStatus(int parcelId);
 
     }
 }
