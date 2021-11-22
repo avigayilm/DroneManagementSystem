@@ -13,35 +13,7 @@ namespace BL
 
     public static class DeepCopy
     {
-        //public static void CopyFields<S, T>(this S source, T target)
-        //{
-        //    foreach (PropertyInfo targetProp in target.GetType().GetProperties())
-        //    {
-        //        PropertyInfo sourceProp = typeof(S).GetProperty(targetProp.Name);//will search for each property from target in source and if it doesnt exist wil return a null
-        //        if (sourceProp != null)
-        //        {
-
-
-        //            dynamic val = sourceProp.GetValue(source, null);//will copy hte property's value from source object to value
-        //            if (val is ValueType || val is string)
-        //            {
-        //                targetProp.SetValue(target, val);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            //BindingFlags flags = BindingFlags.GetProperty;
-        //            foreach (PropertyInfo prop in source.GetType().GetProperties())
-        //            {
-        //                Type t = prop.GetType();
-        //                if (prop.GetType().IsClass)
-        //                    //sourceProp = typeof(prop).GetProperty(targetProp.Name);
-        //                    prop.CopyPropertiesToNew
-        //            }
-        //        }
-        //    }
-        //}
-
+       
         public static void CopyPropertiestoIDAL<Source, Target>(this Source source, Target target)//from bl to idal
         {
             PropertyInfo[] propertyInfos = target.GetType().GetProperties();
