@@ -52,7 +52,6 @@ namespace BL
         {
             try
             {
-                // int index = idal1.CheckExistingDrone(droneId);
                 DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (drone == null)
                     throw new IBL.BO.AssignIssueException("There is no a drone with such ID");
@@ -128,10 +127,9 @@ namespace BL
 
         public void DeliverParcelByDrone(int droneId)
         {
-            try
-            {
-                //int index = idal1.CheckExistingDrone(droneId);
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
+                if(tempDro == default)
+                    throw new RetrievalException("Couldn't get the Drone.\n,");
                 IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
                 if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
                     throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
@@ -141,11 +139,11 @@ namespace BL
                 tempDro.Loc.Latitude = tempCus.Latitude;
                 tempDro.Status = DroneStatuses.Available;
                 idal1.ParcelDelivered(tempPack.Id);
-            }
-            catch (IDAL.DO.MissingIdException ex)
-            {
-                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
-            }
+            
+            //catch (IDAL.DO.MissingIdException ex)
+            //{
+            //    throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            //}
         }
         /// <summary>
         /// returning a ParcelInTransfer

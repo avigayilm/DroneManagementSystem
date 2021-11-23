@@ -30,7 +30,7 @@ namespace BL
                     if (value is ValueType || value is string)
                         targetProp.SetValue(target, value);
                 }
-                else
+                else//
                 {
                     PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
                     foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class

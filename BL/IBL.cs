@@ -16,7 +16,6 @@ using System.Threading.Tasks;
         public void UpdateDrone(int droneId, string model);
         public ParcelInTransfer GetParcelInTransfer(int parcelId);
         public void UpdateStation(int stationId, string name, int chargingSlots);
-        public void ReleasingDroneFromCharge(int droneId, double chargingTime);
         public void SendingDroneToCharge(int droneId);
         public void AssignParcelToDrone(int droneId);
         public void DeliverParcelByDrone(int droneId);
@@ -30,12 +29,27 @@ using System.Threading.Tasks;
         public Parcel GetParcel(int parcelId);
         public IEnumerable<ParcelToList> GetAllParcels();
         public IEnumerable<ParcelToList> GetAllUnassignedParcels();
+        /// <summary>
+        /// returns a station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public Station GetStation(int stationId);
+        /// <summary>
+        /// returns a list with all stations
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<StationToList> GetAllStation();
         public IEnumerable<StationToList> GetAllStationsWithCharging();
         public void UpdateCustomer(string customerId, string name, string phone);
         public ParcelStatuses GetParcelStatus(int parcelId);
         public DroneInCharge getDroneInCharge(int droneId);
+        /// <summary>
+        /// release teh drone from charge, updates the battery according to the charging time
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="chargingTime"></param>
+        public void ReleasingDroneFromCharge(int droneId, double chargingTime);
 
     }
 }

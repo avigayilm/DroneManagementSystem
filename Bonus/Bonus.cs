@@ -23,7 +23,7 @@ public static class Bonus
             coord *= -1;
         }
         //determines the various sexagesimal factors
-        int deg = (int)coord;
+        int deg = (int)coord ;
         decimal minWDec = (decimal)(coord - deg) * 60;
         int min = (int)minWDec;
         decimal secWDec = (minWDec - min) * 60;

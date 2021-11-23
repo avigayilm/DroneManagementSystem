@@ -134,11 +134,7 @@ namespace DAL
             return slots;
         }
 
-        /// <summary>
-        /// checks if a station exists in the customerlist, if it doesn't it throws a MissingIdException
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
+      
         public int CheckExistingStation(int stationId)
         {
             int index = DataSource.stationList.FindIndex(s => s.Id == stationId);

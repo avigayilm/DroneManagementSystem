@@ -46,7 +46,7 @@ namespace ConsoleUI
                                 case EntityOptions.Station://add station
                                     {
                                         Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
-                                        int.TryParse(Console.ReadLine(), out int stationID);
+                                        int stationID  = int.Parse(Console.ReadLine());
                                         string inputname = Console.ReadLine();
                                         double.TryParse(Console.ReadLine(), out double latitudeInput);
                                         double.TryParse(Console.ReadLine(), out double longitudeInput);
