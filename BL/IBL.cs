@@ -33,7 +33,17 @@ using System.Threading.Tasks;
         /// </summary>
         /// <param name="droneId"></param>
         public void CollectingParcelByDrone(int droneId);
+        /// <summary>
+        /// returns a customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+
         public Customer GetCustomer(string customerId);
+        /// <summary>
+        /// returns a list of customers
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CustomerToList> GetAllCustomers();
         public DroneToList getDroneToList(int droneId);
         public Drone GetDrone(int droneId);
@@ -72,8 +82,15 @@ using System.Threading.Tasks;
         /// <returns></returns>
         public IEnumerable<StationToList> GetAllStation();
         public IEnumerable<StationToList> GetAllStationsWithCharging();
+        /// <summary>
+        /// updates the name and phone of the customer
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
         public void UpdateCustomer(string customerId, string name, string phone);
-        public ParcelStatuses GetParcelStatus(int parcelId);
+        //public ParcelStatuses GetParcelStatus(int parcelId)
+        //;
         /// <summary>
         /// release teh drone from charge, updates the battery according to the charging time
         /// </summary>

@@ -44,12 +44,7 @@ namespace BL
         }
 
 
-        /// <summary>
-        /// updates the name and phone of the customer
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <param name="name"></param>
-        /// <param name="phone"></param>
+       
         public void UpdateCustomer(string customerId, string name, string phone)
         {
             try
@@ -58,15 +53,10 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new UpdateIssueException("Couldn't Update the Drone.\n,", ex);
+                throw new UpdateIssueException("Couldn't Update the Customer.\n,", ex);
             }
         }
-        /// <summary>
-        /// returns a customer
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-
+        
         public Customer GetCustomer(string customerId)
         {
             try
@@ -86,10 +76,7 @@ namespace BL
                 throw new RetrievalException("Couldn't get the Customer.\n,", ex);
             }
         }
-        /// <summary>
-        /// returns a list of customers
-        /// </summary>
-        /// <returns></returns>
+       
         public IEnumerable<CustomerToList> GetAllCustomers()
         {
             List<CustomerToList> tempList = new();
