@@ -39,10 +39,10 @@ namespace BL
                 newDrone.CopyPropertiestoIDAL(droneTemp);
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
-            catch(InvalidInputException ex)
-            {
-                throw new AddingException("Couldn't add the drone.\n,", ex);
-            }
+            //catch(InvalidInputException ex)
+            //{
+            //    throw new AddingException("Couldn't add the drone.\n,", ex);
+            //}
             catch (IDAL.DO.MissingIdException ex)
             {
                 throw new AddingException("Couldn't add the drone.\n,", ex);
@@ -110,14 +110,15 @@ namespace BL
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-            DroneToList droneToList = getDroneToList(droneId);
-            Drone drone = new();
-            droneToList.CopyPropertiestoIBL(drone);
-            if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
-                drone.ParcelInTrans = null;
-            else
-                drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
-            return drone;
+                DroneToList droneToList = getDroneToList(droneId);
+                Drone drone = new();
+                droneToList.CopyPropertiestoIBL(drone);
+                if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
+                    drone.ParcelInTrans = null;
+                else
+                    drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+                return drone;
+            
 
         }
 
@@ -147,8 +148,6 @@ namespace BL
         {
             return droneBL;
         }
-
-
 
     }
 }

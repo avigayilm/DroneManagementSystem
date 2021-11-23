@@ -33,6 +33,8 @@ namespace BL
                 object obj = st;
                 station.CopyPropertiestoIDAL(obj);
                 st = (IDAL.DO.Station)obj;
+                st.Latitude = station.Loc.Latitude;
+                st.Longitude = station.Loc.Longitude;
                 idal1.AddStation(st);
                 station.Charging = new();
             }
