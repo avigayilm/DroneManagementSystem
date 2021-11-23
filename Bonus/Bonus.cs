@@ -3,7 +3,7 @@
 public static class Bonus
 {
     //function receives coordinates 
-    public static string DecimalToSexagesimal(decimal coord, char latOrLot)
+    public static string DecimalToSexagesimal(double coord, char latOrLot)
     {
         char direction;// funciton receives char to decide wheter it is t=latitude and n=longitude
         if (latOrLot == 't')// if latitude
@@ -24,7 +24,7 @@ public static class Bonus
         }
         //determines the various sexagesimal factors
         int deg = (int)coord ;
-        decimal minWDec = (coord - deg) * 60;
+        decimal minWDec = (decimal)(coord - deg) * 60;
         int min = (int)minWDec;
         decimal secWDec = (minWDec - min) * 60;
         float sec = (float)secWDec;

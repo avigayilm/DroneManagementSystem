@@ -129,7 +129,7 @@ namespace BL
         {
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if(tempDro == default)
-                    throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+                    throw new RetrievalException("Couldn't get the Drone.\n,");
                 IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
                 if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
                     throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");

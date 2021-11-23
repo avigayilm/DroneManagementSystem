@@ -69,14 +69,15 @@ namespace IDAL
         /// <param name="phone"></param>
         public void UpdateCustomer(string customerId, string name, string phone);
         public Station SmallestDistanceStation(string cusId);
+      
+        
+        public IEnumerable<Drone> DronesChargingAtStation(int stationId);
+        public void CheckDuplicateStation(int stationId);
         /// <summary>
         /// checks if a station exists in the customerlist, if it doesn't it throws a MissingIdException
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
-        public void CheckDuplicateCustomer(string customerId);
-        public IEnumerable<Drone> DronesChargingAtStation(int stationId);
-        public void CheckDuplicateStation(int stationId);
         public int CheckExistingStation(int stationId);
  
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
