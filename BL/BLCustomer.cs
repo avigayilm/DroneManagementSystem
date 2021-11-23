@@ -25,8 +25,14 @@ namespace BL
                     throw new InvalidInputException("invalid name input");
                 if (string.IsNullOrEmpty(newCustomer.PhoneNumber))
                     throw new InvalidInputException("invalid phonenumber");
+                if (newCustomer.Loc.Latitude <= -90.0 || newCustomer.Loc.Latitude >= 90.0)// out of range of latitude
+                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+                if (newCustomer.Loc.Longitude <= -180.0 || newCustomer.Loc.Longitude >= 180.0)// out of range of latitude
+                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Customer customer = new();
-                newCustomer.CopyPropertiestoIDAL(customer);
+                object obj1 = customer;
+                newCustomer.CopyPropertiestoIDAL(obj1);
+                customer = (IDAL.DO.Customer)obj1;
                 customer.Longitude = newCustomer.Loc.Longitude;
                 customer.Latitude=newCustomer.Loc.Latitude;
                 idal1.AddCustomer(customer);

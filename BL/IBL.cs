@@ -43,13 +43,13 @@ using System.Threading.Tasks;
         public IEnumerable<StationToList> GetAllStationsWithCharging();
         public void UpdateCustomer(string customerId, string name, string phone);
         public ParcelStatuses GetParcelStatus(int parcelId);
-        public DroneInCharge getDroneInCharge(int droneId);
         /// <summary>
         /// release teh drone from charge, updates the battery according to the charging time
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
         public void ReleasingDroneFromCharge(int droneId, double chargingTime);
+        public DroneInCharge getDroneInCharge(int droneId);
 
     }
 }

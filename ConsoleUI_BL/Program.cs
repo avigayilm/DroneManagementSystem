@@ -52,7 +52,6 @@ namespace ConsoleUI_BL
                                             string inputName = Console.ReadLine();
                                             double latitudeInput, longitudeInput;
                                             double.TryParse(Console.ReadLine(), out  latitudeInput);
-                                            //latitudeInput = Convert.ToDouble(Console.ReadLine());
                                             double.TryParse(Console.ReadLine(), out  longitudeInput);
                                             int.TryParse(Console.ReadLine(), out int slots);
                                             Station tempStat = new()// adds a new station
@@ -69,15 +68,19 @@ namespace ConsoleUI_BL
                                     case EntityOptions.Customer:// adds a new customer
                                         {
 
-                                            Console.WriteLine("Enter the ID, name, phone.\n ");
+                                            Console.WriteLine("Enter the ID, name, phone,latitude(range +-90), longitude(range +-180),\n ");
                                             string inputId = Console.ReadLine();
                                             string inputname = Console.ReadLine();
                                             string inputphone = Console.ReadLine();
+                                            double latitudeInput, longitudeInput;
+                                            double.TryParse(Console.ReadLine(), out latitudeInput);
+                                            double.TryParse(Console.ReadLine(), out longitudeInput);
                                             Customer newCustomer = new()
                                             {
                                                 Id = inputId,
                                                 Name = inputname,
                                                 PhoneNumber = inputphone,
+                                                Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
 
                                             };
                                             ibl1.AddCustomer(newCustomer);
