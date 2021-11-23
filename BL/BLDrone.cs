@@ -129,16 +129,16 @@ namespace BL
         /// <returns></returns>
         public DroneToList getDroneToList(int droneId)
         {
-            try
-            {
-                int index = idal1.CheckExistingDrone(droneId);
-                return droneBL[index];
-            }
-            catch (IDAL.DO.MissingIdException ex)
-            {
-                throw new RetrievalException("Couldn't get the Drone.\n,", ex);
-            }
+                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+                if(tempDron == default)
+                    throw new RetrievalException("Couldn't get the Drone.\n,");
+                return tempDron;
         }
+            //catch (IDAL.DO.MissingIdException ex)
+            //{
+            //    throw new RetrievalException("Couldn't get the Drone.\n,", ex);
+            //}
+        
 
         /// <summary>
         /// returns a list of drones

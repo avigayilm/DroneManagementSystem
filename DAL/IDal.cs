@@ -28,14 +28,30 @@ namespace IDAL
         public int[] AvailableAndEmptySlots(int id);
         public void SendToCharge(int droneId, int stationId);
         public void BatteryCharged(int droneId, int stationId);
-        public int CheckExistingDrone(int droneId);
         public Parcel GetParcel(int ID);
+        /// <summary>
+        /// returns the customer according to the given ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public Customer GetCustomer(string ID);
         public Drone GetDrone(int ID);
         public Station GetStation(int ID);
+        /// <summary>
+        /// returns the list of customers as Ienumerable
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null);
+        /// <summary>
+        /// returns the list of all drones as Ienumerable
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null);
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null);
+        /// <summary>
+        /// returns a list of Dronecharge
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneCharge> GetDroneChargeList();
        // public IEnumerable<Parcel> GetvacantParcel();
         public double[] DronePwrUsg();
@@ -45,11 +61,19 @@ namespace IDAL
        // public IEnumerable<Parcel> UndeliveredParcels();
         public void UpdateDrone(int droneId, string model);
         public void UpdateStation(int stationId, string name, int chargeSlots);
+        /// <summary>
+        /// updates the customer, gets a customerId and changes the name and phone
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
         public void UpdateCustomer(string customerId, string name, string phone);
         public Station SmallestDistanceStation(string cusId);
-        //public IEnumerable<Customer> GetCustomerReceivedParcels(string customerId);
-        //public IEnumerable<Customer> GetCustomerSentParcels(string customerId);
-        public int CheckExistingCustomer(string customerId);
+        /// <summary>
+        /// checks if a station exists in the customerlist, if it doesn't it throws a MissingIdException
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public void CheckDuplicateCustomer(string customerId);
         public IEnumerable<Drone> DronesChargingAtStation(int stationId);
         public void CheckDuplicateStation(int stationId);

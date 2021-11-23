@@ -34,13 +34,12 @@ namespace BL
 
                 foreach (IDAL.DO.Parcel p in undeliveredParcel)
                 {
-                    int DroneId = p.DroneId;
-                    int droneIndex = droneBL.FindIndex(d => d.Id == DroneId);
-                    if (droneIndex >= 0)// if there is a drone assigned to the parcel
+                    DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);
+                    if (tempDro != default)// if there is a drone assigned to the parcel
                     {
-                        droneBL[droneIndex].Status = DroneStatuses.Delivery;
-                        droneBL[droneIndex].Battery = rand.Next(40, 100);// random battery level so that the drone can still fly
-                        droneBL[droneIndex].Loc = DroneLocation(p, droneBL[droneIndex]);//location of drone
+                        tempDro.Status = DroneStatuses.Delivery;
+                        tempDro.Battery = rand.Next(40, 100);// random battery level so that the drone can still fly
+                        tempDro.Loc = DroneLocation(p, tempDro);//location of drone
                     }
                 }
                 foreach (DroneToList dr in droneBL)

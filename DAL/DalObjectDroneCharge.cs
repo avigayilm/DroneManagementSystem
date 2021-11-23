@@ -55,10 +55,7 @@ namespace DAL
 
         }
 
-        /// <summary>
-        /// returns a list of Dronecharge
-        /// </summary>
-        /// <returns></returns>
+      
         public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
             List<DroneCharge> list = new();

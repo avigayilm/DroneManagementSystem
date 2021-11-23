@@ -130,11 +130,7 @@ namespace BL
         //    throw new BatteryIssueException("Not enough battery to fly to closest station\n");
         //}
 
-        /// <summary>
-        /// returns a station
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
+      
         public Station GetStation(int stationId)
         {
             try
@@ -153,10 +149,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// returns a list with all stations
-        /// </summary>
-        /// <returns></returns>
+    
         public IEnumerable<StationToList> GetAllStation()
         {
             List<StationToList> tempList = new();

@@ -51,10 +51,7 @@ namespace DAL
            return DataSource.dronesList[index];
         }
 
-        /// <summary>
-        /// returns the list of all drones as Ienumerable
-        /// </summary>
-        /// <returns></returns>
+      
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate =null)
         {
             return DataSource.dronesList.FindAll(d => predicate ==null ? true : predicate(d));
@@ -89,7 +86,7 @@ namespace DAL
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public int CheckExistingDrone(int droneId)
+        internal int CheckExistingDrone(int droneId)
         {
             int index = DataSource.dronesList.FindIndex(d => d.Id == droneId);
             if (index == -1)
