@@ -23,7 +23,7 @@ namespace IBL
                     + $"Station id: {Id}\n"
                     + $"Station Name:{Name}\n" 
                     + $"Stations available Slots:{AvailableChargeSlots}\n" 
-                    + $"Station location:{Loc}\n "
+                    + $"Station location:{Loc}\n"
                     ;
             }
             

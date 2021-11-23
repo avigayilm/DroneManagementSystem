@@ -16,8 +16,8 @@ namespace IBL
             public override string ToString()
             {
                 return " "
-                    + $"logitude: {Longitude} \n"
-                    + $"latitude: {Latitude} \n"
+                    + $"logitude: {Bonus.DecimalToSexagesimal(Longitude,'n')}"
+                    + $"latitude: {Bonus.DecimalToSexagesimal(Latitude, 't')}\n"
                     ;
             }
         }

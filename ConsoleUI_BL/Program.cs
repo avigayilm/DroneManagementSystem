@@ -49,14 +49,16 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine("Enter the ID, name, latitude(range +-90), longitude(range +-180), and chargeslots\n ");
                                             int.TryParse(Console.ReadLine(), out int stationID);
-                                            string inputname = Console.ReadLine();
-                                            double.TryParse(Console.ReadLine(), out double latitudeInput);
-                                            double.TryParse(Console.ReadLine(), out double longitudeInput);
+                                            string inputName = Console.ReadLine();
+                                            double latitudeInput, longitudeInput;
+                                            double.TryParse(Console.ReadLine(), out  latitudeInput);
+                                            //latitudeInput = Convert.ToDouble(Console.ReadLine());
+                                            double.TryParse(Console.ReadLine(), out  longitudeInput);
                                             int.TryParse(Console.ReadLine(), out int slots);
                                             Station tempStat = new()// adds a new station
                                             {
                                                 Id = stationID,
-                                                Name = inputname,
+                                                Name = inputName,
                                                 AvailableChargeSlots = slots,
                                                 Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
                                                 Charging = new()
@@ -121,6 +123,10 @@ namespace ConsoleUI_BL
                                 
                             }
                             catch(AddingException ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                            }
+                            catch(InvalidInputException ex)
                             {
                                 Console.WriteLine(ex.ToString());
                             }

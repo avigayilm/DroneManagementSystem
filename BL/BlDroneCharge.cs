@@ -84,5 +84,23 @@ namespace BL
                 throw new RetrievalException("Couldn't get the Drone.\n,", ex);
             }
         }
+
+        public DroneInCharge getDroneInCharge(int droneId)
+        {
+            DroneInCharge droneInCharge = new();
+            droneInCharge.Battery = GetDrone(droneId).Battery;
+            droneInCharge.Id = droneId;
+            return droneInCharge;
+        }
+        public IEnumerable<DroneInCharge> getAllDroneInCharge(int stationId)
+        {
+            List<DroneInCharge> listDronecharge = new();
+            var chargingListIdal = idal1.DronesChargingAtStation(stationId);
+            foreach (IDAL.DO.Drone d in chargingListIdal)
+            {
+                listDronecharge.Add(getDroneInCharge(d.Id));
+            }
+            return listDronecharge;
+        }
     }
 }

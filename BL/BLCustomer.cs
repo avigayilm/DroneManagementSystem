@@ -31,10 +31,6 @@ namespace BL
                 customer.Latitude=newCustomer.Loc.Latitude;
                 idal1.AddCustomer(customer);
             }
-            catch (InvalidInputException ex)
-            {
-                throw new AddingException("Couldn't Add the Customer.\n,", ex);
-            }
             catch (IDAL.DO.DuplicateIdException ex)
             {
                 throw new AddingException("Couldn't Add the Customer.\n,", ex);
@@ -70,7 +66,9 @@ namespace BL
             try
             {
                 Customer customer = new();
-                idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
+                IDAL.DO.Customer customerDal = idal1.GetCustomer(customerId);
+                customerDal.CopyPropertiestoIBL(customer);
+                customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude};
                 List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.Delivered != null).ToList();
                 List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.PickedUp != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
