@@ -110,14 +110,15 @@ namespace BL
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-            DroneToList droneToList = getDroneToList(droneId);
-            Drone drone = new();
-            droneToList.CopyPropertiestoIBL(drone);
-            if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
-                drone.ParcelInTrans = null;
-            else
-                drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
-            return drone;
+                DroneToList droneToList = getDroneToList(droneId);
+                Drone drone = new();
+                droneToList.CopyPropertiestoIBL(drone);
+                if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
+                    drone.ParcelInTrans = null;
+                else
+                    drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+                return drone;
+            
 
         }
 

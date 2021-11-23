@@ -122,7 +122,7 @@ namespace ConsoleUI_BL
                             }
                             catch(AddingException ex)
                             {
-                                Console.WriteLine(ex);
+                                Console.WriteLine(ex.ToString());
                             }
                             break;
                         }
@@ -216,13 +216,20 @@ namespace ConsoleUI_BL
                             {
                                 Console.WriteLine(ex.ToString());
                             }
+                            catch(DroneChargeException ex)
+                            {
+                                Console.WriteLine((ex.Message));
+                            }
+                            catch(RetrievalException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             break;
 
                         }
                     case MenuOptions.Show_List://displays the lists
                         {
-                            try
-                            {
+
                                 Console.WriteLine("what List do you want to print?\n 1-Stations\n, 2-Drones\n, 3-Customers\n, 4-Parcels\n, 5-UnAssignmentParcels\n, 6-AvailableChargingStations\n, 7-DroneCharge\n0:return to menu\n");
                                 listOption = (ListOptions)int.Parse(Console.ReadLine());
                                 switch (listOption)
@@ -268,11 +275,7 @@ namespace ConsoleUI_BL
                                         {
                                             break;
                                         }
-                                }
-                            }
-                            catch(RetrievalException ex)
-                            {
-                                Console.WriteLine(ex);
+                                
                             }
                             break;
                         }
@@ -289,7 +292,7 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine("Enter the ID of the station you want to display\n");
                                             int.TryParse(Console.ReadLine(), out int id);
-                                            Console.WriteLine("----------DISPLAY DRONE----------\n");
+                                            Console.WriteLine("----------DISPLAY STATION----------\n");
                                             Console.WriteLine(ibl1.GetStation(id));
                                             break;
                                         }
@@ -326,7 +329,7 @@ namespace ConsoleUI_BL
                             }
                             catch(RetrievalException ex)
                             {
-                                Console.WriteLine(ex);
+                                Console.WriteLine(ex.Message);
                             }
                             break;
                         }
