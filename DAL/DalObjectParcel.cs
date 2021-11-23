@@ -130,8 +130,8 @@ namespace DAL
         /// checks if a Parcel exists in the Parcellist, if it doesn't it throws a MissingIdException
         /// </summary>
         /// <param name="parcelId"></param>
-        /// <returns></returns>
-        public int CheckExistingParcel(int parcelId)
+        /// <returns>index of the parcel in the list</returns>
+        int CheckExistingParcel(int parcelId)
         {
             int index = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
             if (index == -1)
@@ -145,7 +145,8 @@ namespace DAL
         /// checks if a station already exists, if it does it throws a duplicateIdException
         /// </summary>
         /// <param name="stationId"></param>
-        public void CheckDuplicateParcel(int parcelId)
+        /// <exception cref="IDAL.DO.DuplicateIdException"></exception>
+        void CheckDuplicateParcel(int parcelId)
         {
             if (DataSource.parcelList.Exists(s => s.Id == parcelId))
             {

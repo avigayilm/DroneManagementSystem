@@ -77,7 +77,7 @@ namespace BL
                 }
 
              
-                else //doesnt exist
+                else //doesnt exist as a outright field
                 {
                     PropertyInfo[] propertyInfos1 = target.GetType().GetProperties();
                     foreach (PropertyInfo tProp in propertyInfos1)//each propret thats a class

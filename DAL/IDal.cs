@@ -54,9 +54,7 @@ namespace IDAL
         public IEnumerable<Drone> DronesChargingAtStation(int stationId);
         public void CheckDuplicateStation(int stationId);
         public int CheckExistingStation(int stationId);
-
-        public int CheckExistingParcel(int parcelId);
-        public void CheckDuplicateParcel(int parcelId);
+ 
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
 
     }

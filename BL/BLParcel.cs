@@ -52,24 +52,27 @@ namespace BL
         {
             try
             {
-                int index = idal1.CheckExistingDrone(droneId);
-                List<IBL.BO.DroneToList> tempDroneList = droneBL;
-                List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)droneBL[index].Weight).ToList();//data layer parcel list
+                // int index = idal1.CheckExistingDrone(droneId);
+                DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
+                if (drone == null)
+                    throw new IBL.BO.AssignIssueException("There is no a drone with such ID");
+                var tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight); //data layer parcel list
                 int maxW = 0, maxPri = 0;
                 double minDis = 0.0;
 
-                if (droneBL[index].Status == DroneStatuses.Available)
+                if (drone.Status == DroneStatuses.Available)
                 {
-                    IDAL.DO.Parcel? fittingPack = null;//new null temp parcel
+                    IDAL.DO.Parcel? fittingPack = null; // new null temp parcel
                     foreach (IDAL.DO.Parcel pack in tempParcelList)
                     {
-                        double droneDisFromPack = DroneDistanceFromParcel(droneBL[index], pack);
-                        if ((int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && droneDisFromPack < minDis)//pack is only eligible if its weight , distance and priority are bes
+                        double droneDisFromPack = DroneDistanceFromParcel(drone, pack);
+                        // pack is only eligible if its weight , distance and priority are bes
+                        if ((int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && droneDisFromPack < minDis) 
                         {
-                            
-                            double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.Sender), idal1.SmallestDistanceStation(pack.Sender));//distance from receiver of package to closest charging station
+                            // distance from receiver of package to closest charging station
+                            double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.Sender), idal1.SmallestDistanceStation(pack.Sender));
                             double betweenCus = DistanceBetweenCustomers(idal1.GetCustomer(pack.Sender), idal1.GetCustomer(pack.Receiver));//distance between sender to receiver
-                            if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < droneBL[index].Battery)//enough battery to make the trip
+                            if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < drone.Battery)//enough battery to make the trip
                                 fittingPack = pack;//so far this is the most fitting pack for the drone.
                             maxPri = (int)pack.Priority;
                             maxW = (int)pack.Weight;
@@ -78,7 +81,7 @@ namespace BL
                     }
                     if (fittingPack != null)//if indeed a fitting package has been found
                     {
-                        droneBL[index].Status = DroneStatuses.Delivery;//update drone list in BL
+                        drone.Status = DroneStatuses.Delivery;//update drone list in BL
                         idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId);//update parcel in IDAL
                     }
                 }
@@ -97,21 +100,19 @@ namespace BL
         {
             try
             {
-                int index = idal1.CheckExistingDrone(droneId);
-                DroneToList tempDro = droneBL[index];
-                IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
-                if (!(droneBL[index].Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
+                DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
+                IDAL.DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId);
+                if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
                     throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
-                tempDro.Battery -= BatteryUsage(DroneDistanceFromParcel(tempDro, tempPack), 0);
+                drone.Battery -= BatteryUsage(DroneDistanceFromParcel(drone, tempPack), 0);
                 IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.Sender);
                 Location tempLoc = new()
                 {
                     Longitude = tempCus.Longitude,
                     Latitude = tempCus.Latitude
                 };
-                tempDro.Loc.Longitude = tempCus.Longitude;
+                drone.Loc.Longitude = tempCus.Longitude;
                 idal1.ParcelPickedUp(tempPack.Id);//update parcel to picked up in idal
-                droneBL[index] = tempDro;//update drone in list to picked up
             }
             catch (IDAL.DO.MissingIdException ex)
             {
@@ -129,10 +130,10 @@ namespace BL
         {
             try
             {
-                int index = idal1.CheckExistingDrone(droneId);
-                DroneToList tempDro = droneBL[index];
+                //int index = idal1.CheckExistingDrone(droneId);
+                DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
                 IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
-                if (!(droneBL[index].Status == DroneStatuses.Delivery && tempPack.Delivered == null))
+                if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
                     throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
                 IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.Receiver);
                 tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.Sender), tempCus), (int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package

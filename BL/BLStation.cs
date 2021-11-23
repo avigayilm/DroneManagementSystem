@@ -30,14 +30,16 @@ namespace BL
                 if (station.Loc.Longitude <= -180 || station.Loc.Longitude >= 180)// out of range of latitude
                     throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Station st = new();
-                station.CopyPropertiestoIDAL(st);
+                object obj = st;
+                station.CopyPropertiestoIDAL(obj);
+                st = (IDAL.DO.Station)obj;
                 idal1.AddStation(st);
                 station.Charging = new();
             }
-            catch(InvalidInputException ex)
-            {
-                throw new AddingException("Couldn't add the station.\n,", ex);
-            }
+            //catch(InvalidInputException ex)
+            //{
+            //    throw new AddingException("Couldn't add the station.\n,", ex);
+            //}
             catch (IDAL.DO.DuplicateIdException ex)
             {
                 throw new AddingException("Couldn't add the station.\n,", ex);
