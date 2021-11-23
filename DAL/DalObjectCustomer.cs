@@ -42,7 +42,7 @@ namespace DAL
             if (name != null)
                  tempCustomer.Name = name;
             if (phone !=null)
-                 tempCustomer.Phone = phone;
+                 tempCustomer.PhoneNumber = phone;
             DataSource.customerList[index] = tempCustomer;
         }
     

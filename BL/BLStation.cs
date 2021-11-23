@@ -25,9 +25,9 @@ namespace BL
                     throw new InvalidInputException("The Id is less than zero \n");
                 if (string.IsNullOrEmpty(station.Name))
                     throw new InvalidInputException("The name is\n");
-                if (station.Loc.Latitude <= -90 || station.Loc.Latitude >= 90)// out of range of latitude
+                if (station.Loc.Latitude <= -90.0 || station.Loc.Latitude >= 90.0)// out of range of latitude
                     throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
-                if (station.Loc.Longitude <= -180 || station.Loc.Longitude >= 180)// out of range of latitude
+                if (station.Loc.Longitude <= -180.0 || station.Loc.Longitude >= 180.0)// out of range of latitude
                     throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Station st = new();
                 object obj = st;
@@ -138,8 +138,8 @@ namespace BL
                 Station station = new();
                 IDAL.DO.Station stationDal = idal1.GetStation(stationId);
                 stationDal.CopyPropertiestoIBL(station);
-                List<IDAL.DO.Drone> chargingListIdal = idal1.DronesChargingAtStation(stationId).ToList();
-                chargingListIdal.CopyPropertyListtoIBLList(station.Charging);// converts the list to a DroneInChargeLists and copies it to teh drone list in station
+                station.Loc = new() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
+                station.Charging = getAllDroneInCharge(stationId).ToList();
                 return station;
             }
 

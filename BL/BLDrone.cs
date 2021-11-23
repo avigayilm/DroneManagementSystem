@@ -29,14 +29,19 @@ namespace BL
                 newDrone.Battery = rand.Next(20, 40);
                 newDrone.Status = DroneStatuses.Maintenance;
                 //location of station id
-                List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
+                // List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
+                // newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
+                newDrone.Loc = new() { Longitude = GetStation(stationId).Loc.Longitude, Latitude = GetStation(stationId).Loc.Latitude };
                 DroneToList newDroneToList = new();
+               
                 newDrone.CopyPropertiestoIBL(newDroneToList);
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
+                
                 IDAL.DO.Drone droneTemp = new();
-                newDrone.CopyPropertiestoIDAL(droneTemp);
+                object obj1 = droneTemp;
+                newDrone.CopyPropertiestoIDAL(obj1);
+                droneTemp = (IDAL.DO.Drone)obj1;
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
             //catch(InvalidInputException ex)
@@ -148,6 +153,9 @@ namespace BL
         {
             return droneBL;
         }
+
+
+
 
     }
 }

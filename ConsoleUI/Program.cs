@@ -70,13 +70,13 @@ namespace ConsoleUI
                                         string inputname = Console.ReadLine();
                                         string inputphone = Console.ReadLine();
                                         double longitudeInput, latitudeInput;
-                                        double.TryParse(Console.ReadLine(), out longitudeInput);
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
+                                        double.TryParse(Console.ReadLine(), out  longitudeInput);
                                         Customer newCustomer = new()
                                         {
                                             Id = inputId,
                                             Name = inputname,
-                                            Phone = inputphone,
+                                            PhoneNumber = inputphone,
                                             Longitude = longitudeInput,
                                             Latitude = latitudeInput,
 

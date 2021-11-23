@@ -76,13 +76,13 @@ namespace DAL
                 {
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}";
                 }
-                while (customerList.Exists(d => d.Phone==phone ));
+                while (customerList.Exists(d => d.PhoneNumber==phone ));
 
                 customerList.Add(new()
                 {
                     Id = $"0{rand.Next(100000000, 999999999)}",
                     Name = customerNames[i],
-                    Phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
+                    PhoneNumber = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}",
                     //Lat-long coorditates for cities in Israel are in range: Latitude from 29.55805 to 33.20733 and longitude from 34.57149 to 35.57212.
                     Latitude = GetRandomNumber(29.55805, 33.20733),//jerusalem range
                     Longitude = GetRandomNumber(34.57149, 35.57212)

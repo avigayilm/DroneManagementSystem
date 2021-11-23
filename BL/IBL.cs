@@ -80,6 +80,7 @@ using System.Threading.Tasks;
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
         public void ReleasingDroneFromCharge(int droneId, double chargingTime);
+        public DroneInCharge getDroneInCharge(int droneId);
 
     }
 }

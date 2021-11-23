@@ -35,7 +35,9 @@ namespace BL
                 newParcel.PickedUp = null;
                 newParcel.Dr = null;
                 IDAL.DO.Parcel parcelTemp = new();
-                newParcel.CopyPropertiestoIDAL(parcelTemp);
+                object obj1 = parcelTemp;
+                newParcel.CopyPropertiestoIDAL(obj1);
+                parcelTemp = (IDAL.DO.Parcel)obj1;
                 idal1.AddParcel(parcelTemp);
             }
             catch (IDAL.DO.DuplicateIdException ex)

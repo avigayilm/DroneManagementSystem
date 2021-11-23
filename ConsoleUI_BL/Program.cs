@@ -49,14 +49,15 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine("Enter the ID, name, latitude(range +-90), longitude(range +-180), and chargeslots\n ");
                                             int.TryParse(Console.ReadLine(), out int stationID);
-                                            string inputname = Console.ReadLine();
-                                            double.TryParse(Console.ReadLine(), out double latitudeInput);
-                                            double.TryParse(Console.ReadLine(), out double longitudeInput);
+                                            string inputName = Console.ReadLine();
+                                            double latitudeInput, longitudeInput;
+                                            double.TryParse(Console.ReadLine(), out  latitudeInput);
+                                            double.TryParse(Console.ReadLine(), out  longitudeInput);
                                             int.TryParse(Console.ReadLine(), out int slots);
                                             Station tempStat = new()// adds a new station
                                             {
                                                 Id = stationID,
-                                                Name = inputname,
+                                                Name = inputName,
                                                 AvailableChargeSlots = slots,
                                                 Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
                                                 Charging = new()
@@ -67,15 +68,19 @@ namespace ConsoleUI_BL
                                     case EntityOptions.Customer:// adds a new customer
                                         {
 
-                                            Console.WriteLine("Enter the ID, name, phone.\n ");
+                                            Console.WriteLine("Enter the ID, name, phone,latitude(range +-90), longitude(range +-180),\n ");
                                             string inputId = Console.ReadLine();
                                             string inputname = Console.ReadLine();
                                             string inputphone = Console.ReadLine();
+                                            double latitudeInput, longitudeInput;
+                                            double.TryParse(Console.ReadLine(), out latitudeInput);
+                                            double.TryParse(Console.ReadLine(), out longitudeInput);
                                             Customer newCustomer = new()
                                             {
                                                 Id = inputId,
                                                 Name = inputname,
                                                 PhoneNumber = inputphone,
+                                                Loc = new() { Longitude = longitudeInput, Latitude = latitudeInput },
 
                                             };
                                             ibl1.AddCustomer(newCustomer);
@@ -121,6 +126,10 @@ namespace ConsoleUI_BL
                                 
                             }
                             catch(AddingException ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                            }
+                            catch(InvalidInputException ex)
                             {
                                 Console.WriteLine(ex.ToString());
                             }

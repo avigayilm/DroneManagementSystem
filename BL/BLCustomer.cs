@@ -25,15 +25,17 @@ namespace BL
                     throw new InvalidInputException("invalid name input");
                 if (string.IsNullOrEmpty(newCustomer.PhoneNumber))
                     throw new InvalidInputException("invalid phonenumber");
+                if (newCustomer.Loc.Latitude <= -90.0 || newCustomer.Loc.Latitude >= 90.0)// out of range of latitude
+                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+                if (newCustomer.Loc.Longitude <= -180.0 || newCustomer.Loc.Longitude >= 180.0)// out of range of latitude
+                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Customer customer = new();
-                newCustomer.CopyPropertiestoIDAL(customer);
+                object obj1 = customer;
+                newCustomer.CopyPropertiestoIDAL(obj1);
+                customer = (IDAL.DO.Customer)obj1;
                 customer.Longitude = newCustomer.Loc.Longitude;
                 customer.Latitude=newCustomer.Loc.Latitude;
                 idal1.AddCustomer(customer);
-            }
-            catch (InvalidInputException ex)
-            {
-                throw new AddingException("Couldn't Add the Customer.\n,", ex);
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
@@ -70,7 +72,9 @@ namespace BL
             try
             {
                 Customer customer = new();
-                idal1.GetCustomer(customerId).CopyPropertiestoIBL(customer);
+                IDAL.DO.Customer customerDal = idal1.GetCustomer(customerId);
+                customerDal.CopyPropertiestoIBL(customer);
+                customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude};
                 List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.Delivered != null).ToList();
                 List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.PickedUp != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
