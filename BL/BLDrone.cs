@@ -39,10 +39,10 @@ namespace BL
                 newDrone.CopyPropertiestoIDAL(droneTemp);
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
-            catch(InvalidInputException ex)
-            {
-                throw new AddingException("Couldn't add the drone.\n,", ex);
-            }
+            //catch(InvalidInputException ex)
+            //{
+            //    throw new AddingException("Couldn't add the drone.\n,", ex);
+            //}
             catch (IDAL.DO.MissingIdException ex)
             {
                 throw new AddingException("Couldn't add the drone.\n,", ex);
@@ -148,8 +148,6 @@ namespace BL
         {
             return droneBL;
         }
-
-
 
     }
 }

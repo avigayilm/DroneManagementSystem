@@ -31,6 +31,8 @@ namespace BL
                     throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Station st = new();
                 station.CopyPropertiestoIDAL(st);
+                st.Latitude = station.Loc.Latitude;
+                st.Longitude = station.Loc.Longitude;
                 idal1.AddStation(st);
                 station.Charging = new();
             }

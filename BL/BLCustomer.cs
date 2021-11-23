@@ -27,6 +27,8 @@ namespace BL
                     throw new InvalidInputException("invalid phonenumber");
                 IDAL.DO.Customer customer = new();
                 newCustomer.CopyPropertiestoIDAL(customer);
+                customer.Longitude = newCustomer.Loc.Longitude;
+                customer.Latitude=newCustomer.Loc.Latitude;
                 idal1.AddCustomer(customer);
             }
             catch (InvalidInputException ex)
