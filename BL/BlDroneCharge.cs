@@ -22,11 +22,13 @@ namespace BL
                 if (hasEnoughBattery)//if it's available and there is enough battery
                 {
                     //update the drone
+                    double distance = Bonus.Haversine(tempDron.Loc.Longitude, tempDron.Loc.Latitude, tempStation.Longitude, tempStation.Latitude);
                     tempDron.Loc.Longitude = tempStation.Longitude;
                     tempDron.Loc.Latitude = tempStation.Latitude;
-                    double distance = Bonus.Haversine(tempDron.Loc.Longitude, tempDron.Loc.Latitude, tempDron.Loc.Longitude, tempDron.Loc.Latitude);
                     double batteryusage = BatteryUsage(distance, 0);// when sending the drone to charge the drone is empty
-                    tempDron.Battery += batteryusage;
+                    tempDron.Battery -= batteryusage;
+                    if (tempDron.Battery < 0)
+                        tempDron.Battery = 0;
                     tempDron.Status = DroneStatuses.Maintenance;
                     //update the station
                     idal1.ChangeChargeSlots(tempStation.Id, -1);
@@ -59,6 +61,8 @@ namespace BL
                     // update drone
                     double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
                     tempDron.Battery += batteryFilled;
+                    if (tempDron.Battery > 100)
+                        tempDron.Battery = 100;
                     tempDron.Status = DroneStatuses.Available;
                     //update station
                     idal1.ChangeChargeSlots(stationId, 1);
