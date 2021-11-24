@@ -29,7 +29,7 @@ namespace BL
                 double chargePH = tempArray[4];
 
                 //List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
-                (idal1.GetAllDrones().ToList()).CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
+                idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
                 List<IDAL.DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
 
                 foreach (IDAL.DO.Parcel p in undeliveredParcel)

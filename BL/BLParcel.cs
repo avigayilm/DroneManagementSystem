@@ -36,7 +36,7 @@ namespace BL
                 newParcel.Dr = null;
                 IDAL.DO.Parcel parcelTemp = new();
                 object obj1 = parcelTemp;
-                newParcel.CopyPropertiestoIDAL(obj1);
+                newParcel.CopyProperties(obj1);
                 parcelTemp = (IDAL.DO.Parcel)obj1;
                 idal1.AddParcel(parcelTemp);
             }
@@ -132,7 +132,7 @@ namespace BL
             Parcel parcel = new();
             ParcelInTransfer parcelInTrans = new();
             parcel = GetParcel(parcelId);
-            parcel.CopyPropertiestoIBL(parcelInTrans);
+            parcel.CopyProperties(parcelInTrans);
             parcelInTrans.DeliverdTo = GetCustomer(parcel.Receiver.Id).Loc;
             parcelInTrans.PickedUp = GetCustomer(parcel.Sender.Id).Loc;
             parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
@@ -168,7 +168,7 @@ namespace BL
             Parcel parcel = new();
             ParcelAtCustomer parcelAtCustomer = new();
             parcel = GetParcel(parcelId);
-            parcel.CopyPropertiestoIBL(parcelAtCustomer);
+            parcel.CopyProperties(parcelAtCustomer);
             parcelAtCustomer.ParcelStatus = GetParcelStatus(parcelId);
             if (parcel.Dr.Loc == GetCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
@@ -183,11 +183,11 @@ namespace BL
             {
                 Parcel parcel = new();
                 IDAL.DO.Parcel parcelDal = idal1.GetParcel(parcelId);
-                parcelDal.CopyPropertiestoIBL(parcel);
-                idal1.GetCustomer(parcelDal.Sender).CopyPropertiestoIBL(parcel.Sender);// converts to CustomerInParcel
-                idal1.GetCustomer(parcelDal.Receiver).CopyPropertiestoIBL(parcel.Receiver);
+                parcelDal.CopyProperties(parcel);
+                idal1.GetCustomer(parcelDal.Sender).CopyProperties(parcel.Sender);// converts to CustomerInParcel
+                idal1.GetCustomer(parcelDal.Receiver).CopyProperties(parcel.Receiver);
                 Drone dr = GetDrone(parcelDal.DroneId);
-                dr.CopyPropertiestoIBL(parcel.Dr);
+                dr.CopyProperties(parcel.Dr);
                 parcel.Dr.Loc = dr.Loc;
                 return parcel;
             }
@@ -202,10 +202,10 @@ namespace BL
         {
             List<ParcelToList> tempList = new();
             ParcelToList parcel = new();
-            idal1.GetAllParcels().ToList().ForEach(p => p.CopyPropertiestoIBL(parcel)); 
+            idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
             foreach(IDAL.DO.Parcel p in idal1.GetAllParcels().ToList())
             {
-                p.CopyPropertiestoIBL(parcel);
+                p.CopyProperties(parcel);
                 parcel.parcelStatus = GetParcelStatus(p.Id);
             
             }

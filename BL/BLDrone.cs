@@ -30,14 +30,14 @@ namespace BL
                 newDrone.Loc = new() { Longitude = GetStation(stationId).Loc.Longitude, Latitude = GetStation(stationId).Loc.Latitude };
                 DroneToList newDroneToList = new();
                
-                newDrone.CopyPropertiestoIBL(newDroneToList);
+                newDrone.CopyProperties(newDroneToList);
                 newDroneToList.ParcelId = newDrone.ParcelInTrans.Id;
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 
                 IDAL.DO.Drone droneTemp = new();
                 object obj1 = droneTemp;
-                newDrone.CopyPropertiestoIDAL(obj1);
+                newDrone.CopyProperties(obj1);
                 droneTemp = (IDAL.DO.Drone)obj1;
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
@@ -108,15 +108,16 @@ namespace BL
         {
                 DroneToList droneToList = getDroneToList(droneId);
                 Drone drone = new();
-                droneToList.CopyPropertiestoIBL(drone);
+                droneToList.CopyProperties(drone);
+                drone.Loc = new Location();
+                droneToList.Loc.CopyProperties(drone.Loc);
                 if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
                     drone.ParcelInTrans = null;
                 else
                     drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
-            droneToList.Loc = drone.Loc;
+            //droneToList.Loc = drone.Loc;
                 return drone;
-            
-
+           
         }
 
        

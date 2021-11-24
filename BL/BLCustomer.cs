@@ -31,7 +31,7 @@ namespace BL
                     throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Customer customer = new();
                 object obj1 = customer;
-                newCustomer.CopyPropertiestoIDAL(obj1);
+                newCustomer.CopyProperties(obj1);
                 customer = (IDAL.DO.Customer)obj1;
                 customer.Longitude = newCustomer.Loc.Longitude;
                 customer.Latitude=newCustomer.Loc.Latitude;
@@ -63,7 +63,7 @@ namespace BL
             {
                 Customer customer = new();
                 IDAL.DO.Customer customerDal = idal1.GetCustomer(customerId);
-                customerDal.CopyPropertiestoIBL(customer);
+                customerDal.CopyProperties(customer);
                 customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude};
                 List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.Delivered != null).ToList();
                 List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.PickedUp != null).ToList();
