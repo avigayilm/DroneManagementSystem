@@ -32,6 +32,7 @@ namespace BL
                
                 newDrone.CopyProperties(newDroneToList);
                 newDroneToList.ParcelId = newDrone.ParcelInTrans.Id;
+                newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 
@@ -63,6 +64,13 @@ namespace BL
             try
             {
                 idal1.UpdateDrone(droneId, model);
+                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+                if (tempDron == default)
+                    throw new RetrievalException("Couldn't get the Drone.\n,");
+                else
+                    tempDron.Model = model;
+                
+
             }
             catch (IDAL.DO.MissingIdException ex)
             {
@@ -81,8 +89,8 @@ namespace BL
             Location locTemp = new();
             if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
             {
-                //location of dronewill be in  station closed to the sender
-                var stationTemp = idal1.SmallestDistanceStation(p.Sender);
+                //location of deone will be in  station closed to the sender
+                var stationTemp = idal1.SmallestDistanceStation(p.SenderId);
                 locTemp.Longitude = stationTemp.Longitude;
                 locTemp.Latitude = stationTemp.Latitude;
             }
@@ -90,8 +98,7 @@ namespace BL
             {
                 //location wIll be at the sender
                 List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();
-               //DAL.DO.Customer tempCus = tempCustomerList.FirstOrDefault(c => c.Id == p.Sender);
-                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.Sender);
+                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.SenderId);
                 if (customerIndex != -1)
                 {
                     locTemp.Longitude = tempCustomerList[customerIndex].Longitude;

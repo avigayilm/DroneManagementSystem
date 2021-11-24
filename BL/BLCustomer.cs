@@ -65,8 +65,8 @@ namespace BL
                 IDAL.DO.Customer customerDal = idal1.GetCustomer(customerId);
                 customerDal.CopyProperties(customer);
                 customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude};
-                List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.Delivered != null).ToList();
-                List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.Sender == customerId && p.PickedUp != null).ToList();
+                List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
+                List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUp != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
                 SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
                 return customer;
@@ -77,16 +77,23 @@ namespace BL
             }
         }
        
+        public CustomerInParcel GetCustomerInParcel(string customerId)
+        {
+            CustomerInParcel customerInParcelTemp = new();
+            IDAL.DO.Customer customerTemp = idal1.GetCustomer(customerId);
+            customerInParcelTemp = new() { Id = customerTemp.Id, Name = customerTemp.Name };
+            return customerInParcelTemp;
+        }
         public IEnumerable<CustomerToList> GetAllCustomers()
         {
             List<CustomerToList> tempList = new();
             idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
             foreach (CustomerToList cus in tempList)
             {
-                cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.Receiver == cus.Id).Count();
-                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.Sender == cus.Id).Count();
-                cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.Receiver == cus.Id).Count();
-                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.Sender == cus.Id).Count();
+                cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count();
+                cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
             }
             return tempList;
         }

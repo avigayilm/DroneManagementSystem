@@ -75,7 +75,7 @@ namespace BL
         }
 
         /// <summary>
-        /// returns a the closest station
+        /// returns a the closest station with available stations
         /// </summary>
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
@@ -98,17 +98,17 @@ namespace BL
         }
 
         /// <summary>
-        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// checks if the drone has enough battery to fly to the station
         /// </summary>
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        internal IDAL.DO.Station FindClosestPossibleStation(DroneToList dr)
+        internal bool CanReachstation(DroneToList dr,IDAL.DO.Station station)
         {
-            IDAL.DO.Station closestStation = FindClosestStation(dr);
-            if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude,dr.Loc.Latitude,closestStation.Longitude,closestStation.Latitude), 0) < dr.Battery)
-                return closestStation;
-            throw new BatteryIssueException("Not enough battery to fly to closest station\n");
+            //IDAL.DO.Station closestStation = FindClosestStation(dr);
+            if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude,dr.Loc.Latitude,station.Longitude,station.Latitude), 0) < dr.Battery)
+                return true;
+            throw new BatteryIssueException("Not enough battery to fly to the station\n");
         }
 
         //internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)

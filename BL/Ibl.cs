@@ -117,6 +117,6 @@ using System.Threading.Tasks;
         /// <param name="chargingTime"></param>
         public void ReleasingDroneFromCharge(int droneId, double chargingTime);
         public DroneInCharge getDroneInCharge(int droneId);
-
+        public CustomerInParcel GetCustomerInParcel(string customerId);
     }
 }

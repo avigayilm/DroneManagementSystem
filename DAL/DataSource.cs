@@ -98,9 +98,9 @@ namespace DAL
 
                 Parcel temp = new()
                 {
-                    Id = ++DataSource.Config.LastParcelNumber,
-                    Sender = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
-                    Receiver = customerList[rand.Next((customerList.Count-1))].Id,
+                    Id = DataSource.Config.LastParcelNumber,
+                    SenderId = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
+                    ReceiverId = customerList[rand.Next((customerList.Count-1))].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),

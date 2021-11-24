@@ -9,7 +9,8 @@ using IDAL;
 using DAL;
 
 namespace BL
-{ 
+{
+
     public static class DeepCopy
     {
        
@@ -78,6 +79,12 @@ namespace BL
                     if (value is ValueType || value is string)
                         targetProp.SetValue(target, value);//copy it to target
                 }
+
+
+                else if (targetProp.GetType().IsClass)
+                {
+                    CopyPropertiestoIDAL(source, targetProp);
+                }
             }
         }
         /// <summary>
@@ -87,17 +94,17 @@ namespace BL
         /// <typeparam name="Target"></typeparam>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static  void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
+        public static void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
             where Target : new()//from idal to bl 
         {
             Target T;
-            foreach(Source idalElement in source)
+            foreach (Source idalElement in source)
             {
                 T = new();
                 idalElement.CopyProperties(T);
                 target.Add(T);
             }
-            
+
         }
 
         //public static void CopyPropertiesBlToBl<Source, Target>(this Source source, Target target)//from idal to bl

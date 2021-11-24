@@ -103,6 +103,7 @@ namespace ConsoleUI_BL
                                             break;
                                         }
                                     case EntityOptions.Parcel://adds a parcel
+                                        
                                         {
 
                                             Console.WriteLine("Enter the senderId, the targetId, weightcategory(0=light,1=medium,2=heavy), priority(0=normal,1=fast,2=emergency),\n ");// date requested, scheduled time\n ");
@@ -156,7 +157,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine("Enter the ID and the name or\and chargeslots\n");
                                             int stationId = int.Parse(Console.ReadLine());
                                             string name = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(name))// checks if there was a string entered
+                                            if (string.IsNullOrEmpty(name))// checks if there was a string entered
                                                 name = null;
                                             int availableChargeSlots;
                                             bool result = int.TryParse(Console.ReadLine(), out availableChargeSlots);
@@ -167,14 +168,14 @@ namespace ConsoleUI_BL
                                         }
                                     case UpdateOptions.Customer:
                                         {
+
                                             Console.WriteLine("Enter the ID name and Phone\n");
                                             string customerId = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(customerId)) ;
                                             string name = Console.ReadLine();
                                             string phone = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(name))
+                                            if (string.IsNullOrEmpty(name))
                                                 name = null;
-                                            if (!string.IsNullOrEmpty(phone))
+                                            if (string.IsNullOrEmpty(phone))
                                                 phone = null;
                                             ibl1.UpdateCustomer(customerId, name, phone);
                                             break;
@@ -221,9 +222,9 @@ namespace ConsoleUI_BL
                                         }
                                 }
                             }
-                            catch(UpdateIssueException ex)
+                            catch (UpdateIssueException ex)
                             {
-                                Console.WriteLine(ex.ToString());
+                                Console.WriteLine(ex.Message);
                             }
                             catch(DroneChargeException ex)
                             {
@@ -233,12 +234,21 @@ namespace ConsoleUI_BL
                             {
                                 Console.WriteLine(ex.Message);
                             }
+                            catch(BatteryIssueException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch(DeliveryIssueException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             break;
 
                         }
                     case MenuOptions.Show_List://displays the lists
                         {
-
+                            try
+                            {
                                 Console.WriteLine("what List do you want to print?\n 1-Stations\n, 2-Drones\n, 3-Customers\n, 4-Parcels\n, 5-UnAssignmentParcels\n, 6-AvailableChargingStations\n, 7-DroneCharge\n0:return to menu\n");
                                 listOption = (ListOptions)int.Parse(Console.ReadLine());
                                 switch (listOption)
@@ -284,11 +294,15 @@ namespace ConsoleUI_BL
                                         {
                                             break;
                                         }
-                                
+
+                                }
+                            }
+                            catch (RetrievalException ex)
+                            {
+                                Console.WriteLine(ex.Message);
                             }
                             break;
                         }
-
                     case MenuOptions.Show_One://displays a single entity
                         {
                             try
