@@ -9,42 +9,84 @@ namespace IBL
 {
     public interface Ibl
     {
+        /// <summary>
+        /// adding a station to the list in the Datalayer
+        /// </summary>
+        /// <param name="station"></param>
         public void AddStation(Station tempStat);
+
+        /// <summary>
+        /// adding a customer in the list of the datalayer
+        /// </summary>
+        /// <param name="newCustomer"></param>
         public void AddCustomer(Customer newCustomer);
+
         /// <summary>
         /// adding a drone to the list of the datalayer
         /// </summary>
         /// <param name="newDrone"></param>
         /// <param name="stationId"></param>
         public void AddDrone(Drone newDrone, int stationId);
+
+        /// <summary>
+        /// adds a parcel to the parcelList
+        /// </summary>
+        /// <param name="newParcel"></param>
         public void AddParcel(Parcel newParcel);
+
+        /// <summary>
+        /// updates the drone's model
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="model"></param>
         public void UpdateDrone(int droneId, string model);
+
         /// <summary>
         /// returning a ParcelInTransfer
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns></returns>
         public ParcelInTransfer GetParcelInTransfer(int parcelId);
+
+        /// <summary>
+        /// updates the name and amount of chargingslots of the station
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <param name="name"></param>
+        /// <param name="chargingSlots"></param>
         public void UpdateStation(int stationId, string name, int chargingSlots);
+
+        /// <summary>
+        /// sends a given drone to charge in apropriate station
+        /// </summary>
+        /// <param name="droneId"></param>
         public void SendingDroneToCharge(int droneId);
+
+        /// <summary>
+        /// assigns a fitting parcel to given drone updating parcel in idal and drone list in bl
+        /// </summary>
+        /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId);
+
         /// <summary>
         /// pre assigned drone now collects parcel
         /// </summary>
         /// <param name="droneId"></param>
         public void DeliverParcelByDrone(int droneId);
+
         /// <summary>
         /// pre assigned drone now collects parcel
         /// </summary>
         /// <param name="droneId"></param>
         public void CollectingParcelByDrone(int droneId);
+
         /// <summary>
         /// returns a customer
         /// </summary>
         /// <param name="customerId"></param>
-        /// <returns></returns>
-
+        /// <returns></returns
         public Customer GetCustomer(string customerId);
+
         /// <summary>
         /// returns a list of customers
         /// </summary>
@@ -116,7 +158,11 @@ namespace IBL
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
         public void ReleasingDroneFromCharge(int droneId, double chargingTime);
-        public DroneInCharge getDroneInCharge(int droneId);
+        /// <summary>
+        /// given a customer id returns customer as customer in parcel
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public CustomerInParcel GetCustomerInParcel(string customerId);
     }
 }
