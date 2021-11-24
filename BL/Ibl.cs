@@ -99,8 +99,8 @@ using System.Threading.Tasks;
         /// returns a list with all stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<StationToList> GetAllStation();
-        public IEnumerable<StationToList> GetAllStationsWithCharging();
+        public IEnumerable<StationToList> GetAllStation(Predicate<IDAL.DO.Station> predicate = null);
+        //public IEnumerable<StationToList> GetAllStationsWithCharging();
         /// <summary>
         /// updates the name and phone of the customer
         /// </summary>
