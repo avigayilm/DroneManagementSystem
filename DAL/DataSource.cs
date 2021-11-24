@@ -54,7 +54,7 @@ namespace DAL
                 {
                     Id = rand.Next(1000, 9999),
                     Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
-                    MaxWeight = (WeightCategories)rand.Next(3),
+                    Weight = (WeightCategories)rand.Next(3),
                 });
             }
         }
@@ -98,9 +98,9 @@ namespace DAL
 
                 Parcel temp = new()
                 {
-                    Id = ++DataSource.Config.LastParcelNumber,
-                    Sender = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
-                    Receiver = customerList[rand.Next((customerList.Count-1))].Id,
+                    Id = DataSource.Config.LastParcelNumber,
+                    SenderId = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
+                    ReceiverId = customerList[rand.Next((customerList.Count-1))].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
@@ -123,7 +123,7 @@ namespace DAL
                     }
                     if (temp.DroneId == 0)
                     { 
-                        int dIndex = dronesList.FindIndex(d =>  d.MaxWeight <= temp.Weight);//a possible random parcel 
+                        int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
                         if(dIndex >= 0)
                         {
                             var drone = dronesList[dIndex];

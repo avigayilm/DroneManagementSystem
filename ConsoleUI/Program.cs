@@ -97,7 +97,7 @@ namespace ConsoleUI
                                         {
                                             Id = droneID,
                                             Model = inputmodel,
-                                            MaxWeight = maxim,
+                                            Weight = maxim,
                                         };
 
                                         dal.AddDrone(newDrone);// add drone to dronelist
@@ -115,8 +115,8 @@ namespace ConsoleUI
                                         DateTime.TryParse(Console.ReadLine(), out DateTime sched);
                                         Parcel newParcel = new()
                                         {
-                                            Sender = inputSenderId,
-                                            Receiver = inputTargetId,
+                                            SenderId = inputSenderId,
+                                            ReceiverId = inputTargetId,
                                             Weight = maxim,
                                             Priority = prio,
                                             Created = req, //does this have to be filled in 

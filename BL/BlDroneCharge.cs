@@ -13,16 +13,13 @@ namespace BL
     {
         public void SendingDroneToCharge(int droneId)
         {
-            try
-            {
-                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
-                if(tempDron == default)
-                    throw new RetrievalException("Couldn't get drone\n");
+                DroneToList tempDron = getDroneToList(droneId);
                 if (tempDron.Status == DroneStatuses.Available)
                 {
-                    
-                    IDAL.DO.Station tempStation = FindClosestPossibleStation(tempDron);// returns a station that the drone can fly to.
-                    if (tempStation.Id != 0)//if it's available and there is enough battery
+
+                    IDAL.DO.Station tempStation = FindClosestStation(tempDron);// returns a station that the drone can fly to.
+                    bool hasEnoughBattery = CanReachstation(tempDron, tempStation);
+                    if (hasEnoughBattery)//if it's available and there is enough battery
                     {
                         //update the drone
                         tempDron.Loc.Longitude = tempStation.Longitude;
@@ -40,17 +37,9 @@ namespace BL
                 }
                 else
                     throw new DroneChargeException("Can't send the drone to charge\n");// throw approptate acception
-            }
-            //catch (IDAL.DO.MissingIdException ex)
-            //{
-            //    throw new RetrievalException("Couldn't get drone\n", ex);
-            //}
-            catch(BatteryIssueException)
-            {
-                throw new DroneChargeException("Can't send the drone to charge");
-            }
 
         }
+    
 
         /// <summary>
         /// release teh drone from charge, updates the battery according to the charging time
@@ -61,7 +50,7 @@ namespace BL
         {
             try
             {
-                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+                DroneToList tempDron = getDroneToList(droneId);
                 if (tempDron.Status == DroneStatuses.Maintenance)
                 {
                     List<IDAL.DO.DroneCharge> tempDroneChargeList = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();

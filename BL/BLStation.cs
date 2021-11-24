@@ -31,7 +31,7 @@ namespace BL
                     throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Station st = new();
                 object obj = st;
-                station.CopyPropertiestoIDAL(obj);
+                station.CopyProperties(obj);
                 st = (IDAL.DO.Station)obj;
                 st.Latitude = station.Loc.Latitude;
                 st.Longitude = station.Loc.Longitude;
@@ -75,7 +75,7 @@ namespace BL
         }
 
         /// <summary>
-        /// returns a the closest station
+        /// returns a the closest station with available stations
         /// </summary>
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
@@ -98,17 +98,17 @@ namespace BL
         }
 
         /// <summary>
-        /// returns a station which is has charging and the drone has enough battery to fly to
+        /// checks if the drone has enough battery to fly to the station
         /// </summary>
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        internal IDAL.DO.Station FindClosestPossibleStation(DroneToList dr)
+        internal bool CanReachstation(DroneToList dr,IDAL.DO.Station station)
         {
-            IDAL.DO.Station closestStation = FindClosestStation(dr);
-            if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude,dr.Loc.Latitude,closestStation.Longitude,closestStation.Latitude), 0) < dr.Battery)
-                return closestStation;
-            throw new BatteryIssueException("Not enough battery to fly to closest station\n");
+            //IDAL.DO.Station closestStation = FindClosestStation(dr);
+            if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude,dr.Loc.Latitude,station.Longitude,station.Latitude), 0) < dr.Battery)
+                return true;
+            throw new BatteryIssueException("Not enough battery to fly to the station\n");
         }
 
         //internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
@@ -137,7 +137,7 @@ namespace BL
             {
                 Station station = new();
                 IDAL.DO.Station stationDal = idal1.GetStation(stationId);
-                stationDal.CopyPropertiestoIBL(station);
+                stationDal.CopyProperties(station);
                 station.Loc = new() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
                 station.Charging = getAllDroneInCharge(stationId).ToList();
                 return station;

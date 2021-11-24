@@ -28,7 +28,7 @@ namespace BL
         /// <returns></returns>
         public double DroneDistanceFromParcel(IBL.BO.DroneToList dr, IDAL.DO.Parcel par)
         {
-            double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, idal1.GetCustomer(par.Sender).Longitude, idal1.GetCustomer(par.Sender).Latitude);
+            double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, idal1.GetCustomer(par.SenderId).Longitude, idal1.GetCustomer(par.SenderId).Latitude);
             return distance;
         }
         /// <summary>

@@ -72,7 +72,7 @@ namespace DAL
         {
             List<Customer> temp = new();
             foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null))//for every delivered parcel add its customer to the list
-                temp.Add(GetCustomer(p.Receiver));
+                temp.Add(GetCustomer(p.ReceiverId));
             return temp;
         }
     }

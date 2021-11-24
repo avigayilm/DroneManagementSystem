@@ -103,6 +103,7 @@ namespace ConsoleUI_BL
                                             break;
                                         }
                                     case EntityOptions.Parcel://adds a parcel
+                                        
                                         {
 
                                             Console.WriteLine("Enter the senderId, the targetId, weightcategory(0=light,1=medium,2=heavy), priority(0=normal,1=fast,2=emergency),\n ");// date requested, scheduled time\n ");
@@ -167,7 +168,7 @@ namespace ConsoleUI_BL
                                         }
                                     case UpdateOptions.Customer:
                                         {
-                                           
+
                                             Console.WriteLine("Enter the ID name and Phone\n");
                                             string customerId = Console.ReadLine();
                                             string name = Console.ReadLine();
@@ -221,9 +222,9 @@ namespace ConsoleUI_BL
                                         }
                                 }
                             }
-                            catch(UpdateIssueException ex)
+                            catch (UpdateIssueException ex)
                             {
-                                Console.WriteLine(ex.ToString());
+                                Console.WriteLine(ex.Message);
                             }
                             catch(DroneChargeException ex)
                             {
@@ -233,12 +234,21 @@ namespace ConsoleUI_BL
                             {
                                 Console.WriteLine(ex.Message);
                             }
+                            catch(BatteryIssueException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch(DeliveryIssueException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             break;
 
                         }
                     case MenuOptions.Show_List://displays the lists
                         {
-
+                            try
+                            {
                                 Console.WriteLine("what List do you want to print?\n 1-Stations\n, 2-Drones\n, 3-Customers\n, 4-Parcels\n, 5-UnAssignmentParcels\n, 6-AvailableChargingStations\n, 7-DroneCharge\n0:return to menu\n");
                                 listOption = (ListOptions)int.Parse(Console.ReadLine());
                                 switch (listOption)
@@ -284,11 +294,15 @@ namespace ConsoleUI_BL
                                         {
                                             break;
                                         }
-                                
+
+                                }
+                            }
+                            catch (RetrievalException ex)
+                            {
+                                Console.WriteLine(ex.Message);
                             }
                             break;
                         }
-
                     case MenuOptions.Show_One://displays a single entity
                         {
                             try

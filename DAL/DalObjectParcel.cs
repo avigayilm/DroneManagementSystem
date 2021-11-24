@@ -18,8 +18,8 @@ namespace DAL
         public void AddParcel(Parcel pack)
         {
             CheckDuplicateParcel(pack.Id);
-            DataSource.parcelList.Add(pack);
             pack.Id = ++DataSource.Config.LastParcelNumber;
+            DataSource.parcelList.Add(pack);
         }
 
         /// <summary>

@@ -34,14 +34,14 @@ namespace BL
                 newDrone.Loc = new() { Longitude = GetStation(stationId).Loc.Longitude, Latitude = GetStation(stationId).Loc.Latitude };
                 DroneToList newDroneToList = new();
                
-                newDrone.CopyPropertiestoIBL(newDroneToList);
+                newDrone.CopyProperties(newDroneToList);
                 newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 
                 IDAL.DO.Drone droneTemp = new();
                 object obj1 = droneTemp;
-                newDrone.CopyPropertiestoIDAL(obj1);
+                newDrone.CopyProperties(obj1);
                 droneTemp = (IDAL.DO.Drone)obj1;
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
@@ -96,7 +96,7 @@ namespace BL
             if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
             {
                 //location of deone will be in  station closed to the sender
-                var stationTemp = idal1.SmallestDistanceStation(p.Sender);
+                var stationTemp = idal1.SmallestDistanceStation(p.SenderId);
                 locTemp.Longitude = stationTemp.Longitude;
                 locTemp.Latitude = stationTemp.Latitude;
             }
@@ -104,7 +104,7 @@ namespace BL
             {
                 //location wIll be at the sender
                 List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();
-                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.Sender);
+                int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.SenderId);
                 if (customerIndex != -1)
                 {
                     locTemp.Longitude = tempCustomerList[customerIndex].Longitude;
@@ -125,7 +125,7 @@ namespace BL
         {
                 DroneToList droneToList = getDroneToList(droneId);
                 Drone drone = new();
-                droneToList.CopyPropertiestoIBL(drone);
+                droneToList.CopyProperties(drone);
             drone.Loc = new() { Longitude = droneToList.Loc.Longitude, Latitude = droneToList.Loc.Latitude };
                 if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
                     drone.ParcelInTrans = null;

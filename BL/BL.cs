@@ -51,7 +51,7 @@ namespace BL
                         {
                             //List<IDAL.DO.Customer> cus = idal1.CustomersDeliverdTo();
                             //List<IDAL.DO.Parcel> tempList = idal1.GetAllParcels(p => p.Delivered != null).ToList();
-                            List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.Receiver))).ToList();//returns a  list of all the customers that have received a parcel
+                            List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
                             IDAL.DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
                             dr.Loc = new() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
                             // int minBat = BatteryUsage(FindClosestPossibleStation1(dr).Item2, 0
