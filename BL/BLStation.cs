@@ -139,7 +139,7 @@ namespace BL
                 IDAL.DO.Station stationDal = idal1.GetStation(stationId);
                 stationDal.CopyProperties(station);
                 station.Loc = new() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
-                station.Charging = getAllDroneInCharge(stationId).ToList();
+                station.Charging = getAllDroneInCharge(stationId).Item1.ToList();
                 return station;
             }
 
@@ -150,16 +150,16 @@ namespace BL
         }
 
     
-        public IEnumerable<StationToList> GetAllStation()
+        public IEnumerable<StationToList> GetAllStation(Predicate<IDAL.DO.Station> predicate = null)
         {
             List<StationToList> tempList = new();
-            int[] slots;
-            idal1.GetAllStations().CopyPropertyListtoIBLList(tempList);
+            
+            idal1.GetAllStations(predicate).CopyPropertyListtoIBLList(tempList);
             foreach (StationToList temp in tempList)
             {
-                slots = idal1.AvailableAndEmptySlots(temp.Id);
-                temp.OccupiedSlots = slots[0];
-                temp.AvailableSlots = slots[1];
+                var slots = idal1.AvailableAndOccupiedSlots(temp.Id);
+                temp.OccupiedSlots = slots.Item1;
+                temp.AvailableChargeSlots = slots.Item2;
             }
             return tempList;
         }
@@ -167,11 +167,11 @@ namespace BL
         /// <summary>
         /// returns all stations with available charging slots
         /// </summary>
-        public IEnumerable<StationToList> GetAllStationsWithCharging()
-        {
-            List<StationToList> tempList = new();
-            idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList().CopyPropertyListtoIBLList(tempList);
-            return tempList;
-        }
+        //public IEnumerable<StationToList> GetAllStationsWithCharging()
+        //{
+        //    List<StationToList> tempList = new();
+        //    idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList().CopyPropertyListtoIBLList(tempList);
+        //    return tempList;
+        //}
     }
 }

@@ -193,6 +193,7 @@ namespace BL
                 Drone dr = GetDrone(parcelDal.DroneId);
                 parcel.Dr = new();
                 dr.CopyProperties(parcel.Dr);
+                parcel.Dr.Loc = new();
                 dr.Loc.CopyProperties(parcel.Dr.Loc);
                 return parcel;
             }

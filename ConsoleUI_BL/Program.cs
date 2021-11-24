@@ -288,7 +288,7 @@ namespace ConsoleUI_BL
                                         }
                                     case ListOptions.AvailableChargingStations://diplay stations with available charging slots
                                         Console.WriteLine("----------DISPLAY AVAILABLECHARGINGSTATION----------\n");
-                                        ((List<StationToList>)ibl1.GetAllStationsWithCharging()).ForEach(p => Console.WriteLine(p));
+                                        ((List<StationToList>)ibl1.GetAllStation(s => s.AvailableChargeSlots > 0)).ForEach(p => Console.WriteLine(p));
                                         break;
                                     case ListOptions.Exit:
                                         {

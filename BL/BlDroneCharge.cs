@@ -82,7 +82,7 @@ namespace BL
             droneInCharge.Id = droneId;
             return droneInCharge;
         }
-        public IEnumerable<DroneInCharge> getAllDroneInCharge(int stationId)
+        public (IEnumerable<DroneInCharge>,int) getAllDroneInCharge(int stationId)
         {
             List<DroneInCharge> listDronecharge = new();
             var chargingListIdal = idal1.DronesChargingAtStation(stationId);
@@ -90,7 +90,7 @@ namespace BL
             {
                 listDronecharge.Add(getDroneInCharge(d.Id));
             }
-            return listDronecharge;
+            return (listDronecharge, listDronecharge.Count);
         }
     }
 }

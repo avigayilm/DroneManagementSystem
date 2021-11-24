@@ -114,24 +114,17 @@ namespace DAL
             if (name != null)
                 tempStation.Name = name;
             if (chargeSlots != -1)// chekc if chargeslots was enetered
-                tempStation.AvailableChargeSlots = chargeSlots - AvailableAndEmptySlots(stationId)[0];// input=total chargeslots, we only save the availablechargeslots
+                tempStation.AvailableChargeSlots = AvailableAndOccupiedSlots(stationId).Item2;// input=total chargeslots, we only save the availablechargeslots
             DataSource.stationList[index] = tempStation;
         }
 
 
 
-        /// <summary>
-        /// returns an array with number of empty slots in index 1 and occupied slots in index 2 in a station
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public int[] AvailableAndEmptySlots(int id)
+        
+        public (int, int) AvailableAndOccupiedSlots(int id)
         {
             Station st = GetStation(id);
-            int[] slots = new int[2];
-            slots[0] = DataSource.chargeList.Where(s => s.StationId == st.Id).Count();
-            slots[1] = st.AvailableChargeSlots;
-            return slots;
+            return (DataSource.chargeList.Where(s => s.StationId == st.Id).Count(),st.AvailableChargeSlots);
         }
 
       

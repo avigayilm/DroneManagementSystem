@@ -21,17 +21,18 @@ namespace BL
                     throw new InvalidInputException("invalid Id input \n");
                 if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.Light && newDrone.Weight != WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory \n");
+                
                 int index=idal1.CheckExistingStation(stationId);
+                Station tempSt = GetStation(stationId);
                 newDrone.Battery = rand.Next(20, 40);
                 newDrone.Status = DroneStatuses.Maintenance;
                 //location of station id
                 // List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
                 // newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
-                newDrone.Loc = new() { Longitude = GetStation(stationId).Loc.Longitude, Latitude = GetStation(stationId).Loc.Latitude };
+                newDrone.Loc = new() { Longitude = tempSt.Loc.Longitude, Latitude = tempSt.Loc.Latitude };
                 DroneToList newDroneToList = new();
                
                 newDrone.CopyProperties(newDroneToList);
-                newDroneToList.ParcelId = newDrone.ParcelInTrans.Id;
                 newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
@@ -41,6 +42,7 @@ namespace BL
                 newDrone.CopyProperties(obj1);
                 droneTemp = (IDAL.DO.Drone)obj1;
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
+                idal1.SendToCharge(newDrone.Id, stationId);//sending the drone to charge
             }
 
             catch (IDAL.DO.MissingIdException ex)

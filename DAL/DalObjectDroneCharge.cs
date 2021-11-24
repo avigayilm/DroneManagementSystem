@@ -24,14 +24,12 @@ namespace DAL
                 throw new MissingIdException(" No such station in list\n");
             if (droneIndex == -1)
                 throw new MissingIdException("No  such drone in list \n");
-            else
-            {
-                //// making a new Dronecharge
-                DroneCharge DC = new DroneCharge();
-                DC.DroneId = droneId;
-                DC.StationId = stationId;
-                DataSource.chargeList.Add(DC);
-            }
+            //// making a new Dronecharge
+            ChangeChargeSlots(stationId, -1);
+            DroneCharge DC = new DroneCharge();
+            DC.DroneId = droneId;
+            DC.StationId = stationId;
+            DataSource.chargeList.Add(DC);
 
         }
 
@@ -41,7 +39,7 @@ namespace DAL
         /// <param name="Buzzer"></param>
         public void BatteryCharged(int droneId, int stationId)
         {
-           
+
             int droneIndex = DataSource.chargeList.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (droneIndex == -1)
                 throw new MissingIdException("No such drone \n");
@@ -55,7 +53,7 @@ namespace DAL
 
         }
 
-      
+
         public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
         {
             List<DroneCharge> list = new();

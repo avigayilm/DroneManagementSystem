@@ -25,7 +25,12 @@ namespace IDAL
         public List<Customer> CustomersDeliverdTo();
 
         public void ChangeChargeSlots(int stationId, int n);
-        public int[] AvailableAndEmptySlots(int id);
+        /// <summary>
+        /// returns tuple first occupied slots second available slots
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public (int, int) AvailableAndOccupiedSlots(int id);
         public void SendToCharge(int droneId, int stationId);
         public void BatteryCharged(int droneId, int stationId);
         public Parcel GetParcel(int ID);
