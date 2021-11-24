@@ -11,10 +11,7 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// adding a customer in the list of the datalayer
-        /// </summary>
-        /// <param name="newCustomer"></param>
+      
         public void AddCustomer(Customer newCustomer)
         {
             try

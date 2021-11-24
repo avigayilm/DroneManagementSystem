@@ -26,9 +26,6 @@ namespace BL
                 Station tempSt = GetStation(stationId);
                 newDrone.Battery = rand.Next(20, 40);
                 newDrone.Status = DroneStatuses.Maintenance;
-                //location of station id
-                // List<IDAL.DO.Station> tempStat = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                // newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
                 newDrone.Loc = new() { Longitude = tempSt.Loc.Longitude, Latitude = tempSt.Loc.Latitude };
                 DroneToList newDroneToList = new();
 
@@ -36,7 +33,6 @@ namespace BL
                 newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
                                             //adding the drone to the dalObject list
-
                 IDAL.DO.Drone droneTemp = new();
                 object obj1 = droneTemp;
                 newDrone.CopyProperties(obj1);
@@ -53,14 +49,8 @@ namespace BL
             {
                 throw new AddingException("Couldn't add the drone.", ex);
             }
-
         }
 
-        /// <summary>
-        /// updates the drone's model
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="model"></param>
         public void UpdateDrone(int droneId, string model)
         {
             try
@@ -71,8 +61,6 @@ namespace BL
                     throw new RetrievalException("Couldn't get the Drone.");
                 else
                     tempDron.Model = model;
-                
-
             }
             catch (IDAL.DO.MissingIdException ex)
             {
@@ -111,8 +99,6 @@ namespace BL
             return locTemp;
         }
 
-
-      
         public Drone GetDrone(int droneId)
         {
                 DroneToList droneToList = getDroneToList(droneId);
@@ -125,11 +111,9 @@ namespace BL
                     drone.ParcelInTrans = null;
                 else
                     drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
-            //droneToList.Loc = drone.Loc;
                 return drone;
            
         }
-
        
         public DroneToList getDroneToList(int droneId)
         {

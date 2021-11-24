@@ -75,7 +75,7 @@ namespace BL
             }
         }
 
-        public DroneInCharge getDroneInCharge(int droneId)
+        internal DroneInCharge getDroneInCharge(int droneId)
         {
             DroneInCharge droneInCharge = new();
             droneInCharge.Battery = GetDrone(droneId).Battery;

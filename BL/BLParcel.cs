@@ -12,10 +12,6 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// adds a parcel to the parcelList
-        /// </summary>
-        /// <param name="newParcel"></param>
         public void AddParcel(Parcel newParcel)// do I have to check customer and receiver
         {
             try
@@ -48,17 +44,12 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// assigns a fitting parcel to given drone updating parcel in idal and drone list in bl
-        /// </summary>
-        /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId)
         {
             DroneToList drone = getDroneToList(droneId);
             var tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight);//.OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
             int maxW = 0, maxPri = 0;
             double minDis = 0.0;
-
             if (drone.Status == DroneStatuses.Available)
             {
                 IDAL.DO.Parcel? fittingPack = null; // new null temp parcel
@@ -79,23 +70,24 @@ namespace BL
                         maxW = (int)pack.Weight;
                         minDis = droneDisFromPack;
                     }
-
-                    }
-                    if (fittingPack != null) // if indeed a fitting package has been found
-                    {
-                        drone.Status = DroneStatuses.Delivery;//update drone list in BL
-                        idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId);//update parcel in IDAL
-                    }
-                    else
-                        throw new BatteryIssueException("Drone hasn't got enough battery to carry any parcel");
                 }
+                if (fittingPack != null) // if indeed a fitting package has been found
+                {
+                    drone.Status = DroneStatuses.Delivery; // update drone list in BL
+                    idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId); // update parcel in IDAL
+                }
+                else
+                    throw new BatteryIssueException("Drone hasn't got enough battery to carry any parcel");
+            }
         }
 
-      
         public void CollectingParcelByDrone(int droneId)
         {
+            try
+            {
                 DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
-                IDAL.DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId);
+                IDAL.DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId); //retrieve parcel assigned
+                // checks that the drone is indeed ready to deliver it parcel
                 if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
                     throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
                 drone.Battery -= BatteryUsage(DroneDistanceFromParcel(drone, tempPack), 0);
@@ -107,26 +99,29 @@ namespace BL
                 };
                 drone.Loc.Longitude = tempCus.Longitude;
                 idal1.ParcelPickedUp(tempPack.Id);//update parcel to picked up in idal
-
-
+            }
+            catch (IDAL.DO.MissingIdException ex)
+            {
+                throw new RetrievalException("drone has no parcel");
+            }
         }
 
         public void DeliverParcelByDrone(int droneId)
         {
-                DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
-                if(tempDro == default)
-                    throw new RetrievalException("Couldn't get the Drone.\n,");
-                IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
-                if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
-                    throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
-                IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.ReceiverId);
-                tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.SenderId), tempCus), (int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package
-                tempDro.Loc.Longitude = tempCus.Longitude;
-                tempDro.Loc.Latitude = tempCus.Latitude;
-                tempDro.Status = DroneStatuses.Available;
-                idal1.ParcelDelivered(tempPack.Id);
+            DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
+            if (tempDro == default)
+                throw new RetrievalException("Couldn't get the Drone.\n,");
+            IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
+            if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
+                throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
+            IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.ReceiverId);
+            tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.SenderId), tempCus), (int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package
+            tempDro.Loc.Longitude = tempCus.Longitude;
+            tempDro.Loc.Latitude = tempCus.Latitude;
+            tempDro.Status = DroneStatuses.Available;
+            idal1.ParcelDelivered(tempPack.Id);
         }
-       
+
         public ParcelInTransfer GetParcelInTransfer(int parcelId)
         {
             Parcel parcel = new();
@@ -151,7 +146,7 @@ namespace BL
         /// <returns></returns>
         internal ParcelStatuses GetParcelStatus(int parcelId)
         {
-            Parcel parcel=GetParcel(parcelId);
+            Parcel parcel = GetParcel(parcelId);
             if (parcel.Delivered != null)
                 return ParcelStatuses.Delivered;
             if (parcel.PickedUp != null)
@@ -160,9 +155,8 @@ namespace BL
                 return ParcelStatuses.Assigned;
             else
                 return ParcelStatuses.Created;
-
         }
-     
+
         public ParcelAtCustomer GetParcelAtCustomer(int parcelId)
         {
             Parcel parcel = new();
@@ -176,7 +170,7 @@ namespace BL
                 parcelAtCustomer.CustomerInP = parcel.Sender;
             return parcelAtCustomer;
         }
-       
+
         public Parcel GetParcel(int parcelId)
         {
             try
@@ -204,7 +198,7 @@ namespace BL
             }
         }
 
-     
+
         public IEnumerable<ParcelToList> GetAllParcels()
         {
             List<ParcelToList> tempList = new();
@@ -216,18 +210,18 @@ namespace BL
                 p.CopyProperties(parcel);
                 parcel.parcelStatus = GetParcelStatus(p.Id);
                 tempList.Add(parcel);
-            
+
             }
-            
+
             return tempList;
         }
 
-     
+
         public IEnumerable<ParcelToList> GetAllUnassignedParcels()
         {
             List<ParcelToList> tempList = new();
             idal1.GetAllParcels(p => p.Assigned == null).CopyPropertyListtoIBLList(tempList);
-            foreach(ParcelToList p in tempList)
+            foreach (ParcelToList p in tempList)
             {
                 p.parcelStatus = GetParcelStatus(p.Id);
             }

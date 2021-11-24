@@ -14,6 +14,58 @@ namespace BL
     public static class DeepCopy
     {
 
+        /// <summary>
+        /// copies all fields from an idal object to a bl object in deep copy
+        /// </summary>
+        /// <typeparam name="Source"></typeparam>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+
+        public static void CopyProperties<Source, Target>(this Source source, Target target)//from idal to bl
+        {
+            PropertyInfo[] propertyInfos = target.GetType().GetProperties();
+            foreach (var targetProp in propertyInfos)//goes over all source props
+            {
+
+                //bool isMatched = target.GetType().GetProperties().Any(targetProp => targetProp!= null && targetProp.Name == sProp.Name && targetProp.GetType() == sProp.GetType());
+                // get wanted property will return null if not found
+                PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);
+
+                if (propInf != null)//such a propety does indeed exist in target
+                {
+                    object value = propInf.GetValue(source);//get the value of this property
+                    if (value is ValueType || value is string)
+                        targetProp.SetValue(target, value);//copy it to target
+                }
+                //else
+                //     if (targetProp.GetType().IsSubclassOf(typeof(object)))
+                //           CopyProperties(source, targetProp);
+
+            }
+        }
+
+        /// <summary>
+        /// converts a DalList to a BlList
+        /// </summary>
+        /// <typeparam name="Source"></typeparam>
+        /// <typeparam name="Target"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
+            where Target : new()//from idal to bl 
+        {
+            Target T;
+            foreach (Source idalElement in source)
+            {
+                T = new();
+                idalElement.CopyProperties(T);
+                target.Add(T);
+            }
+
+        }
+
+
         //public static void CopyProperties<Source, Target>(this Source source, Target target)//from bl to idal
         //{
         //    PropertyInfo[] propertyInfos = target.GetType().GetProperties();
@@ -52,61 +104,7 @@ namespace BL
         //return target;
         // }
 
-        /// <summary>
-        /// copies all fields from an idal object to a bl object in deep copy
-        /// </summary>
-        /// <typeparam name="Source"></typeparam>
-        /// <typeparam name="Target"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        public static void CopyProperties<Source, Target>(this Source source, Target target)//from idal to bl
-        {
-            PropertyInfo[] propertyInfos = target.GetType().GetProperties();
-            foreach (var targetProp in propertyInfos)//goes over all source props
-            {
-
-                //bool isMatched = target.GetType().GetProperties().Any(targetProp => targetProp!= null && targetProp.Name == sProp.Name && targetProp.GetType() == sProp.GetType());
-                PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property - has the same name in sprop and targetprop so will work anyhow
-
-                if (propInf != null)//such a propety does indeed exist in target
-                {
-
-                    object value = propInf.GetValue(source);//get the value of this property
-                    //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
-                    if (value is ValueType || value is string)
-                        targetProp.SetValue(target, value);//copy it to target
-                }
-                //else
-                //     if (targetProp.GetType().IsSubclassOf(typeof(object)))
-                //           CopyProperties(source, targetProp);
-
-            }
-
-            //else if (targetProp.GetType().IsClass)
-            //{
-            //    CopyPropertiestoIDAL(source, targetProp);
-            //}
-
-        }
-        /// <summary>
-        /// converts a DalList to a BlList
-        /// </summary>
-        /// <typeparam name="Source"></typeparam>
-        /// <typeparam name="Target"></typeparam>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static void CopyPropertyListtoIBLList<Source, Target>(this IEnumerable<Source> source, List<Target> target)
-            where Target : new()//from idal to bl 
-        {
-            Target T;
-            foreach (Source idalElement in source)
-            {
-                T = new();
-                idalElement.CopyProperties(T);
-                target.Add(T);
-            }
-
-        }
+      
 
         //public static void CopyPropertyListtoIBLList1<Source, Target>(this IEnumerable<Source> source, List<Target> target)
         //   where Target : struct//from idal to bl 

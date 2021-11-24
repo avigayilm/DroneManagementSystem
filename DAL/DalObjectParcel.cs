@@ -93,14 +93,6 @@ namespace DAL
             return DataSource.parcelList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
-        // returns a list with parcels that have not been assigned to a drone
-        //public IEnumerable<Parcel> GetvacantParcel()
-        //{
-        //    List<Parcel> temp = new();
-        //    DataSource.parcelList.ForEach(p => { if (p.DroneId == 0) temp.Add(p); });
-        //    return (IEnumerable<Parcel>)temp;
-        //}
-
         /// <summary>
         /// returns a new list with the undelivered parcels
         /// </summary>
