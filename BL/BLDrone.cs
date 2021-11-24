@@ -12,11 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-        /// <summary>
-        /// adding a drone to the list of the datalayer
-        /// </summary>
-        /// <param name="newDrone"></param>
-        /// <param name="stationId"></param>
+       
         public void AddDrone(Drone newDrone, int stationId)
         {
             try
@@ -35,6 +31,7 @@ namespace BL
                 DroneToList newDroneToList = new();
                
                 newDrone.CopyPropertiestoIBL(newDroneToList);
+                newDroneToList.ParcelId = newDrone.ParcelInTrans.Id;
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 
@@ -44,10 +41,7 @@ namespace BL
                 droneTemp = (IDAL.DO.Drone)obj1;
                 idal1.AddDrone(droneTemp);// adding the drone to the dallist
             }
-            //catch(InvalidInputException ex)
-            //{
-            //    throw new AddingException("Couldn't add the drone.\n,", ex);
-            //}
+
             catch (IDAL.DO.MissingIdException ex)
             {
                 throw new AddingException("Couldn't add the drone.\n,", ex);
@@ -87,15 +81,16 @@ namespace BL
             Location locTemp = new();
             if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
             {
-                //location of deone will be in  station closed to the sender
+                //location of dronewill be in  station closed to the sender
                 var stationTemp = idal1.SmallestDistanceStation(p.Sender);
                 locTemp.Longitude = stationTemp.Longitude;
                 locTemp.Latitude = stationTemp.Latitude;
             }
-            if (p.Created != null && p.PickedUp != null)// if pakage is assigned and picked up
+            if (p.Created != null && p.PickedUp != null)// if package is picked up
             {
                 //location wIll be at the sender
                 List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();
+               //DAL.DO.Customer tempCus = tempCustomerList.FirstOrDefault(c => c.Id == p.Sender);
                 int customerIndex = tempCustomerList.FindIndex(c => c.Id == p.Sender);
                 if (customerIndex != -1)
                 {
@@ -108,11 +103,7 @@ namespace BL
         }
 
 
-        /// <summary>
-        /// returns a drone according to the droneId
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+      
         public Drone GetDrone(int droneId)
         {
                 DroneToList droneToList = getDroneToList(droneId);
@@ -122,16 +113,13 @@ namespace BL
                     drone.ParcelInTrans = null;
                 else
                     drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+            droneToList.Loc = drone.Loc;
                 return drone;
             
 
         }
 
-        /// <summary>
-        /// returns a DroneToList
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+       
         public DroneToList getDroneToList(int droneId)
         {
                 DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
@@ -139,16 +127,7 @@ namespace BL
                     throw new RetrievalException("Couldn't get the Drone.\n,");
                 return tempDron;
         }
-            //catch (IDAL.DO.MissingIdException ex)
-            //{
-            //    throw new RetrievalException("Couldn't get the Drone.\n,", ex);
-            //}
-        
 
-        /// <summary>
-        /// returns a list of drones
-        /// </summary>
-        /// <returns></returns>
         public IEnumerable<DroneToList> GetAllDrones()
         {
             return droneBL;

@@ -97,7 +97,7 @@ namespace ConsoleUI
                                         {
                                             Id = droneID,
                                             Model = inputmodel,
-                                            MaxWeight = maxim,
+                                            Weight = maxim,
                                         };
 
                                         dal.AddDrone(newDrone);// add drone to dronelist

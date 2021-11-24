@@ -54,7 +54,7 @@ namespace DAL
                 {
                     Id = rand.Next(1000, 9999),
                     Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
-                    MaxWeight = (WeightCategories)rand.Next(3),
+                    Weight = (WeightCategories)rand.Next(3),
                 });
             }
         }
@@ -123,7 +123,7 @@ namespace DAL
                     }
                     if (temp.DroneId == 0)
                     { 
-                        int dIndex = dronesList.FindIndex(d =>  d.MaxWeight <= temp.Weight);//a possible random parcel 
+                        int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
                         if(dIndex >= 0)
                         {
                             var drone = dronesList[dIndex];
