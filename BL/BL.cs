@@ -17,8 +17,6 @@ namespace BL
         IDal idal1 = new DAL.DalObject();
         public BL()
         {
-            try
-            {
                 //DAL.DalObject dal2 = new();
 
                 double[] tempArray = idal1.DronePwrUsg();
@@ -68,7 +66,7 @@ namespace BL
                         }
                     }
                 }
-            }
+            
 
         }
     }

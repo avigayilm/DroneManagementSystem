@@ -82,11 +82,11 @@ namespace BL
 
             }
 
-                //else if (targetProp.GetType().IsClass)
-                //{
-                //    CopyPropertiestoIDAL(source, targetProp);
-                //}
-            }
+            //else if (targetProp.GetType().IsClass)
+            //{
+            //    CopyPropertiestoIDAL(source, targetProp);
+            //}
+
         }
         /// <summary>
         /// converts a DalList to a BlList
