@@ -156,7 +156,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine("Enter the ID and the name or\and chargeslots\n");
                                             int stationId = int.Parse(Console.ReadLine());
                                             string name = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(name))// checks if there was a string entered
+                                            if (string.IsNullOrEmpty(name))// checks if there was a string entered
                                                 name = null;
                                             int availableChargeSlots;
                                             bool result = int.TryParse(Console.ReadLine(), out availableChargeSlots);
@@ -167,14 +167,14 @@ namespace ConsoleUI_BL
                                         }
                                     case UpdateOptions.Customer:
                                         {
+                                           
                                             Console.WriteLine("Enter the ID name and Phone\n");
                                             string customerId = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(customerId)) ;
                                             string name = Console.ReadLine();
                                             string phone = Console.ReadLine();
-                                            if (!string.IsNullOrEmpty(name))
+                                            if (string.IsNullOrEmpty(name))
                                                 name = null;
-                                            if (!string.IsNullOrEmpty(phone))
+                                            if (string.IsNullOrEmpty(phone))
                                                 phone = null;
                                             ibl1.UpdateCustomer(customerId, name, phone);
                                             break;

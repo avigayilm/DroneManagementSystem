@@ -38,7 +38,9 @@ namespace BL
                 object obj1 = parcelTemp;
                 newParcel.CopyPropertiestoIDAL(obj1);
                 parcelTemp = (IDAL.DO.Parcel)obj1;
-                idal1.AddParcel(parcelTemp);
+                parcelTemp.Sender = newParcel.Sender.Id;
+                parcelTemp.Receiver = newParcel.Receiver.Id;
+                idal1.AddParcel(parcelTemp);// can we print the parcelId here
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {

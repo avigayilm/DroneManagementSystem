@@ -35,6 +35,7 @@ namespace BL
                 DroneToList newDroneToList = new();
                
                 newDrone.CopyPropertiestoIBL(newDroneToList);
+                newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
                                       //adding the drone to the dalObject list
                 
@@ -69,6 +70,13 @@ namespace BL
             try
             {
                 idal1.UpdateDrone(droneId, model);
+                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+                if (tempDron == default)
+                    throw new RetrievalException("Couldn't get the Drone.\n,");
+                else
+                    tempDron.Model = model;
+                
+
             }
             catch (IDAL.DO.MissingIdException ex)
             {
@@ -118,6 +126,7 @@ namespace BL
                 DroneToList droneToList = getDroneToList(droneId);
                 Drone drone = new();
                 droneToList.CopyPropertiestoIBL(drone);
+            drone.Loc = new() { Longitude = droneToList.Loc.Longitude, Latitude = droneToList.Loc.Latitude };
                 if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
                     drone.ParcelInTrans = null;
                 else
