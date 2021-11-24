@@ -19,14 +19,14 @@ namespace IBL
 
             public override string ToString()
             {
-                return String.Join(" ", Charging) 
+                return String.Join(" ", Charging)
                     + $"Station id: {Id}\n"
-                    + $"Station Name:{Name}\n" 
-                    + $"Stations available Slots:{AvailableChargeSlots}\n" 
+                    + $"Station Name:{Name}\n"
+                    + $"Stations available Slots:{AvailableChargeSlots}\n"
                     + $"Station location:{Loc}\n"
                     ;
             }
-            
+
         }
     }
 }

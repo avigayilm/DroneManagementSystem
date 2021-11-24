@@ -16,7 +16,7 @@ namespace ConsoleUI
         //enums to determine updating, adding etc. choices
         enum MenuOptions { Exit, Add, Update, Show_One, Show_List, Show_Distance }
         enum EntityOptions { Exit, Station, Drone, Customer, Parcel }
-        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge,ReleasefromCharge}
+        enum UpdateOptions { Exit, Assignment, Pickedup, Delivery, Recharge, ReleasefromCharge }
         enum ListOptions { Exit, Stations, Drones, Customers, Parcels, UnAssignmentParcels, AvailableChargingStations, DroneCharge }
 
         //menu function wil go thorough all options for user
@@ -46,7 +46,7 @@ namespace ConsoleUI
                                 case EntityOptions.Station://add station
                                     {
                                         Console.WriteLine("Enter the ID, name, latitude, longitude, and chargeslots\n ");
-                                        int stationID  = int.Parse(Console.ReadLine());
+                                        int stationID = int.Parse(Console.ReadLine());
                                         string inputname = Console.ReadLine();
                                         double.TryParse(Console.ReadLine(), out double latitudeInput);
                                         double.TryParse(Console.ReadLine(), out double longitudeInput);
@@ -71,7 +71,7 @@ namespace ConsoleUI
                                         string inputphone = Console.ReadLine();
                                         double longitudeInput, latitudeInput;
                                         double.TryParse(Console.ReadLine(), out latitudeInput);
-                                        double.TryParse(Console.ReadLine(), out  longitudeInput);
+                                        double.TryParse(Console.ReadLine(), out longitudeInput);
                                         Customer newCustomer = new()
                                         {
                                             Id = inputId,
@@ -125,7 +125,7 @@ namespace ConsoleUI
                                             //requested = DateTime.MinValue,
                                             //scheduled = DateTime.MinValue
                                         };
-                                        dal.AddParcel(newParcel); 
+                                        dal.AddParcel(newParcel);
                                         break;
                                     }
 
@@ -280,7 +280,7 @@ namespace ConsoleUI
                                     {
                                         Console.WriteLine("Enter the ID of the Customer you want to print\n");
                                         string id = Console.ReadLine();
-                                        Console.WriteLine(dal.GetCustomer(id)); 
+                                        Console.WriteLine(dal.GetCustomer(id));
                                         break;
                                     }
                                 case EntityOptions.Exit:

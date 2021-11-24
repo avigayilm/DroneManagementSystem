@@ -19,7 +19,7 @@ namespace BL
         {
             return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
         }
-        
+
         /// <summary>
         /// returns the distance between a drone and a parcel
         /// </summary>

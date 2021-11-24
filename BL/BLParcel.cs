@@ -21,15 +21,15 @@ namespace BL
             try
             {
                 if (newParcel.Id < 0)
-                    throw new InvalidInputException("invalid Id input \n");
+                    throw new InvalidInputException("invalid Id input");
                 if (newParcel.Priority != Priorities.Emergency && newParcel.Priority != Priorities.Fast && newParcel.Priority != Priorities.Normal)
-                    throw new InvalidInputException("Invalid weightCategory \n");
+                    throw new InvalidInputException("Invalid weightCategory");
                 if (newParcel.Weight != WeightCategories.Heavy && newParcel.Weight != WeightCategories.Light && newParcel.Weight != WeightCategories.Medium)
-                    throw new InvalidInputException("Invalid weightCategory \n");
+                    throw new InvalidInputException("Invalid weightCategory");
                 if (string.IsNullOrEmpty(newParcel.Sender.Id))
-                    throw new InvalidInputException("invalid senderId \n");
+                    throw new InvalidInputException("invalid inputId");
                 if (string.IsNullOrEmpty(newParcel.Receiver.Id))
-                    throw new InvalidInputException("invalid receiverId \n");
+                    throw new InvalidInputException("invalid inputId");
                 newParcel.Delivered = null;
                 newParcel.Assigned = null;
                 newParcel.PickedUp = null;
@@ -44,7 +44,7 @@ namespace BL
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new AddingException("Couldn't add the parcel.\n,", ex);
+                throw new AddingException("Couldn't add the parcel.", ex);
             }
         }
 
@@ -54,33 +54,31 @@ namespace BL
         /// <param name="droneId"></param>
         public void AssignParcelToDrone(int droneId)
         {
-                DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
-                if (drone == null)
-                    throw new IBL.BO.AssignIssueException("There is no drone with such ID");
-                var tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight);//.OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
-                int maxW = 0, maxPri = 0;
-                double minDis = 0.0;
+            DroneToList drone = getDroneToList(droneId);
+            var tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight);//.OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
+            int maxW = 0, maxPri = 0;
+            double minDis = 0.0;
 
-                if (drone.Status == DroneStatuses.Available)
+            if (drone.Status == DroneStatuses.Available)
+            {
+                IDAL.DO.Parcel? fittingPack = null; // new null temp parcel
+                foreach (IDAL.DO.Parcel pack in tempParcelList)
                 {
-                    IDAL.DO.Parcel? fittingPack = null; // new null temp parcel
-                    foreach (IDAL.DO.Parcel pack in tempParcelList)
+                    double droneDisFromPack = DroneDistanceFromParcel(drone, pack);
+                    // pack is only eligible if its weight , distance and priority are best
+                    if ((int)pack.Priority > maxPri ||
+                    (int)pack.Priority >= maxPri && (int)pack.Weight > maxW ||
+                    (int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && droneDisFromPack < minDis)
                     {
-                        double droneDisFromPack = DroneDistanceFromParcel(drone, pack);
-                        // pack is only eligible if its weight , distance and priority are best
-                        if ((int)pack.Priority > maxPri ||
-                        (int) pack.Priority >= maxPri && (int)pack.Weight > maxW ||
-                        (int)pack.Priority >= maxPri && (int)pack.Weight >= maxW && droneDisFromPack < minDis)
-                        {
-                            // distance from receiver of package to closest charging station
-                            double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.SenderId), idal1.SmallestDistanceStation(pack.SenderId));
-                            double betweenCus = DistanceBetweenCustomers(idal1.GetCustomer(pack.SenderId), idal1.GetCustomer(pack.ReceiverId));//distance between sender to receiver
-                            if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < drone.Battery)//enough battery to make the trip
-                                fittingPack = pack;//so far this is the most fitting pack for the drone.
-                            maxPri = (int)pack.Priority;
-                            maxW = (int)pack.Weight;
-                            minDis = droneDisFromPack;
-                        }
+                        // distance from receiver of package to closest charging station
+                        double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.SenderId), idal1.SmallestDistanceStation(pack.SenderId));
+                        double betweenCus = DistanceBetweenCustomers(idal1.GetCustomer(pack.SenderId), idal1.GetCustomer(pack.ReceiverId));//distance between sender to receiver
+                        if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < drone.Battery)//enough battery to make the trip
+                            fittingPack = pack;//so far this is the most fitting pack for the drone.
+                        maxPri = (int)pack.Priority;
+                        maxW = (int)pack.Weight;
+                        minDis = droneDisFromPack;
+                    }
 
                     }
                     if (fittingPack != null) // if indeed a fitting package has been found
@@ -190,16 +188,19 @@ namespace BL
                 parcel.Receiver = GetCustomerInParcel(parcelDal.ReceiverId);
                 //idal1.GetCustomer(parcelDal.Sender).CopyProperties(parcel.Sender);// converts to CustomerInParcel
                 //idal1.GetCustomer(parcelDal.Receiver).CopyProperties(parcel.Receiver);
-                Drone dr = GetDrone(parcelDal.DroneId);
                 parcel.Dr = new();
-                dr.CopyProperties(parcel.Dr);
-                parcel.Dr.Loc = new();
-                dr.Loc.CopyProperties(parcel.Dr.Loc);
+                if (parcelDal.DroneId != 0)
+                {
+                    Drone dr = GetDrone(parcelDal.DroneId);
+                    dr.CopyProperties(parcel.Dr);
+                    parcel.Dr.Loc = new();
+                    dr.Loc.CopyProperties(parcel.Dr.Loc);
+                }
                 return parcel;
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new RetrievalException("Couldn't get the Parcel.\n,", ex);
+                throw new RetrievalException("Couldn't get the Parcel.", ex);
             }
         }
 

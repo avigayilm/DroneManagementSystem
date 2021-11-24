@@ -18,9 +18,9 @@ namespace BL
             try
             {
                 if (newDrone.Id < 0)
-                    throw new InvalidInputException("invalid Id input \n");
+                    throw new InvalidInputException("invalid Id input");
                 if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.Light && newDrone.Weight != WeightCategories.Medium)
-                    throw new InvalidInputException("Invalid weightCategory \n");
+                    throw new InvalidInputException("Invalid weightCategory");
                 
                 int index=idal1.CheckExistingStation(stationId);
                 Station tempSt = GetStation(stationId);
@@ -31,12 +31,12 @@ namespace BL
                 // newDrone.Loc = new() { Longitude = tempStat[index].Longitude, Latitude = tempStat[index].Latitude };
                 newDrone.Loc = new() { Longitude = tempSt.Loc.Longitude, Latitude = tempSt.Loc.Latitude };
                 DroneToList newDroneToList = new();
-               
+
                 newDrone.CopyProperties(newDroneToList);
                 newDroneToList.Loc = new() { Latitude = newDrone.Loc.Latitude, Longitude = newDrone.Loc.Longitude };
                 droneBL.Add(newDroneToList);// adding a droneToList
-                                      //adding the drone to the dalObject list
-                
+                                            //adding the drone to the dalObject list
+
                 IDAL.DO.Drone droneTemp = new();
                 object obj1 = droneTemp;
                 newDrone.CopyProperties(obj1);
@@ -47,11 +47,11 @@ namespace BL
 
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new AddingException("Couldn't add the drone.\n,", ex);
+                throw new AddingException("Couldn't add the drone.", ex);
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new AddingException("Couldn't add the drone.\n,", ex);
+                throw new AddingException("Couldn't add the drone.", ex);
             }
 
         }
@@ -68,7 +68,7 @@ namespace BL
                 idal1.UpdateDrone(droneId, model);
                 DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDron == default)
-                    throw new RetrievalException("Couldn't get the Drone.\n,");
+                    throw new RetrievalException("Couldn't get the Drone.");
                 else
                     tempDron.Model = model;
                 
@@ -76,7 +76,7 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new UpdateIssueException("Couldn't update the drone.\n,", ex);
+                throw new UpdateIssueException("Couldn't update the drone.", ex);
             }
         }
 
@@ -120,7 +120,8 @@ namespace BL
                 droneToList.CopyProperties(drone);
                 drone.Loc = new Location();
                 droneToList.Loc.CopyProperties(drone.Loc);
-                if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
+            //drone.Loc = new() { Longitude = droneToList.Loc.Longitude, Latitude = droneToList.Loc.Latitude };
+            if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
                     drone.ParcelInTrans = null;
                 else
                     drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
@@ -132,10 +133,10 @@ namespace BL
        
         public DroneToList getDroneToList(int droneId)
         {
-                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
-                if(tempDron == default)
-                    throw new RetrievalException("Couldn't get the Drone.\n,");
-                return tempDron;
+            DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+            if (tempDron == default)
+                throw new RetrievalException("Couldn't get the Drone.");
+            return tempDron;
         }
 
         public IEnumerable<DroneToList> GetAllDrones()

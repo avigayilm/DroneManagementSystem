@@ -17,9 +17,9 @@ namespace IBL
             public override string ToString()
             {
                 return " "
-                    + $" drone id: {Id} \n"
-                    + $"drone battery: {Battery} \n"
-                    + $"drone location: {Loc} \n"
+                    + $" drone id: {Id}\n"
+                    + $"drone battery: {Battery}\n"
+                    + $"drone location: {Loc}\n"
                     ;
             }
         }

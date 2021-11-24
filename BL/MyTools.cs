@@ -13,47 +13,44 @@ namespace BL
 
     public static class DeepCopy
     {
-       
+
         //public static void CopyProperties<Source, Target>(this Source source, Target target)//from bl to idal
         //{
         //    PropertyInfo[] propertyInfos = target.GetType().GetProperties();
 
         //    foreach (var targetProp in propertyInfos)//goes over all source props
         //    {
-        //        if (targetProp.GetType().IsClass)
-        //            CopyProperties(source, targetProp);
         //        //bool isMatched = source.GetType().GetProperties().Any(sourceProp => sourceProp.Name == targetProp.Name && sourceProp.GetType() == targetProp.GetType());
-        //        else
+        //        PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);
+        //        if (propInf != null)
         //        {
-        //            PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);
-        //            if (propInf != null)
-        //            {
-        //                //PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property
-        //                object value = propInf.GetValue(source);//get the value of this property
-        //                                                        //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
-        //                if (value is ValueType || value is string)
-        //                    targetProp.SetValue(target, value);
-        //            }
-
+        //            //PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property
+        //            object value = propInf.GetValue(source);//get the value of this property
+        //                                                    //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
+        //            if (value is ValueType || value is string)
+        //                targetProp.SetValue(target, value);
         //        }
-        //            //PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
-        //            //foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class
-        //            //{ //isMatched = sProp.GetType().IsClass;
 
-        //            //    if (sProp.GetType().IsClass)//is a class
-        //            //    {
-        //            //        PropertyInfo propInf2 = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
-        //            //        if (propInf2 == null)//if not found in this class
-        //            //            continue;
-        //            //        var value = propInf2.GetValue(sProp);//get the value from inner class insource
-        //            //        targetProp.SetValue(target, value);
-        //            //    }
-        //            //}
+        //    else//
+        //    {
+        //        PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
+        //        foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class
+        //        { //isMatched = sProp.GetType().IsClass;
 
-                
+        //            if (sProp.GetType().IsClass)//is a class
+        //            {
+        //                PropertyInfo propInf2 = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
+        //                if (propInf2 == null)//if not found in this class
+        //                    continue;
+        //                var value = propInf2.GetValue(sProp);//get the value from inner class insource
+        //                sProp.SetValue(target, value);
+        //            }
+        //        }
+
         //    }
-        //        //return target;
         //}
+        //return target;
+        // }
 
         /// <summary>
         /// copies all fields from an idal object to a bl object in deep copy
@@ -79,7 +76,11 @@ namespace BL
                     if (value is ValueType || value is string)
                         targetProp.SetValue(target, value);//copy it to target
                 }
+                //else
+                //     if (targetProp.GetType().IsSubclassOf(typeof(object)))
+                //           CopyProperties(source, targetProp);
 
+            }
 
                 //else if (targetProp.GetType().IsClass)
                 //{
@@ -107,42 +108,13 @@ namespace BL
 
         }
 
-        //public static void CopyPropertiesBlToBl<Source, Target>(this Source source, Target target)//from idal to bl
-        //{
-        //    PropertyInfo[] propertyInfos = target.GetType().GetProperties();
-        //    foreach (var targetProp in propertyInfos)//goes over all source props
-        //    {
-
-        //        //bool isMatched = target.GetType().GetProperties().Any(targetProp => targetProp!= null && targetProp.Name == sProp.Name && targetProp.GetType() == sProp.GetType());
-        //        PropertyInfo propInf = typeof(Source).GetProperty(targetProp.Name);//get my wanted property - has the same name in sprop and targetprop so will work anyhow
-
-            
-
-        //        if (propInf != null)//such a propety does indeed exist in target
-        //        {
-        //            if (propInf.GetType().IsClass)
-        //            { 
-        //                CopyProperties(propInf, targetProp);
-        //            }
-        //            object value = propInf.GetValue(source);//get the value of this property
-        //            //PropertyInfo propertyInfo = target.GetType().GetProperty(targetProp.Name);
-        //            if (value is ValueType || value is string)
-        //                targetProp.SetValue(target, value);//copy it to target
-        //        }
-
-
-                
-        //    }
-        //}
-
-        
         //public static void CopyPropertyListtoIBLList1<Source, Target>(this IEnumerable<Source> source, List<Target> target)
         //   where Target : struct//from idal to bl 
         //{
         //    Target T = new();
         //    foreach (Source idalElement in source)
         //    {
-        //        idalElement.CopyProperties(T);
+        //        idalElement.CopyPropertiestoIBL(T);
         //        target.Add(T);
         //    }
         //}
@@ -181,11 +153,11 @@ namespace BL
 //static class MyBLTools
 //{
 
-    /// <summary>
-    /// function converts a drone object from idal to a Bl drone
-    /// </summary>
-    /// <param name="dro"></param>
-    /// <returns></returns>
+/// <summary>
+/// function converts a drone object from idal to a Bl drone
+/// </summary>
+/// <param name="dro"></param>
+/// <returns></returns>
 
 
 //    public static Drone ToBLDrone(this IDAL.DO.Drone dro)

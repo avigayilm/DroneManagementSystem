@@ -21,11 +21,11 @@ namespace IBL
             public override string ToString()
             {
                 return " "
-                + $"ID is: {Id}, \n"
-                + $"Priority is: {Priority}, \n"
-                + $"stat is: {Stat}, \n"
-                + $"Collecting location: {Collecting}, \n"
-                + $"Delivering location: {Delivering}, \n"
+                + $"ID is: {Id}\n"
+                + $"Priority is: {Priority}\n"
+                + $"stat is: {Stat}\n"
+                + $"Collecting location: {Collecting}\n"
+                + $"Delivering location: {Delivering}\n"
                 + $"Delivery distance: {DeliveryDistance}";
             }
 
@@ -33,5 +33,5 @@ namespace IBL
 
         }
     }
-   
+
 }
