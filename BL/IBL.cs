@@ -11,6 +11,11 @@ namespace IBL
     {
         public void AddStation(Station tempStat);
         public void AddCustomer(Customer newCustomer);
+        /// <summary>
+        /// adding a drone to the list of the datalayer
+        /// </summary>
+        /// <param name="newDrone"></param>
+        /// <param name="stationId"></param>
         public void AddDrone(Drone newDrone, int stationId);
         public void AddParcel(Parcel newParcel);
         public void UpdateDrone(int droneId, string model);
@@ -45,8 +50,22 @@ namespace IBL
         /// </summary>
         /// <returns></returns>
         public IEnumerable<CustomerToList> GetAllCustomers();
+        /// <summary>
+        /// returns a DroneToList
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         public DroneToList getDroneToList(int droneId);
+        /// <summary>
+        /// returns a drone according to the droneId
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <returns></returns>
         public Drone GetDrone(int droneId);
+        /// <summary>
+        /// returns a list of drones
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DroneToList> GetAllDrones();
         /// <summary>
         /// returning a ParcelAtCustomer

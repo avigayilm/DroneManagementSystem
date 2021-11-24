@@ -20,6 +20,7 @@ namespace DAL
             CheckDuplicateParcel(pack.Id);
             pack.Id = ++DataSource.Config.LastParcelNumber;
             DataSource.parcelList.Add(pack);
+            
         }
 
         /// <summary>

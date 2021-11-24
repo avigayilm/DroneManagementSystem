@@ -116,11 +116,7 @@ namespace BL
         }
 
 
-        /// <summary>
-        /// returns a drone according to the droneId
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+      
         public Drone GetDrone(int droneId)
         {
             DroneToList droneToList = getDroneToList(droneId);
@@ -136,11 +132,7 @@ namespace BL
 
         }
 
-        /// <summary>
-        /// returns a DroneToList
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <returns></returns>
+       
         public DroneToList getDroneToList(int droneId)
         {
             DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
