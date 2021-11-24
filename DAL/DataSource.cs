@@ -46,7 +46,7 @@ namespace DAL
                 int id;// checking if the random Id exists already
                 do
                 {
-                    id = i; //rand.Next(1000, 9999);
+                    id = rand.Next(1000, 9999);
                 }
                 while (dronesList.Exists(d => d.Id == id));
 
@@ -69,7 +69,7 @@ namespace DAL
                 string id,phone;// checking if the random Id exists
                 do
                 {
-                    id = "" + i;//$"0{rand.Next(100000000, 999999999)}";
+                    id = "" + $"0{rand.Next(100000000, 999999999)}";
                 }
                 while (customerList.Exists(d => d.Id == id));
                 do
@@ -146,7 +146,7 @@ namespace DAL
                 int id;// checking if the random Id exists already
                 do
                 {
-                    id = i;//rand.Next(1000, 9999);
+                    id = rand.Next(1000, 9999);
                 }
                 while (stationList.Exists(d => d.Id == id));
                 stationList.Add(new()

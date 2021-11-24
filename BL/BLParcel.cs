@@ -65,15 +65,18 @@ namespace BL
                         double toStat = StationDistanceFromCustomer(idal1.GetCustomer(pack.SenderId), idal1.SmallestDistanceStation(pack.SenderId));
                         double betweenCus = DistanceBetweenCustomers(idal1.GetCustomer(pack.SenderId), idal1.GetCustomer(pack.ReceiverId));//distance between sender to receiver
                         if (BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < drone.Battery)//enough battery to make the trip
+                        {
                             fittingPack = pack;//so far this is the most fitting pack for the drone.
-                        maxPri = (int)pack.Priority;
-                        maxW = (int)pack.Weight;
-                        minDis = droneDisFromPack;
+                            maxPri = (int)pack.Priority;
+                            maxW = (int)pack.Weight;
+                            minDis = droneDisFromPack;
+                        }
                     }
                 }
                 if (fittingPack != null) // if indeed a fitting package has been found
                 {
                     drone.Status = DroneStatuses.Delivery; // update drone list in BL
+                    drone.ParcelId = ((IDAL.DO.Parcel)fittingPack).Id;
                     idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId); // update parcel in IDAL
                 }
                 else
