@@ -69,10 +69,6 @@ namespace BL
                     }
                 }
             }
-            catch(BatteryIssueException ex)
-            {
-                throw new ConstructorIssueException("Problem in the constructor\n", ex);
-            }
 
         }
     }

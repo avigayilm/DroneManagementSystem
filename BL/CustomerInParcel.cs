@@ -14,10 +14,10 @@ namespace IBL
             public string Name { get; set; }
             public override string ToString()
             {
-                return  " "
-                + $"ID is: {Id}, \n"
-                + $"Name is: {Name}, \n";
-                
+                return " "
+                + $"ID is: {Id}\n"
+                + $"Name is: {Name}\n";
+
             }
         }
     }

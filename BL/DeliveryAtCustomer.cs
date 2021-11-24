@@ -17,10 +17,10 @@ namespace IBL
             public override string ToString()
             {
                 return " "
-                + $"ID is {Id}, \n"
-                + $"Priority is {Prioirty}, \n"
-                + $"Customer in Delivery {Sender}, \n"
-                + $"Customer in Delivery {Receiver}, \n";
+                + $"ID is {Id}\n"
+                + $"Priority is {Prioirty}\n"
+                + $"Customer in Delivery {Sender}\n"
+                + $"Customer in Delivery {Receiver}\n";
             }
 
         }

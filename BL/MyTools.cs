@@ -30,27 +30,27 @@ namespace BL
         //            if (value is ValueType || value is string)
         //                targetProp.SetValue(target, value);
         //        }
-                
-            //    else//
-            //    {
-            //        PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
-            //        foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class
-            //        { //isMatched = sProp.GetType().IsClass;
 
-            //            if (sProp.GetType().IsClass)//is a class
-            //            {
-            //                PropertyInfo propInf2 = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
-            //                if (propInf2 == null)//if not found in this class
-            //                    continue;
-            //                var value = propInf2.GetValue(sProp);//get the value from inner class insource
-            //                sProp.SetValue(target, value);
-            //            }
-            //        }
+        //    else//
+        //    {
+        //        PropertyInfo[] propertyInfos1 = source.GetType().GetProperties();
+        //        foreach (PropertyInfo sProp in propertyInfos1)//each propret thats a class
+        //        { //isMatched = sProp.GetType().IsClass;
 
-            //    }
-            //}
-            //return target;
-       // }
+        //            if (sProp.GetType().IsClass)//is a class
+        //            {
+        //                PropertyInfo propInf2 = sProp.GetType().GetProperty(targetProp.Name);//the wanted property within the inner class
+        //                if (propInf2 == null)//if not found in this class
+        //                    continue;
+        //                var value = propInf2.GetValue(sProp);//get the value from inner class insource
+        //                sProp.SetValue(target, value);
+        //            }
+        //        }
+
+        //    }
+        //}
+        //return target;
+        // }
 
         /// <summary>
         /// copies all fields from an idal object to a bl object in deep copy
@@ -81,7 +81,7 @@ namespace BL
                 //           CopyProperties(source, targetProp);
 
             }
-            
+
         }
         //else //doesnt exist as a outright field
         //{

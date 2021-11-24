@@ -11,8 +11,8 @@ namespace IBL
         public class ParcelToList
         {
             public int Id { get; set; }
-            public string Sender { get; set; }
-            public string Receiver { get; set; }
+            public string SenderId { get; set; }
+            public string ReceiverId { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
             public ParcelStatuses parcelStatus { get; set; }
@@ -22,8 +22,8 @@ namespace IBL
             {
                 return " "
                     + $"Parcel id: {Id}\n"
-                    + $"Parcel Sender:{Sender}\n"
-                    + $"Parcel Receiver:{Receiver}\n"
+                    + $"Parcel Sender:{SenderId}\n"
+                    + $"Parcel Receiver:{ReceiverId}\n"
                     + $"Parcel Weight:{Weight}\n "
                     + $"Parcel priority:{Priority}\n"
                     ;

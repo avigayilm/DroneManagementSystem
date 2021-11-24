@@ -19,14 +19,14 @@ namespace IBL
             public override string ToString()
             {
                 String result = " ";
-                result += $"ID is {Id}, \n";
-                result += $"Name is {Name}, \n";
-                result += $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}, \n";
-                result += $"Latitude is {Bonus.DecimalToSexagesimal(Loc.Latitude, 't')}, \n";
-                result += $"longitude is{Bonus.DecimalToSexagesimal(Loc.Longitude, 'n')}, \n";
+                result += $"ID is {Id}\n";
+                result += $"Name is {Name}\n";
+                result += $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}\n";
+                result += $"Latitude is {Bonus.DecimalToSexagesimal(Loc.Latitude, 't')}\n";
+                result += $"longitude is{Bonus.DecimalToSexagesimal(Loc.Longitude, 'n')}\n";
                 return result;
             }
         }
     }
-    
+
 }

@@ -36,7 +36,7 @@ namespace IBL
                 + $"Drone carrying is {Dr}, \n"
                 + $" The Parcel is scheduled for {Assigned},\n"
                 + $"The Parcel was picked up at{PickedUp},\n"
-                + $"The parcel was delivered at { Delivered},\n" ;
+                + $"The parcel was delivered at { Delivered},\n";
             }
         }
     }

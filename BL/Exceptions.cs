@@ -165,27 +165,6 @@ namespace IBL
             {
             }
         }
-
-        [Serializable]
-        public class ConstructorIssueException : Exception
-        {
-            public ConstructorIssueException() : base()
-            {
-            }
-
-            public ConstructorIssueException(string message) : base("Constructor Issue exception: " + message)
-            {
-            }
-
-            public ConstructorIssueException(string message, Exception innerException) : base(message, innerException)
-            {
-            }
-
-            protected ConstructorIssueException(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
-            }
-        }
-
         [Serializable]
         public class AssignIssueException : Exception
         {

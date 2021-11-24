@@ -21,13 +21,13 @@ namespace IBL
             public override string ToString()
             {
                 return " "
-                    + $"Drone id: {Id} \n"
-                    + $"Drone model: {Model} \n"
-                    + $"Drone Weight: {Weight} \n"
-                    + $"Drone battery level: {Battery} \n"
-                    + $"Drone status: {Status} \n"
-                    + $"Drone location: {Loc} \n"
-                    + $"Drone parcel being delivered id: {ParcelId} \n"
+                    + $"Drone id: {Id}\n"
+                    + $"Drone model: {Model}\n"
+                    + $"Drone Weight: {Weight}\n"
+                    + $"Drone battery level: {Battery}\n"
+                    + $"Drone status: {Status}\n"
+                    + $"Drone location: {Loc}\n"
+                    + $"Drone parcel being delivered id: {ParcelId}\n"
                     ;
             }
         }

@@ -23,7 +23,7 @@ namespace IBL
         }
         public enum ParcelStatuses
         {
-            Created, Assigned, PickedUp,Delivered
+            Created, Assigned, PickedUp, Delivered
         }
 
     }

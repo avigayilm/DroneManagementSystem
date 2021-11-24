@@ -34,17 +34,17 @@ namespace BL
                 newCustomer.CopyProperties(obj1);
                 customer = (IDAL.DO.Customer)obj1;
                 customer.Longitude = newCustomer.Loc.Longitude;
-                customer.Latitude=newCustomer.Loc.Latitude;
+                customer.Latitude = newCustomer.Loc.Latitude;
                 idal1.AddCustomer(customer);
             }
             catch (IDAL.DO.DuplicateIdException ex)
             {
-                throw new AddingException("Couldn't Add the Customer.\n,", ex);
+                throw new AddingException("Couldn't Add the Customer.", ex);
             }
         }
 
 
-       
+
         public void UpdateCustomer(string customerId, string name, string phone)
         {
             try
@@ -56,7 +56,7 @@ namespace BL
                 throw new UpdateIssueException("Couldn't Update the Customer.\n,", ex);
             }
         }
-        
+
         public Customer GetCustomer(string customerId)
         {
             try
@@ -64,7 +64,7 @@ namespace BL
                 Customer customer = new();
                 IDAL.DO.Customer customerDal = idal1.GetCustomer(customerId);
                 customerDal.CopyProperties(customer);
-                customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude};
+                customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
                 List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
                 List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUp != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
@@ -73,10 +73,10 @@ namespace BL
             }
             catch (IDAL.DO.MissingIdException ex)
             {
-                throw new RetrievalException("Couldn't get the Customer.\n,", ex);
+                throw new RetrievalException("Couldn't get the Customer.", ex);
             }
         }
-       
+
         public CustomerInParcel GetCustomerInParcel(string customerId)
         {
             CustomerInParcel customerInParcelTemp = new();
