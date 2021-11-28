@@ -32,7 +32,23 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Weight == StatusSelector.SelectedIndex);
+            DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Status == StatusSelector.SelectedIndex);
+        }
+
+        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DronesListView.ItemsSource = bl.GetAllDrones(d => (int)d.Weight == WeightSelector.SelectedIndex);
+        }
+        private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Controls.ListView list = (System.Windows.Controls.ListView)sender;
+            DroneToList selectedObject = (DroneToList)list.SelectedItem;
+            new DroneWindow(bl, selectedObject).Show();
+        }
+
+        private void AddDroneButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
