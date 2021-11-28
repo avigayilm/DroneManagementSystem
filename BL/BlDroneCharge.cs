@@ -25,7 +25,7 @@ namespace BL
                     double distance = Bonus.Haversine(tempDron.Loc.Longitude, tempDron.Loc.Latitude, tempStation.Longitude, tempStation.Latitude);
                     tempDron.Loc.Longitude = tempStation.Longitude;
                     tempDron.Loc.Latitude = tempStation.Latitude;
-                    double batteryusage = BatteryUsage(distance, 0);// when sending the drone to charge the drone is empty
+                    int batteryusage = BatteryUsage(distance, 0);// when sending the drone to charge the drone is empty
                     tempDron.Battery -= batteryusage;
                     if (tempDron.Battery < 0)
                         tempDron.Battery = 0;
