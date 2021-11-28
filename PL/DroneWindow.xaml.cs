@@ -35,7 +35,7 @@ namespace PL
         public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
         {
             InitializeComponent();
-            bl = IblObj;
+            bl = ibl;
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
