@@ -215,6 +215,7 @@ namespace ConsoleUI_BL
                                             int.TryParse(Console.ReadLine(), out int droneId);
                                             ibl1.CollectingParcelByDrone(droneId);
                                             break;
+
                                         }
                                     case UpdateOptions.Exit:
                                         {

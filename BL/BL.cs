@@ -48,13 +48,11 @@ namespace BL
                     dr.Status = (DroneStatuses)rand.Next(1);
                     if (dr.Status == DroneStatuses.Available)
                     {
-                        //List<IDAL.DO.Customer> cus = idal1.CustomersDeliverdTo();
-                        //List<IDAL.DO.Parcel> tempList = idal1.GetAllParcels(p => p.Delivered != null).ToList();
                         List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
                         IDAL.DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
                         dr.Loc = new() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
-                        // int minBat = BatteryUsage(FindClosestPossibleStation1(dr).Item2, 0
-                        int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);//calculates battery usage of flying to closest station to drone
+                        // calculates battery usage of flying to closest station to drone
+                        int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);
                         dr.Battery = rand.Next(minBat, 100);
                     }
                     else//it is in maintenance
