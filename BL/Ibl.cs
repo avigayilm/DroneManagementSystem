@@ -108,7 +108,7 @@ namespace IBL
         /// returns a list of drones
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<DroneToList> GetAllDrones();
+        public IEnumerable<DroneToList> GetAllDrones(Predicate<DroneToList> predicate = null);
         /// <summary>
         /// returning a ParcelAtCustomer
         /// </summary>
