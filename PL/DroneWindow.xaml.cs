@@ -19,9 +19,35 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public DroneWindow()
+        IBL.Ibl bl;
+        private int id;
+        private int StationId;
+        private IBL.BO.WeightCategories weight;
+        public DroneWindow(IBL.Ibl IblObj)// to add a drone
+        {
+          InitializeComponent();
+          bl = IblObj;
+          
+        }
+
+        public DroneWindow(IBL.Ibl IblObj, IBL.BO.Drone dr)// to update a drone
         {
             InitializeComponent();
+            bl = IblObj;
+        }
+
+        private void AddDroneButton_Click(object sender, RoutedEventArgs e)
+        {
+            id =(int.Parse( DroneId.Text));
+            StationId = (int.Parse(stationId.Text));
+            weight = (IBL.BO.WeightCategories)int.Parse(InputWeightCategory.Text);
+            DroneLabel.Content = $"adding drone{id.ToString()} to the list";
+            IBL.BO.Drone droneTemp = new()
+            {
+                Id = id,
+                Weight = weight
+            };
+            bl.AddDrone(droneTemp, StationId);
         }
     }
 }

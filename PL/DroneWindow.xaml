@@ -7,6 +7,44 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel>
+            <StackPanel>
+                <Label 
+                    x:Name="AddDroneLabel" 
+                    Content="Adding a Drone"  
+                    FontWeight="Bold"/>
+                <TextBlock 
+                    Text="Enter DroneId"/>
+                <TextBox
+                    Margin="10"
+                    x:Name="DroneId" 
+                    Width="200px"
+                    HorizontalAlignment="left"/>
+                <TextBlock 
+                    Text="Enter WeightCategory"/>
+                <TextBox
+                    Margin="10"
+                    x:Name="InputWeightCategory" 
+                    Width="200px"
+                    HorizontalAlignment="left"/>
+                <TextBlock 
+                    Text="Enter StationId for first charging"/>
+                <TextBox
+                    Margin="10"
+                    x:Name="stationId" 
+                    Width="200px"
+                    HorizontalAlignment="left"/>
+                <Button 
+                    Margin="10"
+                    x:Name="AddDroneButton"
+                    Content="Add Drone"
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    Click="AddDroneButton_Click"/>
+                <Label 
+                    x:Name="DroneLabel"   
+                    FontWeight="Bold"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
