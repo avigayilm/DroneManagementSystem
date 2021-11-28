@@ -19,8 +19,9 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+            <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"/>
             <TextBox Grid.Column="0"/>
+            <ComboBox x:Name="WeightSelector" Grid.ColumnSpan="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </Grid>
         <ListView x:Name="DronesListView"
                   Grid.Row="1">
