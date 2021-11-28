@@ -12,7 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-       
+
         public void AddDrone(Drone newDrone, int stationId)
         {
             try
@@ -21,8 +21,8 @@ namespace BL
                     throw new InvalidInputException("invalid Id input");
                 if (newDrone.Weight != WeightCategories.Heavy && newDrone.Weight != WeightCategories.Light && newDrone.Weight != WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory");
-                
-                int index=idal1.CheckExistingStation(stationId);
+
+                int index = idal1.CheckExistingStation(stationId);
                 Station tempSt = GetStation(stationId);
                 newDrone.Battery = rand.Next(20, 40);
                 newDrone.Status = DroneStatuses.Maintenance;
@@ -101,20 +101,20 @@ namespace BL
 
         public Drone GetDrone(int droneId)
         {
-                DroneToList droneToList = getDroneToList(droneId);
-                Drone drone = new();
-                droneToList.CopyProperties(drone);
-                drone.Loc = new Location();
-                droneToList.Loc.CopyProperties(drone.Loc);
+            DroneToList droneToList = getDroneToList(droneId);
+            Drone drone = new();
+            droneToList.CopyProperties(drone);
+            drone.Loc = new Location();
+            droneToList.Loc.CopyProperties(drone.Loc);
             //drone.Loc = new() { Longitude = droneToList.Loc.Longitude, Latitude = droneToList.Loc.Latitude };
             if (droneToList.ParcelId == 0)// if the drone doesn't hold a parcel
-                    drone.ParcelInTrans = null;
-                else
-                    drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
-                return drone;
-           
+                drone.ParcelInTrans = null;
+            else
+                drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
+            return drone;
+
         }
-       
+
         public DroneToList getDroneToList(int droneId)
         {
             DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
@@ -123,9 +123,10 @@ namespace BL
             return tempDron;
         }
 
-        public IEnumerable<DroneToList> GetAllDrones()
+        public IEnumerable<DroneToList> GetAllDrones(Predicate<DroneToList> predicate = null)
         {
-            return droneBL;
+            return droneBL.FindAll(d => predicate == null ? true : predicate(d));
+
         }
 
 
