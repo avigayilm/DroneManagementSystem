@@ -39,15 +39,6 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
         }
-
-
-
-
-
-    
-
-        
-
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Status == StatusSelector.SelectedIndex);

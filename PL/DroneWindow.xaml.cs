@@ -29,7 +29,12 @@ namespace PL
         {
           InitializeComponent();
           bl = IblObj;
-          
+          Mtb.IsEnabled = false;
+
+          //DronesListView.ItemsSource = bl.GetAllDrones();
+          //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+          //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
         }
 
         public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
