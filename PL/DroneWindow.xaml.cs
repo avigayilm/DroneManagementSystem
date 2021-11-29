@@ -25,6 +25,7 @@ namespace PL
         private int id;
         private int StationId;
         private IBL.BO.WeightCategories weight;
+        //private IBL.BO.DroneToList drone = new()
         public DroneWindow(IBL.Ibl IblObj)// to add a drone
         {
           InitializeComponent();
@@ -45,9 +46,10 @@ namespace PL
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            id =(int.Parse( DroneId.Text));
-            StationId = (int.Parse(stationId.Text));
-            weight = (IBL.BO.WeightCategories)int.Parse(InputWeightCategory.Text);
+            id =(int.Parse( idTx.Text));
+            StationId = (int.Parse(sTx.Text));
+            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
             DroneLabel.Content = $"adding drone{id.ToString()} to the list";
             IBL.BO.Drone droneTemp = new()
             {
