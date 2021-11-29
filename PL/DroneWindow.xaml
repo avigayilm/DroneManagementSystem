@@ -7,7 +7,17 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style x:Key ="TextBlockStyle" TargetType="TextBlock">
+
+        <Style x:Key="HiddenStyleTB" TargetType="TextBlock" >
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Foreground" Value="Gray">
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key ="TextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource HiddenStyleTB}">
             <Setter Property="TextAlignment" Value="Justify"/>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
@@ -18,6 +28,7 @@
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
             <!--<Setter Property="TextDecorations" Value="Underline"></Setter>-->
         </Style>
+        
 
         <!--<Style x:Key="HiddenStyle" TargetType="TextBox">
             <Style.Triggers>
@@ -35,15 +46,7 @@
             </Style.Triggers>
         </Style>-->
 
-        <Style x:Key="HiddenStyle" TargetType="TextBlock">
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Foreground" Value="Gray">
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
+       
         <Style x:Key="brush1" TargetType="TextBox"   BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="Background">
                 <Setter.Value>
@@ -120,7 +123,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Label  x:Name="DroneLabel" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+        <Label  x:Name="DroneLabel" Content="hello" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                       
                     FontWeight="Bold"/>
 
