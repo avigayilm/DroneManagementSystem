@@ -14,7 +14,7 @@
             <Setter Property="Padding" Value="0, 10, 0 , 0"></Setter>
         </Style>
 
-        <Style x:Key="textboxStyle" TargetType="TextBox" BasedOn="{StaticResource TextBlockStyle}">
+        <Style x:Key="textboxStyle" TargetType="TextBox" >
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
             <!--<Setter Property="TextDecorations" Value="Underline"></Setter>-->
         </Style>
@@ -95,15 +95,34 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Name="Idtb" Text="DroneId"
+        <Label  x:Name="DroneLabel" 
+                      
+                    FontWeight="Bold"/>
+
+        <TextBlock Name="idTb" Text="DroneId"
                    Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBlockStyle}"/>
-        <TextBlock Name="Wtb" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+        <TextBlock Name="wTb" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="WeightCategory"/>
-        <TextBlock Name="Stb" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+        <TextBlock Name="sTb" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="StationId first charging"/>
-        <TextBlock Name="Mtb" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+        <TextBlock Name="mTb" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="Model"/>
-        <TextBlock Name="" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
-                    Text="StationId first charging"/>
+        <TextBlock Name="statTb" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Drone status"/>
+        <TextBlock Name="dTb" Grid.Row="6" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Delivery"/>
+        <TextBlock Name="lnTb" Grid.Row="7" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Longitude"/>
+        <TextBlock Name="ltTb" Grid.Row="8" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Latitude"/>
+        <TextBox Name="idTx" Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" />
+        <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2"/>
+        <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        
     </Grid>
 </Window>
