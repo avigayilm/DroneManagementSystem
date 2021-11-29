@@ -8,7 +8,23 @@
         Title="DroneWindow" Height="450" Width="800">
     <Window.Resources>
 
-        <Style x:Key="HiddenStyleTB" TargetType="TextBlock" >
+        <Style x:Key="HiddenStyleTBX" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TextBox">
+                                <Border Background="LightGray" BorderBrush="Gray" BorderThickness="1">
+                                    <TextBlock Text="{TemplateBinding Text}" Padding="2" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HiddenStyleTB" TargetType="TextBlock">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="false">
                     <Setter Property="Foreground" Value="Gray">
@@ -16,8 +32,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style x:Key ="TextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource HiddenStyleTB}">
+        
+        <Style x:Key ="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Justify"/>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>

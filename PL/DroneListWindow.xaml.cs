@@ -22,7 +22,7 @@ namespace PL
 
     public enum WeightCategories
     {
-        All, Light = 0, Medium, Heavy
+        All, Light, Medium, Heavy
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace PL
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl);
+            new DroneWindow(bl).Show();
         }
 
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

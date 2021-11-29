@@ -31,6 +31,16 @@ namespace PL
             InitializeComponent();
             bl = IblObj;
             mTb.IsEnabled = false;
+            ltTb.IsEnabled = false;
+            lnTb.IsEnabled = false;
+            dTb.IsEnabled = false;
+            statTb.IsEnabled = false;
+            mTx.IsEnabled = false;
+            statCb.IsEnabled = false;
+            dTx.IsEnabled = false;
+            lnTx.IsEnabled = false;
+            ltTx.IsEnabled = false;
+            mTb.IsEnabled = false;
             //DronesListView.ItemsSource = bl.GetAllDrones();
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -41,6 +51,16 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
+            mTb.IsEnabled = false;
+            ltTb.IsEnabled = false;
+            lnTb.IsEnabled = false;
+            dTb.IsEnabled = false;
+            statTb.IsEnabled = false;
+            mTx.IsEnabled = false;
+            statCb.IsEnabled = false;
+            dTx.IsEnabled = false;
+            lnTx.IsEnabled = false;
+            ltTx.IsEnabled = false;
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
