@@ -89,7 +89,7 @@ namespace PL
         }
         private void EnableSubmit()
         {
-            if(idTx.Text!=string.Empty)
+            if (idTx.Text != string.Empty)
         }
     }
 }
