@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Name="FirstButton" Content="Button"  HorizontalAlignment="Left" Margin="178,75,0,0" VerticalAlignment="Top" Click="ShowDronesButton_Click"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            
+        <Button Name="FirstButton" Content="Show drone list" FontSize="22" HorizontalAlignment="Stretch" Margin="80" VerticalAlignment="Stretch" Click="ShowDronesButton_Click"/>
     </Grid>
 </Window>
