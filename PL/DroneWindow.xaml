@@ -6,8 +6,36 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel>
+    <Window.Resources>
+        <Style x:Key ="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Justify"/>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="Padding" Value="0, 10, 0 , 0"></Setter>
+        </Style>
+
+        <Style x:Key="textboxStyle" TargetType="TextBox" BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <!--<Setter Property="TextDecorations" Value="Underline"></Setter>-->
+        </Style>
+
+        <Style x:Key="brush1" TargetType="TextBox"   BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0.3" Color="Blue"/>
+                        <GradientStop Offset="0.7" Color="Red"></GradientStop>
+                        <GradientStop Offset=" 0.1" Color="Green"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    
+    
+    <Grid ShowGridLines="True">
+        <!--<StackPanel>
             <StackPanel>
                 <Label 
                     x:Name="AddDroneLabel" 
@@ -16,22 +44,23 @@
                 <TextBlock 
                     Text="Enter DroneId"/>
                 <TextBox
+                   
                     Margin="10"
-                    x:Name="DroneId" 
+                    x:Name="Idtbx" 
                     Width="200px"
                     HorizontalAlignment="left"/>
                 <TextBlock 
                     Text="Enter WeightCategory"/>
                 <TextBox
                     Margin="10"
-                    x:Name="InputWeightCategory" 
+                    x:Name="Weighttbx" 
                     Width="200px"
                     HorizontalAlignment="left"/>
                 <TextBlock 
                     Text="Enter StationId for first charging"/>
                 <TextBox
                     Margin="10"
-                    x:Name="stationId" 
+                    x:Name="Stationtbx" 
                     Width="200px"
                     HorizontalAlignment="left"/>
                 <Button 
@@ -45,6 +74,36 @@
                     x:Name="DroneLabel"   
                     FontWeight="Bold"/>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="Idtb" Text="DroneId"
+                   Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Name="Wtb" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="WeightCategory"/>
+        <TextBlock Name="Stb" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="StationId first charging"/>
+        <TextBlock Name="Mtb" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Model"/>
+        <TextBlock Name="" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="StationId first charging"/>
     </Grid>
 </Window>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneListWindow" Height="640" Width="800">
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.RowDefinitions >
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -22,7 +22,7 @@ VerticalAlignment="Stretch" Width="auto">
             <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"/>
             <TextBox Grid.Column="0"/>
             <ComboBox x:Name="WeightSelector" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="WeightSelector_SelectionChanged" />
-            <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Click"/>
+            <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click"/>
         </Grid>
         <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick"
                   Grid.Row="1">
@@ -32,7 +32,7 @@ VerticalAlignment="Stretch" Width="auto">
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>
+        <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
 
     </Grid>
 </Window>
