@@ -89,7 +89,8 @@ namespace PL
         }
         private void EnableSubmit()
         {
-            if (idTx.Text != string.Empty)
+            if (idTx.Text != string.Empty && sTx.Text != string.Empty && wCb.SelectedIndex > 1)
+                submit.IsEnabled = true;
         }
     }
 }
