@@ -95,7 +95,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Label  x:Name="DroneLabel" 
+        <Label  x:Name="DroneLabel" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                       
                     FontWeight="Bold"/>
 
@@ -116,7 +116,7 @@
         <TextBlock Name="ltTb" Grid.Row="8" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
         <TextBox Name="idTx" Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" />
+        <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" />
         <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2"/>
