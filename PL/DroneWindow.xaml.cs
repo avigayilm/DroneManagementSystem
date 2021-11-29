@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
+using IBL.BO;
 
 namespace PL
 {
@@ -30,10 +32,10 @@ namespace PL
           
         }
 
-        public DroneWindow(IBL.Ibl IblObj, IBL.BO.Drone dr)// to update a drone
+        public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
         {
             InitializeComponent();
-            bl = IblObj;
+            bl = ibl;
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
