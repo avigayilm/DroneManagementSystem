@@ -11,7 +11,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-            
-        <Button Name="FirstButton" Content="Show drone list" FontSize="22" HorizontalAlignment="Stretch" Margin="80" VerticalAlignment="Stretch" Click="ShowDronesButton_Click"/>
+
+        <Button Name="FirstButton" 
+                Content="Show drone list" 
+                FontSize="22" 
+                HorizontalAlignment="Stretch" 
+                Margin="80" 
+                VerticalAlignment="Stretch" 
+                Click="ShowDronesButton_Click">
+            <Button.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </Button.Resources>
+        </Button>
     </Grid>
 </Window>

@@ -167,8 +167,17 @@
         <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <Button Name="submit" IsEnabled="False" Grid.Row="9" Grid.Column="1" Click="submit_Click" ></Button>
-        
-        
+        <Button Name="submit" 
+                IsEnabled="False" 
+                Grid.Row="9" 
+                Grid.Column="1" 
+                Click="submit_Click" 
+                Margin="99,10,98,10" Grid.ColumnSpan="2">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

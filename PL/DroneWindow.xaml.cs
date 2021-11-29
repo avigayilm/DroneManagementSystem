@@ -26,6 +26,7 @@ namespace PL
         private int StationId;
         private IBL.BO.WeightCategories weight;
         private IBL.BO.Drone droneTemp ;
+        string choice;
         public DroneWindow(IBL.Ibl IblObj)// to add a drone
         {
             InitializeComponent();
@@ -41,6 +42,7 @@ namespace PL
             lnTx.IsEnabled = false;
             ltTx.IsEnabled = false;
             mTb.IsEnabled = false;
+            submit.Content = "Add Drone";
             //DronesListView.ItemsSource = bl.GetAllDrones();
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
@@ -51,19 +53,10 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
-            mTb.IsEnabled = false;
-            ltTb.IsEnabled = false;
-            lnTb.IsEnabled = false;
-            dTb.IsEnabled = false;
-            statTb.IsEnabled = false;
-            mTx.IsEnabled = false;
-            statCb.IsEnabled = false;
-            dTx.IsEnabled = false;
-            lnTx.IsEnabled = false;
-            ltTx.IsEnabled = false;
+            submit.Content = "Update Drone";
         }
 
-        private void AddDroneButton_Click(object sender, RoutedEventArgs e)
+        private void AddDrone()
         {
             id = (int.Parse(idTx.Text));
             StationId = (int.Parse(sTx.Text));
@@ -80,7 +73,8 @@ namespace PL
 
         private void submit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(droneTemp.ToString());
+           AddDrone();
+           MessageBox.Show(droneTemp.ToString());
         }
 
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
