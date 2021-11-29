@@ -51,6 +51,8 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
+            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
@@ -67,7 +69,7 @@ namespace PL
         {
             id = (int.Parse(idTx.Text));
             StationId = (int.Parse(sTx.Text));
-            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            
             weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
             DroneLabel.Content = $"adding drone{id.ToString()} to the list";
             droneTemp = new()
@@ -91,6 +93,21 @@ namespace PL
         {
             if (idTx.Text != string.Empty && sTx.Text != string.Empty && wCb.SelectedIndex > 1)
                 submit.IsEnabled = true;
+        }
+
+        private void idTx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
+
+        private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
+
+        private void sTx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableSubmit();
         }
     }
 }
