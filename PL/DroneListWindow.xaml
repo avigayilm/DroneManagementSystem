@@ -20,7 +20,7 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"/>
-            <TextBox Grid.Column="0"/>
+            <TextBox x:Name="textTBD" HorizontalAlignment="left" Margin="35,10,0,0" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0"/>
             <ComboBox x:Name="WeightSelector" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="WeightSelector_SelectionChanged" />
             <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click"/>
         </Grid>
