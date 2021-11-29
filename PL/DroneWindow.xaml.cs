@@ -28,11 +28,13 @@ namespace PL
         //private IBL.BO.DroneToList drone = new()
         public DroneWindow(IBL.Ibl IblObj)// to add a drone
         {
-          InitializeComponent();
-          bl = IblObj;
-            
-            
-          
+            InitializeComponent();
+            bl = IblObj;
+            mTb.IsEnabled = false;
+            //DronesListView.ItemsSource = bl.GetAllDrones();
+            //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
         }
 
         public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
@@ -43,7 +45,7 @@ namespace PL
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            id =(int.Parse( idTx.Text));
+            id = (int.Parse(idTx.Text));
             StationId = (int.Parse(sTx.Text));
             wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
