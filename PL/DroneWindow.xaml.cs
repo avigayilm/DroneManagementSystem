@@ -59,23 +59,35 @@ namespace PL
 
         private void AddDrone()
         {
-            id = (int.Parse(idTx.Text));
-            StationId = (int.Parse(sTx.Text));
             
-            weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
-            DroneLabel.Content = $"adding drone{id.ToString()} to the list";
-            droneTemp = new()
-            {
-                Id = id,
-                Weight = weight
-            };
-            bl.AddDrone(droneTemp, StationId);
+                id = (int.Parse(idTx.Text));
+                StationId = (int.Parse(sTx.Text));
+
+                weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
+                DroneLabel.Content = $"adding drone{id.ToString()} to the list";
+                droneTemp = new()
+                {
+                    Id = id,
+                    Weight = weight
+                };
+                bl.AddDrone(droneTemp, StationId);
+            
+            
         }
 
         private void submit_Click(object sender, RoutedEventArgs e)
         {
-           AddDrone();
-           MessageBox.Show(droneTemp.ToString());
+            try
+            {
+                AddDrone();
+                MessageBox.Show(droneTemp.ToString());
+            }
+            catch (AddingException ex)
+            {
+                MessageBox.Show(ex.Message);
+                new DroneWindow(bl).Show();
+                this.Close();
+            }
         }
 
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
@@ -106,6 +118,11 @@ namespace PL
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void statCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
