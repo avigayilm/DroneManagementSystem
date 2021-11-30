@@ -36,6 +36,8 @@ namespace PL
         {
             InitializeComponent();
             bl = IblObj;
+            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
@@ -51,8 +53,7 @@ namespace PL
             ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
             choice = "add";
             //DronesListView.ItemsSource = bl.GetAllDrones();
-            //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+           
 
         }
 
@@ -160,8 +161,8 @@ namespace PL
         }
         private void EnableSubmit()
         {
-            if (idTx.Text != string.Empty && sTx.Text != string.Empty && wCb.SelectedIndex > 1)
-                submit.IsEnabled = true;
+            if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
+              //  submit.IsEnabled = true;
         }
 
         private void idTx_TextChanged(object sender, TextChangedEventArgs e)

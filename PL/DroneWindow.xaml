@@ -32,7 +32,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key ="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Justify"/>
             <Setter Property="FontSize" Value="14"></Setter>
@@ -44,7 +44,7 @@
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
             <!--<Setter Property="TextDecorations" Value="Underline"></Setter>-->
         </Style>
-        
+
 
         <Style x:Key="HiddenStyle" TargetType="TextBox">
             <Style.Triggers>
@@ -62,7 +62,7 @@
             </Style.Triggers>
         </Style>
 
-       
+
         <Style x:Key="brush1" TargetType="TextBox"   BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="Background">
                 <Setter.Value>
@@ -74,52 +74,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="ButtonEnable" TargetType="Button">
+            <Style.Triggers>
+                
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=idTx, Path=Text}" Value=""></Condition>
+                        <Condition Binding="{Binding ElementName=sTx, Path=Text}" Value=""></Condition>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                    </MultiDataTrigger.Setters>
+                     </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+
+     
     </Window.Resources>
 
 
-
-    <Grid ShowGridLines="True">
-        <!--<StackPanel>
-            <StackPanel>
-                <Label 
-                    x:Name="AddDroneLabel" 
-                    Content="Adding a Drone"  
-                    FontWeight="Bold"/>
-                <TextBlock 
-                    Text="Enter DroneId"/>
-                <TextBox
-                   
-                    Margin="10"
-                    x:Name="Idtbx" 
-                    Width="200px"
-                    HorizontalAlignment="left"/>
-                <TextBlock 
-                    Text="Enter WeightCategory"/>
-                <TextBox
-                    Margin="10"
-                    x:Name="Weighttbx" 
-                    Width="200px"
-                    HorizontalAlignment="left"/>
-                <TextBlock 
-                    Text="Enter StationId for first charging"/>
-                <TextBox
-                    Margin="10"
-                    x:Name="Stationtbx" 
-                    Width="200px"
-                    HorizontalAlignment="left"/>
-                <Button 
-                    Margin="10"
-                    x:Name="AddDroneButton"
-                    Content="Add Drone"
-                    Width="100"
-                    HorizontalAlignment="Left"
-                    Click="AddDroneButton_Click"/>
-                <Label 
-                    x:Name="DroneLabel"   
-                    FontWeight="Bold"/>
-            </StackPanel>
-        </StackPanel>-->
-
+    <Grid ShowGridLines="True" Visibility="Hidden">
+      
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
@@ -171,17 +147,29 @@
         <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
         <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
         <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
-        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2"/>
+        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" />
         <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <ComboBox Name="ComboUpdateOption" Grid.Row="2" Grid.Column="3" SelectionChanged="UpdateOption_SelectionChanged"/>
         <Button Name="submit" 
-                IsEnabled="False" 
                 Grid.Row="9" 
                 Grid.Column="1" 
                 Click="submit_Click" 
-                Margin="99,10,98,10" Grid.ColumnSpan="2">
+                Margin="9,10,10,10"
+                Style="{StaticResource ButtonEnable}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Name="cancel" 
+                 Content="Cancel"
+                IsCancel="True"
+                Grid.Row="9" 
+                Grid.Column="2" 
+                Margin="9,10,10,10" Click="cancel_Click" >
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
