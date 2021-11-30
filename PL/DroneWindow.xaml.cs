@@ -98,7 +98,10 @@ namespace PL
             {
                 UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                 if (choice == "add")
+                {
                     AddDrone();
+                    MessageBox.Show(droneTemp.ToString());
+                }
                 if (choice == "update")
                 {
                     switch (inputedOption)
@@ -138,9 +141,14 @@ namespace PL
                 }
                 MessageBox.Show(droneTemp.ToString());
             }
-            catch(AddingException ex)
+            catch (AddingException ex)
             {
-                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message);
+                new DroneWindow(bl).Show();
+                this.Close();
+            
+             }
+             //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         //switch (messageBoxResult)       
         //        {
         //            case MessageBoxResult.None:
@@ -157,7 +165,7 @@ namespace PL
         //            default:
         //                break;
         //        }
-            }
+            
         }
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
         {

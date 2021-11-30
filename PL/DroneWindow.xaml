@@ -93,9 +93,7 @@
      
     </Window.Resources>
 
-
-    <Grid ShowGridLines="True" >
-      
+    <!--<Grid x:Name="addGrid" ShowGridLines="True" Visibility="Hidden">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
@@ -115,7 +113,85 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+
         <Label  x:Name="DroneLabel" Content="hello" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                      
+                    FontWeight="Bold"/>
+
+        <TextBlock Name="idTb" Text="DroneId"
+                   Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Name="wTb" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="WeightCategory"/>
+        <TextBlock Name="sTb" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="StationId first charging"/>
+        <TextBlock Name="mTb" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Model"/>
+        <TextBlock Name="statTb" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Drone status"/>
+        <TextBlock Name="dTb" Grid.Row="6" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Delivery"/>
+        <TextBlock Name="lnTb" Grid.Row="7" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Longitude"/>
+        <TextBlock Name="ltTb" Grid.Row="8" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
+                    Text="Latitude"/>
+        <TextBox Name="idTx" Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
+        <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" SelectedIndex="1"  HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
+        <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
+        <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
+        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" SelectedIndex="1" SelectionChanged="statCb_SelectionChanged"/>
+        <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <Button Name="sumbit"  
+                Grid.Row="9" 
+                Grid.Column="1" 
+                Click="submit_Click" 
+                Margin="9,10,10,10"
+                Style="{StaticResource ButtonEnable}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Name="cancel" 
+                 Content="Cancel"
+                IsCancel="True"
+                Grid.Row="9" 
+                Grid.Column="2" 
+                Margin="9,10,10,10" Click="cancel_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>-->
+
+    <Grid ShowGridLines="True" Visibility="Visible">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+    
+
+    <Label  x:Name="DroneLabel" Content="hello" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                       
                     FontWeight="Bold"/>
 
@@ -147,7 +223,7 @@
         <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
         <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
         <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
-        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" />
+        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" SelectedIndex="1" SelectionChanged="statCb_SelectionChanged"/>
         <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
