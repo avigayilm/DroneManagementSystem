@@ -31,6 +31,8 @@ namespace PL
         {
             InitializeComponent();
             bl = IblObj;
+            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
@@ -44,8 +46,7 @@ namespace PL
             mTb.IsEnabled = false;
             submit.Content = "Add Drone";
             //DronesListView.ItemsSource = bl.GetAllDrones();
-            //StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            //WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+           
 
         }
 
@@ -83,8 +84,8 @@ namespace PL
         }
         private void EnableSubmit()
         {
-            if (idTx.Text != string.Empty && sTx.Text != string.Empty && wCb.SelectedIndex > 1)
-                submit.IsEnabled = true;
+            if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
+              //  submit.IsEnabled = true;
         }
 
         private void idTx_TextChanged(object sender, TextChangedEventArgs e)
@@ -100,6 +101,11 @@ namespace PL
         private void sTx_TextChanged(object sender, TextChangedEventArgs e)
         {
             EnableSubmit();
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
