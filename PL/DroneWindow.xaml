@@ -90,7 +90,19 @@
             </Style.Triggers>
         </Style>
 
-     
+        <Style x:Key="UpdateEnable" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedIndex, ElementName=ComboUpdateOption}" Value="-1" >
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+                <!--<Condition Binding="{Binding ElementName=sTx, Path=Text}" Value=""></Condition>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="IsEnabled" Value="False"></Setter>
+                </MultiDataTrigger.Setters>-->
+            </Style.Triggers>
+        </Style>
+
+
     </Window.Resources>
 
     <!--<Grid x:Name="addGrid" ShowGridLines="True" Visibility="Hidden">

@@ -78,11 +78,14 @@ namespace BL
                     if (fittingPack != null) // if indeed a fitting package has been found
                     {
                         drone.Status = DroneStatuses.Delivery; // update drone list in BL
+                        drone.ParcelId = ((IDAL.DO.Parcel)fittingPack).Id;
                         idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId); // update parcel in IDAL
                     }
                     else
                         throw new BatteryIssueException("Drone hasn't got enough battery to carry any parcel");
                 }
+                else
+                    throw new UpdateIssueException("Couldn't assign the parcel");
             }
             catch (IDAL.DO.MissingIdException ex)
             {

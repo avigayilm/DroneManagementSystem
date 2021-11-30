@@ -22,7 +22,7 @@ namespace PL
 
     public enum UpdateOptions
     {
-        updateModel,SendingToCharge, ReleaseFromCharge,Delivery,CollectingAParcel,DeliveringAParcel
+        updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
     public partial class DroneWindow : Window
     {
@@ -117,7 +117,7 @@ namespace PL
                                 bl.ReleasingDroneFromCharge(droneTemp.Id, double.Parse(addMinutestxt.Text));
                                 break;
                             }
-                        case UpdateOptions.Delivery:
+                        case UpdateOptions.Assign:
                             {
                                 bl.AssignParcelToDrone(droneTemp.Id);
                                 break;
@@ -144,10 +144,15 @@ namespace PL
             catch (AddingException ex)
             {
                 MessageBox.Show(ex.Message);
-                new DroneWindow(bl).Show();
+                new DroneListWindow(bl).Show();
                 this.Close();
-            
              }
+            catch(UpdateIssueException ex)
+            {
+                MessageBox.Show(ex.Message);
+                new DroneListWindow(bl).Show();
+                this.Close();
+            }
              //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         //switch (messageBoxResult)       
         //        {
