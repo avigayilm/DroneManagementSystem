@@ -30,7 +30,7 @@ namespace PL
         internal int id;
         private int StationId;
         private IBL.BO.WeightCategories weight;
-        private IBL.BO.Drone droneTemp ;
+        private IBL.BO.DroneToList droneTemp ;
         string choice;
         public DroneWindow(IBL.Ibl IblObj)// to add a drone
         {
@@ -59,10 +59,14 @@ namespace PL
 
         public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
         {
+            droneTemp = dr;
             InitializeComponent();
+            EnableAllKeys();
             bl = ibl;
+            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             idTx.Text = (dr.Id).ToString();
-            wCb.SelectedIndex = (int)dr.Weight;
+            wCb.SelectedIndex= (int)dr.Weight;
             statCb.SelectedIndex = (int)dr.Status;
             dTx.Text = (dr.ParcelId).ToString();
             lnTx.Text = (dr.Loc.Longitude).ToString();
@@ -80,12 +84,12 @@ namespace PL
             
             weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
             DroneLabel.Content = $"adding drone{id.ToString()} to the list";
-            droneTemp = new()
+            Drone dr = new()
             {
                 Id = id,
                 Weight = weight
             };
-            bl.AddDrone(droneTemp, StationId);
+            bl.AddDrone(dr, StationId);
         }
 
         private void submit_Click(object sender, RoutedEventArgs e)
@@ -102,32 +106,32 @@ namespace PL
                         case UpdateOptions.SendingToCharge:
                             {
 
-                                bl.SendingDroneToCharge(int.Parse(idTx.Text));
+                                bl.SendingDroneToCharge(droneTemp.Id);
                                 break;
                             }
                         case UpdateOptions.ReleaseFromCharge:
                             {
-                                bl.ReleasingDroneFromCharge(int.Parse(idTx.Text), double.Parse(addMinutestxt.Text));
+                                bl.ReleasingDroneFromCharge(droneTemp.Id, double.Parse(addMinutestxt.Text));
                                 break;
                             }
                         case UpdateOptions.Delivery:
                             {
-                                bl.AssignParcelToDrone(int.Parse(idTx.Text));
+                                bl.AssignParcelToDrone(droneTemp.Id);
                                 break;
                             }
                         case UpdateOptions.CollectingAParcel:
                             {
-                                bl.CollectingParcelByDrone(int.Parse(idTx.Text));
+                                bl.CollectingParcelByDrone(droneTemp.Id);
                                 break;
                             }
                         case UpdateOptions.DeliveringAParcel:
                             {
-                                bl.DeliverParcelByDrone(int.Parse(idTx.Text));
+                                bl.DeliverParcelByDrone(droneTemp.Id);
                                 break;
                             }
                         case UpdateOptions.updateModel:
                             {
-                                bl.UpdateDrone(int.Parse(idTx.Text), mTx.Text);
+                                bl.UpdateDrone(droneTemp.Id, mTx.Text);
                                 break;
                             }
                     }
@@ -179,10 +183,14 @@ namespace PL
         {
             EnableSubmit();
         }
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EnableAllKeysbutId();
+            EnableAllKeys();
             UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
             if(inputedOption==UpdateOptions.ReleaseFromCharge)
             {
@@ -200,8 +208,10 @@ namespace PL
             }
         }
 
-        private void EnableAllKeysbutId()
+        private void EnableAllKeys()
         {
+            idTx.IsEnabled = false;
+            idTb.IsEnabled = false;
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;

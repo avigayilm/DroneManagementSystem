@@ -94,7 +94,7 @@
     </Window.Resources>
 
 
-    <Grid ShowGridLines="True" Visibility="Hidden">
+    <Grid ShowGridLines="True" >
       
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

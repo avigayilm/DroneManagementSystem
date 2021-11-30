@@ -17,12 +17,12 @@ namespace PL
 {
     public enum DroneStatuses
     {
-       All, Available, Maintenance, Delivery
+       Available, Maintenance, Delivery
     }
 
     public enum WeightCategories
     {
-        All, Light, Medium, Heavy
+         Light, Medium, Heavy
     }
 
     /// <summary>
