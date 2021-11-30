@@ -223,7 +223,7 @@
         <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
         <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
         <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
-        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" SelectedIndex="1" SelectionChanged="statCb_SelectionChanged"/>
+        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" SelectedIndex="1"/>
         <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>

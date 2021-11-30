@@ -95,8 +95,7 @@ namespace PL
         private void submit_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
+            {  
                 if (choice == "add")
                 {
                     AddDrone();
@@ -104,6 +103,7 @@ namespace PL
                 }
                 if (choice == "update")
                 {
+                    UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                     switch (inputedOption)
                     {
                         case UpdateOptions.SendingToCharge:
