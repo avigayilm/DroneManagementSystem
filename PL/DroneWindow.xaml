@@ -75,9 +75,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
-    
-    
+
+
+
     <Grid ShowGridLines="True">
         <!--<StackPanel>
             <StackPanel>
@@ -159,7 +159,15 @@
                     Text="Longitude"/>
         <TextBlock Name="ltTb" Grid.Row="8" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
-        <TextBox Name="idTx" Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
+        <TextBlock
+            Name="addMinutes" 
+            Visibility="Hidden"
+            Text="enter amount of minutes of charging:"
+            Grid.Row="4"
+            Grid.Column="3"/>
+        <TextBox Name="addMinutestxt" Grid.Row="5" Grid.Column="3" Visibility="Hidden"/>
+        <TextBox Name="idTx"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
+        
         <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
         <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
         <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
@@ -167,6 +175,7 @@
         <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <ComboBox Name="ComboUpdateOption" Grid.Row="2" Grid.Column="3" SelectionChanged="UpdateOption_SelectionChanged"/>
         <Button Name="submit" 
                 IsEnabled="False" 
                 Grid.Row="9" 
