@@ -158,6 +158,12 @@ namespace PL
                 new DroneListWindow(bl).Show();
                 this.Close();
             }
+            catch(BatteryIssueException ex)
+            {
+                MessageBox.Show(ex.Message);
+                new DroneListWindow(bl).Show();
+                this.Close();
+            }
              //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         //switch (messageBoxResult)       
         //        {
