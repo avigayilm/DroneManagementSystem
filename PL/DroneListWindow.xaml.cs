@@ -28,9 +28,10 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
-    public partial class DroneListWindow : Window
+    public partial class DroneListWindow : CustomWindow
     {
         IBL.Ibl bl;
+
         public DroneListWindow(IBL.Ibl IblObj)
         {
             InitializeComponent();
@@ -65,6 +66,11 @@ namespace PL
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
 

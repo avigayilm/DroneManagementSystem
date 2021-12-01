@@ -220,34 +220,32 @@ namespace BL
         }
 
 
-        public IEnumerable<ParcelToList> GetAllParcels()
+        public IEnumerable<ParcelToList> GetAllParcels(Predicate<IDAL.DO.Parcel> predicate = null)
         {
             List<ParcelToList> tempList = new();
             //idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
-            List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels().ToList();
+            List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels(predicate).ToList();
             foreach (IDAL.DO.Parcel p in tempParcelList)
             {
                 ParcelToList parcel = new();
                 p.CopyProperties(parcel);
                 parcel.parcelStatus = GetParcelStatus(p.Id);
                 tempList.Add(parcel);
-
-            }
-
-            return tempList;
-        }
-
-
-        public IEnumerable<ParcelToList> GetAllUnassignedParcels()
-        {
-            List<ParcelToList> tempList = new();
-            idal1.GetAllParcels(p => p.Assigned == null).CopyPropertyListtoIBLList(tempList);
-            foreach (ParcelToList p in tempList)
-            {
-                p.parcelStatus = GetParcelStatus(p.Id);
             }
             return tempList;
         }
+
+
+        //public IEnumerable<ParcelToList> GetAllUnassignedParcels()
+        //{
+        //    List<ParcelToList> tempList = new();
+        //    idal1.GetAllParcels(p => p.Assigned == null).CopyPropertyListtoIBLList(tempList);
+        //    foreach (ParcelToList p in tempList)
+        //    {
+        //        p.parcelStatus = GetParcelStatus(p.Id);
+        //    }
+        //    return tempList;
+        //}
 
     }
 }

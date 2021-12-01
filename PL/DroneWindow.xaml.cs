@@ -24,7 +24,7 @@ namespace PL
     {
         updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow : Window
+    public partial class DroneWindow : CustomWindow
     {
         IBL.Ibl bl;
         internal int id;
@@ -38,22 +38,22 @@ namespace PL
             bl = IblObj;
             statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //mTb.IsEnabled = false;
-            //ltTb.IsEnabled = false;
-            //lnTb.IsEnabled = false;
-            //dTb.IsEnabled = false;
-            //statTb.IsEnabled = false;
-            //mTx.IsEnabled = false;
-            //statCb.IsEnabled = false;
-            //dTx.IsEnabled = false;
-            //lnTx.IsEnabled = false;
-            //ltTx.IsEnabled = false;
-            //mTb.IsEnabled = false;
-            //submit.Content = "Add Drone";
-            //ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
+            mTb.IsEnabled = false;
+            ltTb.IsEnabled = false;
+            lnTb.IsEnabled = false;
+            dTb.IsEnabled = false;
+            statTb.IsEnabled = false;
+            mTx.IsEnabled = false;
+            statCb.IsEnabled = false;
+            dTx.IsEnabled = false;
+            lnTx.IsEnabled = false;
+            ltTx.IsEnabled = false;
+            mTb.IsEnabled = false;
+            submit.Content = "Add Drone";
+            ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
             choice = "add";
             //DronesListView.ItemsSource = bl.GetAllDrones();
-           
+
 
         }
 
@@ -149,20 +149,20 @@ namespace PL
             catch (AddingException ex)
             {
                 MessageBox.Show(ex.Message);
-                new DroneListWindow(bl).Show();
-                this.Close();
+               // new DroneListWindow(bl).Show();
+                //this.Close();
              }
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message);
-                new DroneListWindow(bl).Show();
-                this.Close();
+               // new DroneListWindow(bl).Show();
+               // this.Close();
             }
             catch(BatteryIssueException ex)
             {
                 MessageBox.Show(ex.Message);
-                new DroneListWindow(bl).Show();
-                this.Close();
+                //new DroneListWindow(bl).Show();
+                //this.Close();
             }
              //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         //switch (messageBoxResult)       
@@ -209,7 +209,9 @@ namespace PL
         }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
+            new DroneListWindow(bl).Show();
             this.Close();
+           
         }
 
         private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
