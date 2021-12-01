@@ -284,7 +284,7 @@ namespace ConsoleUI_BL
                                     case ListOptions.UnAssignmentParcels://display unassigned parcels
                                         {
                                             Console.WriteLine("----------DISPLAY UNASSIGNEDPARCELS----------\n");
-                                            ((List<ParcelToList>)ibl1.GetAllUnassignedParcels()).ForEach(p => Console.WriteLine(p.ToString()));
+                                            ((List<ParcelToList>)ibl1.GetAllParcels(p => p.Assigned == null)).ForEach(p => Console.WriteLine(p.ToString()));
                                             break;
                                         }
                                     case ListOptions.AvailableChargingStations://diplay stations with available charging slots

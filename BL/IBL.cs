@@ -125,12 +125,12 @@ namespace IBL
         /// returns all parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ParcelToList> GetAllParcels();
+        public IEnumerable<ParcelToList> GetAllParcels(Predicate<IDAL.DO.Parcel> predicate = null);
         /// <summary>
         /// returns all unassigned parcels
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ParcelToList> GetAllUnassignedParcels();
+        //public IEnumerable<ParcelToList> GetAllUnassignedParcels();
         /// <summary>
         /// returns a station
         /// </summary>

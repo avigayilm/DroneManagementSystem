@@ -24,7 +24,7 @@ namespace PL
     {
         updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow : Window
+    public partial class DroneWindow : CustomWindow
     {
         IBL.Ibl bl;
         internal int id;
@@ -53,7 +53,7 @@ namespace PL
             ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
             choice = "add";
             //DronesListView.ItemsSource = bl.GetAllDrones();
-           
+
 
         }
 
@@ -150,13 +150,13 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
                // new DroneListWindow(bl).Show();
-               // this.Close();
+                //this.Close();
              }
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message);
-                //new DroneListWindow(bl).Show();
-                //this.Close();
+               // new DroneListWindow(bl).Show();
+               // this.Close();
             }
             catch(BatteryIssueException ex)
             {
@@ -209,7 +209,9 @@ namespace PL
         }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
+            new DroneListWindow(bl).Show();
             this.Close();
+           
         }
 
         private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
