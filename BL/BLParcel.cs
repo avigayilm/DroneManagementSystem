@@ -134,6 +134,7 @@ namespace BL
                 tempDro.Loc.Longitude = tempCus.Longitude;
                 tempDro.Loc.Latitude = tempCus.Latitude;
                 tempDro.Status = DroneStatuses.Available;
+                tempDro.ParcelId = 0;// unassign the parcel
                 idal1.ParcelDelivered(tempPack.Id);
             }
             catch (IDAL.DO.MissingIdException ex)

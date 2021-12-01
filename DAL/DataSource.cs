@@ -16,10 +16,10 @@ namespace DAL
             /// <summary>
             /// battery usage per km of flying- battery life is 20 hours of flying empty and takes 3+ hours to charge
             /// </summary>
-            internal static double pwrUsgEmpty = 5;
-            internal static double pwrUsgLight= 15;
-            internal static double pwrUsgMedium = 25;
-            internal static double pwrUsgHeavy = 35;
+            internal static double pwrUsgEmpty = 3;
+            internal static double pwrUsgLight= 5;
+            internal static double pwrUsgMedium = 10;
+            internal static double pwrUsgHeavy = 15;
             internal static double chargePH = 30;
 
         }

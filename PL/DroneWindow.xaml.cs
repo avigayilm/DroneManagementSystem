@@ -100,6 +100,8 @@ namespace PL
                 {
                     AddDrone();
                     MessageBox.Show(droneTemp.ToString());
+                    new DroneListWindow(bl).Show();
+                    this.Close();
                 }
                 if (choice == "update")
                 {
@@ -140,6 +142,9 @@ namespace PL
                     }
                 }
                 MessageBox.Show(droneTemp.ToString());
+                new DroneListWindow(bl).Show();
+                this.Close();// replace old dronelist window
+                
             }
             catch (AddingException ex)
             {
