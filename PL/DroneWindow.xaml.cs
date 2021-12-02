@@ -33,6 +33,7 @@ namespace PL
         private IBL.BO.WeightCategories weight;
         private IBL.BO.DroneToList droneTemp ;
         string choice;
+        double chargingTime;
         public DroneWindow(IBL.Ibl IblObj)// to add a drone
         {
             InitializeComponent();
@@ -119,7 +120,7 @@ namespace PL
                             }
                         case UpdateOptions.ReleaseFromCharge:
                             {
-                                bl.ReleasingDroneFromCharge(droneTemp.Id, double.Parse(addMinutestxt.Text));
+                                bl.ReleasingDroneFromCharge(droneTemp.Id, chargingTime);
                                 break;
                             }
                         case UpdateOptions.Assign:
@@ -166,6 +167,18 @@ namespace PL
                 MessageBox.Show(ex.Message);
                 //new DroneListWindow(bl).Show();
                 //this.Close();
+            }
+            catch(DroneChargeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(DeliveryIssueException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
              //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         //switch (messageBoxResult)       
@@ -221,12 +234,12 @@ namespace PL
         {
             EnableAllKeys();
             UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-            if(inputedOption==UpdateOptions.ReleaseFromCharge)
+            if (inputedOption == UpdateOptions.ReleaseFromCharge)
             {
                 addMinutestxt.Visibility = Visibility.Visible;
                 //addMinutes.Visibility = Visibility.Visible;
             }
-            if(inputedOption==UpdateOptions.updateModel)
+            if (inputedOption==UpdateOptions.updateModel)
             {
                 mTx.IsEnabled = true;
 
