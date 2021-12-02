@@ -233,7 +233,7 @@ namespace PL
             UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
             if (inputedOption == UpdateOptions.ReleaseFromCharge)
             {
-                addMinutestxt.Visibility = Visibility.Visible;
+                //addMinutestxt.Visibility = Visibility.Visible;
                 //addMinutes.Visibility = Visibility.Visible;
             }
             if (inputedOption==UpdateOptions.updateModel)
@@ -266,5 +266,7 @@ namespace PL
             wTb.IsEnabled = false;
             wCb.IsEnabled = false;
         }
+
+
     }
 }
