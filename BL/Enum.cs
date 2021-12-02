@@ -10,7 +10,7 @@ namespace IBL
     {
         public enum DroneStatuses
         {
-            Available, Maintenance, Delivery
+            Available = 0, Maintenance, Delivery
         }
         public enum WeightCategories
         {

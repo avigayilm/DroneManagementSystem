@@ -17,12 +17,12 @@ namespace PL
 {
     public enum DroneStatuses
     {
-       Available, Maintenance, Delivery
+       Available, Maintenance, Delivery, All
     }
 
     public enum WeightCategories
     {
-         Light, Medium, Heavy
+        Light, Medium, Heavy, All
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ namespace PL
         }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Status == StatusSelector.SelectedIndex);
+            DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Status == StatusSelector.SelectedIndex);//basically change this to one void function being called that will check the combo boxes...
         }
 
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

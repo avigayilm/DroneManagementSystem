@@ -29,6 +29,7 @@ namespace PL
         IBL.Ibl bl;
         internal int id;
         private int StationId;
+       
         private IBL.BO.WeightCategories weight;
         private IBL.BO.DroneToList droneTemp ;
         string choice;
@@ -39,6 +40,8 @@ namespace PL
             bl = IblObj;
             statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            wCb.SelectedIndex = 3;
+            statCb.SelectedIndex = 3;
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
