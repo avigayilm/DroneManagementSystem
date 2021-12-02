@@ -21,9 +21,9 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="StatusSelector" Text="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"/>
+            <ComboBox Name="StatusSelector" Text="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3"/>
             <TextBox x:Name="textTBD" HorizontalAlignment="left" Margin="35,10,0,0" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0"/>
-            <ComboBox x:Name="WeightSelector" Text="WeightSelector"  Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="WeightSelector_SelectionChanged" />
+            <ComboBox x:Name="WeightSelector" Text="WeightSelector"  Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="WeightSelector_SelectionChanged" SelectedIndex="3"/>
             <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click"/>
 
         </Grid>
