@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace PL
 {
     public enum DroneStatuses
     {
-       Available, Maintenance, Delivery, All
+        Available, Maintenance, Delivery, All
     }
 
     public enum WeightCategories
@@ -31,36 +33,62 @@ namespace PL
     public partial class DroneListWindow : CustomWindow
     {
         IBL.Ibl bl;
-
+        public ObservableCollection<DroneToList> droneToLists;
         public DroneListWindow(IBL.Ibl IblObj)
         {
             InitializeComponent();
             bl = IblObj;
-            DronesListView.ItemsSource = bl.GetAllDrones();
+            droneToLists = new();
+            List<DroneToList> tempDroneToLists = bl.GetAllDrones().ToList();
+            foreach(var dronetolist in tempDroneToLists)
+            {
+                droneToLists.Add(dronetolist);
+            }
+            DronesListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-        }
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DronesListView.ItemsSource = bl.GetAllDrones(X => (int)X.Status == StatusSelector.SelectedIndex);//basically change this to one void function being called that will check the combo boxes...
+            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
         }
 
-        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DroneToLists_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            DronesListView.ItemsSource = bl.GetAllDrones(d => (int)d.Weight == WeightSelector.SelectedIndex);
+            checkComboBoxes();
         }
+
+        private void checkComboBoxes()
+        {
+            int wInd = WeightSelector.SelectedIndex;
+            int sInd = StatusSelector.SelectedIndex;
+            if (wInd == 3 && sInd == 3)
+                DronesListView.ItemsSource = droneToLists;
+            if(wInd == 3 && sInd != 3)
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
+            if(wInd != 3 && sInd == 3)
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Weight == WeightSelector.SelectedIndex);
+            if (wInd != 3 && sInd != 3)
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);
+        }
+        //private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    checkComboBoxes(); // basically change this                                                                                                         //to one void                                                                                                         //being called th                                                                                                   //check the combo boxes...
+        //}
+
+        //private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    checkComboBoxes();
+        //}
 
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
-        { 
+        {
             DroneToList selectedObject = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(bl, selectedObject).Show();
-            this.Close();
+            new DroneWindow(bl,this, selectedObject).Show();
+          //  this.Close();
         }
 
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).Show();
-            this.Close();
+            new DroneWindow(bl, this).Show();
+            //this.Close();
         }
 
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

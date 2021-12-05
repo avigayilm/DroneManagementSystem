@@ -27,14 +27,15 @@ namespace PL
     public partial class DroneWindow : CustomWindow
     {
         IBL.Ibl bl;
-        internal int id;
-        private int StationId;
+        //internal int id;
+       
+        public int StationId;
        
         private IBL.BO.WeightCategories weight;
-        private IBL.BO.DroneToList droneTemp ;
+        private IBL.BO.Drone Drone ;
         string choice;
         double chargingTime;
-        public DroneWindow(IBL.Ibl IblObj)// to add a drone
+        public DroneWindow(IBL.Ibl IblObj, DroneListWindow last)// to add a drone
         {
             InitializeComponent();
             bl = IblObj;
@@ -58,24 +59,24 @@ namespace PL
             choice = "add";
             //DronesListView.ItemsSource = bl.GetAllDrones();
 
-
         }
 
-        public DroneWindow(IBL.Ibl ibl, DroneToList dr)// to update a drone
+        public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
         {
-            droneTemp = dr;
-            InitializeComponent();
-            EnableAllKeys();
+            Drone = bl.GetDrone(dr.Id);
+            DataContext = Drone;
             bl = ibl;
+            InitializeComponent();
+            EnableAllKeys(); 
             statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            idTx.Text = (dr.Id).ToString();
-            wCb.SelectedIndex= (int)dr.Weight;
-            statCb.SelectedIndex = (int)dr.Status;
-            dTx.Text = (dr.ParcelId).ToString();
-            lnTx.Text = (dr.Loc.Longitude).ToString();
-            ltTx.Text = (dr.Loc.Latitude).ToString();
-            mTx.Text = dr.Model;
+            //idTx.Text = (dr.Id).ToString();
+            //wCb.SelectedIndex= (int)dr.Weight;
+            //statCb.SelectedIndex = (int)dr.Status;
+            //dTx.Text = (dr.ParcelId).ToString();
+            //lnTx.Text = (dr.Loc.Longitude).ToString();
+            //ltTx.Text = (dr.Loc.Latitude).ToString();
+            //mTx.Text = dr.Model;
             submit.Content = "Update Drone";
             choice = "update";
             ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
@@ -83,61 +84,70 @@ namespace PL
 
         private void AddDrone()
         {
-            id = (int.Parse(idTx.Text));
+            //id = (int.Parse(idTx.Text));
             StationId = (int.Parse(sTx.Text));
             
-            weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
+           // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
             DroneLabel.Content = $"adding drone{id.ToString()} to the list";
-            Drone dr = new()
-            {
-                Id = id,
-                Weight = weight
-            };
-            bl.AddDrone(dr, StationId);
+            //Drone dr = new()
+            //{
+            //    Id = id,
+            //    Weight = weight
+            //};
+            bl.AddDrone(Drone, StationId);
         }
 
         private void submit_Click(object sender, RoutedEventArgs e)
         {
             try
             {  
+                if (choice == "add")
+                {
+                    AddDrone();
+                    MessageBox.Show(Drone.ToString());
+                    new DroneListWindow(bl).Show();
+                    this.Close();
+                }
+                if (choice == "update")
+                {
                     UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                     switch (inputedOption)
                     {
                         case UpdateOptions.SendingToCharge:
                             {
 
-                                bl.SendingDroneToCharge(droneTemp.Id);
+                                bl.SendingDroneToCharge(Drone.Id);
                                 break;
                             }
                         case UpdateOptions.ReleaseFromCharge:
                             {
-                                bl.ReleasingDroneFromCharge(droneTemp.Id, chargingTime);
+                                bl.ReleasingDroneFromCharge(Drone.Id, chargingTime);
                                 break;
                             }
                         case UpdateOptions.Assign:
                             {
-                                bl.AssignParcelToDrone(droneTemp.Id);
+                                bl.AssignParcelToDrone(Drone.Id);
                                 break;
                             }
                         case UpdateOptions.CollectingAParcel:
                             {
-                                bl.CollectingParcelByDrone(droneTemp.Id);
+                                bl.CollectingParcelByDrone(Drone.Id);
                                 break;
                             }
                         case UpdateOptions.DeliveringAParcel:
                             {
-                                bl.DeliverParcelByDrone(droneTemp.Id);
+                                bl.DeliverParcelByDrone(Drone.Id);
                                 break;
                             }
                         case UpdateOptions.updateModel:
                             {
-                                bl.UpdateDrone(droneTemp.Id, mTx.Text);
+                                bl.UpdateDrone(Drone.Id, mTx.Text);
                                 break;
                             }
                     }
-                
-                MessageBox.Show(droneTemp.ToString());
-                new DroneListWindow(bl).Show();
+                }
+                MessageBox.Show(Drone.ToString());
+                //new DroneListWindow(bl).Show();
                 this.Close();// replace old dronelist window
                 
             }
@@ -190,30 +200,30 @@ namespace PL
         //        }
             
         }
-        private void mTx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            submit.IsEnabled = true;
-        }
-        private void EnableSubmit()
-        {
-            if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
-              //  submit.IsEnabled = true;
-        }
+        //private void mTx_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    submit.IsEnabled = true;
+        //}
+        //private void EnableSubmit()
+        //{
+        //    if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
+        //      //  submit.IsEnabled = true;
+        //}
 
-        private void idTx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EnableSubmit();
-        }
+        //private void idTx_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    EnableSubmit();
+        //}
 
-        private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            EnableSubmit();
-        }
+        //private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    EnableSubmit();
+        //}
 
-        private void sTx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EnableSubmit();
-        }
+        //private void sTx_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    EnableSubmit();
+        //}
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(bl).Show();
@@ -261,12 +271,12 @@ namespace PL
             wCb.IsEnabled = false;
         }
 
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-            AddDrone();
-            MessageBox.Show(droneTemp.ToString());
-            new DroneListWindow(bl).Show();
-            this.Close();
-        }
+        //private void add_Click(object sender, RoutedEventArgs e)
+        //{
+        //    AddDrone();
+        //    MessageBox.Show(droneTemp.ToString());
+        //    new DroneListWindow(bl).Show();
+        //    this.Close();
+        //}
     }
 }

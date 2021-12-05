@@ -47,6 +47,7 @@
             <Setter Property="TextAlignment" Value="Justify"/>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontFamily" Value="Constantia"/>
             <Setter Property="Padding" Value="0, 10, 0 , 0"></Setter>
         </Style>
 
@@ -73,16 +74,20 @@
         </Style>
 
 
-        <Style x:Key="brush1" TargetType="TextBox"   BasedOn="{StaticResource TextBlockStyle}">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush>
-                        <GradientStop Offset="0.3" Color="Blue"/>
-                        <GradientStop Offset="0.7" Color="Red"></GradientStop>
-                        <GradientStop Offset=" 0.1" Color="Green"></GradientStop>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="brush1" TargetType="TextBox"   BasedOn="{StaticResource textboxStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseDirectlyOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0.3" Color="Blue"/>
+                                <GradientStop Offset="0.7" Color="Red"></GradientStop>
+                                <GradientStop Offset=" 0.1" Color="Green"></GradientStop>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="ButtonEnable" TargetType="Button">
@@ -92,6 +97,7 @@
                     <MultiDataTrigger.Conditions>
                         <Condition Binding="{Binding ElementName=idTx, Path=Text}" Value=""></Condition>
                         <Condition Binding="{Binding ElementName=sTx, Path=Text}" Value=""></Condition>
+                        <Condition Binding="{Binding ElementName=mTx, Path=Text}" Value=""></Condition>
                     </MultiDataTrigger.Conditions>
                     <MultiDataTrigger.Setters>
                         <Setter Property="IsEnabled" Value="False"></Setter>
@@ -122,6 +128,7 @@
                     <Setter Property="Visibility" Value="Visible" />
                     <!--<Setter Property="Text" Value="Enter number of minutes"></Setter>-->
                 </DataTrigger>
+
             </Style.Triggers>
         </Style>
 
@@ -203,8 +210,8 @@
 </local:CustomWindow>-->
 
 
-<Grid  ShowGridLines="True"
-         Visibility="Visible">
+    <Grid  ShowGridLines="False"
+         Visibility="Visible" DataContext="{Binding}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -225,9 +232,63 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="packId" Text="parcel Id:" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+            <TextBlock Name="packPrior" Text="Parcel Priority:" Grid.Column="0" Grid.Row="1" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+            <TextBlock Name="packStat" Text="Parcel status:" Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+            <TextBlock Name="packPickUp" Text="Parcel pickUp location:" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+            <TextBlock Name="packDeliverTo" Text="Parcel delivery location:" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+            <TextBlock Name="packDis" Text="Distance:" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12"/>
+
+
+            <TextBlock Name="packIdb" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="packPriorb" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Name="packStatb" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Name="packPickUpb" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Name="packDeliverTob" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Name="packDisb" Text="{Binding ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}"/>
+
+
+            <Grid x:Name="customerGrid" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.8*"/>
+                    <RowDefinition Height="0.8*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Sender:" Grid.Row="0" Grid.Column="1"/>
+                <Label Content="Receiever:" Grid.Row="0" Grid.Column="2"/>
+                <Label Content="Id:" Grid.Row="1"/>
+                <Label Content="Name:" Grid.Row="2"/>
+                <TextBlock x:Name="sendIdx" Text="{Binding Path=ParcelInTrans.Sender.Id}" Style="{StaticResource TextBlockStyle}" FontSize="12" Grid.Column="1" Grid.Row="1" />
+                <TextBlock x:Name="sendNamex" Text="{Binding Path=ParcelInTrans.Sender.Name}" Style="{StaticResource TextBlockStyle}" FontSize="12" Grid.Column="1" Grid.Row="2" />
+                <TextBlock x:Name="recdIdx" Text="{Binding Path=ParcelInTrans.Receiver.Id}" Style="{StaticResource TextBlockStyle}" FontSize="12" Grid.Column="2" Grid.Row="1" />
+                <TextBlock x:Name="recNamex" Text="{Binding Path=ParcelInTrans.Receiver.Name}" Style="{StaticResource TextBlockStyle}" FontSize="12" Grid.Column="2" Grid.Row="2" />
+            </Grid>
+        </Grid>
+
+
 
         <Label  x:Name="DroneLabel" Content="update drone" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                      
                     FontWeight="Bold"/>
 
         <TextBlock Name="idTb" Text="DroneId"
@@ -268,18 +329,20 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
-        </TextBlock>
+        </TextBlock>-->
+        <TextBox Name="idTx" Text="{Binding Id}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
 
-        <TextBox Name="idTx"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
+        <ComboBox Name="wCb" SelectedIndex="{Binding Path=(int)Weight}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
+        <TextBox Name="sTx" Grid.Row="3"  Grid.Column="2" Style="{StaticResource textboxStyle}" />
+        <TextBox Name="mTx" Grid.Row="4" Text="{Binding Model}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <ComboBox Name="statCb" Grid.Row="5" SelectedIndex="{Binding (int)Status}" Grid.Column="2"/>
+        <TextBox Name="dTx" Grid.Row="6"  Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="lnTx" Grid.Row="7" Text="{Binding Path=Loc.longitude}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="ltTx" Grid.Row="8" Text="{Binding Path=Loc.latitude}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <ComboBox Name="ComboUpdateOption" Text="Enter Search Term Here" ToolTip="Enter Search Term Here" Grid.Row="2" Grid.Column="0" SelectedIndex="0" SelectionChanged="UpdateOption_SelectionChanged"/>
 
-        <ComboBox Name="wCb" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
-        <TextBox Name="sTx" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="sTx_TextChanged"/>
-        <TextBox Name="mTx" Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTx_TextChanged"/>
-        <ComboBox Name="statCb" Grid.Row="5" Grid.Column="2" SelectedIndex="1"/>
-        <TextBox Name="dTx" Grid.Row="6" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <TextBox Name="lnTx" Grid.Row="7" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <TextBox Name="ltTx" Grid.Row="8" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <ComboBox Name="ComboUpdateOption" Text="Enter Search Term Here" ToolTip="Enter Search Term Here" Grid.Row="2" Grid.Column="3" SelectionChanged="UpdateOption_SelectionChanged"/>
+        <Label Name="delivery" Content="Parcel in delivery info:" Grid.Column="2" Grid.ColumnSpan="2" Margin="177,36,0,0" />
+
         <Button Name="submit" 
                 Grid.Row="9" 
                 Grid.Column="1" 
