@@ -100,15 +100,6 @@ namespace PL
         {
             try
             {  
-                if (choice == "add")
-                {
-                    AddDrone();
-                    MessageBox.Show(droneTemp.ToString());
-                    new DroneListWindow(bl).Show();
-                    this.Close();
-                }
-                if (choice == "update")
-                {
                     UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                     switch (inputedOption)
                     {
@@ -144,7 +135,7 @@ namespace PL
                                 break;
                             }
                     }
-                }
+                
                 MessageBox.Show(droneTemp.ToString());
                 new DroneListWindow(bl).Show();
                 this.Close();// replace old dronelist window
@@ -270,6 +261,12 @@ namespace PL
             wCb.IsEnabled = false;
         }
 
-
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+            AddDrone();
+            MessageBox.Show(droneTemp.ToString());
+            new DroneListWindow(bl).Show();
+            this.Close();
+        }
     }
 }

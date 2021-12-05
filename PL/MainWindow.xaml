@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,7 +15,7 @@
 
         <Button Name="FirstButton" 
                 Content="Show drone list" 
-             
+                
                 FontSize="22" 
                 HorizontalAlignment="Stretch" 
                 Margin="80" 
