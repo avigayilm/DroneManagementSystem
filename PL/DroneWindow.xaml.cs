@@ -63,9 +63,10 @@ namespace PL
 
         public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
         {
+            bl = ibl;
             Drone = bl.GetDrone(dr.Id);
             DataContext = Drone;
-            bl = ibl;
+    
             InitializeComponent();
             EnableAllKeys(); 
             statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
@@ -88,7 +89,7 @@ namespace PL
             StationId = (int.Parse(sTx.Text));
             
            // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
-            DroneLabel.Content = $"adding drone{id.ToString()} to the list";
+            DroneLabel.Content = $"adding drone to the list";
             //Drone dr = new()
             //{
             //    Id = id,
@@ -200,30 +201,30 @@ namespace PL
         //        }
             
         }
-        //private void mTx_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    submit.IsEnabled = true;
-        //}
-        //private void EnableSubmit()
-        //{
-        //    if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
-        //      //  submit.IsEnabled = true;
-        //}
+        private void mTx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            submit.IsEnabled = true;
+        }
+        private void EnableSubmit()
+        {
+          //  if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
+            //  submit.IsEnabled = true;
+        }
 
-        //private void idTx_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    EnableSubmit();
-        //}
+        private void idTx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
 
-        //private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    EnableSubmit();
-        //}
+        private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
 
-        //private void sTx_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    EnableSubmit();
-        //}
+        private void sTx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(bl).Show();
