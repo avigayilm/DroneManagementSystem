@@ -88,7 +88,7 @@ namespace PL
             StationId = (int.Parse(sTx.Text));
             
            // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
-            DroneLabel.Content = $"adding drone{id.ToString()} to the list";
+            DroneLabel.Content = $"adding drone{Drone.Id.ToString()} to the list";
             //Drone dr = new()
             //{
             //    Id = id,

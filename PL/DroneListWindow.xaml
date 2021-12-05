@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="640" Width="800">
+        Title="DroneListWindow" Height="640" Width="800" Background="MidnightBlue">
+  
 
     
    
@@ -29,12 +30,12 @@ VerticalAlignment="Stretch" Width="auto">
 
             <TextBox x:Name="textTBD" HorizontalAlignment="left" Margin="35,10,0,0" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0"/>
             
-            <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click"/>
+            <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click" Background="MidnightBlue"/>
 
         </Grid>
         
-        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick"
-                  Grid.Row="1">
+        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" 
+                  Grid.Row="1" Background="LightBlue">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -42,7 +43,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
         
-        <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="289" Click="Cancel_Click">
+        <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="289" Click="Cancel_Click" Background="LightBlue">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />

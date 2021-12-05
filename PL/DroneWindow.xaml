@@ -317,8 +317,8 @@
         <TextBox Name="addMinutestxt" Grid.Row="5" Grid.Column="3" Visibility="Hidden" IsEnabled="False" Style="{StaticResource AddminutesEnable}" />-->
 
         <TextBox  Width="250" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addMinutestxt" Margin="5" Grid.Row="3" Grid.Column="3"  Style="{StaticResource AddminutesEnable}" />
-        
-<TextBlock IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray" Grid.Row="3" Grid.Column="3" >
+
+        <TextBlock IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray" Grid.Row="3" Grid.Column="3" >
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -329,7 +329,7 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
-        </TextBlock>-->
+        </TextBlock>
         <TextBox Name="idTx" Text="{Binding Id}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
 
         <ComboBox Name="wCb" SelectedIndex="{Binding Path=(int)Weight}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
