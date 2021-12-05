@@ -112,7 +112,6 @@ namespace BL
             else
                 drone.ParcelInTrans = GetParcelInTransfer(droneToList.ParcelId);
             return drone;
-
         }
 
         public DroneToList getDroneToList(int droneId)
