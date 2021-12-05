@@ -8,14 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
-        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick"
-                  Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid x:Name="first" IsEnabled="False"></Grid>
+        <Grid x:Name="second" IsEnabled="True"></Grid>
     </Grid>
     
+
 </Window>

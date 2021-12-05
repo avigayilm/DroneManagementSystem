@@ -29,7 +29,7 @@ public static class Bonus
         decimal secWDec = (minWDec - min) * 60;
         float sec = (float)secWDec;
         const string quote = "\"  ";
-        string toReturn = deg + "° " + min + $"' " + sec + quote + direction;
+        string toReturn = deg + "° " + min + $"' " + sec + quote + direction + " ";
         return toReturn;
     }
 

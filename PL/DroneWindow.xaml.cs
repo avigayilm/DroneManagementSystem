@@ -54,6 +54,7 @@ namespace PL
             lnTx.IsEnabled = false;
             ltTx.IsEnabled = false;
             mTb.IsEnabled = false;
+            DataContext = this;
             submit.Content = "Add Drone";
             ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
             choice = "add";

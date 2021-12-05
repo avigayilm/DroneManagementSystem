@@ -61,8 +61,8 @@ namespace PL
             int sInd = StatusSelector.SelectedIndex;
             if (wInd == 3 && sInd == 3)
                 DronesListView.ItemsSource = droneToLists;
-            if(wInd == 3 && sInd != 3)
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
+            if (wInd == 3 && sInd != 3)
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);//.OrderBy(i=> i.);
             if(wInd != 3 && sInd == 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Weight == WeightSelector.SelectedIndex);
             if (wInd != 3 && sInd != 3)
@@ -101,7 +101,12 @@ namespace PL
             this.Close();
         }
 
-        
+        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //{
+        //    DronesListView.ItemsSource= 
+        //}
+
+
 
 
         //    private void Button_Click(object sender, RoutedEventArgs e)
