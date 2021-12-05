@@ -68,15 +68,15 @@ namespace PL
             if (wInd != 3 && sInd != 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);
         }
-        //private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    checkComboBoxes(); // basically change this                                                                                                         //to one void                                                                                                         //being called th                                                                                                   //check the combo boxes...
-        //}
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            checkComboBoxes();                                                                                                                                                                                                              //being called th                                                                                                   //check the combo boxes...
+        }
 
-        //private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    checkComboBoxes();
-        //}
+        private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            checkComboBoxes();
+        }
 
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -100,6 +100,8 @@ namespace PL
         {
             this.Close();
         }
+
+        
 
 
         //    private void Button_Click(object sender, RoutedEventArgs e)

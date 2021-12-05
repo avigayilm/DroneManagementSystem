@@ -332,10 +332,10 @@
         </TextBlock>
         <TextBox Name="idTx" Text="{Binding Id}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTx_TextChanged"/>
 
-        <ComboBox Name="wCb" SelectedIndex="{Binding Path=(int)Weight}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
+        <ComboBox Name="wCb" SelectedItem="{Binding Path=Weight}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,36" Grid.RowSpan="2" Width="177" SelectionChanged="wCb_SelectionChanged" />
         <TextBox Name="sTx" Grid.Row="3"  Grid.Column="2" Style="{StaticResource textboxStyle}" />
         <TextBox Name="mTx" Grid.Row="4" Text="{Binding Model}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <ComboBox Name="statCb" Grid.Row="5" SelectedIndex="{Binding (int)Status}" Grid.Column="2"/>
+        <ComboBox Name="statCb" Grid.Row="5" SelectedItem="{Binding Status}" Grid.Column="2"/>
         <TextBox Name="dTx" Grid.Row="6"  Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="lnTx" Grid.Row="7" Text="{Binding Path=Loc.longitude}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
         <TextBox Name="ltTx" Grid.Row="8" Text="{Binding Path=Loc.latitude}" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
