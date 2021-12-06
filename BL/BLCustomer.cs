@@ -63,7 +63,7 @@ namespace BL
                 customerDal.CopyProperties(customer);
                 customer.Loc = new() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
                 List<IDAL.DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
-                List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUp != null).ToList();
+                List<IDAL.DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
                 SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
                 return customer;

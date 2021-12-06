@@ -24,33 +24,29 @@ namespace PL
     {
         updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow : CustomWindow
+    public partial class DroneWindow
     {
         IBL.Ibl bl;
-        //internal int id;
-       
-        public int StationId;
-       
-        private IBL.BO.WeightCategories weight;
-        private IBL.BO.Drone Drone ;
+       // public int StationId { get; set; }
+       // private IBL.BO.WeightCategories weight { get; set; }
+        private IBL.BO.Drone Drone { get; set; }
         string choice;
         double chargingTime;
         public DroneWindow(IBL.Ibl IblObj, DroneListWindow last)// to add a drone
         {
             InitializeComponent();
             bl = IblObj;
-            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            wCb.SelectedIndex = 3;
-            statCb.SelectedIndex = 3;
+            //statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
+            //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+           // wCb.SelectedIndex = 3;
+           // statCb.SelectedIndex = 3;
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
-            dTb.IsEnabled = false;
             statTb.IsEnabled = false;
             mTx.IsEnabled = false;
             statCb.IsEnabled = false;
-            dTx.IsEnabled = false;
+            //dTx.IsEnabled = false;
             lnTx.IsEnabled = false;
             ltTx.IsEnabled = false;
             mTb.IsEnabled = false;
@@ -67,37 +63,28 @@ namespace PL
             bl = ibl;
             Drone = bl.GetDrone(dr.Id);
             DataContext = Drone;
-    
             InitializeComponent();
             EnableAllKeys(); 
-            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //idTx.Text = (dr.Id).ToString();
-            //wCb.SelectedIndex= (int)dr.Weight;
-            //statCb.SelectedIndex = (int)dr.Status;
-            //dTx.Text = (dr.ParcelId).ToString();
-            //lnTx.Text = (dr.Loc.Longitude).ToString();
-            //ltTx.Text = (dr.Loc.Latitude).ToString();
-            //mTx.Text = dr.Model;
+            //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             submit.Content = "Update Drone";
             choice = "update";
             ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
         }
 
-        private void AddDrone()
-        {
-            //id = (int.Parse(idTx.Text));
-            StationId = (int.Parse(sTx.Text));
+        //private void AddDrone()
+        //{
+        //    //id = (int.Parse(idTx.Text));
+        //    StationId = (int.Parse(sTx.Text));
             
-           // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
-            DroneLabel.Content = $"adding drone to the list";
-            //Drone dr = new()
-            //{
-            //    Id = id,
-            //    Weight = weight
-            //};
-            bl.AddDrone(Drone, StationId);
-        }
+        //   // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
+        //    DroneLabel.Content = $"adding drone to the list";
+        //    //Drone dr = new()
+        //    //{
+        //    //    Id = id,
+        //    //    Weight = weight
+        //    //};
+        //    bl.AddDrone(Drone, StationId);
+        //}
 
         private void submit_Click(object sender, RoutedEventArgs e)
         {
@@ -105,7 +92,7 @@ namespace PL
             {  
                 if (choice == "add")
                 {
-                    AddDrone();
+                    //AddDrone();
                     MessageBox.Show(Drone.ToString());
                     new DroneListWindow(bl).Show();
                     this.Close();
@@ -228,7 +215,7 @@ namespace PL
         }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(bl).Show();
+            //new DroneListWindow(bl).Show();
             this.Close();
            
         }
@@ -237,19 +224,9 @@ namespace PL
         {
             EnableAllKeys();
             UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-            if (inputedOption == UpdateOptions.ReleaseFromCharge)
-            {
-                //addMinutestxt.Visibility = Visibility.Visible;
-                //addMinutes.Visibility = Visibility.Visible;
-            }
             if (inputedOption==UpdateOptions.updateModel)
             {
                 mTx.IsEnabled = true;
-
-            }
-            if(idTx.Text != string.Empty)
-            {
-                submit.IsEnabled = true;
             }
         }
 
@@ -260,18 +237,33 @@ namespace PL
             mTb.IsEnabled = false;
             ltTb.IsEnabled = false;
             lnTb.IsEnabled = false;
-            dTb.IsEnabled = false;
             statTb.IsEnabled = false;
             mTx.IsEnabled = false;
             statCb.IsEnabled = false;
-            dTx.IsEnabled = false;
+            //dTx.IsEnabled = false;
             lnTx.IsEnabled = false;
             ltTx.IsEnabled = false;
-            sTb.IsEnabled = false;
-            sTx.IsEnabled = false;
             wTb.IsEnabled = false;
             wCb.IsEnabled = false;
         }
+
+
+        private void dTb_Click(object sender, RoutedEventArgs e)
+        {
+            parcelGrid.Visibility = Visibility.Visible;
+
+        }
+
+        private void senderButton_Click(object sender, RoutedEventArgs e)
+        {
+            senderGrid.Visibility = Visibility.Visible;
+        }
+
+        private void receiverButton_Click(object sender, RoutedEventArgs e)
+        {
+            receiverGrid.Visibility = Visibility.Visible;
+        }
+
 
         //private void add_Click(object sender, RoutedEventArgs e)
         //{

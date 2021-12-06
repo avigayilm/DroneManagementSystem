@@ -77,14 +77,14 @@ namespace BL
         internal Location DroneLocation(IDAL.DO.Parcel p, DroneToList tempBl)
         {
             Location locTemp = new();
-            if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
+            if (p.Created != null && p.PickedUpTime == null)//if assigned but not yet collected
             {
                 //location of deone will be in  station closed to the sender
                 var stationTemp = idal1.SmallestDistanceStation(p.SenderId);
                 locTemp.Longitude = stationTemp.Longitude;
                 locTemp.Latitude = stationTemp.Latitude;
             }
-            if (p.Created != null && p.PickedUp != null)// if package is picked up
+            if (p.Created != null && p.PickedUpTime != null)// if package is picked up
             {
                 //location wIll be at the sender
                 List<IDAL.DO.Customer> tempCustomerList = (List<IDAL.DO.Customer>)idal1.GetAllCustomers();

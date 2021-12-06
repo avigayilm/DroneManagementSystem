@@ -30,7 +30,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
-    public partial class DroneListWindow : CustomWindow
+    public partial class DroneListWindow
     {
         IBL.Ibl bl;
         public ObservableCollection<DroneToList> droneToLists;
