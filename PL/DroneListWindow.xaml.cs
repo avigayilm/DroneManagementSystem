@@ -30,7 +30,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
-    public partial class DroneListWindow : CustomWindow
+    public partial class DroneListWindow
     {
         IBL.Ibl bl;
         public ObservableCollection<DroneToList> droneToLists;
@@ -81,7 +81,7 @@ namespace PL
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DroneToList selectedObject = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(bl,this, selectedObject).Show();
+            new DroneWindow(bl,selectedObject).Show();
           //  this.Close();
         }
 

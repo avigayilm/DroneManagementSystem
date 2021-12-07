@@ -1,15 +1,26 @@
-﻿<local:CustomWindow x:Class="PL.DroneListWindow"
+﻿<Window x:Class="PL.DroneListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="640" Width="800">
+        WindowStyle="None"
+        Title="DroneListWindow" Height="640" Width="800"
+  AllowsTransparency="True"     Background="red">
 
-
-
+ 
     <Grid Name="MainGrid" ShowGridLines="True">
+        <Grid.Background
+       >
+            <LinearGradientBrush
+        EndPoint="0,4" SpreadMethod="Repeat"
+       >
+                <GradientStop
+        Color="#FF3DC3D0" Offset="4"
+      />
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions >
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -17,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+VerticalAlignment="Stretch" Width="auto" Background="#FF436A8E">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -34,11 +45,19 @@ VerticalAlignment="Stretch" Width="auto">
         </Grid>
 
         <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" >
-            <ListView.ItemContainerStyle>                <Style TargetType="ListViewItem">                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <!--<ListView.Template>                <ControlTemplate>                    <Border CornerRadius="50" BorderThickness="50" >                        <ItemsPresenter></ItemsPresenter>                    </Border>                </ControlTemplate>            </ListView.Template>-->
+            <!--<ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="50" BorderThickness="50" >
+                        <ItemsPresenter></ItemsPresenter>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>-->
 
             <ListView.View>
                 <GridView>
@@ -52,7 +71,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="289" Click="Cancel_Click">
+         <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="289" Click="Cancel_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -62,4 +81,4 @@ VerticalAlignment="Stretch" Width="auto">
         <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
 
     </Grid>
-</local:CustomWindow>
+</Window>

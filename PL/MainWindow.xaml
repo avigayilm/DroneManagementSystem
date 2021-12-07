@@ -6,25 +6,32 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid ShowGridLines="True">
+    
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\thumbnail-drone-companies.jpg"></ImageBrush>
+    </Window.Background>
+    <Grid ShowGridLines="False">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
         <Button Name="FirstButton" 
                 Content="Show drone list" 
-             
+             Background="White"
                 FontSize="22" 
-                HorizontalAlignment="Stretch" 
-                Margin="80" 
-                VerticalAlignment="Stretch" 
-                Click="ShowDronesButton_Click">
+                FontFamily="Bodoni MT Black"
+                Margin="87,217,116,119" 
+                Click="ShowDronesButton_Click" Grid.Column="1">
             <Button.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-        </Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50"/>
+                    
+                </Style>
+            </Button.Resources>
         </Button>
+        <!--<Image Source="/thumbnail-drone-companies.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RenderTransformOrigin="4.719,0.43" Margin="0,0,0,0" Grid.ColumnSpan="2" />-->
     </Grid>
 </Window>

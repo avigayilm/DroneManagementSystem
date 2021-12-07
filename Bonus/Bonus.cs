@@ -24,10 +24,10 @@ public static class Bonus
         }
         //determines the various sexagesimal factors
         int deg = (int)coord;
-        decimal minWDec = (decimal)(coord - deg) * 60;
+        double minWDec = (coord - deg) * 60;
         int min = (int)minWDec;
-        decimal secWDec = (minWDec - min) * 60;
-        float sec = (float)secWDec;
+        double secWDec = (minWDec - min) * 60;
+        double sec = Math.Round( secWDec, 2);
         const string quote = "\"  ";
         string toReturn = deg + "° " + min + $"' " + sec + quote + direction + " ";
         return toReturn;

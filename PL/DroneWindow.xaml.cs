@@ -24,45 +24,30 @@ namespace PL
     {
         updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow : CustomWindow
+    public partial class DroneWindow //: CustomWindow
     {
         IBL.Ibl bl;
         //internal int id;
        
         public int StationId;
-       
-        private IBL.BO.WeightCategories weight;
         private IBL.BO.Drone Drone ;
-        string choice;
+        DroneListWindow lastW;
+
         double chargingTime;
-        public DroneWindow(IBL.Ibl IblObj, DroneListWindow last)// to add a drone
+        public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// to add a drone
         {
             InitializeComponent();
             bl = IblObj;
-            statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            wCb.SelectedIndex = 3;
-            statCb.SelectedIndex = 3;
-            mTb.IsEnabled = false;
-            ltTb.IsEnabled = false;
-            lnTb.IsEnabled = false;
-            dTb.IsEnabled = false;
-            statTb.IsEnabled = false;
-            mTx.IsEnabled = false;
-            statCb.IsEnabled = false;
-            dTx.IsEnabled = false;
-            lnTx.IsEnabled = false;
-            ltTx.IsEnabled = false;
-            mTb.IsEnabled = false;
-            DataContext = this;
-            submit.Content = "Add Drone";
-            ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
-            choice = "add";
-            //DronesListView.ItemsSource = bl.GetAllDrones();
-
+            lastW = last;
+           wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            //note that u havent dealt with the "all" option in the enum
+            Drone = new();
+            DataContext = Drone;
+            sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
+            addGrid.Visibility = Visibility.Visible;
         }
 
-        public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
+        public DroneWindow(IBL.Ibl ibl,  DroneToList dr)// to update a drone
         {
             bl = ibl;
             Drone = bl.GetDrone(dr.Id);
@@ -78,16 +63,15 @@ namespace PL
             //dTx.Text = (dr.ParcelId).ToString();
             //lnTx.Text = (dr.Loc.Longitude).ToString();
             //ltTx.Text = (dr.Loc.Latitude).ToString();
-            //mTx.Text = dr.Model;
-            submit.Content = "Update Drone";
-            choice = "update";
+            //mTx.Text = dr.Model
+           
             ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
         }
 
         private void AddDrone()
         {
-            //id = (int.Parse(idTx.Text));
-            StationId = (int.Parse(sTx.Text));
+            StationId= (int)sTCBAdd.SelectedItem;
+            
             
            // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
             DroneLabel.Content = $"adding drone to the list";
@@ -96,22 +80,33 @@ namespace PL
             //    Id = id,
             //    Weight = weight
             //};
+            
             bl.AddDrone(Drone, StationId);
+            lastW.droneToLists.Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
         }
 
+
+        private void submitAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AddDrone();
+                MessageBox.Show(Drone.ToString());
+                //   new DroneListWindow(bl).Show();
+                this.Close();
+            }
+            catch (AddingException ex)
+            {
+                MessageBox.Show(ex.Message);
+                // new DroneListWindow(bl).Show();
+                //this.Close();
+            }
+        }
         private void submit_Click(object sender, RoutedEventArgs e)
         {
             try
             {  
-                if (choice == "add")
-                {
-                    AddDrone();
-                    MessageBox.Show(Drone.ToString());
-                    new DroneListWindow(bl).Show();
-                    this.Close();
-                }
-                if (choice == "update")
-                {
+               
                     UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                     switch (inputedOption)
                     {
@@ -147,18 +142,13 @@ namespace PL
                                 break;
                             }
                     }
-                }
+                
                 MessageBox.Show(Drone.ToString());
                 //new DroneListWindow(bl).Show();
                 this.Close();// replace old dronelist window
                 
             }
-            catch (AddingException ex)
-            {
-                MessageBox.Show(ex.Message);
-               // new DroneListWindow(bl).Show();
-                //this.Close();
-             }
+            
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -222,13 +212,13 @@ namespace PL
             EnableSubmit();
         }
 
-        private void sTx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EnableSubmit();
-        }
+        //private void sTx_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    EnableSubmit();
+        //}
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(bl).Show();
+          //  new DroneListWindow(bl).Show();
             this.Close();
            
         }
@@ -273,6 +263,14 @@ namespace PL
             wCb.IsEnabled = false;
         }
 
+        private void sTCBAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StationId = (int)sTCBAdd.SelectedItem;
+        }
 
+        private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
