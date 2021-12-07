@@ -57,7 +57,7 @@ namespace IDAL
         /// returns a list of Dronecharge
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<DroneCharge> GetDroneChargeList();
+        public IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null);
        // public IEnumerable<Parcel> GetvacantParcel();
         public double[] DronePwrUsg();
 

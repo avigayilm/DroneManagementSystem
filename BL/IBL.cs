@@ -157,7 +157,7 @@ namespace IBL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
-        public void ReleasingDroneFromCharge(int droneId, double chargingTime);
+        public void ReleasingDroneFromCharge(int droneId);
         /// <summary>
         /// given a customer id returns customer as customer in parcel
         /// </summary>

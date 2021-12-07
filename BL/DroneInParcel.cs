@@ -11,7 +11,7 @@ namespace IBL
         public class DroneInParcel
         {
             public int Id { get; set; }
-            public double Battery { get; set; }
+            public int Battery { get; set; }
             public Location Loc { get; set; }
 
             public override string ToString()

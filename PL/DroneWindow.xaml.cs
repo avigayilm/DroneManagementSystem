@@ -112,7 +112,7 @@ namespace PL
                             }
                         case UpdateOptions.ReleaseFromCharge:
                             {
-                                bl.ReleasingDroneFromCharge(Drone.Id, chargingTime);
+                                bl.ReleasingDroneFromCharge(Drone.Id);
                                 break;
                             }
                         case UpdateOptions.Assign:
@@ -136,8 +136,8 @@ namespace PL
                                 break;
                             }
                     }
-                
-                MessageBox.Show(Drone.ToString());
+                }
+                MessageBox.Show(bl.GetDrone(Drone.Id).ToString());
                 //new DroneListWindow(bl).Show();
                 int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
                 lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);

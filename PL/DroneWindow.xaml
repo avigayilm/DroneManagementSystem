@@ -269,7 +269,9 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
@@ -286,11 +288,12 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid x:Name="parcelGrid" Grid.Column="3" Grid.RowSpan="15" Visibility="Hidden" Grid.ColumnSpan="4" Margin="0,0,213,0">
+            <Grid x:Name="parcelGrid" Grid.Column="4" Grid.RowSpan="15" Visibility="Hidden" Grid.ColumnSpan="6" Margin="0,0,213,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -303,6 +306,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -311,16 +315,28 @@
                 <TextBlock Name="packPrior" Text="Parcel Priority:" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
                 <TextBlock Name="packStat" Text="Parcel status:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12"  />
                 <TextBlock Name="packDis" Text="Distance:" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Grid.ColumnSpan="2"/>
-                <Button Name="senderButton" Content="Sender:" Grid.Row="6"  FontSize="12"  Background="White" BorderBrush="Snow" HorizontalAlignment="Left" FontFamily="Constantia" FontWeight="Bold" Click="senderButton_Click"/>
-                <Button Name="receiverButton" Content="Receiever:" Grid.Row="7"  FontSize="12" Background="White" BorderBrush="White" HorizontalAlignment="Left" FontFamily="Constantia" FontWeight="Bold" Click="receiverButton_Click"/>
+                <Button Name="senderButton" Content="Sender" Grid.Row="5"  FontSize="12"  Background="LightBlue" BorderBrush="White" HorizontalAlignment="Left" FontFamily="Constantia" FontWeight="Bold" Click="senderButton_Click" Margin="0,36,0,0" Grid.RowSpan="2" Width="63">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Name="receiverButton" Content="Receiever" Grid.Row="6"  FontSize="12" Background="LightBlue" BorderBrush="White" HorizontalAlignment="Left" FontFamily="Constantia" FontWeight="Bold" Click="receiverButton_Click" Margin="0,36,0,36" Grid.RowSpan="3" Width="63">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
 
-                <TextBlock Name="packIdb" Text="{Binding Path=ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="0,39,0,39" Grid.RowSpan="3" Width="74"/>
+                <TextBlock Name="packIdb" Text="{Binding Path=ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="2"/>
                 <TextBlock Name="packPriorb" Text="{Binding Path=ParcelInTrans.Priority, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="3"/>
                 <TextBlock Name="packStatb" Text="{Binding Path=ParcelInTrans.Status, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1"  Grid.Row="4"/>
-                <TextBlock Name="packdistance" Text="{Binding Path=ParcelInTrans.Distance, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1"  Grid.Row="5"/>
+                <TextBlock Name="packdistance" Text="{Binding Path=ParcelInTrans.Distance, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="5"/>
             </Grid>
 
-            <Grid x:Name="senderGrid" Grid.Column="6" Grid.RowSpan="10" Visibility="Hidden" Grid.ColumnSpan="2">
+            <Grid x:Name="senderGrid" Grid.Column="8" Grid.RowSpan="10" Visibility="Hidden" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -336,19 +352,22 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Name="sender" Text="Sender" Grid.Row="1" Grid.Column="0" FontFamily="Constantia" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Grid.ColumnSpan="5"/>
                 <TextBlock Name="senderId" Text="Id" Grid.Row="2" Grid.Column="0" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Name="senderName" Text="Name:" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="senderLocation" Text="Location:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
+                <TextBlock Name="senderLongitude" Text="Longitude:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
+                <TextBlock Name="senderLatitude" Text="Latitude:" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
 
                 <TextBlock Name="senderIdb" Text="{Binding ParcelInTrans.Sender.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Name="senderNameb" Text="{Binding ParcelInTrans.Sender.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="senderLocationb" Text="{Binding ParcelInTrans.Sender.Loc}" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center"/>
+                <TextBlock Name="senderLongitudeb" Text="{Binding ParcelInTrans.PickedUp.Longitude}" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Name="senderLatitudeb" Text="{Binding ParcelInTrans.PickedUp.Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
-            <Grid x:Name="receiverGrid" Grid.Column="6" Grid.Row="3" Grid.RowSpan="7" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39">
+            <Grid x:Name="receiverGrid" Grid.Column="8" Grid.Row="3" Grid.RowSpan="8" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -360,15 +379,18 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Name="Receiver" Text="Receiver" Grid.Row="1" Grid.Column="0" FontFamily="Constantia" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Grid.ColumnSpan="5"/>
                 <TextBlock Name="ReceiverId" Text="Id" Grid.Row="2" Grid.Column="0" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Name="ReceiverName" Text="Name:" Grid.Column="0" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="ReceuverLocation" Text="Location:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
+                <TextBlock Name="ReceiverLongitude" Text="Latitude:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
+                <TextBlock Name="ReceiverLatitude" Text="Latitude:" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
 
                 <TextBlock Name="receiverIdb" Text="{Binding ParcelInTrans.Receiver.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Name="receiverNameb" Text="{Binding ParcelInTrans.Receiver.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="receiverLocationb" Text="{Binding ParcelInTrans.Receiver.Loc}" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center"/>
+                <TextBlock Name="receiverLongitudeb" Text="{Binding ParcelInTrans.DeliverdTo.Longitude}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,26,0,0" Grid.RowSpan="3"/>
+                <TextBlock Name="receiverLatitudeb" Text="{Binding ParcelInTrans.DeliverdTo.Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
 
@@ -383,12 +405,28 @@
                     Text="Model"/>
             <TextBlock Name="statTb" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Drone status"/>
-            <TextBlock Name="lnTb" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                    Text="Longitude" Height="40" Margin="0,39,0,0" Grid.RowSpan="3" VerticalAlignment="Top"/>
+            <TextBlock Name="lnTb" Grid.Row="6" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Longitude" Grid.RowSpan="3"/>
             <TextBlock Name="ltTb" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
-            <Button Name="dTb" Grid.Row="8" HorizontalAlignment="Center" BorderBrush="Snow" FontFamily="Constantia" FontWeight="Bold" FontSize="14"
-                    Content="Parcel" Background="White" Click="dTb_Click" />
+            <TextBlock Name="bTb" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Battery"/>
+            <Button Name="dTb" 
+                    Grid.Row="9"
+                    HorizontalAlignment="Center"
+                    BorderBrush="White"
+                    FontFamily="Constantia"
+                    FontWeight="Bold"
+                    FontSize="14"
+                    Content="Parcel" 
+                    Background="LightBlue" 
+                    Click="dTb_Click" Margin="0,0,0,36" Grid.RowSpan="2" Width="56">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10" />
+                    </Style>
+                </Button.Resources>
+            </Button>
             <TextBox  Width="250" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="addMinutestxt" Margin="0,32,0,10"  Grid.Row="0" Grid.Column="2"  Style="{StaticResource AddminutesEnable}" />
             <TextBlock IsHitTestVisible="False" Text="Amount of minutes it charged" HorizontalAlignment="Center" Margin="0,32,0,10" Foreground="DarkGray" Grid.Row="0" Grid.Column="2" Width="180" >
                 <TextBlock.Style>
@@ -406,16 +444,17 @@
             <TextBlock Name="idTx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
             <TextBlock Name="wCb" Text="{Binding Path=Weight, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" />
             <TextBox Name="mTx" Grid.Row="4" Text="{Binding Path=Model, Mode=TwoWay}" Grid.Column="1" Style="{StaticResource modelEnable}" />
-            <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}" Grid.ColumnSpan="2" Height="39" Margin="145,0,0,0" VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}" />
-            <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc.Longitude}" Grid.Column="1" Style="{StaticResource TextBlockStyle}" />
-            <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc.Latitude}" Grid.Column="1" Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc.Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc.Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="bTx" Grid.Row="8" Text="{Binding Path=Battery}" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource TextBlockStyle}" />
             <ComboBox Name="ComboUpdateOption" Text="Choose update Option" ToolTip="Choose UpdateOption" SelectedItem="{Binding UpdateOptions}" Grid.Row="0" Grid.Column="2"  Margin="0,10,10,38"/>
             <Button Name="submitUpdate" 
-                Grid.Row="8" 
-                Grid.Column="2" 
+                Grid.Row="9" 
+                Grid.Column="3" 
                 Click="submitUpdate_Click" 
                 Content="Update"
-                Style="{StaticResource ButtonUpdateEnable}" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="32,20,79,20">
+                Style="{StaticResource ButtonUpdateEnable}" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,0,10,36">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />
@@ -425,16 +464,15 @@
             <Button Name="cancel" 
                  Content="Cancel"
                 IsCancel="True"
-                Grid.Row="8" 
-                Grid.Column="3" 
-                 Click="cancel_Click" RenderTransformOrigin="3.76,0.492" Grid.ColumnSpan="2" Margin="99,20,10,20" Grid.RowSpan="2" >
+                Grid.Row="9" 
+                Grid.Column="5" 
+                 Click="cancel_Click" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="10,0,0,36" >
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-
         </Grid>
 
     </Grid>

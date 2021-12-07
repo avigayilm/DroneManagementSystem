@@ -13,7 +13,7 @@ namespace BL
     {
         public void SendingDroneToCharge(int droneId)
         {
-            DroneToList tempDron = getDroneToList(droneId);
+            DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
             if (tempDron.Status == DroneStatuses.Available)
             {
 
@@ -48,19 +48,21 @@ namespace BL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
-        public void ReleasingDroneFromCharge(int droneId, double chargingTime)
+        public void ReleasingDroneFromCharge(int droneId)
         {
             try
             {
-                DroneToList tempDron = getDroneToList(droneId);
+                DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDron.Status == DroneStatuses.Maintenance)
                 {
                     List<IDAL.DO.DroneCharge> tempDroneChargeList = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = tempDroneChargeList.FindIndex(dc => dc.DroneId == droneId);// finding the index of drone to get the station id
                     int stationId = tempDroneChargeList[droneChargeIndex].StationId;
                     // update drone
-                    double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
-                    tempDron.Battery += batteryFilled;
+                    TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList().First(x => x.DroneId == tempDron.Id).ChargingTime;
+                    //double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
+                    int batteryCharge =(int) (timeInCharging.TotalHours * idal1.DronePwrUsg()[4]);
+                    tempDron.Battery += batteryCharge;
                     if (tempDron.Battery > 100)
                         tempDron.Battery = 100;
                     tempDron.Status = DroneStatuses.Available;
