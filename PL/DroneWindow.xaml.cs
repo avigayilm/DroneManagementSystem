@@ -22,7 +22,7 @@ namespace PL
 
     public enum UpdateOptions
     {
-        updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
+        updateModel =0,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
     public partial class DroneWindow //: CustomWindow
     {
@@ -47,13 +47,15 @@ namespace PL
             addGrid.Visibility = Visibility.Visible;
         }
 
-        public DroneWindow(IBL.Ibl ibl,  DroneToList dr)// to update a drone
+        public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
         {
             bl = ibl;
             Drone = bl.GetDrone(dr.Id);
+            lastW = last;
             DataContext = Drone;
             InitializeComponent();
-            EnableAllKeys(); 
+            UpdateGrid.Visibility = Visibility.Visible;
+           
             //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             //submit.Content = "Update Drone";
            // choice = "update";
@@ -94,7 +96,7 @@ namespace PL
                 //this.Close();
             }
         }
-        private void submit_Click(object sender, RoutedEventArgs e)
+        private void submitUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {  
@@ -137,10 +139,11 @@ namespace PL
                 
                 MessageBox.Show(Drone.ToString());
                 //new DroneListWindow(bl).Show();
+                int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
+                lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);
                 this.Close();// replace old dronelist window
                 
             }
-            
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -164,29 +167,11 @@ namespace PL
             catch(DeliveryIssueException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-             //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-        //switch (messageBoxResult)       
-        //        {
-        //            case MessageBoxResult.None:
-        //                break;
-        //            case MessageBoxResult.OK:
-        //                Close();             
-        //                break;
-        //            case MessageBoxResult.Cancel:
-        //                break;
-        //            case MessageBoxResult.Yes:
-        //                break;
-        //            case MessageBoxResult.No:
-        //                break;
-        //            default:
-        //                break;
-        //        }
-            
+            }      
         }
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
         {
-            submit.IsEnabled = true;
+            submitUpdate.IsEnabled = true;
         }
         private void EnableSubmit()
         {
@@ -215,32 +200,18 @@ namespace PL
            
         }
 
-        private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            EnableAllKeys();
-            UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-            if (inputedOption==UpdateOptions.updateModel)
-            {
-                mTx.IsEnabled = true;
-            }
-        }
+        //private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+          
+        //    //UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
+        //    //if (inputedOption==UpdateOptions.updateModel)
+        //    //{
+        //    //    mTx.IsReadOnly = false;
+               
+        //    //}
+        //}
 
-        private void EnableAllKeys()
-        {
-            idTx.IsEnabled = false;
-            idTb.IsEnabled = false;
-            mTb.IsEnabled = false;
-            ltTb.IsEnabled = false;
-            lnTb.IsEnabled = false;
-            statTb.IsEnabled = false;
-            mTx.IsEnabled = false;
-            statCb.IsEnabled = false;
-            //dTx.IsEnabled = false;
-            lnTx.IsEnabled = false;
-            ltTx.IsEnabled = false;
-            wTb.IsEnabled = false;
-            wCb.IsEnabled = false;
-        }
+        
 
         private void sTCBAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -249,6 +220,8 @@ namespace PL
 
         private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
+
+        }
 
         private void dTb_Click(object sender, RoutedEventArgs e)
         {

@@ -7,9 +7,16 @@
         mc:Ignorable="d"
         WindowStyle="None"
         Title="DroneListWindow" Height="640" Width="800"
-  AllowsTransparency="True"     Background="red">
+  AllowsTransparency="True">
+    <Window.Resources>
 
- 
+
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/b_round.jpg"/>
+    </Window.Background>
+
+
     <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.Background
        >
@@ -17,7 +24,7 @@
         EndPoint="0,4" SpreadMethod="Repeat"
        >
                 <GradientStop
-        Color="#FF3DC3D0" Offset="4"
+        Color="#FF37A1AB" Offset="4"
       />
             </LinearGradientBrush>
         </Grid.Background>
@@ -28,28 +35,81 @@
         </Grid.RowDefinitions>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto" Background="#FF436A8E">
+VerticalAlignment="Stretch" Width="auto">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF7BD3E0" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name="StatusSelector" FontWeight="Bold" Background="Blue"    VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3"></ComboBox>
-            <ComboBox x:Name="WeightSelector" FontWeight="Bold" Background="Blue"    VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="WeightSelector"  Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="WeightSelector_SelectionChanged" SelectedIndex="3"/>
+            <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
+            <ComboBox Name="StatusSelector" FontWeight="Bold"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
+                      Background="AliceBlue" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497">
+                <ComboBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
 
+                    </Style>
+                </ComboBox.Resources>
+
+            </ComboBox>
+            <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497">
+                <ComboBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
+
+                    </Style>
+                </ComboBox.Resources>
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+
+            </ComboBox>
             <TextBox x:Name="textTBD" HorizontalAlignment="left" Margin="35,10,0,0" Text="TBD" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="0"/>
 
-            <Button Content="Add drone" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddDroneButton_Click"/>
+            <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
+                  FontWeight="Bold"   
+                       Margin="10,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+
+
 
         </Grid>
 
         <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" >
-            <ListView.ItemContainerStyle>                <Style TargetType="ListViewItem">                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <!--<ListView.Template>                <ControlTemplate>                    <Border CornerRadius="50" BorderThickness="50" >                        <ItemsPresenter></ItemsPresenter>                    </Border>                </ControlTemplate>            </ListView.Template>-->
+            <!--<ListView.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="50" BorderThickness="50" >
+                        <ItemsPresenter></ItemsPresenter>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Template>-->
 
             <ListView.View>
                 <GridView>
@@ -63,13 +123,14 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF436A8E">
             </ListView.View>
         </ListView>
 
-         <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="289" Click="Cancel_Click">
+        <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="Cancel_Click">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Button.Resources>
         </Button>
+
         <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
 
     </Grid>
