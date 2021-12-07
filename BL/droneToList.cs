@@ -13,7 +13,7 @@ namespace IBL
             public int Id { get; set; }
             public string Model { get; set; }
             public WeightCategories Weight { get; set; }
-            public double Battery { get; set; }
+            public int Battery { get; set; }
             public DroneStatuses Status { get; set; }
             public Location Loc { get; set; }
             public int ParcelId { get; set; }

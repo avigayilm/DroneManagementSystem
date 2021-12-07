@@ -29,8 +29,8 @@ namespace DAL
             DroneCharge DC = new DroneCharge();
             DC.DroneId = droneId;
             DC.StationId = stationId;
+            DC.ChargingTime = DateTime.Now;
             DataSource.chargeList.Add(DC);
-
         }
 
         /// <summary>
@@ -54,11 +54,9 @@ namespace DAL
         }
 
 
-        public IEnumerable<DroneCharge> GetDroneChargeList()// Display all the parcels in the array
+        public IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null)// Display all the parcels in the array
         {
-            List<DroneCharge> list = new();
-            DataSource.chargeList.ForEach(dc => list.Add(dc));
-            return (IEnumerable<DroneCharge>)list;
+            return DataSource.chargeList.FindAll(c => predicate == null ? true : predicate(c));
         }
     }
 }
