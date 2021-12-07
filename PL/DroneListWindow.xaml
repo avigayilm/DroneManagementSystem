@@ -12,9 +12,9 @@
 
 
     </Window.Resources>
-    <Window.Background>
+    <!--<Window.Background>
         <ImageBrush ImageSource="/b_round.jpg"/>
-    </Window.Background>
+    </Window.Background>-->
 
 
     <Grid Name="MainGrid" ShowGridLines="True">

@@ -189,7 +189,7 @@
 
     <Grid>
 
-        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Visible">
+        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>

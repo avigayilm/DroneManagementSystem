@@ -136,7 +136,7 @@ namespace PL
                                 break;
                             }
                     }
-                }
+                
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString());
                 //new DroneListWindow(bl).Show();
                 int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
