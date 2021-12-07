@@ -39,6 +39,7 @@ namespace BL
                     tempDro.Status = DroneStatuses.Delivery;
                     tempDro.Battery = rand.Next(40, 100);// random battery level so that the drone can still fly
                     tempDro.Loc = DroneLocation(p, tempDro);//location of drone
+                    tempDro.ParcelId = p.Id;
                 }
             }
             foreach (DroneToList dr in droneBL)

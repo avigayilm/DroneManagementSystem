@@ -35,7 +35,7 @@ namespace DAL
             //var temp2 = DataSource.dronesList[droneIndex];
             // temp2.status = DroneStatuses.Delivery;
             var temp = DataSource.parcelList[parcelIndex];
-            temp.PickedUp = DateTime.Now;
+            temp.PickedUpTime = DateTime.Now;
             //DataSource.dronesList[droneIndex] = temp2;
             DataSource.parcelList[parcelIndex] = temp;
         }

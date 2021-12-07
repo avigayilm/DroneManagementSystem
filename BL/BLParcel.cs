@@ -101,7 +101,7 @@ namespace BL
                 DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
                 IDAL.DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId); //retrieve parcel assigned
                 // checks that the drone is indeed ready to deliver it parcel
-                if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
+                if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUpTime == null))
                     throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
                 drone.Battery -= BatteryUsage(DroneDistanceFromParcel(drone, tempPack), 0);
                 IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.SenderId);
@@ -145,16 +145,19 @@ namespace BL
 
         public ParcelInTransfer GetParcelInTransfer(int parcelId)
         {
-            Parcel parcel = new();
+            IDAL.DO.Parcel parcel = new();
             ParcelInTransfer parcelInTrans = new();
-            parcel = GetParcel(parcelId);
+            parcel = idal1.GetParcel(parcelId);
+            IDAL.DO.Customer tempCus = idal1.GetCustomer(parcel.SenderId);
+
             parcel.CopyProperties(parcelInTrans);
-            parcelInTrans.DeliverdTo = GetCustomer(parcel.Receiver.Id).Loc;
-            parcelInTrans.PickedUp = GetCustomer(parcel.Sender.Id).Loc;
+            parcelInTrans.Sender = GetCustomerInParcel(parcel.SenderId);
+            parcelInTrans.Receiver = GetCustomerInParcel(parcel.ReceiverId);
+            parcelInTrans.PickedUp = new() {Longitude=tempCus.Longitude,Latitude= tempCus.Latitude };
+            tempCus = idal1.GetCustomer(parcel.ReceiverId);
+            parcelInTrans.DeliverdTo= new() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
             parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
-            parcelInTrans.Sender = parcel.Sender;
-            parcelInTrans.Receiver = parcel.Receiver;
-            if (parcel.PickedUp == null)
+            if (parcel.PickedUpTime == null)
                 parcelInTrans.Status = true;
             else
                 parcelInTrans.Status = false;
@@ -185,7 +188,8 @@ namespace BL
             parcel = GetParcel(parcelId);
             parcel.CopyProperties(parcelAtCustomer);
             parcelAtCustomer.ParcelStatus = GetParcelStatus(parcelId);
-            if (parcel.Dr.Loc == GetCustomer(parcel.Sender.Id).Loc)// if the location is same as sender
+            IDAL.DO.Customer dalCustomer = idal1.GetCustomer(parcel.Sender.Id);
+            if (parcel.Dr.Loc.Longitude == dalCustomer.Longitude && parcel.Dr.Loc.Latitude==dalCustomer.Latitude)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else
                 parcelAtCustomer.CustomerInP = parcel.Sender;
