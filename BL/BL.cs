@@ -46,7 +46,7 @@ namespace BL
             {
                 if (dr.Status != DroneStatuses.Delivery)
                 {
-                    dr.Status = (DroneStatuses)rand.Next(1);
+                    dr.Status = (DroneStatuses)rand.Next(2);
                     if (dr.Status == DroneStatuses.Available)
                     {
                         List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
@@ -58,11 +58,10 @@ namespace BL
                     }
                     else//it is in maintenance
                     {
-                        dr.Battery = rand.Next(20);// random battery level so that the drone can still fly
+                        dr.Battery = rand.Next(20,50);// random battery level so that the drone can still fly
                         List<IDAL.DO.Station> tempList = (List<IDAL.DO.Station>)idal1.GetAllStations();
                         IDAL.DO.Station tempSt = tempList[rand.Next(tempList.Count())];
-                        dr.Loc.Latitude = tempSt.Latitude;
-                        dr.Loc.Longitude = tempSt.Longitude;
+                        dr.Loc = new() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
                     }
                 }
             }
