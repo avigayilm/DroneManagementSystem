@@ -85,13 +85,13 @@ namespace PL
             try
             {
                 AddDrone();
-                MessageBox.Show(Drone.ToString());
+                MessageBox.Show(Drone.ToString(),"added Drone");
                 //   new DroneListWindow(bl).Show();
                 this.Close();
             }
             catch (AddingException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"Adding issue");
                 // new DroneListWindow(bl).Show();
                 //this.Close();
             }
@@ -137,7 +137,7 @@ namespace PL
                             }
                     }
                 
-                MessageBox.Show(bl.GetDrone(Drone.Id).ToString());
+                MessageBox.Show(bl.GetDrone(Drone.Id).ToString(),"Updated Drone");
                 //new DroneListWindow(bl).Show();
                 int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
                 lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);
@@ -147,27 +147,27 @@ namespace PL
             }
             catch(UpdateIssueException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
                // new DroneListWindow(bl).Show();
                // this.Close();
             }
             catch(BatteryIssueException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"BatteryIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
                 //new DroneListWindow(bl).Show();
                 //this.Close();
             }
             catch(DroneChargeException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"DroneCharge Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch(RetrievalException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"Retrieval Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch(DeliveryIssueException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"Delivery Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }      
         }
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
@@ -226,18 +226,27 @@ namespace PL
 
         private void dTb_Click(object sender, RoutedEventArgs e)
         {
-            parcelGrid.Visibility = Visibility.Visible;
+            if(parcelGrid.Visibility==Visibility.Hidden)
+                 parcelGrid.Visibility = Visibility.Visible;
+            else
+                parcelGrid.Visibility = Visibility.Hidden;
 
         }
 
         private void senderButton_Click(object sender, RoutedEventArgs e)
         {
-            senderGrid.Visibility = Visibility.Visible;
+            if (senderGrid.Visibility == Visibility.Hidden)
+                senderGrid.Visibility = Visibility.Visible;
+            else
+                senderGrid.Visibility = Visibility.Hidden;
         }
 
         private void receiverButton_Click(object sender, RoutedEventArgs e)
         {
-            receiverGrid.Visibility = Visibility.Visible;
+            if (receiverGrid.Visibility == Visibility.Hidden)
+                receiverGrid.Visibility = Visibility.Visible;
+            else
+                receiverGrid.Visibility = Visibility.Hidden;
         }
 
 

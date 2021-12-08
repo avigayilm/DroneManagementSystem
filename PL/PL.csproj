@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="b_round.jpg" />
+    <None Remove="sky.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="b_round.jpg" />
+    <Resource Include="sky.jpg" />
   </ItemGroup>
 
 </Project>
