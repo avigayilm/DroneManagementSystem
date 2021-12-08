@@ -22,83 +22,85 @@ namespace PL
 
     public enum UpdateOptions
     {
-        updateModel,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
+        updateModel =0,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow
+    public partial class DroneWindow //: CustomWindow
     {
         IBL.Ibl bl;
-       // public int StationId { get; set; }
-       // private IBL.BO.WeightCategories weight { get; set; }
+        //internal int id;
+       
+        public int StationId { get; set; }
         private IBL.BO.Drone Drone { get; set; }
-        string choice;
+        DroneListWindow lastW;
+
         double chargingTime;
-        public DroneWindow(IBL.Ibl IblObj, DroneListWindow last)// to add a drone
+        public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// to add a drone
         {
             InitializeComponent();
             bl = IblObj;
-            //statCb.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-           // wCb.SelectedIndex = 3;
-           // statCb.SelectedIndex = 3;
-            mTb.IsEnabled = false;
-            ltTb.IsEnabled = false;
-            lnTb.IsEnabled = false;
-            statTb.IsEnabled = false;
-            mTx.IsEnabled = false;
-            statCb.IsEnabled = false;
-            //dTx.IsEnabled = false;
-            lnTx.IsEnabled = false;
-            ltTx.IsEnabled = false;
-            mTb.IsEnabled = false;
-            DataContext = this;
-            submit.Content = "Add Drone";
-            ComboUpdateOption.Visibility = Visibility.Collapsed;// doesn't show the update option
-            choice = "add";
-            //DronesListView.ItemsSource = bl.GetAllDrones();
-
+            lastW = last;
+           wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            //note that u havent dealt with the "all" option in the enum
+            Drone = new();
+            DataContext = Drone;
+            sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
+            addGrid.Visibility = Visibility.Visible;
         }
 
         public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
         {
             bl = ibl;
             Drone = bl.GetDrone(dr.Id);
+            lastW = last;
             DataContext = Drone;
             InitializeComponent();
-            EnableAllKeys(); 
+            UpdateGrid.Visibility = Visibility.Visible;
+           
             //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            submit.Content = "Update Drone";
-            choice = "update";
+            //submit.Content = "Update Drone";
+           // choice = "update";
             ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
         }
 
-        //private void AddDrone()
-        //{
-        //    //id = (int.Parse(idTx.Text));
-        //    StationId = (int.Parse(sTx.Text));
+        private void AddDrone()
+        {
+            StationId= (int)sTCBAdd.SelectedItem;
             
-        //   // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
-        //    DroneLabel.Content = $"adding drone to the list";
-        //    //Drone dr = new()
-        //    //{
-        //    //    Id = id,
-        //    //    Weight = weight
-        //    //};
-        //    bl.AddDrone(Drone, StationId);
-        //}
+            
+           // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
+            DroneLabel.Content = $"adding drone to the list";
+            //Drone dr = new()
+            //{
+            //    Id = id,
+            //    Weight = weight
+            //};
+            
+            bl.AddDrone(Drone, StationId);
+            lastW.droneToLists.Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
+        }
 
-        private void submit_Click(object sender, RoutedEventArgs e)
+
+        private void submitAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                AddDrone();
+                MessageBox.Show(Drone.ToString());
+                //   new DroneListWindow(bl).Show();
+                this.Close();
+            }
+            catch (AddingException ex)
+            {
+                MessageBox.Show(ex.Message);
+                // new DroneListWindow(bl).Show();
+                //this.Close();
+            }
+        }
+        private void submitUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {  
-                if (choice == "add")
-                {
-                    //AddDrone();
-                    MessageBox.Show(Drone.ToString());
-                    new DroneListWindow(bl).Show();
-                    this.Close();
-                }
-                if (choice == "update")
-                {
+               
                     UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                     switch (inputedOption)
                     {
@@ -134,18 +136,15 @@ namespace PL
                                 break;
                             }
                     }
-                }
+                
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString());
                 //new DroneListWindow(bl).Show();
+                int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
+                lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);
+                lastW.DronesListView.Items.Refresh();
                 this.Close();// replace old dronelist window
                 
             }
-            catch (AddingException ex)
-            {
-                MessageBox.Show(ex.Message);
-               // new DroneListWindow(bl).Show();
-                //this.Close();
-             }
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -169,29 +168,11 @@ namespace PL
             catch(DeliveryIssueException ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-             //   _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-        //switch (messageBoxResult)       
-        //        {
-        //            case MessageBoxResult.None:
-        //                break;
-        //            case MessageBoxResult.OK:
-        //                Close();             
-        //                break;
-        //            case MessageBoxResult.Cancel:
-        //                break;
-        //            case MessageBoxResult.Yes:
-        //                break;
-        //            case MessageBoxResult.No:
-        //                break;
-        //            default:
-        //                break;
-        //        }
-            
+            }      
         }
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
         {
-            submit.IsEnabled = true;
+            submitUpdate.IsEnabled = true;
         }
         private void EnableSubmit()
         {
@@ -209,44 +190,39 @@ namespace PL
             EnableSubmit();
         }
 
-        private void sTx_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EnableSubmit();
-        }
+        //private void sTx_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    EnableSubmit();
+        //}
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-            //new DroneListWindow(bl).Show();
+          //  new DroneListWindow(bl).Show();
             this.Close();
            
         }
 
-        private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+          
+        //    //UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
+        //    //if (inputedOption==UpdateOptions.updateModel)
+        //    //{
+        //    //    mTx.IsReadOnly = false;
+               
+        //    //}
+        //}
+
+        
+
+        private void sTCBAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EnableAllKeys();
-            UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-            if (inputedOption==UpdateOptions.updateModel)
-            {
-                mTx.IsEnabled = true;
-            }
+            StationId = (int)sTCBAdd.SelectedItem;
         }
 
-        private void EnableAllKeys()
+        private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
-            idTx.IsEnabled = false;
-            idTb.IsEnabled = false;
-            mTb.IsEnabled = false;
-            ltTb.IsEnabled = false;
-            lnTb.IsEnabled = false;
-            statTb.IsEnabled = false;
-            mTx.IsEnabled = false;
-            statCb.IsEnabled = false;
-            //dTx.IsEnabled = false;
-            lnTx.IsEnabled = false;
-            ltTx.IsEnabled = false;
-            wTb.IsEnabled = false;
-            wCb.IsEnabled = false;
-        }
 
+        }
 
         private void dTb_Click(object sender, RoutedEventArgs e)
         {

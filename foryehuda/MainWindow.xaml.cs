@@ -27,7 +27,7 @@ namespace foryehuda
         {
             InitializeComponent();
             bl = new BL.BL();
-            DronesListView.ItemsSource = bl.GetAllDrones().ToList();
+            
         }
     }
 }
