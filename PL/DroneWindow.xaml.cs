@@ -227,6 +227,11 @@ namespace PL
 
         private void dTb_Click(object sender, RoutedEventArgs e)
         {
+            if(Drone.ParcelInTrans==null)
+            {
+                MessageBox.Show("Drone doesn't contain a parcel", "No assigned Parcel");
+                return;
+            }
             if(parcelGrid.Visibility==Visibility.Hidden)
                  parcelGrid.Visibility = Visibility.Visible;
             else
