@@ -443,7 +443,7 @@
             <TextBlock Name="DroneDisplay" Text="Drone" Grid.Row="1" Grid.Column="0" FontFamily="Constantia" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center"/>
             <TextBlock Name="idTx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
             <TextBlock Name="wCb" Text="{Binding Path=Weight, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" />
-            <TextBox Name="mTx" Grid.Row="4" Text="{Binding Path=Model, Mode=TwoWay}" Grid.Column="1" Style="{StaticResource modelEnable}" />
+            <TextBox Name="mTx" Text="{Binding Model}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource modelEnable}" />
             <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc.Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc.Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />

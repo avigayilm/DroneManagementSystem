@@ -141,6 +141,7 @@ namespace PL
                 //new DroneListWindow(bl).Show();
                 int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
                 lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);
+                lastW.DronesListView.Items.Refresh();
                 this.Close();// replace old dronelist window
                 
             }

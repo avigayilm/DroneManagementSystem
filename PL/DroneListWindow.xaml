@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="DroneListWindow" Height="640" Width="800"
-  AllowsTransparency="True">
+        Title="DroneListWindow" Height="640" Width="850"
+  AllowsTransparency="True" >
     <Window.Resources>
 
 
@@ -118,7 +118,8 @@ VerticalAlignment="Stretch" Width="auto">
                     <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="134"/>
                     <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="134"/>
                     <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="134"/>
-                    <GridViewColumn Header="Loc" DisplayMemberBinding="{Binding Loc}" Width="134"/>
+                    <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
+                    
                 </GridView>
             </ListView.View>
         </ListView>

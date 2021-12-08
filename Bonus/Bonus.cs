@@ -28,7 +28,7 @@ public static class Bonus
         int min = (int)minWDec;
         double secWDec = (minWDec - min) * 60;
         double sec = Math.Round( secWDec, 2);
-        const string quote = "\"  ";
+        const string quote = "\" ";
         string toReturn = deg + "° " + min + $"' " + sec + quote + direction + " ";
         return toReturn;
     }
