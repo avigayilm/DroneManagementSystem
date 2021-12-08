@@ -33,7 +33,6 @@ namespace PL
         private IBL.BO.Drone Drone { get; set; }
         DroneListWindow lastW;
 
-        double chargingTime;
         public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// to add a drone
         {
             InitializeComponent();
@@ -47,14 +46,18 @@ namespace PL
             addGrid.Visibility = Visibility.Visible;
         }
 
-        public DroneWindow(IBL.Ibl ibl, DroneListWindow last, DroneToList dr)// to update a drone
+        public DroneWindow(DroneListWindow last, IBL.Ibl ibl)// to update a drone
         {
-            bl = ibl;
-            Drone = bl.GetDrone(dr.Id);
-            lastW = last;
-            DataContext = Drone;
             InitializeComponent();
+            bl = ibl;
+            lastW = last;
+            Drone = bl.GetDrone(lastW.droneToList.Id);
+           
+
             UpdateGrid.Visibility = Visibility.Visible;
+            DataContext = Drone;
+            
+         
            
             //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             //submit.Content = "Update Drone";
@@ -139,8 +142,9 @@ namespace PL
                 
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString());
                 //new DroneListWindow(bl).Show();
-                int index = lastW.droneToLists.ToList().FindIndex(x => x.Id == Drone.Id);
-                lastW.droneToLists[index] = bl.getDroneToList(Drone.Id);
+
+                lastW.droneToLists.Remove(lastW.droneToList);
+                lastW.droneToLists.Add(bl.getDroneToList(Drone.Id));
                 lastW.DronesListView.Items.Refresh();
                 this.Close();// replace old dronelist window
                 
@@ -176,24 +180,24 @@ namespace PL
         }
         private void EnableSubmit()
         {
-          //  if (!string.IsNullOrWhiteSpace(idTx.Text) && sTx.Text != string.Empty && wCb.SelectedIndex > -1) ;
-            //  submit.IsEnabled = true;
+            if (!string.IsNullOrWhiteSpace(idTxAdd.Text) && !string.IsNullOrWhiteSpace(mTxAdd.Text) && wCbAdd.SelectedIndex != 3) 
+                sumbitAdd.IsEnabled = true;
         }
 
-        private void idTx_TextChanged(object sender, TextChangedEventArgs e)
+        private void idTxAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
             EnableSubmit();
         }
 
-        private void wCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void wCbAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EnableSubmit();
         }
 
-        //private void sTx_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    EnableSubmit();
-        //}
+        private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableSubmit();
+        }
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
           //  new DroneListWindow(bl).Show();
@@ -219,10 +223,7 @@ namespace PL
             StationId = (int)sTCBAdd.SelectedItem;
         }
 
-        private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+      
 
         private void dTb_Click(object sender, RoutedEventArgs e)
         {
@@ -239,7 +240,6 @@ namespace PL
         {
             receiverGrid.Visibility = Visibility.Visible;
         }
-
 
         //private void add_Click(object sender, RoutedEventArgs e)
         //{

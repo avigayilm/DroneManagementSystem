@@ -25,7 +25,7 @@ namespace BL
                 if (newCustomer.Loc.Latitude <= -90.0 || newCustomer.Loc.Latitude >= 90.0)// out of range of latitude
                     throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
                 if (newCustomer.Loc.Longitude <= -180.0 || newCustomer.Loc.Longitude >= 180.0)// out of range of latitude
-                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)\n");
+                    throw new InvalidInputException("The Longitude is not in a existing range(betweeen -180 and 180)\n");
                 IDAL.DO.Customer customer = new();
                 object obj1 = customer;
                 newCustomer.CopyProperties(obj1);

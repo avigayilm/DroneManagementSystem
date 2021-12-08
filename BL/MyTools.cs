@@ -190,7 +190,7 @@ namespace BL
 //            id = st.id,
 //            name = st.name,
 //            chargeSlots = st.chargeslots,
-//            longitude = st.loc.longitude,
+//            Longitude = st.loc.Longitude,
 //            latitude = st.loc.latitude
 //        };
 //        return dalStation;
@@ -224,7 +224,7 @@ namespace BL
 //        {
 //            id = cus.id,
 //            latitude = cus.loc.latitude,
-//            longitude = cus.loc.longitude,
+//            Longitude = cus.loc.Longitude,
 //            name = cus.name,
 //            phone = cus.phoneNumber
 //        };

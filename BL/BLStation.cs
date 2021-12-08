@@ -25,7 +25,7 @@ namespace BL
                 if (station.Loc.Latitude <= -90.0 || station.Loc.Latitude >= 90.0)// out of range of latitude
                     throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90)");
                 if (station.Loc.Longitude <= -180.0 || station.Loc.Longitude >= 180.0)// out of range of latitude
-                    throw new InvalidInputException("The longitude is not in a existing range(betweeen -180 and 180)");
+                    throw new InvalidInputException("The Longitude is not in a existing range(betweeen -180 and 180)");
                 IDAL.DO.Station st = new();
                 object obj = st;
                 station.CopyProperties(obj);

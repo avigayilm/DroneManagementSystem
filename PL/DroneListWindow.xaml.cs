@@ -34,6 +34,7 @@ namespace PL
     {
         IBL.Ibl bl;
         public ObservableCollection<DroneToList> droneToLists;
+        public DroneToList droneToList;
         public DroneListWindow(IBL.Ibl IblObj)
         {
             InitializeComponent();
@@ -80,8 +81,9 @@ namespace PL
 
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DroneToList selectedObject = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(bl, this, selectedObject).Show();
+            droneToList = (DroneToList)DronesListView.SelectedItem;
+            new DroneWindow(this, bl).Show();
+          
           //  this.Close();
         }
 

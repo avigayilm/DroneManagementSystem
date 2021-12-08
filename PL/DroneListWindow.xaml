@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="DroneListWindow" Height="640" Width="850"
+        Title="DroneListWindow" Height="640" Width="870"
   AllowsTransparency="True" >
     <Window.Resources>
 
@@ -96,7 +96,7 @@ VerticalAlignment="Stretch" Width="auto">
 
         </Grid>
 
-        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" >
+        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>

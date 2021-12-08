@@ -23,7 +23,7 @@ namespace IBL
                 result += $"Name is {Name}\n";
                 result += $"Telephone is {PhoneNumber.Substring(0, 3) + '-' + PhoneNumber.Substring(3)}\n";
                 result += $"Latitude is {Bonus.DecimalToSexagesimal(Loc.Latitude, 't')}\n";
-                result += $"longitude is{Bonus.DecimalToSexagesimal(Loc.Longitude, 'n')}\n";
+                result += $"Longitude is{Bonus.DecimalToSexagesimal(Loc.Longitude, 'n')}\n";
                 return result;
             }
         }
