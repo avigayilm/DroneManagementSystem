@@ -2,7 +2,12 @@
 
 public static class Bonus
 {
-    //function receives coordinates 
+    /// <summary>
+    ///  funciton receives char to decide wheter it is t=latitude and n=longitude
+    /// </summary>
+    /// <param name="coord"></param>
+    /// <param name="latOrLot"></param>
+    /// <returns></returns>
     public static string DecimalToSexagesimal(double coord, char latOrLot)
     {
         char direction;// funciton receives char to decide wheter it is t=latitude and n=longitude
