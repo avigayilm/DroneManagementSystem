@@ -12,25 +12,12 @@
     <Window.Background>
         <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
     </Window.Background>
-    <!--<Window.Background>
-        <ImageBrush ImageSource="/b_round.jpg"/>
-    </Window.Background>-->
 
 
     <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.Background>
             <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
-        <!--<Grid.Background
-       >
-            <LinearGradientBrush
-        EndPoint="0,4" SpreadMethod="Repeat"
-       >
-                <GradientStop
-        Color="#FF37A1AB" Offset="4"
-      />
-            </LinearGradientBrush>
-        </Grid.Background>-->
 
         <Grid.RowDefinitions >
             <RowDefinition Height="70*"/>
@@ -40,18 +27,14 @@
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
-            <!--<Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FF7BD3E0" Offset="0.5"/>
-                </LinearGradientBrush>
-            </Grid.Background>-->
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            
             <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
             <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
@@ -60,18 +43,16 @@ VerticalAlignment="Stretch" Width="auto">
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                         <Setter Property="BorderBrush" Value="#FF3C4497"/>
-
                     </Style>
                 </ComboBox.Resources>
-
             </ComboBox>
+            
             <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                         <Setter Property="BorderBrush" Value="#FF3C4497"/>
-
                     </Style>
                 </ComboBox.Resources>
                 <ComboBox.Background>
@@ -80,13 +61,15 @@ VerticalAlignment="Stretch" Width="auto">
                         <GradientStop Color="#FFA8E7F8" Offset="1"/>
                     </LinearGradientBrush>
                 </ComboBox.Background>
-
             </ComboBox>
-            <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+            
+            <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" 
+                     VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
+                     FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
 
             <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
-                  FontWeight="Bold"   
-                       Margin="10,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                  FontWeight="Bold"   Margin="10,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue"
+                    RenderTransformOrigin="0.3,0.533">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

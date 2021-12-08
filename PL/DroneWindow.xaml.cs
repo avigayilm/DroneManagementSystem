@@ -24,88 +24,75 @@ namespace PL
     {
         updateModel =0,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow //: CustomWindow
+    public partial class DroneWindow 
     {
         IBL.Ibl bl;
-        //internal int id;
-       
         public int StationId { get; set; }
         private IBL.BO.Drone Drone { get; set; }
         DroneListWindow lastW;
 
-        public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// to add a drone
+        public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// constructor to add a drone
         {
             InitializeComponent();
             bl = IblObj;
             lastW = last;
            wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //note that u havent dealt with the "all" option in the enum
             Drone = new();
             DataContext = Drone;
             sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
             addGrid.Visibility = Visibility.Visible;
         }
 
-        public DroneWindow(DroneListWindow last, IBL.Ibl ibl)// to update a drone
+        public DroneWindow(DroneListWindow last, IBL.Ibl ibl) // constructor to update a drone
         {
             InitializeComponent();
             bl = ibl;
             lastW = last;
             Drone = bl.GetDrone(lastW.droneToList.Id);
-           
-
-            UpdateGrid.Visibility = Visibility.Visible;
+            UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = Drone;
-            
-         
-           
-            //wCb.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //submit.Content = "Update Drone";
-           // choice = "update";
             ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
         }
-
+        /// <summary>
+        /// adds the drone to list view and list in bl
+        /// </summary>
         private void AddDrone()
         {
-            StationId= (int)sTCBAdd.SelectedItem;
-            
-            
-           // weight = (IBL.BO.WeightCategories)(WeightCategories)wCb.SelectedIndex;
+            StationId= (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             DroneLabel.Content = $"adding drone to the list";
-            //Drone dr = new()
-            //{
-            //    Id = id,
-            //    Weight = weight
-            //};
-            
             bl.AddDrone(Drone, StationId);
-            lastW.droneToLists.Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
+            lastW.droneToLists.Add(bl.GetAllDrones().First(x => x.Id == Drone.Id)); // after drone is updated in bl now updates listview
         }
-
-
+        /// <summary>
+        /// calls add drone function and displays added drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void submitAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 AddDrone();
                 MessageBox.Show(Drone.ToString(),"added Drone");
-                //   new DroneListWindow(bl).Show();
                 this.Close();
             }
             catch (AddingException ex)
             {
                 MessageBox.Show(ex.Message,"Adding issue");
-                // new DroneListWindow(bl).Show();
-                //this.Close();
             }
         }
-        private void submitUpdate_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// updates drone according to update option chosen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void submitUpdate_Click(object sender, RoutedEventArgs e) 
         {
             try
             {  
                
                     UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-                    switch (inputedOption)
+                    switch (inputedOption) 
                     {
                         case UpdateOptions.SendingToCharge:
                             {
@@ -141,25 +128,19 @@ namespace PL
                     }
                 
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(),"Updated Drone");
-                //new DroneListWindow(bl).Show();
-
-                lastW.droneToLists.Remove(lastW.droneToList);
+                lastW.droneToLists.Remove(lastW.droneToList); //updates the appropriate drone in list view 
                 lastW.droneToLists.Add(bl.getDroneToList(Drone.Id));
                 lastW.DronesListView.Items.Refresh();
-                this.Close();// replace old dronelist window
+                this.Close();
                 
             }
             catch(UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
-               // new DroneListWindow(bl).Show();
-               // this.Close();
             }
             catch(BatteryIssueException ex)
             {
                 MessageBox.Show(ex.Message,"BatteryIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //new DroneListWindow(bl).Show();
-                //this.Close();
             }
             catch(DroneChargeException ex)
             {
@@ -174,30 +155,54 @@ namespace PL
                 MessageBox.Show(ex.Message,"Delivery Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }      
         }
+       
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
         {
             submitUpdate.IsEnabled = true;
         }
+        /// <summary>
+        /// will enable adding button only if all appropriate fields were filled
+        /// </summary>
         private void EnableSubmit()
         {
             if (!string.IsNullOrWhiteSpace(idTxAdd.Text) && !string.IsNullOrWhiteSpace(mTxAdd.Text) && wCbAdd.SelectedIndex != 3) 
                 sumbitAdd.IsEnabled = true;
         }
 
+        /// <summary>
+        /// calls function to check whether to enable submit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void idTxAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
             EnableSubmit();
         }
 
+        /// <summary>
+        /// calls function to check whether to enable submit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void wCbAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EnableSubmit();
         }
 
+        /// <summary>
+        /// calls function to check whether to enable submit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mTxAdd_TextChanged(object sender, TextChangedEventArgs e)
         {
             EnableSubmit();
         }
+        /// <summary>
+        /// closes the window if user wishes to cancel choice
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
           //  new DroneListWindow(bl).Show();
@@ -224,7 +229,11 @@ namespace PL
         }
 
       
-
+        /// <summary>
+        /// collapses and opens view of parcel in drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dTb_Click(object sender, RoutedEventArgs e)
         {
             if(parcelGrid.Visibility==Visibility.Hidden)
@@ -233,7 +242,11 @@ namespace PL
                 parcelGrid.Visibility = Visibility.Hidden;
 
         }
-
+        /// <summary>
+        /// collapses and shows the seder of parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void senderButton_Click(object sender, RoutedEventArgs e)
         {
             if (senderGrid.Visibility == Visibility.Hidden)
@@ -242,6 +255,11 @@ namespace PL
                 senderGrid.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// toggles collapsing and showing of receiver of parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void receiverButton_Click(object sender, RoutedEventArgs e)
         {
             if (receiverGrid.Visibility == Visibility.Hidden)
@@ -249,13 +267,5 @@ namespace PL
             else
                 receiverGrid.Visibility = Visibility.Hidden;
         }
-
-        //private void add_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddDrone();
-        //    MessageBox.Show(droneTemp.ToString());
-        //    new DroneListWindow(bl).Show();
-        //    this.Close();
-        //}
     }
 }

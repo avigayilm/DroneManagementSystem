@@ -29,7 +29,7 @@ namespace PL
         }
 
       
-private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
+private void ShowDronesButton_Click(object sender, RoutedEventArgs e) // shows drone list button
         {
             new DroneListWindow(IblObj).Show();
         }

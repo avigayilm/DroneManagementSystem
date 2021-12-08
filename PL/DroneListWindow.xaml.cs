@@ -51,11 +51,18 @@ namespace PL
             droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
         }
 
+        /// <summary>
+        /// if selectors are changed the drone list will be updated accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneToLists_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             checkComboBoxes();
         }
-
+        /// <summary>
+        /// determines how to filter the list
+        /// </summary>
         private void checkComboBoxes()
         {
             int wInd = WeightSelector.SelectedIndex;
@@ -69,52 +76,59 @@ namespace PL
             if (wInd != 3 && sInd != 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);
         }
+
+        /// <summary>
+        /// will check selectors if one is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             checkComboBoxes();                                                                                                                                                                                                              //being called th                                                                                                   //check the combo boxes...
         }
 
+        /// <summary>
+        /// will check selectors if one is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             checkComboBoxes();
         }
 
+        /// <summary>
+        /// if a drone is double clicked will call update function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             droneToList = (DroneToList)DronesListView.SelectedItem;
             new DroneWindow(this, bl).Show();
-          
-          //  this.Close();
         }
-
+        /// <summary>
+        /// if add button is selected wil open adding window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddDroneButton_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl, this).Show();
-            //this.Close();
         }
 
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// allows user to cancel and return to main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
-        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        //{
-        //    DronesListView.ItemsSource= 
-        //}
-
-
-
-
-        //    private void Button_Click(object sender, RoutedEventArgs e)
-        //    {
-        //        new DroneWindow(IblObj).Show();
-        //    }
-        //}
     }
 }
