@@ -174,7 +174,7 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
 
         <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
@@ -462,7 +462,7 @@
             <TextBlock Name="DroneDisplay" Text="Drone" Grid.Row="1" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
             <TextBlock Name="idTx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
             <TextBlock Name="wCb" Text="{Binding Path=Weight, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" />
-            <TextBox Name="mTx" Text="{Binding Model}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource modelEnable}" ToolTip="Enter new Model" />
+            <TextBox Name="mTx" Text="{Binding Model}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource modelEnable}" ToolTip="Enter new Model" BorderBrush="{x:Null}" Background="Transparent" TextDecorations="Underline" FontFamily="Constantia" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc._Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc._Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />

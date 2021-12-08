@@ -10,13 +10,13 @@
   AllowsTransparency="True" >
 
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
+        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
     </Window.Background>
 
 
     <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
 
         <Grid.RowDefinitions >
