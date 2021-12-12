@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using DAL;
-using IDAL;
+using BO;
+using DO;
+using DalApi;
 
 
 namespace BL
 {
     public partial class BL
     {
-        public void AddParcel(Parcel newParcel)// do I have to check customer and receiver
+        public void AddParcel(BO.Parcel newParcel)// do I have to check customer and receiver
         {
             try
             {
                 if (newParcel.Id < 0)
                     throw new InvalidInputException("invalid Id input");
-                if (newParcel.Priority != Priorities.Emergency && newParcel.Priority != Priorities.Fast && newParcel.Priority != Priorities.Normal)
+                if (newParcel.Priority != BO.Priorities.Emergency && newParcel.Priority != BO.Priorities.Fast && newParcel.Priority != BO.Priorities.Normal)
                     throw new InvalidInputException("Invalid weightCategory");
-                if (newParcel.Weight != WeightCategories.Heavy && newParcel.Weight != WeightCategories.Light && newParcel.Weight != WeightCategories.Medium)
+                if (newParcel.Weight != BO.WeightCategories.Heavy && newParcel.Weight != BO.WeightCategories.Light && newParcel.Weight != BO.WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory");
                 if (string.IsNullOrEmpty(newParcel.Sender.Id))
                     throw new InvalidInputException("invalid inputId");
@@ -30,15 +30,15 @@ namespace BL
                 newParcel.Assigned = null;
                 newParcel.PickedUp = null;
                 newParcel.Dr = null;
-                IDAL.DO.Parcel parcelTemp = new();
+                DO.Parcel parcelTemp = new();
                 object obj1 = parcelTemp;
                 newParcel.CopyProperties(obj1);
-                parcelTemp = (IDAL.DO.Parcel)obj1;
+                parcelTemp = (DO.Parcel)obj1;
                 parcelTemp.SenderId = newParcel.Sender.Id;// only insert if sender exists?
                 parcelTemp.ReceiverId = newParcel.Receiver.Id;
                 idal1.AddParcel(parcelTemp);// can we print the parcelId here
             }
-            catch (IDAL.DO.DuplicateIdException ex)
+            catch (DO.DuplicateIdException ex)
             {
                 throw new AddingException("Couldn't add the parcel.", ex);
             }
@@ -54,8 +54,8 @@ namespace BL
                 double minDis = 0.0;
                 if (drone.Status == DroneStatuses.Available)
                 {
-                    IDAL.DO.Parcel? fittingPack = null; // new null temp parcel
-                    foreach (IDAL.DO.Parcel pack in tempParcelList)
+                    DO.Parcel? fittingPack = null; // new null temp parcel
+                    foreach (DO.Parcel pack in tempParcelList)
                     {
                         double droneDisFromPack = DroneDistanceFromParcel(drone, pack);
                         // pack is only eligible if its weight , distance and priority are best
@@ -78,7 +78,7 @@ namespace BL
                     if (fittingPack != null) // if indeed a fitting package has been found
                     {
                         drone.Status = DroneStatuses.Delivery; // update drone list in BL
-                        drone.ParcelId = ((IDAL.DO.Parcel)fittingPack).Id;
+                        drone.ParcelId = ((DO.Parcel)fittingPack).Id;
                         idal1.ParcelDrone(fittingPack.GetValueOrDefault().Id, droneId); // update parcel in IDAL
                     }
                     else
@@ -87,7 +87,7 @@ namespace BL
                 else
                     throw new UpdateIssueException("Couldn't assign the parcel");
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new UpdateIssueException("Couldn't assign", ex);
             }
@@ -99,12 +99,12 @@ namespace BL
             try
             {
                 DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
-                IDAL.DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId); //retrieve parcel assigned
+                DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId); //retrieve parcel assigned
                 // checks that the drone is indeed ready to deliver it parcel
                 if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUpTime == null))
                     throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
                 drone.Battery -= BatteryUsage(DroneDistanceFromParcel(drone, tempPack), 0);
-                IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.SenderId);
+                DO.Customer tempCus = idal1.GetCustomer(tempPack.SenderId);
                 Location tempLoc = new()
                 {
                     Longitude = tempCus.Longitude,
@@ -113,7 +113,7 @@ namespace BL
                 drone.Loc.Longitude = tempCus.Longitude;
                 idal1.ParcelPickedUp(tempPack.Id);//update parcel to picked up in idal
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new RetrievalException("drone has no parcel");
             }
@@ -126,10 +126,10 @@ namespace BL
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDro == default)
                     throw new RetrievalException("Couldn't get the Drone.\n,");
-                IDAL.DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
+                DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
                 if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
                     throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
-                IDAL.DO.Customer tempCus = idal1.GetCustomer(tempPack.ReceiverId);
+                DO.Customer tempCus = idal1.GetCustomer(tempPack.ReceiverId);
                 tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.SenderId), tempCus), (int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package
                 tempDro.Loc.Longitude = tempCus.Longitude;
                 tempDro.Loc.Latitude = tempCus.Latitude;
@@ -137,7 +137,7 @@ namespace BL
                 tempDro.ParcelId = 0;// unassign the parcel
                 idal1.ParcelDelivered(tempPack.Id);
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new DeliveryIssueException("Couldn't Deliver", ex);
             }
@@ -145,10 +145,10 @@ namespace BL
 
         public ParcelInTransfer GetParcelInTransfer(int parcelId)
         {
-            IDAL.DO.Parcel parcel = new();
+            DO.Parcel parcel = new();
             ParcelInTransfer parcelInTrans = new();
             parcel = idal1.GetParcel(parcelId);
-            IDAL.DO.Customer tempCus = idal1.GetCustomer(parcel.SenderId);
+            DO.Customer tempCus = idal1.GetCustomer(parcel.SenderId);
 
             parcel.CopyProperties(parcelInTrans);
             parcelInTrans.Sender = GetCustomerInParcel(parcel.SenderId);
@@ -170,7 +170,7 @@ namespace BL
         /// <returns></returns>
         internal ParcelStatuses GetParcelStatus(int parcelId)
         {
-            Parcel parcel = GetParcel(parcelId);
+            BO.Parcel parcel = GetParcel(parcelId);
             if (parcel.Delivered != null)
                 return ParcelStatuses.Delivered;
             if (parcel.PickedUp != null)
@@ -182,13 +182,14 @@ namespace BL
         }
 
         public ParcelAtCustomer GetParcelAtCustomer(int parcelId)
-        {
-            Parcel parcel = new();
+        { 
+        
+            BO.Parcel parcel = new();
             ParcelAtCustomer parcelAtCustomer = new();
             parcel = GetParcel(parcelId);
             parcel.CopyProperties(parcelAtCustomer);
             parcelAtCustomer.ParcelStatus = GetParcelStatus(parcelId);
-            IDAL.DO.Customer dalCustomer = idal1.GetCustomer(parcel.Sender.Id);
+            DO.Customer dalCustomer = idal1.GetCustomer(parcel.Sender.Id);
             if (parcel.Dr.Loc.Longitude == dalCustomer.Longitude && parcel.Dr.Loc.Latitude==dalCustomer.Latitude)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else
@@ -196,12 +197,12 @@ namespace BL
             return parcelAtCustomer;
         }
 
-        public Parcel GetParcel(int parcelId)
+        public BO.Parcel GetParcel(int parcelId)
         {
             try
             {
-                Parcel parcel = new();
-                IDAL.DO.Parcel parcelDal = idal1.GetParcel(parcelId);
+                BO.Parcel parcel = new();
+                DO.Parcel parcelDal = idal1.GetParcel(parcelId);
                 parcelDal.CopyProperties(parcel);
                 parcel.Sender = GetCustomerInParcel(parcelDal.SenderId);
                 parcel.Receiver = GetCustomerInParcel(parcelDal.ReceiverId);
@@ -210,26 +211,26 @@ namespace BL
                 parcel.Dr = new();
                 if (parcelDal.DroneId != 0)
                 {
-                    Drone dr = GetDrone(parcelDal.DroneId);
+                    BO.Drone dr = GetDrone(parcelDal.DroneId);
                     dr.CopyProperties(parcel.Dr);
                     parcel.Dr.Loc = new();
                     dr.Loc.CopyProperties(parcel.Dr.Loc);
                 }
                 return parcel;
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new RetrievalException("Couldn't get the Parcel.", ex);
             }
         }
 
 
-        public IEnumerable<ParcelToList> GetAllParcels(Predicate<IDAL.DO.Parcel> predicate = null)
+        public IEnumerable<ParcelToList> GetAllParcels(Predicate<DO.Parcel> predicate = null)
         {
             List<ParcelToList> tempList = new();
             //idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
-            List<IDAL.DO.Parcel> tempParcelList = idal1.GetAllParcels(predicate).ToList();
-            foreach (IDAL.DO.Parcel p in tempParcelList)
+            List<DO.Parcel> tempParcelList = idal1.GetAllParcels(predicate).ToList();
+            foreach (DO.Parcel p in tempParcelList)
             {
                 ParcelToList parcel = new();
                 p.CopyProperties(parcel);

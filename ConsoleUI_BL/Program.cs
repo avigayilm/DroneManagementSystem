@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IBL;
+using BO;
+using BlApi;
 
 // need to finish empty input by update
 //update battery for the droneCharge functions
@@ -24,7 +24,7 @@ namespace ConsoleUI_BL
         private static void ShowMenuBL()
         {
 
-            Ibl ibl1 = new BL.BL();
+            BlApi.Ibl ibl1 = BlApi.BlFactory.GetBl();
 
             EntityOptions entityOption;
             MenuOptions menuOption;

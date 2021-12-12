@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using DAL;
-using IDAL;
+using BO;
+using DO;
+using DalApi;
 
 namespace BL
 {
@@ -17,7 +17,7 @@ namespace BL
             if (tempDron.Status == DroneStatuses.Available)
             {
 
-                IDAL.DO.Station tempStation = FindClosestStation(tempDron);// returns a station that the drone can fly to.
+                DO.Station tempStation = FindClosestStation(tempDron);// returns a station that the drone can fly to.
                 bool hasEnoughBattery = CanReachstation(tempDron, tempStation);
                 if (hasEnoughBattery)//if it's available and there is enough battery
                 {
@@ -55,7 +55,7 @@ namespace BL
                 DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDron.Status == DroneStatuses.Maintenance)
                 {
-                    List<IDAL.DO.DroneCharge> tempDroneChargeList = (List<IDAL.DO.DroneCharge>)idal1.GetDroneChargeList();
+                    List<DO.DroneCharge> tempDroneChargeList = (List<DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = tempDroneChargeList.FindIndex(dc => dc.DroneId == droneId);// finding the index of drone to get the station id
                     int stationId = tempDroneChargeList[droneChargeIndex].StationId;
                     // update drone
@@ -75,7 +75,7 @@ namespace BL
                 else
                     throw new DroneChargeException("Couldn't release the drone from charge");// throw approptate acception
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new RetrievalException("Couldn't get the Drone.", ex);
             }
@@ -92,7 +92,7 @@ namespace BL
         {
             List<DroneInCharge> listDronecharge = new();
             var chargingListIdal = idal1.DronesChargingAtStation(stationId);
-            foreach (IDAL.DO.Drone d in chargingListIdal)
+            foreach (DO.Drone d in chargingListIdal)
             {
                 listDronecharge.Add(getDroneInCharge(d.Id));
             }

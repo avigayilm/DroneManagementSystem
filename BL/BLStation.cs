@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using DAL;
-using IDAL;
+using BO;
+using DO;
+using DalApi;
 
 namespace BL
 {
     public partial class BL
     {
         
-        public void AddStation(Station station)
+        public void AddStation(BO.Station station)
         {
             try
             {
                 if (station.AvailableChargeSlots < 0)
-                    throw new InvalidInputException("The number of charging slots is less than 0");
+                    throw new BO.InvalidInputException("The number of charging slots is less than 0");
                 if (station.Id <= 0)
                     throw new InvalidInputException("The Id is less than zero");
                 if (string.IsNullOrEmpty(station.Name))
@@ -26,21 +26,21 @@ namespace BL
                     throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90)");
                 if (station.Loc.Longitude <= -180.0 || station.Loc.Longitude >= 180.0)// out of range of latitude
                     throw new InvalidInputException("The Longitude is not in a existing range(betweeen -180 and 180)");
-                IDAL.DO.Station st = new();
+                DO.Station st = new();
                 object obj = st;
                 station.CopyProperties(obj);
-                st = (IDAL.DO.Station)obj;
+                st = (DO.Station)obj;
                 st.Latitude = station.Loc.Latitude;
                 st.Longitude = station.Loc.Longitude;
                 idal1.AddStation(st);
                 station.Charging = new();
             }
 
-            catch (IDAL.DO.DuplicateIdException ex)
+            catch (DO.DuplicateIdException ex)
             {
                 throw new AddingException("Couldn't add the station.", ex);
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new AddingException("Couldn't add the station.", ex);
             }
@@ -52,7 +52,7 @@ namespace BL
             {
                 idal1.UpdateStation(stationId, name, chargingSlots);
             }
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new UpdateIssueException("Invalid ID.", ex);
             }
@@ -64,11 +64,11 @@ namespace BL
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        internal IDAL.DO.Station FindClosestStation(DroneToList dr)
+        internal DO.Station FindClosestStation(DroneToList dr)
         {
-            double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-            List<IDAL.DO.Station> tempList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
-            foreach (IDAL.DO.Station st in tempList)
+            double minDistance = double.MaxValue; DO.Station temp = new();
+            List<DO.Station> tempList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
+            foreach (DO.Station st in tempList)
             {
                 double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
                 if (distance < minDistance)
@@ -86,32 +86,32 @@ namespace BL
         /// <param name="withCharging"></param>
         /// <param name="dr"></param>
         /// <returns></returns>
-        internal bool CanReachstation(DroneToList dr, IDAL.DO.Station station)
+        internal bool CanReachstation(DroneToList dr, DO.Station station)
         {
             if (BatteryUsage(Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, station.Longitude, station.Latitude), 0) < dr.Battery)
                 return true;
             throw new BatteryIssueException("Not enough battery to fly to the station");
         }
       
-        public Station GetStation(int stationId)
+        public BO.Station GetStation(int stationId)
         {
             try
             {
-                Station station = new();
-                IDAL.DO.Station stationDal = idal1.GetStation(stationId); //get the station from DAL
+                BO.Station station = new();
+                DO.Station stationDal = idal1.GetStation(stationId); //get the station from DAL
                 stationDal.CopyProperties(station); // copy its preperties to BL
                 station.Loc = new() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
                 station.Charging = getAllDroneInCharge(stationId).Item1.ToList();
                 return station;
             }
 
-            catch (IDAL.DO.MissingIdException ex)
+            catch (DO.MissingIdException ex)
             {
                 throw new RetrievalException("Couldn't get the Station.", ex);
             }
         }
     
-        public IEnumerable<StationToList> GetAllStation(Predicate<IDAL.DO.Station> predicate = null)
+        public IEnumerable<StationToList> GetAllStation(Predicate<DO.Station> predicate = null)
         {
             List<StationToList> tempList = new();
             
@@ -127,12 +127,12 @@ namespace BL
     }
 }
 
-//internal (IDAL.DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
+//internal (DO.Station, double) FindClosestPossibleStation1(DroneToList dr)
 //{
 
-//    double minDistance = double.MaxValue; IDAL.DO.Station temp = new();
-//    List<IDAL.DO.Station> AvailableChargeList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
-//    foreach (IDAL.DO.Station st in AvailableChargeList)
+//    double minDistance = double.MaxValue; DO.Station temp = new();
+//    List<DO.Station> AvailableChargeList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
+//    foreach (DO.Station st in AvailableChargeList)
 //    {
 //        double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
 //        if (distance < minDistance)

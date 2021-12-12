@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using DAL;
-using IDAL;
+using BO;
+using DO;
+using DalApi;
 
 
 namespace BL
 {
-    public partial class BL : IBL.Ibl
+    public sealed partial class BL : BlApi.Ibl
     {
-        internal static Random rand = new Random();
-        internal List<IBL.BO.DroneToList> droneBL = new();
-        IDal idal1 = new DAL.DalObject();
-        public BL()
+        internal static Random rand = new();
+        internal List<BO.DroneToList> droneBL = new();
+        DalApi.Idal idal1 = DalFactory.GetDal();
+        private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
+
+        public static BL Instance
+        {
+            get
+            {
+                return instance.Value;
+            }
+        }
+        private BL()
         {
 
             //DAL.DalObject dal2 = new();
@@ -27,11 +36,11 @@ namespace BL
             double pwrUsgHeavy = tempArray[3];
             double chargePH = tempArray[4];
 
-            //List<IDAL.DO.Drone> tempDroneList = (List<IDAL.DO.Drone>)idal1.GetAllDrones();
+            //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
-            List<IDAL.DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
+            List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
 
-            foreach (IDAL.DO.Parcel p in undeliveredParcel)
+            foreach (DO.Parcel p in undeliveredParcel)
             {
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);
                 if (tempDro != default)// if there is a drone assigned to the parcel
@@ -49,8 +58,8 @@ namespace BL
                     dr.Status = (DroneStatuses)rand.Next(2);
                     if (dr.Status == DroneStatuses.Available)
                     {
-                        List<IDAL.DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
-                        IDAL.DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
+                        List<DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
+                        DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
                         dr.Loc = new() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
                         // calculates battery usage of flying to closest station to drone
                         int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);
@@ -59,8 +68,8 @@ namespace BL
                     else//it is in maintenance
                     {
                         dr.Battery = rand.Next(20,50);// random battery level so that the drone can still fly
-                        List<IDAL.DO.Station> tempList = (List<IDAL.DO.Station>)idal1.GetAllStations();
-                        IDAL.DO.Station tempSt = tempList[rand.Next(tempList.Count())];
+                        List<DO.Station> tempList = (List<DO.Station>)idal1.GetAllStations();
+                        DO.Station tempSt = tempList[rand.Next(tempList.Count())];
                         dr.Loc = new() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
                     }
                 }

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IDAL;
-using DAL;
+
 
 namespace BL
 {
@@ -158,7 +156,7 @@ namespace BL
 /// <returns></returns>
 
 
-//    public static Drone ToBLDrone(this IDAL.DO.Drone dro)
+//    public static Drone ToBLDrone(this DO.Drone dro)
 //    {
 //        Drone BLDrone = new()
 //        {
@@ -173,19 +171,19 @@ namespace BL
 //    /// </summary>
 //    /// <param name="dr"></param>
 //    /// <returns></returns>
-//    public static IEnumerable<Drone> ToBLDroneList(this List<IDAL.DO.Drone> dr)
+//    public static IEnumerable<Drone> ToBLDroneList(this List<DO.Drone> dr)
 //    {
 //        List<Drone> BLdrones = new();
-//        foreach (IDAL.DO.Drone dro in dr)
+//        foreach (DO.Drone dro in dr)
 //        {
 //            BLdrones.Add(dro.ToBLDrone());//adds to the list all drones from idal list converted
 //        }
 //        return BLdrones;
 //    }
 
-//    public static IDAL.DO.Station StationToDal(this Station st)
+//    public static DO.Station StationToDal(this Station st)
 //    {
-//        IDAL.DO.Station dalStation = new()
+//        DO.Station dalStation = new()
 //        {
 //            id = st.id,
 //            name = st.name,
@@ -200,15 +198,15 @@ namespace BL
 //    /// </summary>
 //    /// <param name="par"></param>
 //    /// <returns></returns>
-//    public static IDAL.DO.Parcel ParcelToDal(this Parcel par)
+//    public static DO.Parcel ParcelToDal(this Parcel par)
 //    {
-//        IDAL.DO.Parcel dalParcel = new()
+//        DO.Parcel dalParcel = new()
 //        {
 //            id = par.id,
 //            senderid = par.sender.id,
 //            targetid = par.receiver.id,
-//            weight = (IDAL.DO.WeightCategories)par.weight,
-//            priority = (IDAL.DO.Priorities)par.priority,
+//            weight = (DO.WeightCategories)par.weight,
+//            priority = (DO.Priorities)par.priority,
 //            requested = par.requested,
 //            scheduled = par.scheduled,
 //            pickedUp = par.pickedUp,
@@ -218,9 +216,9 @@ namespace BL
 //        return dalParcel;
 //    }
 
-//    public static IDAL.DO.Customer CustomerToDal(this Customer cus)
+//    public static DO.Customer CustomerToDal(this Customer cus)
 //    {
-//        IDAL.DO.Customer dalCustomer = new()
+//        DO.Customer dalCustomer = new()
 //        {
 //            id = cus.id,
 //            latitude = cus.loc.latitude,

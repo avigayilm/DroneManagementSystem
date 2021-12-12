@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL;
+using DO;
+using DalApi;
 
 namespace ConsoleUI
 {
@@ -23,8 +23,8 @@ namespace ConsoleUI
         private static void ShowMenu()
         {
 
-            DAL.DalObject dal = new();
-            IDal idal1 = new DAL.DalObject();
+           // Dal.DalObject dal = new();
+             DalApi.Idal dal = DalFactory.GetDal();
 
             EntityOptions entityOption;
             MenuOptions menuOption;

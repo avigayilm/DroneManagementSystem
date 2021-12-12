@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{1E197EEE-BA8B-432A-A937-0B3E843DFD84}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{1FF77C5B-BDE0-4B59-8F27-2A1445C0D98F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalApi", "DAL\DalApi.csproj", "{1FF77C5B-BDE0-4B59-8F27-2A1445C0D98F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bonus", "Bonus\Bonus.csproj", "{8D409248-8C8E-4247-8E0C-FF6BC6FA0163}"
 EndProject
@@ -18,6 +18,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{71CFD214-36A4-4258-9540-1EC57D63D13F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{531B36CA-4003-48EC-AA28-96EE2D028DA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{59732219-D237-49EF-AEAD-530C7574ED44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xmlFiles", "xmlFiles", "{FF0A2A03-9389-4BD6-8745-985A51DD408A}"
+	ProjectSection(SolutionItems) = preProject
+		bin\net5.0-windows\config.xml = bin\net5.0-windows\config.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalObject", "ClassLibrary1\DalObject.csproj", "{ED2A241A-07B6-4E77-A64B-3B8FFBD12BE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +66,14 @@ Global
 		{531B36CA-4003-48EC-AA28-96EE2D028DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531B36CA-4003-48EC-AA28-96EE2D028DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531B36CA-4003-48EC-AA28-96EE2D028DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59732219-D237-49EF-AEAD-530C7574ED44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59732219-D237-49EF-AEAD-530C7574ED44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59732219-D237-49EF-AEAD-530C7574ED44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59732219-D237-49EF-AEAD-530C7574ED44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED2A241A-07B6-4E77-A64B-3B8FFBD12BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED2A241A-07B6-4E77-A64B-3B8FFBD12BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED2A241A-07B6-4E77-A64B-3B8FFBD12BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED2A241A-07B6-4E77-A64B-3B8FFBD12BE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

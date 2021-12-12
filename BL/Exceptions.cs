@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace IBL
-{
+
     namespace BO
     {
         /// <summary>
@@ -187,4 +186,4 @@ namespace IBL
 
 
     }
-}
+

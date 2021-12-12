@@ -11,8 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BO;
 
 namespace PL
 {
@@ -26,12 +26,12 @@ namespace PL
     }
     public partial class DroneWindow 
     {
-        IBL.Ibl bl;
+        BlApi.Ibl bl;
         public int StationId { get; set; }
-        private IBL.BO.Drone Drone { get; set; }
+        private Drone Drone { get; set; }
         DroneListWindow lastW;
 
-        public DroneWindow(IBL.Ibl IblObj , DroneListWindow last)// constructor to add a drone
+        public DroneWindow(BlApi.Ibl IblObj , DroneListWindow last)// constructor to add a drone
         {
             InitializeComponent();
             bl = IblObj;
@@ -43,7 +43,7 @@ namespace PL
             addGrid.Visibility = Visibility.Visible;
         }
 
-        public DroneWindow(DroneListWindow last, IBL.Ibl ibl) // constructor to update a drone
+        public DroneWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
         {
             InitializeComponent();
             bl = ibl;
