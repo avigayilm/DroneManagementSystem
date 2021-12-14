@@ -22,24 +22,25 @@ namespace PL
 
     public enum UpdateOptions
     {
-        updateModel =0,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
+        updateModel = 0, SendingToCharge, ReleaseFromCharge, Assign, CollectingAParcel, DeliveringAParcel
     }
-    public partial class DroneWindow 
+    public partial class DroneWindow
     {
         BlApi.Ibl bl;
         public int StationId { get; set; }
         private Drone Drone { get; set; }
         DroneListWindow lastW;
 
-        public DroneWindow(BlApi.Ibl IblObj , DroneListWindow last)// constructor to add a drone
+        public DroneWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
         {
             InitializeComponent();
             bl = IblObj;
             lastW = last;
-           wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            Drone = new();
+            wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            Drone = new Drone();
             DataContext = Drone;
-            sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
+            //sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
+            sTCBAdd.ItemsSource = bl.GetAllStation().Select(s => s.Id);
             addGrid.Visibility = Visibility.Visible;
         }
 
@@ -51,14 +52,14 @@ namespace PL
             Drone = bl.GetDrone(lastW.droneToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = Drone;
-            ComboUpdateOption.ItemsSource= Enum.GetValues(typeof(UpdateOptions));
+            ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
         }
         /// <summary>
         /// adds the drone to list view and list in bl
         /// </summary>
         private void AddDrone()
         {
-            StationId= (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
+            StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             DroneLabel.Content = $"adding drone to the list";
             bl.AddDrone(Drone, StationId);
             lastW.droneToLists.Add(bl.GetAllDrones().First(x => x.Id == Drone.Id)); // after drone is updated in bl now updates listview
@@ -73,12 +74,12 @@ namespace PL
             try
             {
                 AddDrone();
-                MessageBox.Show(Drone.ToString(),"added Drone");
+                MessageBox.Show(Drone.ToString(), "added Drone");
                 this.Close();
             }
             catch (AddingException ex)
             {
-                MessageBox.Show(ex.Message,"Adding issue");
+                MessageBox.Show(ex.Message, "Adding issue");
             }
         }
         /// <summary>
@@ -86,76 +87,76 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void submitUpdate_Click(object sender, RoutedEventArgs e) 
+        private void submitUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
-            {  
-               
-                    UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
-                    switch (inputedOption) 
-                    {
-                        case UpdateOptions.SendingToCharge:
-                            {
+            {
 
-                                bl.SendingDroneToCharge(Drone.Id);
-                                break;
-                            }
-                        case UpdateOptions.ReleaseFromCharge:
-                            {
-                                bl.ReleasingDroneFromCharge(Drone.Id);
-                                break;
-                            }
-                        case UpdateOptions.Assign:
-                            {
-                                bl.AssignParcelToDrone(Drone.Id);
-                                break;
-                            }
-                        case UpdateOptions.CollectingAParcel:
-                            {
-                                bl.CollectingParcelByDrone(Drone.Id);
-                                break;
-                            }
-                        case UpdateOptions.DeliveringAParcel:
-                            {
-                                bl.DeliverParcelByDrone(Drone.Id);
-                                break;
-                            }
-                        case UpdateOptions.updateModel:
-                            {
-                                bl.UpdateDrone(Drone.Id, mTx.Text);
-                                break;
-                            }
-                    }
-                
-                MessageBox.Show(bl.GetDrone(Drone.Id).ToString(),"Updated Drone");
+                UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
+                switch (inputedOption)
+                {
+                    case UpdateOptions.SendingToCharge:
+                        {
+
+                            bl.SendingDroneToCharge(Drone.Id);
+                            break;
+                        }
+                    case UpdateOptions.ReleaseFromCharge:
+                        {
+                            bl.ReleasingDroneFromCharge(Drone.Id);
+                            break;
+                        }
+                    case UpdateOptions.Assign:
+                        {
+                            bl.AssignParcelToDrone(Drone.Id);
+                            break;
+                        }
+                    case UpdateOptions.CollectingAParcel:
+                        {
+                            bl.CollectingParcelByDrone(Drone.Id);
+                            break;
+                        }
+                    case UpdateOptions.DeliveringAParcel:
+                        {
+                            bl.DeliverParcelByDrone(Drone.Id);
+                            break;
+                        }
+                    case UpdateOptions.updateModel:
+                        {
+                            bl.UpdateDrone(Drone.Id, mTx.Text);
+                            break;
+                        }
+                }
+
+                MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
                 lastW.droneToLists.Remove(lastW.droneToList); //updates the appropriate drone in list view 
                 lastW.droneToLists.Add(bl.getDroneToList(Drone.Id));
                 lastW.DronesListView.Items.Refresh();
                 this.Close();
-                
+
             }
-            catch(UpdateIssueException ex)
+            catch (UpdateIssueException ex)
             {
                 MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch(BatteryIssueException ex)
+            catch (BatteryIssueException ex)
             {
-                MessageBox.Show(ex.Message,"BatteryIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, "BatteryIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch(DroneChargeException ex)
+            catch (DroneChargeException ex)
             {
-                MessageBox.Show(ex.Message,"DroneCharge Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, "DroneCharge Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch(RetrievalException ex)
+            catch (RetrievalException ex)
             {
-                MessageBox.Show(ex.Message,"Retrieval Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, "Retrieval Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch(DeliveryIssueException ex)
+            catch (DeliveryIssueException ex)
             {
-                MessageBox.Show(ex.Message,"Delivery Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }      
+                MessageBox.Show(ex.Message, "Delivery Issue", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
-       
+
         private void mTx_TextChanged(object sender, TextChangedEventArgs e)
         {
             submitUpdate.IsEnabled = true;
@@ -165,7 +166,7 @@ namespace PL
         /// </summary>
         private void EnableSubmit()
         {
-            if (!string.IsNullOrWhiteSpace(idTxAdd.Text) && !string.IsNullOrWhiteSpace(mTxAdd.Text) && wCbAdd.SelectedIndex != 3) 
+            if (!string.IsNullOrWhiteSpace(idTxAdd.Text) && !string.IsNullOrWhiteSpace(mTxAdd.Text) && wCbAdd.SelectedIndex != 3)
                 sumbitAdd.IsEnabled = true;
         }
 
@@ -205,30 +206,30 @@ namespace PL
         /// <param name="e"></param>
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-          //  new DroneListWindow(bl).Show();
+            //  new DroneListWindow(bl).Show();
             this.Close();
-           
+
         }
 
         //private void UpdateOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
-          
+
         //    //UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
         //    //if (inputedOption==UpdateOptions.updateModel)
         //    //{
         //    //    mTx.IsReadOnly = false;
-               
+
         //    //}
         //}
 
-        
+
 
         private void sTCBAdd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StationId = (int)sTCBAdd.SelectedItem;
         }
 
-      
+
         /// <summary>
         /// collapses and opens view of parcel in drone
         /// </summary>
@@ -236,13 +237,13 @@ namespace PL
         /// <param name="e"></param>
         private void dTb_Click(object sender, RoutedEventArgs e)
         {
-            if(Drone.ParcelInTrans==null)
+            if (Drone.ParcelInTrans == null)
             {
                 MessageBox.Show("Drone doesn't contain a parcel", "No assigned Parcel");
                 return;
             }
-            if(parcelGrid.Visibility==Visibility.Hidden)
-                 parcelGrid.Visibility = Visibility.Visible;
+            if (parcelGrid.Visibility == Visibility.Hidden)
+                parcelGrid.Visibility = Visibility.Visible;
             else
                 parcelGrid.Visibility = Visibility.Hidden;
 

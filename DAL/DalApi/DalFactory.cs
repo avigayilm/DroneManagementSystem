@@ -46,7 +46,7 @@ namespace DalApi
             }
 
             // Get concrete Dal implementation's class metadata object
-            // 1st element in the list inside the string is full class name:
+            ////////// 1st element in the list inside the string is full class name:
             //    namespace = "Dal" or as specified in the "namespace" attribute in the config file,
             //    class name = package name or as specified in the "class" attribute in the config file
             //    the last requirement (class name = package name) is not mandatory in general - but this is the way it

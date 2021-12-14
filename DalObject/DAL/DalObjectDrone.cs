@@ -77,7 +77,7 @@ namespace Dal
         /// <returns></returns>
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
-            List<Drone> charging = new();
+            List<Drone> charging = new List<Drone>();
             DataSource.chargeList.ForEach(c => { if (c.StationId == stationId) charging.Add(GetDrone(c.DroneId));});
             return charging;
         }

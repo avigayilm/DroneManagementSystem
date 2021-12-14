@@ -4,15 +4,15 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\bin\net5.0-windows\</OutputPath>
+    <RootNamespace />
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="b_round.jpg" />
+    <None Remove="images (1).jpg" />
+    <None Remove="images.jpg" />
     <None Remove="sky.jpg" />
+    <None Remove="thumbnail-drone-companies.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +21,10 @@
 
   <ItemGroup>
     <Resource Include="b_round.jpg" />
+    <Resource Include="images (1).jpg" />
+    <Resource Include="images.jpg" />
     <Resource Include="sky.jpg" />
+    <Resource Include="thumbnail-drone-companies.jpg" />
   </ItemGroup>
 
 </Project>

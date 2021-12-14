@@ -70,7 +70,7 @@ namespace Dal
         /// <returns></returns>
         public List<Customer> CustomersDeliverdTo()
         {
-            List<Customer> temp = new();
+            List<Customer> temp = new List<Customer>();
             foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null))//for every delivered parcel add its customer to the list
                 temp.Add(GetCustomer(p.ReceiverId));
             return temp;

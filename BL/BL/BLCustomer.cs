@@ -1,0 +1,98 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BO;
+using DO;
+using DalApi;
+
+namespace BL
+{
+    public partial class BL
+    {
+      
+        public void AddCustomer(BO.Customer newCustomer)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(newCustomer.Id))
+                    throw new InvalidInputException("invalid Id input");
+                if (string.IsNullOrEmpty(newCustomer.Name))
+                    throw new InvalidInputException("invalid name input");
+                if (string.IsNullOrEmpty(newCustomer.PhoneNumber))
+                    throw new InvalidInputException("invalid phonenumber");
+                if (newCustomer.Loc.Latitude <= -90.0 || newCustomer.Loc.Latitude >= 90.0)// out of range of latitude
+                    throw new InvalidInputException("The latitude is not in a existing range(between -90 and 90) \n");
+                if (newCustomer.Loc.Longitude <= -180.0 || newCustomer.Loc.Longitude >= 180.0)// out of range of latitude
+                    throw new InvalidInputException("The Longitude is not in a existing range(betweeen -180 and 180)\n");
+                DO.Customer customer = new DO.Customer();
+                object obj1 = customer;
+                newCustomer.CopyProperties(obj1);
+                customer = (DO.Customer)obj1;
+                customer.Longitude = newCustomer.Loc.Longitude;
+                customer.Latitude = newCustomer.Loc.Latitude;
+                idal1.AddCustomer(customer);
+            }
+            catch (DO.DuplicateIdException ex)
+            {
+                throw new AddingException("Couldn't Add the Customer.", ex);
+            }
+        }
+
+
+
+        public void UpdateCustomer(string customerId, string name, string phone)
+        {
+            try
+            {
+                idal1.UpdateCustomer(customerId, name, phone);
+            }
+            catch (DO.MissingIdException ex)
+            {
+                throw new UpdateIssueException("Couldn't Update the Customer.\n,", ex);
+            }
+        }
+
+        public BO.Customer GetCustomer(string customerId)
+        {
+            try
+            {
+                BO.Customer customer = new BO.Customer();
+                DO.Customer customerDal = idal1.GetCustomer(customerId);
+                customerDal.CopyProperties(customer);
+                customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
+                List<DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
+                List<DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
+                ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
+                SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
+                return customer;
+            }
+            catch (DO.MissingIdException ex)
+            {
+                throw new RetrievalException("Couldn't get the Customer.", ex);
+            }
+        }
+
+        public CustomerInParcel GetCustomerInParcel(string customerId)
+        {
+            CustomerInParcel customerInParcelTemp = new CustomerInParcel();
+            DO.Customer customerTemp = idal1.GetCustomer(customerId);
+            customerInParcelTemp = new CustomerInParcel() { Id = customerTemp.Id, Name = customerTemp.Name };
+            return customerInParcelTemp;
+        }
+        public IEnumerable<CustomerToList> GetAllCustomers()
+        {
+            List<CustomerToList> tempList = new List<CustomerToList>();
+            idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
+            foreach (CustomerToList cus in tempList)
+            {
+                cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count();
+                cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count();
+                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
+            }
+            return tempList;
+        }
+    }
+}

@@ -40,9 +40,9 @@ namespace PL
         {
             InitializeComponent();
             bl = IblObj;
-            droneToLists = new();
+            droneToLists = new ObservableCollection<DroneToList>();
             List<DroneToList> tempDroneToLists = bl.GetAllDrones().ToList();
-            foreach(var dronetolist in tempDroneToLists)
+            foreach (var dronetolist in tempDroneToLists)
             {
                 droneToLists.Add(dronetolist);
             }
@@ -72,7 +72,7 @@ namespace PL
                 DronesListView.ItemsSource = droneToLists;
             if (wInd == 3 && sInd != 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);//.OrderBy(i=> i.);
-            if(wInd != 3 && sInd == 3)
+            if (wInd != 3 && sInd == 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Weight == WeightSelector.SelectedIndex);
             if (wInd != 3 && sInd != 3)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);

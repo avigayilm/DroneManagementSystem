@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <NoWin32Manifest>true</NoWin32Manifest>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\bin\net5.0-windows\</OutputPath>
+    <RootNamespace>Dal</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DalApi.csproj" />
+    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
   </ItemGroup>
 
 </Project>

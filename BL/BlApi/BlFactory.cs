@@ -14,7 +14,7 @@ namespace BlApi
             try
             {
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
-                Ibl bl =  BL.BL.Instance as Ibl;
+                Ibl bl =  BL.BL.Instance;
                 // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
                 if (bl == null)
                 {

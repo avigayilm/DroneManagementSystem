@@ -9,14 +9,14 @@ using DalApi;
 namespace Dal
 {
 
-     internal sealed partial class DalObject : DalApi.Idal
+     internal sealed partial class DalObject : Idal
     {
         /// <summary>
         /// constructor to initialize the dalobject
         /// </summary>
-
-        private static readonly Lazy<DalObject> instance = new Lazy<DalObject>(()=>new DalObject());
-        
+        internal static DalObject instance { get { return Instance.Value; } }
+        private static Lazy<DalObject> Instance = new Lazy<DalObject>(() => new DalObject());
+        static DalObject() { }
         private DalObject() { DataSource.Initialize(); }
         public double[] DronePwrUsg()
         {

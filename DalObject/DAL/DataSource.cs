@@ -24,12 +24,12 @@ namespace Dal
 
         }
 
-        internal static List<Drone> dronesList = new();
-        internal static List<Station> stationList = new();
-        internal static List<Customer> customerList = new();
-        internal static List<Parcel> parcelList = new();
-        internal static List<DroneCharge> chargeList = new(); 
-        internal static Random rand = new();
+        internal static List<Drone> dronesList = new List<Drone>();
+        internal static List<Station> stationList = new List<Station>();
+        internal static List<Customer> customerList = new List<Customer>();
+        internal static List<Parcel> parcelList = new List<Parcel>();
+        internal static List<DroneCharge> chargeList = new List<DroneCharge>(); 
+        internal static Random rand = new Random();
         public static void Initialize()
         {
             CreateDrone();
@@ -50,7 +50,7 @@ namespace Dal
                 }
                 while (dronesList.Exists(d => d.Id == id));
 
-                dronesList.Add(new()
+                dronesList.Add(new Drone()
                 {
                     Id = id,
                     Model = ("A" + rand.Next(0, 10)) + rand.Next(100, 1000).ToString(),
@@ -78,7 +78,7 @@ namespace Dal
                 }
                 while (customerList.Exists(d => d.PhoneNumber==phone ));
 
-                customerList.Add(new()
+                customerList.Add(new Customer()
                 {
                     Id = id,
                     Name = customerNames[i],
@@ -92,11 +92,11 @@ namespace Dal
 
         public static void CreateParcel()//initializes 20 parcels
         {
-            DateTime startDate = new(2021, 1, 1);
+            DateTime startDate = new DateTime(2021, 1, 1);
             for (int i = 0; i < 20; i++)
             {
 
-                Parcel temp = new()
+                Parcel temp = new Parcel()
                 {
                     Id = DataSource.Config.LastParcelNumber,
                     SenderId = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
@@ -149,7 +149,7 @@ namespace Dal
                     id = rand.Next(1000, 9999);
                 }
                 while (stationList.Exists(d => d.Id == id));
-                stationList.Add(new()
+                stationList.Add(new Station()
                 {
                     Id = id,
                     Name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",

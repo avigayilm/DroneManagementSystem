@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DalUi": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
