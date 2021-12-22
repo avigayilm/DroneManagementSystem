@@ -22,7 +22,7 @@ using System.Runtime.Serialization;
             {
             }
 
-            public DuplicateIdException(string message, Exception innerException) : base(message, innerException)
+        public DuplicateIdException(string message, Exception innerException) : base(message, innerException)
             {
             }
 
@@ -50,6 +50,26 @@ using System.Runtime.Serialization;
             }
             
         }
+
+    public class LoginException : Exception
+    {
+        public LoginException() : base()
+        {
+        }
+
+        public LoginException(string message) : base("LoginException: " + message)
+        {
+        }
+
+        public LoginException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected LoginException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
     }
+}
 
 

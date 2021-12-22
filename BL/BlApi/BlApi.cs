@@ -165,5 +165,8 @@ namespace BlApi
         /// <param name="customerId"></param>
         /// <returns></returns>
         CustomerInParcel GetCustomerInParcel(string customerId);
+
+        public void Register(BO.Customer cus, string user, string password, bool cusOrStff);
+        public bool Login(string user, string pass);
     }
 }

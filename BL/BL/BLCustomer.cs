@@ -40,6 +40,42 @@ namespace BL
             }
         }
 
+        public void Register(BO.Customer cus, string user, string password, bool cusOrStff)
+        {
+            try
+            {
+                DO.Login login = new() { UserName = user, Password = password };
+                idal1.AddLogin(login);
+                try
+                {
+                    AddCustomer(cus);
+                }
+                catch(DO.DuplicateIdException ex)
+                {
+
+                }
+            }
+            catch (DO.DuplicateIdException ex)
+            {
+                throw new AddingException("User already exists", ex);
+            }
+        }
+
+        public bool Login(string user, string pass)
+        {
+            try
+            {
+               bool userType = idal1.ValidateLogin(user, pass);
+                return userType;
+            }
+            catch(DO.LoginException ex)
+            {
+                throw new LoginBLException(ex.Message);
+            }
+
+            
+        }
+
 
 
         public void UpdateCustomer(string customerId, string name, string phone)

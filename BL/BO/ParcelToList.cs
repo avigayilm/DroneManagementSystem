@@ -13,7 +13,7 @@ using System.Threading.Tasks;
             public string ReceiverId { get; set; }
             public WeightCategories Weight { get; set; }
             public Priorities Priority { get; set; }
-            public ParcelStatuses parcelStatus { get; set; }
+            public ParcelStatuses ParcelStatus { get; set; }
 
 
             public override string ToString()

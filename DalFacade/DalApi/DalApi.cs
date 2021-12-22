@@ -10,8 +10,9 @@ namespace DalApi
 {
     public interface Idal
     {
-       // public static DalObject Instance
-       
+        // public static DalObject Instance
+
+        public void AddLogin(Login log);
         void AddStation(Station stat);
         void AddDrone(Drone dro);
         void AddCustomer(Customer cus);
@@ -86,6 +87,7 @@ namespace DalApi
         int CheckExistingStation(int stationId);
  
         IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
+        public bool ValidateLogin(string user, string pass);
 
     }
 }

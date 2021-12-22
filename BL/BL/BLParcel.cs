@@ -19,7 +19,7 @@ namespace BL
                 if (newParcel.Id < 0)
                     throw new InvalidInputException("invalid Id input");
                 if (newParcel.Priority != BO.Priorities.Emergency && newParcel.Priority != BO.Priorities.Fast && newParcel.Priority != BO.Priorities.Normal)
-                    throw new InvalidInputException("Invalid weightCategory");
+                    throw new InvalidInputException("Invalid priority");
                 if (newParcel.Weight != BO.WeightCategories.Heavy && newParcel.Weight != BO.WeightCategories.Light && newParcel.Weight != BO.WeightCategories.Medium)
                     throw new InvalidInputException("Invalid weightCategory");
                 if (string.IsNullOrEmpty(newParcel.Sender.Id))
@@ -234,7 +234,7 @@ namespace BL
             {
                 ParcelToList parcel = new ParcelToList();
                 p.CopyProperties(parcel);
-                parcel.parcelStatus = GetParcelStatus(p.Id);
+                parcel.ParcelStatus = GetParcelStatus(p.Id);
                 tempList.Add(parcel);
             }
             return tempList;

@@ -38,7 +38,7 @@ VerticalAlignment="Stretch" Width="auto">
             <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
             <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
-                      Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
+                      Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedItem="All" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -48,7 +48,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ComboBox>
 
             <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedItem="All" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
                 <ComboBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -81,7 +81,7 @@ VerticalAlignment="Stretch" Width="auto">
 
 
 
-        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1">
+        <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -101,7 +101,7 @@ VerticalAlignment="Stretch" Width="auto">
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="134"/>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="134" />
                     <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="134"/>
                     <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="134"/>
                     <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="134"/>

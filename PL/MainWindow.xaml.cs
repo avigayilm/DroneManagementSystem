@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using BlApi;
+using BO;
 
 
 namespace PL
@@ -13,6 +14,9 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            //rec rec = new("me");
+            //MessageBox.Show(rec.hudis);
+            //rec.hudis = "hi";
         }
 
 

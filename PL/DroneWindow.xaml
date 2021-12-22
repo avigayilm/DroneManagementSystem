@@ -280,8 +280,8 @@
 
 
 
-        <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
-         Visibility="Hidden">
+        <Grid x:Name="UpdateGrid" ShowGridLines="True" IsEnabled="True"
+         Visibility="Visible">
 
 
             <Grid.ColumnDefinitions>

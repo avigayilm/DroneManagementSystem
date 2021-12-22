@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
     namespace BO
     {
+  // public record rec(string hudis); 
+    
         public class Location
         {
             public double Longitude { get; set; }//{ get { return Math.Round(Longitude, 2); } set => Longitude = value; }//we can't chage location, set it only when we initilize

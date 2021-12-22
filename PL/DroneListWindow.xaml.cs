@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,25 +29,63 @@ namespace PL
         Light, Medium, Heavy, All
     }
 
+    public class WeightAndStatus
+    {
+        public WeightCategories Weight { get; set; }
+        public DroneStatuses Status { get; set; }
+    }
+
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
     public partial class DroneListWindow
     {
         BlApi.Ibl bl;
-        public ObservableCollection<DroneToList> droneToLists;
+        public ObservableCollection<IGrouping<WeightAndStatus, DroneToList>> droneToLists;
         public DroneToList droneToList;
         public DroneListWindow(BlApi.Ibl IblObj)
         {
             InitializeComponent();
             bl = IblObj;
-            droneToLists = new ObservableCollection<DroneToList>();
-            List<DroneToList> tempDroneToLists = bl.GetAllDrones().ToList();
-            foreach (var dronetolist in tempDroneToLists)
-            {
-                droneToLists.Add(dronetolist);
-            }
-            DronesListView.ItemsSource = droneToLists;
+            droneToLists = new ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>();
+
+            //IEnumerable<DroneToList> temp = bl.GetAllDrones();
+
+            //var temp = /*(ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>)*/
+            //               (from droneToList in bl.GetAllDrones()
+            //                group droneToList by new WeightAndStatus { Weight = droneToList.Weight, Status = droneToList.Status });
+            //droneToLists= new ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>(temp);
+
+            (from droneToList in bl.GetAllDrones()
+
+             group droneToList by
+
+             new WeightAndStatus()
+
+             {
+                
+                 Status = (DroneStatuses)droneToList.Status,
+
+                 Weight =(WeightCategories)droneToList.Weight
+
+             }).ToList().ForEach(x => droneToLists.Add(x));
+
+
+            //var item = 
+            //              (from droneToList in bl.GetAllDrones()
+            //               group droneToList by  droneToList.Status into NewGroup
+            //               orderby NewGroup.Sum(x => x.Battery)
+            //               select new
+            //               {
+            //                   key = droneToList.Status,
+            //                   avg = NewGroup.Average(x => x.Battery),
+            //                   sum = NewGroup.Sum(x => x.Battery),
+            //                   sumMulti = (from l in NewGroup where l.Battery > 20 select l.Battery * 5).Sum()
+            //               });
+            //List<string> vs = new List<string>();
+            //string s = vs.Aggregate((x, y) => x.Length > y.Length ? x : y);
+
+            DronesListView.ItemsSource = droneToLists.SelectMany(x=>x);
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
@@ -66,16 +105,17 @@ namespace PL
         /// </summary>
         private void checkComboBoxes()
         {
-            int wInd = WeightSelector.SelectedIndex;
-            int sInd = StatusSelector.SelectedIndex;
-            if (wInd == 3 && sInd == 3)
-                DronesListView.ItemsSource = droneToLists;
-            if (wInd == 3 && sInd != 3)
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);//.OrderBy(i=> i.);
-            if (wInd != 3 && sInd == 3)
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Weight == WeightSelector.SelectedIndex);
-            if (wInd != 3 && sInd != 3)
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);
+            DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedItem;
+            WeightCategories wInd =(WeightCategories) WeightSelector.SelectedItem;
+            if (wInd == WeightCategories.All && sInd == DroneStatuses.All)
+                DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
+            if (wInd == WeightCategories.All && sInd != DroneStatuses.All)
+                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Status == (DroneStatuses)sInd).SelectMany(x => x);
+                    
+            if (wInd != WeightCategories.All && sInd == DroneStatuses.All)
+                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Weight == (WeightCategories)wInd).SelectMany(x => x);
+            if (wInd != WeightCategories.All && sInd != DroneStatuses.All)
+                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Status == (DroneStatuses)sInd && x.Key.Weight == (WeightCategories)wInd).SelectMany(x => x);
         }
 
         /// <summary>
@@ -118,10 +158,6 @@ namespace PL
             new DroneWindow(bl, this).Show();
         }
 
-        private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
         /// <summary>
         /// allows user to cancel and return to main window
         /// </summary>
@@ -131,5 +167,10 @@ namespace PL
         {
             this.Close();
         }
+
+        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //{
+        //    droneToLists.OrderBy(x => x.Id);
+        //}
     }
 }

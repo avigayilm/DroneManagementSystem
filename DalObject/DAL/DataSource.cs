@@ -24,12 +24,14 @@ namespace Dal
 
         }
 
-        internal static List<Drone> dronesList = new List<Drone>();
-        internal static List<Station> stationList = new List<Station>();
-        internal static List<Customer> customerList = new List<Customer>();
-        internal static List<Parcel> parcelList = new List<Parcel>();
-        internal static List<DroneCharge> chargeList = new List<DroneCharge>(); 
+        internal static List<Drone> dronesList = new();
+        internal static List<Station> stationList = new ();
+        internal static List<Customer> customerList = new ();
+        internal static List<Parcel> parcelList = new ();
+        internal static List<DroneCharge> chargeList = new ();
+        internal static List<Login> loginList = new();
         internal static Random rand = new Random();
+
         public static void Initialize()
         {
             CreateDrone();
