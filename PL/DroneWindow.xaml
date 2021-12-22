@@ -224,7 +224,17 @@
                     Text="WeightCategory"/>
             <TextBlock Name="sTbAdd" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="StationId first charging"/>
-            <TextBox Name="idTxAdd" Text="{Binding Id, Mode=OneWayToSource}"  Grid.Row="2" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTxAdd_TextChanged" BorderBrush="{x:Null}" Margin="10"/>
+            <TextBox Name="idTxAdd" Grid.Row="2" Validation.ErrorTemplate="{StaticResource errorTemplate}" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTxAdd_TextChanged" BorderBrush="{x:Null}" Margin="5" >
+                <TextBox.Text>
+                    <Binding Path="Id" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="LostFocus"  >
+                        <Binding.ValidationRules>
+                            <local:Check MinimumCharacters="5">
+                            </local:Check>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBlock IsHitTestVisible="False" Text="Enter id" FontFamily="Arial"  HorizontalAlignment="Center" Foreground="Gray" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" FontStyle="Italic" Width="129">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
@@ -237,7 +247,8 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Name="mTxAdd" Text="{Binding Model, Mode=TwoWay}"  Grid.Row="3" Grid.Column="2" Margin="10" Style="{StaticResource textboxStyle}" TextChanged="mTxAdd_TextChanged"/>
+            <TextBox Name="mTxAdd" Text="{Binding Model, Mode=TwoWay}"  Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTxAdd_TextChanged" Margin="5"/>
+
             <TextBlock IsHitTestVisible="False" Text="Enter model" FontFamily="Arial"  HorizontalAlignment="Center" Foreground="Gray" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" FontStyle="Italic" Width="129">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
@@ -251,8 +262,8 @@
                 </TextBlock.Style>
             </TextBlock>
 
-            <ComboBox Name="wCbAdd"  Grid.Row="4" Grid.Column="2"  SelectedItem="{Binding Weight , Mode=OneWayToSource}" SelectedIndex="3" SelectionChanged="wCbAdd_SelectionChanged"  Background="AliceBlue" Margin="10"/>
-            <ComboBox Name="sTCBAdd" Grid.Row="5"  Grid.Column="2"  SelectedIndex="0" SelectionChanged="sTCBAdd_SelectionChanged" Foreground="#FF70C9EB" Margin="10" >
+            <ComboBox Name="wCbAdd"  Grid.Row="4" Grid.Column="2"  SelectedItem="{Binding Weight , Mode=OneWayToSource, ValidatesOnDataErrors=True}" SelectedIndex="3" SelectionChanged="wCbAdd_SelectionChanged"  Background="AliceBlue" Margin="5"/>
+            <ComboBox Name="sTCBAdd" Grid.Row="5"  Grid.Column="2"  SelectedIndex="0" SelectionChanged="sTCBAdd_SelectionChanged" Foreground="#FF70C9EB" Margin="5"  >
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>

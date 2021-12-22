@@ -30,7 +30,7 @@ namespace IBL
             public double Latitude { get; set; }
             public string _Latitude
             {
-                get => " " + $", {Bonus.DecimalToSexagesimal(Latitude, 't')}\n";
+                get => " " + $", {Bonus.DecimalToSexagesimal(Latitude, 't')}";
 
                 set { }
             }

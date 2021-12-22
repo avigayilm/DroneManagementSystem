@@ -22,16 +22,16 @@ namespace IBL
 
             public override string ToString()
             {
-                return " "
-                + $"ID is: {Id}, \n"
-                + $"Priority is: {Priority}, \n"
-                + $"Parcel weight: {Weight}, \n"
-                + $"stat is: {Status}, \n"
-                + $"sender: {Sender}, \n"
-                + $"receiver: {Receiver}, \n"
-                + $"Collecting location: {PickedUp}, \n"
-                + $"Delivering location: {DeliverdTo}, \n"
-                + $"Delivery distance: {Distance}";
+                return ""
+                + $"ID is: {Id}\n"
+                + $"Priority is: {Priority}\n"
+                + $"Parcel weight: {Weight}\n"
+                + $"stat is: {Status}\n"
+                + $"Collecting location: {PickedUp}\n"
+                + $"Delivering location: {DeliverdTo}\n"
+                + $"Delivery distance: {Distance}\n"
+                + $"sender: {Sender}\n"
+                + $"receiver: {Receiver}\n";
             }
 
         }

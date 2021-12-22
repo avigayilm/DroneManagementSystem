@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 using IBL;
 using IBL.BO;
 
@@ -19,12 +21,78 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneWindow.xaml
     /// </summary>
+    public partial class Check : ValidationRule, IDataErrorInfo, INotifyPropertyChanged// I notifypropertychanged is an interface so that we can make varaibles update on events. meaning we make them dependency property
+    {
+        IBL.Ibl bl;
+        DroneToList droneToList = new();
+        public int MinimumCharacters { get; set; }
 
+        // this is just to gove red border
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)//value is the string written in he textbox
+        {
+            string charString = value as string; //casting to string
+            if (charString.Length < MinimumCharacters)
+                return new ValidationResult(false, $" no{MinimumCharacters}characters.");// there was an error give tis message as error
+            // we can add here a lot of iff statement
+            return new ValidationResult(true, null);
+        }
+        public string UserName { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public int Id2
+        {
+        get{return droneToList.Id;}
+        set
+            {
+                Id2 = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));// invoke show that something changed in the dictionary
+            }
+        }
+        public string Error => throw new NotImplementedException();
+        public string this[string columnName] => throw new NotImplementedException();
+        //public Dictionary<string, string> ErrorMessages { get; private set; } = new Dictionary<string, string>
+
+        //public string this[string name]
+        //{
+        //    get
+        //    {
+        //        string result = null;
+        //        switch (name)
+        //        {
+        //            case "Password":// name of variable that gets error
+        //                if (string.IsNullOrWhiteSpace(Password))
+        //                {
+        //                    result = "Password cannot be empty";// message that will be printed
+        //                }
+        //                else if (User.Password.Length < 8)
+        //                {
+        //                    result = " Password must not be less than 8 digits";
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        if (ErrorMessages.ContainsKey(name))// checks if a key exists in the dictionary
+        //        {
+        //            ErrorMessages[name] = result;
+
+        //        }
+        //        else if(result!=null)// if the result is not null and the key doens't exist yet we add it to the dictionary
+        //        {
+        //            ErrorMessages.Add(name, result);// name=key, and result=messages
+        //        }
+        //        return result;
+        //    }
+        //}
+
+
+    }
     public enum UpdateOptions
     {
         updateModel =0,SendingToCharge, ReleaseFromCharge,Assign,CollectingAParcel,DeliveringAParcel
     }
-    public partial class DroneWindow //: CustomWindow
+    public partial class DroneWindow//: CustomWindow
     {
         IBL.Ibl bl;
         //internal int id;
@@ -232,10 +300,14 @@ namespace PL
                 MessageBox.Show("Drone doesn't contain a parcel", "No assigned Parcel");
                 return;
             }
-            if(parcelGrid.Visibility==Visibility.Hidden)
-                 parcelGrid.Visibility = Visibility.Visible;
+            if (parcelGrid.Visibility == Visibility.Hidden)
+                parcelGrid.Visibility = Visibility.Visible;
             else
+            {
                 parcelGrid.Visibility = Visibility.Hidden;
+                senderGrid.Visibility = Visibility.Hidden;
+                receiverGrid.Visibility = Visibility.Hidden;
+            }
 
         }
 
@@ -262,5 +334,6 @@ namespace PL
         //    new DroneListWindow(bl).Show();
         //    this.Close();
         //}
+
     }
 }

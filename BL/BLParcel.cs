@@ -233,7 +233,7 @@ namespace BL
             {
                 ParcelToList parcel = new();
                 p.CopyProperties(parcel);
-                parcel.parcelStatus = GetParcelStatus(p.Id);
+                parcel.ParcelStatus = GetParcelStatus(p.Id);
                 tempList.Add(parcel);
             }
             return tempList;

@@ -17,11 +17,47 @@
     </Window.Background>-->
 
 
-    <Grid Name="MainGrid" ShowGridLines="True">
-        <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
-        </Grid.Background>
-        <!--<Grid.Background
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Name="DroneTab" Margin="0,-1,-5,-1">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
+                        <!--<TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid Name="MainGrid" ShowGridLines="True">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
+                    </Grid.Background>
+                    <!--<Grid.Background
        >
             <LinearGradientBrush
         EndPoint="0,4" SpreadMethod="Repeat"
@@ -32,112 +68,396 @@
             </LinearGradientBrush>
         </Grid.Background>-->
 
-        <Grid.RowDefinitions >
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="400*"/>
-            <RowDefinition Height="70*"/>
-        </Grid.RowDefinitions>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="400*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+                    <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
-            <!--<Grid.Background>
+                        <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
                     <GradientStop Color="#FF7BD3E0" Offset="0.5"/>
                 </LinearGradientBrush>
             </Grid.Background>-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
-            <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
+                        <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
                       Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
-                <ComboBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
 
-                    </Style>
-                </ComboBox.Resources>
+                                </Style>
+                            </ComboBox.Resources>
 
-            </ComboBox>
-            <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
+                        </ComboBox>
+                        <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
-                <ComboBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
 
-                    </Style>
-                </ComboBox.Resources>
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFA8E7F8" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
+                                </Style>
+                            </ComboBox.Resources>
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black"/>
+                                    <GradientStop Color="#FFA8E7F8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
 
-            </ComboBox>
-            <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+                        </ComboBox>
+                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
 
-            <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
+                        <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
                   FontWeight="Bold"   
                        Margin="10,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </Grid>
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
 
-        
-            
-            <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1">
-            <ListView.Background>
-                <ImageBrush Opacity="0.5"/>
-            </ListView.Background>
-            <ListView.ItemContainerStyle>
+
+
+                    <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding droneToLists}" >
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
+                                <MenuItem Header="Delete Drone" Background="WhiteSmoke" Click="DeleteDrone_Click" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Background>
+                            <ImageBrush Opacity="0.5"/>
+                        </ListView.Background>
+                        <!--<ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
-            </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>-->
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
+                                <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="120"/>
+                                <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="120"/>
+                                <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
+                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="120"/>
+                                <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-            <!--<ListView.Template>
-                <ControlTemplate>
-                    <Border CornerRadius="50" BorderThickness="50" >
-                        <ItemsPresenter></ItemsPresenter>
-                    </Border>
-                </ControlTemplate>
-            </ListView.Template>-->
+                    <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelDrone_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="134"/>
-                    <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="134"/>
-                    <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="134"/>
-                    <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="134"/>
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="134"/>
-                    <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
-                    
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
+                </Grid>
+            </TabItem>
 
-        <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="Cancel_Click">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10" />
-                </Style>
-            </Button.Resources>
-        </Button>
+            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>
+                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Name="ParcelGridWindow" ShowGridLines="True">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="400*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
 
-        <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
+                    <Grid Name="UpGridParcel" Height="auto" Grid.Row="0" Width="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--<Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />-->
+                        <ComboBox x:Name="PrioritySelectorParcel" FontWeight="Bold"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10,30,74,10" 
+                      Background="#FF2476BD" SelectionChanged="StatusSelectorParcel_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
 
+                                </Style>
+                            </ComboBox.Resources>
+
+                        </ComboBox>
+                        <ComboBox x:Name="StatusSelectorParcel" FontWeight="Bold"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="168,30,0,10" 
+                      Background="#FF2476BD" SelectionChanged="StatusSelectorParcel_SelectionChanged" SelectedIndex="4" BorderBrush="#FF3C4497" Foreground="#FF70C9EB" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="130">
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </ComboBox.Resources>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="WeightSelectorParcel" FontWeight="Bold"   
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="136,30,135,10" SelectedIndex="3"  SelectionChanged="StatusSelectorParcel_SelectionChanged" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB" Grid.ColumnSpan="2">
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                        <TextBox x:Name="textParcellist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="ParcelList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+
+                        <Button Content="Add Parcel" Grid.Column="3" Click="AddParcelButton_Click"
+                  FontWeight="Bold"   
+                       Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+
+
+
+                    <ListView x:Name="ParcelListView" MouseDoubleClick="ParcelListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding parcelToLists}" >
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
+                                <MenuItem Header="Show Receiver" Background="WhiteSmoke" Click="ShowReceiver_Click" />
+                                <MenuItem Header="Show Drone" Background="WhiteSmoke" Click="ShowDrone_Click" />
+                                <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Background>
+                            <ImageBrush Opacity="0.5"/>
+                        </ListView.Background>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
+                                <GridViewColumn Header="SenderId" DisplayMemberBinding="{Binding SenderId}" Width="120"/>
+                                <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="120"/>
+                                <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
+                                <GridViewColumn Header="Priorities" DisplayMemberBinding="{Binding Priority}" Width="129"/>
+                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="150"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button x:Name="CancelParcel" Content="Cancel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelParcel_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+
+            </TabItem>
+
+            <TabItem Name="StationTab" Margin="0,-1,-5,-1">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Name="imgStation" Height="162" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\StationIcon.png" ToolTip="ShowStationList"></Image>
+                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Name="StationGridWindow" ShowGridLines="True">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="400*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Name="UpGridStation" Height="auto" Grid.Row="0" Width="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+
+                        <Button Content="Add Station" Grid.Column="3" Click="AddStationButton_Click"
+                  FontWeight="Bold"   
+                       Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                    <ListView x:Name="StationListView" MouseDoubleClick="StationListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding stationToLists}" >
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
+                                <MenuItem Header="Show Receiver" Background="WhiteSmoke" Click="ShowReceiver_Click" />
+                                <MenuItem Header="Show Drone" Background="WhiteSmoke" Click="ShowDrone_Click" />
+                                <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Background>
+                            <ImageBrush Opacity="0.5"/>
+                        </ListView.Background>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="120"/>
+                                <GridViewColumn Header="OccupiedSlots" DisplayMemberBinding="{Binding OccupiedSlots}" Width="120"/>
+                                <GridViewColumn Header="AvailableChargeSlots" DisplayMemberBinding="{Binding  AvailableChargeSlots}" Width="120"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button x:Name="CancelStation" Content="Cancel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelStation_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\CustomerIcon.png" ToolTip="ShowCustomerList"/>
+                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Name="CustomerGridWindow" ShowGridLines="True">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="400*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Name="UpGridCustomer" Height="auto" Grid.Row="0" Width="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+
+                        <Button Content="Add Customer" Grid.Column="3" Click="AddCustomerButton_Click"
+                  FontWeight="Bold"   
+                       Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                    <ListView x:Name="CustomerListView" MouseDoubleClick="CustomerListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding customerToLists}" >
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
+                                <MenuItem Header="Show Receiver" Background="WhiteSmoke" Click="ShowReceiver_Click" />
+                                <MenuItem Header="Show Drone" Background="WhiteSmoke" Click="ShowDrone_Click" />
+                                <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Margin" Value="10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Background>
+                            <ImageBrush Opacity="0.5"/>
+                        </ListView.Background>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="70"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="70"/>
+                                <GridViewColumn Header="PhoneNumber" DisplayMemberBinding="{Binding PhoneNumber}" Width="100"/>
+                                <GridViewColumn Header="NumPacksReceived" DisplayMemberBinding="{Binding  NumPacksReceived}" Width="120"/>
+                                <GridViewColumn Header="NumPackSentDel" DisplayMemberBinding="{Binding  NumPackSentDel}" Width="100"/>
+                                <GridViewColumn Header="NumPackSentUnDel" DisplayMemberBinding="{Binding  NumPackSentUnDel}" Width="120"/>
+                                <GridViewColumn Header="NumPackExp" DisplayMemberBinding="{Binding NumPackExp}" Width="80"/>
+                                <GridViewColumn Header="NumPacksReceived" DisplayMemberBinding="{Binding NumPacksReceived}" Width="120"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button x:Name="CancelCustomer" Content="Cancel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelStation_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
+
+
 </Window>
