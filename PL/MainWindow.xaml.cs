@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BL;
-using IBL;
+﻿using System.Windows;
+using BlApi;
+using BO;
+
 
 namespace PL
 {
@@ -22,14 +10,17 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL.Ibl IblObj = new BL.BL();
+        BlApi.Ibl IblObj = BlApi.BlFactory.GetBl();
         public MainWindow()
         {
             InitializeComponent();
+            //rec rec = new("me");
+            //MessageBox.Show(rec.hudis);
+            //rec.hudis = "hi";
         }
 
-      
-private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
+
+        private void ShowDronesButton_Click(object sender, RoutedEventArgs e) // shows drone list button
         {
             new DroneListWindow(IblObj).Show();
         }

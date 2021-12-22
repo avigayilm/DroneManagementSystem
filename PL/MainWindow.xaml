@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
-    
+
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\thumbnail-drone-companies.jpg"></ImageBrush>
+        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\thumbnail-drone-companies.jpg"></ImageBrush>
     </Window.Background>
     <Grid ShowGridLines="False">
 
@@ -28,7 +28,7 @@
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="50"/>
-                    
+
                 </Style>
             </Button.Resources>
         </Button>

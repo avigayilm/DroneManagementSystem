@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+	
+	
+	<dal>dalobj</dal>
+	<dal-packages>
+		<dalobject namespace="Dal" class="DalObject">ClassLibrary6</dalobject>	
+	</dal-packages>
+</config>

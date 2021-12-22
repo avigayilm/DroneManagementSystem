@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BlConsole": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}

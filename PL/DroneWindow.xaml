@@ -77,23 +77,6 @@
             </Style.Triggers>
         </Style>
 
-
-        <!--<Style x:Key="brush1" TargetType="Label">
-            <Style.Triggers>
-                <Trigger Property="IsMouseDirectlyOver" Value="True">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush>
-                                <GradientStop Offset="0.3" Color="Blue"/>
-                                <GradientStop Offset="0.7" Color="Red"></GradientStop>
-                                <GradientStop Offset=" 0.1" Color="Green"></GradientStop>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
-
         <Style x:Key="brush2" TargetType="Label" >
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -191,7 +174,7 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
 
         <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
@@ -308,8 +291,8 @@
 
 
 
-        <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
-         Visibility="Hidden">
+        <Grid x:Name="UpdateGrid" ShowGridLines="True" IsEnabled="True"
+         Visibility="Visible">
 
 
             <Grid.ColumnDefinitions>
