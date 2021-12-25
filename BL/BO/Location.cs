@@ -30,7 +30,7 @@ using System.Threading.Tasks;
             public double Latitude { get; set; }
             public string _Latitude
             {
-                get => " " + $", {Bonus.DecimalToSexagesimal(Latitude, 't')}\n";
+                get => " " + $", {Bonus.DecimalToSexagesimal(Latitude, 't')}";
 
                 set { }
             }
