@@ -3,11 +3,137 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ParcelWindow" WindowStyle="None" Height="500" Width="800" 
         FontFamily="Constantia" >
-    <Grid>
+
+    <Window.Resources>
+        <Style x:Key="textboxStyle" TargetType="TextBox"  >
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="FontFamily" Value="Constantia"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                    <Setter Property="Background" Value="Transparent"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key ="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Justify"/>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontFamily" Value="Constantia"/>
+            <Setter Property="Padding" Value="0, 10, 0 , 0"></Setter>
+        </Style>
+
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="FontFamily" Value="Constantia"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+
+        <Style x:Key="enabledTextbox" TargetType="TextBox" BasedOn="{StaticResource ResourceKey=textboxStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         
+
+
+
+    </Window.Resources>
+
+    <Grid Name="RegularGrid" >
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label  x:Name="CustomerLabel" Content="Update Customer"  Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    FontWeight="Bold" Grid.ColumnSpan="6" Margin="34,0,33,11" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFEEEEEE" />
+        <TextBlock Name="idTblk" Text="Number" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                   Grid.Column="0" Grid.Row="1" />
+        <TextBlock Name="wtTblk" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Weight"/>
+        <TextBlock Name="priTblk" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Priority"/>
+        <TextBlock Name="creTblk" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Created:"/>
+        <TextBlock Name="sendTblk" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Sender"/>
+        <TextBlock Name="recTblk" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Receiver"/>
+        <TextBox Name="noTbx" Text="{Binding Id, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textboxStyle}" />
+        <TextBox Name="sendrIdTx" Text="{Binding Sender.Id}" Grid.Row="1" Grid.Column="3" Style="{StaticResource enabledTextbox}" ToolTip="Enter phone number" />
+        <TextBox Name="recIdTx" Text="{Binding Receiever.Id}" Grid.Row="3" Grid.Column="3" Style="{StaticResource enabledTextbox}" />
+        <TextBlock Name="crTblk" Grid.Row="4" Grid.Column="1"  Style="{StaticResource TextBlockStyle}"
+                    Text="{Binding ElementName=ParcelWindow, Path=created,StringFormat='HH:mm:ss tt'}"/>
+        <ComboBox Name="wCBx"  Grid.Row="2" Grid.Column="1"  SelectedItem="{Binding Weight , Mode=OneWayToSource}" SelectedIndex="3"  Background="AliceBlue" Margin="10"/>
+        <ComboBox Name="wCbAdd"  Grid.Row="3" Grid.Column="1"  SelectedItem="{Binding Priority , Mode=OneWayToSource}" SelectedIndex="3"   Background="AliceBlue" Margin="10"/>
+
+        <Grid x:Name="UpdateGrid" Grid.Row="5" Grid.ColumnSpan="5" Grid.RowSpan="5" ShowGridLines="True" Visibility="Visible" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.6*"/>
+                <ColumnDefinition Width="1.6*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="assTblk" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Assigned:"/>
+            <TextBlock Name="collTblk" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Collected:"/>
+            <TextBlock Name="delTblk" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Deliverd:"/>
+            <TextBlock Name="droneTblk" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="Delivering drone"/>
+
+            <TextBlock Name="assDateTblk" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="{Binding Assigned}"/>
+            <TextBlock Name="collDateTblk" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="{Binding PickedUp}"/>
+            <TextBlock Name="delDateTblk" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    Text="{Binding Delivered }"/>
+            
+        </Grid>
     </Grid>
 </Window>

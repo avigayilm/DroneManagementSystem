@@ -20,9 +20,11 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
+        DateTime created;
         public ParcelWindow()
         {
             InitializeComponent();
+            created = DateTime.Now;
         }
     }
 }

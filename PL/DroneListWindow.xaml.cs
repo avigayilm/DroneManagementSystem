@@ -61,7 +61,6 @@ namespace PL
              group droneToList by
 
              new WeightAndStatus()
-
              {
                 
                  Status = (DroneStatuses)droneToList.Status,
