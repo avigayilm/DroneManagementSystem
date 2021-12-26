@@ -25,7 +25,7 @@ namespace PL
     /// </summary>
     public partial class Check : ValidationRule, IDataErrorInfo, INotifyPropertyChanged// I notifypropertychanged is an interface so that we can make varaibles update on events. meaning we make them dependency property
     {
-        IBL.Ibl bl;
+        BlApi.Ibl bl;
         DroneToList droneToList = new();
         public int MinimumCharacters { get; set; }
 
@@ -203,6 +203,7 @@ namespace PL
                 }
 
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
+              
                 //lastW.droneToLists = (from dronetolist in lastW.droneToLists
                 //                      where dronetolist.Key.Status == Drone.Status && dronetolist.Key.Weight == Drone.Weight
                 //                      );
@@ -215,6 +216,7 @@ namespace PL
                 //            group droneToList by new WeightAndStatus { Weight = (WeightCategories)droneToList.Weight, Status = (DroneStatuses)droneToList.Status });
 
                 lastW.droneToLists.Remove();
+              
                 //(from droneToList in bl.GetAllDrones()
 
                 // group droneToList by

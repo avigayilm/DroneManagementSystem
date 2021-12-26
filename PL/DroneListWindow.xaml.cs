@@ -256,7 +256,7 @@ namespace PL
 
 
             //this.Close();
-        }
+        
         private void CancelParcel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

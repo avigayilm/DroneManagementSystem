@@ -174,10 +174,10 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
 
-        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
+        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
@@ -292,7 +292,7 @@
 
 
         <Grid x:Name="UpdateGrid" ShowGridLines="True" IsEnabled="True"
-         Visibility="Visible">
+         Visibility="Hidden">
 
 
             <Grid.ColumnDefinitions>
@@ -419,8 +419,8 @@
 
                 <TextBlock Name="receiverIdb" Text="{Binding ParcelInTrans.Receiver.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Name="receiverNameb" Text="{Binding ParcelInTrans.Receiver.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="receiverLongitudeb" Text="{Binding ParcelInTrans.DeliverdTo.Longitude}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,26,0,0" Grid.RowSpan="3"/>
-                <TextBlock Name="receiverLatitudeb" Text="{Binding ParcelInTrans.DeliverdTo.Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Name="receiverLongitudeb" Text="{Binding ParcelInTrans.DeliverdTo._Longitude}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,26,0,0" Grid.RowSpan="3"/>
+                <TextBlock Name="receiverLatitudeb" Text="{Binding ParcelInTrans.DeliverdTo._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
 

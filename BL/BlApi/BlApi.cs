@@ -168,5 +168,6 @@ namespace BlApi
 
         public void Register(BO.Customer cus, string user, string password, bool cusOrStff);
         public bool Login(string user, string pass);
+        public (IEnumerable<DroneInCharge>, int) getAllDroneInCharge(int stationId);
     }
 }

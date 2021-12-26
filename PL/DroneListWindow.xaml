@@ -149,11 +149,6 @@ VerticalAlignment="Stretch" Width="auto">
                         <ListView.Background>
                             <ImageBrush Opacity="0.5"/>
                         </ListView.Background>
-                        <!--<ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                </Style>
-            </ListView.ItemContainerStyle>-->
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
