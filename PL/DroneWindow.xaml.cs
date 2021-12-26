@@ -97,6 +97,7 @@ namespace PL
     public partial class DroneWindow
     {
         BlApi.Ibl bl;
+        WeightAndStatus wAndS;
         public int StationId { get; set; }
         private Drone Drone { get; set; }
         DroneListWindow lastW;
@@ -132,11 +133,19 @@ namespace PL
             StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             DroneLabel.Content = $"adding drone to the list";
             bl.AddDrone(Drone, StationId);
-            foreach (var item in lastW.droneToLists.Where(x => x.Key.Status == (DroneStatuses)Drone.Status && x.Key.Weight == (WeightCategories)Drone.Weight))
+            wAndS.Status = (DroneStatuses)Drone.Status;
+            wAndS.Weight = (WeightCategories)Drone.Weight;
+            if (lastW.droneToLists.ContainsKey(wAndS))
+                lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
+            else
             {
-                item.Append(bl.GetAllDrones().First(x => x.Id == Drone.Id));
-                break;
-            }// after drone is updated in bl now updates listview
+                lastW.droneToLists.Add(wAndS, bl.GetAllDrones().Where(x => x.Id == Drone.Id).ToList());
+            }
+            //lastW.droneToLists.ContainsKey(wAndS)? 
+            //    lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id)) :
+            //    lastW.droneToLists.Add(wAndS, bl.GetAllDrones().TakeWhile(x => x.Id == Drone.Id).ToList());
+            lastW.checkComboBoxesDrone();
+            // after drone is updated in bl now updates listview
         }
         /// <summary>
         /// calls add drone function and displays added drone
@@ -204,57 +213,17 @@ namespace PL
 
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
               
-                //lastW.droneToLists = (from dronetolist in lastW.droneToLists
-                //                      where dronetolist.Key.Status == Drone.Status && dronetolist.Key.Weight == Drone.Weight
-                //                      );
-                lastW.droneToLists[lastW.DronesListView.SelectedIndex] = (IGrouping<WeightAndStatus, DroneToList>)lastW.droneToList;
-
-
-
-                //lastW.droneToLists = (ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>)
-                //           (from droneToList in bl.GetAllDrones()
-                //            group droneToList by new WeightAndStatus { Weight = (WeightCategories)droneToList.Weight, Status = (DroneStatuses)droneToList.Status });
-
-                lastW.droneToLists.Remove();
-              
-                //(from droneToList in bl.GetAllDrones()
-
-                // group droneToList by
-
-                // new WeightAndStatus()
-
-                // {
-
-                //     Status = (DroneStatuses)droneToList.Status,
-
-                //     Weight = (WeightCategories)droneToList.Weight
-
-                // }).ToList().ForEach(x => lastW.droneToLists.Add(x));
-
-
-                //foreach (IGrouping<WeightAndStatus, DroneToList> item in lastW.droneToLists.Where(x => x.Key.Status == Drone.Status && x.Key.Weight == Drone.Weight))
-                //{
-
-
-                //    foreach (var dro in item)
-                //    {
-                //        if (/*bl.GetAllDrones().First(x => x.Id == Drone.Id) == dro.Id*/ true)
-                //        {
-                //            item.Remove(dro);
-                //            break;
-                //        }
-
-                //    }
-
-                //}
-
-                //foreach (var item in lastW.droneToLists.Where(x => x.Key.Status == Drone.Status && x.Key.Weight == Drone.Weight))
-                //{
-                //    item.(bl.GetAllDrones().First(x => x.Id == Drone.Id));
-                //    break;
-                //}// aft
-                //lastW.droneToLists.Remove(lastW.droneToList); //updates the appropriate drone in list view 
-                //lastW.droneToLists.Add(bl.getDroneToList(Drone.Id));
+                lastW.droneToList.Model = Drone.Model;
+                //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
+                //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();
+                //item.ToList().Remove(lastW.droneToList);
+                //item.Append(lastW.droneToList);
+                //int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
+                //&& i.Key.Weight == (WeightCategories)Drone.Weight);
+                //lastW.droneToLists[index] = item;
+                
+                
+               
                 lastW.DronesListView.Items.Refresh();
                 this.Close();
 

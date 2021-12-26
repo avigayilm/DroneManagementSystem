@@ -211,10 +211,10 @@
                 <TextBox.Text>
                     <Binding Path="Id" ValidatesOnDataErrors="True" 
                              Mode="TwoWay" UpdateSourceTrigger="LostFocus"  >
-                        <Binding.ValidationRules>
+                        <!--<Binding.ValidationRules>
                             <local:Check MinimumCharacters="5">
                             </local:Check>
-                        </Binding.ValidationRules>
+                        </Binding.ValidationRules>-->
                     </Binding>
                 </TextBox.Text>
             </TextBox>
