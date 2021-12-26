@@ -10,7 +10,8 @@
   AllowsTransparency="True" >
 
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
+        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"></ImageBrush>
+        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>-->
     </Window.Background>
 
 
@@ -45,14 +46,15 @@
             <TabItem Name="DroneTab" Margin="0,-1,-5,-1">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>-->
-                        <!--<TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 
                 <Grid Name="MainGrid" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <!--<Grid.Background
        >
@@ -89,31 +91,31 @@ VerticalAlignment="Stretch" Width="auto">
                         <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
                       Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
-                <ComboBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
-                    </Style>
-                </ComboBox.Resources>
-            </ComboBox>
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
 
-            <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
+                        <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
-                <ComboBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="#FF3C4497"/>
-                    </Style>
-                </ComboBox.Resources>
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFA8E7F8" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
-            </ComboBox>
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                </Style>
+                            </ComboBox.Resources>
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black"/>
+                                    <GradientStop Color="#FFA8E7F8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                        </ComboBox>
 
-            <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" 
+                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" 
                      VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
                      FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
 
@@ -176,13 +178,14 @@ VerticalAlignment="Stretch" Width="auto">
             <TabItem Name="ParcelTab" Margin="0,-1,-5,-1">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="ParcelGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -294,13 +297,14 @@ VerticalAlignment="Stretch" Width="auto">
             <TabItem Name="StationTab" Margin="0,-1,-5,-1">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgStation" Height="162" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\StationIcon.png" ToolTip="ShowStationList"></Image>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgStation" Height="162" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\StationIcon.png" ToolTip="ShowStationList"></Image>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -371,21 +375,24 @@ VerticalAlignment="Stretch" Width="auto">
             <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" >
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\CustomerIcon.png" ToolTip="ShowCustomerList"/>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\CustomerIcon.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
-                        <RowDefinition Height="70*"/>
-                        <RowDefinition Height="400*"/>
-                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="7*"/>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="67*"/>
+                        <RowDefinition Height="470*"/>
+                        <RowDefinition Height="82*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Name="UpGridCustomer" Height="auto" Grid.Row="0" Width="auto">
+                    <Grid Name="UpGridCustomer" Height="auto" Grid.Row="0" Width="auto" Grid.RowSpan="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -405,7 +412,7 @@ VerticalAlignment="Stretch" Width="auto">
                             </Button.Resources>
                         </Button>
                     </Grid>
-                    <ListView x:Name="CustomerListView" MouseDoubleClick="CustomerListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding customerToLists}" >
+                    <ListView x:Name="CustomerListView" MouseDoubleClick="CustomerListView_DoubleClick" Grid.Row="3" ItemsSource= "{Binding customerToLists}" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
@@ -439,7 +446,7 @@ VerticalAlignment="Stretch" Width="auto">
                         </ListView.View>
                     </ListView>
 
-                    <Button x:Name="CancelCustomer" Content="Cancel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelStation_Click">
+                    <Button x:Name="CancelCustomer" Content="Cancel" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="288" Click="CancelStation_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />

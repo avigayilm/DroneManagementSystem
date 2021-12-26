@@ -18,7 +18,7 @@ using BO;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for CustomerWindow.xaml
+    /// Interaction logic for StationWindow.xaml
     /// </summary>
     public partial class StationWindow : Window
     {
@@ -26,11 +26,12 @@ namespace PL
 
         BlApi.Ibl bl;
         private Station Station { get; set; }
+        List<DroneInCharge> tempDroneInCharge { get; set; }
         DroneListWindow lastW;
         bool addOrUpdate;
-        public ObservableCollection<DroneInCharge> DroneChargeObservable;
+        public ObservableCollection<DroneInCharge> DroneChargeObservable = new();
 
-        public StationWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
+        public StationWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a station
         {
             InitializeComponent();
             bl = IblObj;
@@ -41,35 +42,81 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
-        public StationWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
+        public StationWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a station
         {
             InitializeComponent();
             bl = ibl;
             addOrUpdate = Globals.update;
             lastW = last;
-            Station = bl.GetStation(lastW.droneToList.Id);
+            Station = bl.GetStation(lastW.stationToList.Id);
            // droneInChargeList = new();
-            List<DroneInCharge> tempDroneInCharge = bl.getAllDroneInCharge(Station.Id).Item1.ToList();
-            foreach (var droneInCharge in tempDroneInCharge)
+            tempDroneInCharge = bl.getAllDroneInCharge(Station.Id).Item1.ToList();
+            if (tempDroneInCharge.Count != 0)
             {
-                DroneChargeObservable.Add(droneInCharge);
+                foreach (var droneInCharge in tempDroneInCharge)
+                {
+                    DroneChargeObservable.Add(droneInCharge);
+                }
+                DronesInchargeListview.ItemsSource = DroneChargeObservable;
             }
-            DronesInchargeListview.ItemsSource = DroneChargeObservable;
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = Station;
         }
 
         private void droneInChargeList_Click(object sender, RoutedEventArgs e)
         {
-            if (DronesInchargetxt.Visibility == Visibility.Visible)
+            if (DronesInchargetxt.Visibility == Visibility.Visible)// if it's already visible
             {
                 DronesInchargetxt.Visibility = Visibility.Hidden;
                 DronesInchargeListview.Visibility = Visibility.Hidden;
             }
-            else
+            else// if it's hidden
             {
-                DronesInchargetxt.Visibility = Visibility.Visible;
-                DronesInchargeListview.Visibility = Visibility.Visible;
+                if (tempDroneInCharge.Count == 0)
+                {
+                    MessageBox.Show("No Drones in Charge");
+                }
+                else
+                {
+                    DronesInchargetxt.Visibility = Visibility.Visible;
+                    DronesInchargeListview.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void UpdateorAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(addOrUpdate==Globals.add)// if we add
+            {
+                try
+                {
+                    bl.AddStation(Station);
+                    MessageBox.Show(Station.ToString(), "added station");
+                    this.Close();
+                }
+                catch (AddingException ex)
+                {
+                    MessageBox.Show(ex.Message, "Adding issue");
+                }
+            }
+            else// if we update
+            {
+                try
+                {
+                    bl.UpdateStation(Station.Id, Station.Name, Station.AvailableChargeSlots);
+                    MessageBox.Show(bl.GetStation(Station.Id).ToString(), "Updated Station");
+                    lastW.StationListView.Items.Refresh();
+                    this.Close();
+                }
+                catch (UpdateIssueException ex)
+                {
+                    MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
     }

@@ -72,6 +72,7 @@ namespace BL
                         List<DO.Station> tempList = (List<DO.Station>)idal1.GetAllStations();
                         DO.Station tempSt = tempList[rand.Next(tempList.Count())];
                         dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
+                        idal1.SendToCharge(dr.Id, tempSt.Id);
                     }
                 }
             }
