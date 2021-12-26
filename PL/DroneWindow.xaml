@@ -174,10 +174,11 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
 
-        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Visible">
+        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>

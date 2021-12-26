@@ -43,6 +43,7 @@ namespace PL
         public DroneStatuses Status { get; set; }
     }
 
+
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
@@ -50,9 +51,9 @@ namespace PL
     {
         BlApi.Ibl bl;
         public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
-        public ObservableCollection<ParcelToList> parcelToLists;
+        public Dictionary<string,List<ParcelToList>> parcelToLists;
         public ObservableCollection<CustomerToList> customerToLists;
-        public ObservableCollection<StationToList> stationToLists;
+        public Dictionary<int,List<StationToList>> stationToLists;
         public DroneToList droneToList;
         public ParcelToList parcelToList;
         public StationToList stationToList;
@@ -63,83 +64,21 @@ namespace PL
 
             bl = IblObj;
             droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
-           
             IEnumerable<DroneToList> temp = bl.GetAllDrones();
-
-
-            //var temp = /*(ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>)*/
-            //               (from droneToList in bl.GetAllDrones()
-            //                group droneToList by new WeightAndStatus { Weight = droneToList.Weight, Status = droneToList.Status });
-            //droneToLists= new ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>(temp);
-
             droneToLists = (from droneToList in temp
-
-                            group droneToList by
-                            
+                            group droneToList by    
                             new WeightAndStatus()
                             {
-
                                 Status = (DroneStatuses)droneToList.Status,
-
                                 Weight = (WeightCategories)droneToList.Weight
-
                             }).ToDictionary(x => x.Key, x => x.ToList());
-
-
-            //var item = 
-            //              (from droneToList in bl.GetAllDrones()
-            //               group droneToList by  droneToList.Status into NewGroup
-            //               orderby NewGroup.Sum(x => x.Battery)
-            //               select new
-            //               {
-            //                   key = droneToList.Status,S
-            //                   avg = NewGroup.Average(x => x.Battery),
-            //                   sum = NewGroup.Sum(x => x.Battery),
-            //                   sumMulti = (from l in NewGroup where l.Battery > 20 select l.Battery * 5).Sum()
-            //               });
-            //List<string> vs = new List<string>();
-            //string s = vs.Aggregate((x, y) => x.Length > y.Length ? x : y);
-
             DronesListView.ItemsSource = droneToLists.Values.SelectMany(x => x);
-
-            // droneToLists = new();
-            parcelToLists = new();
-            customerToLists = new();
-            stationToLists = new();
-            // List<DroneToList> tempDroneToLists = bl.GetAllDrones().OrderBy(d => d.Weight).ToList();
-            List<ParcelToList> tempParcelToLists = bl.GetAllParcels().OrderBy(p => p.Weight).ToList();
-            List<CustomerToList> tempCustomerToLists = bl.GetAllCustomers().ToList();
-            List<StationToList> tempStationToLists = bl.GetAllStation().ToList();
-            //foreach (var dronetolist in tempDroneToLists)
-            //{
-            //    droneToLists.Add(dronetolist);
-            //}
-            foreach (var parcelToList in tempParcelToLists)
-            {
-                parcelToLists.Add(parcelToList);
-            }
-
-            foreach (var stationToList in tempStationToLists)
-            {
-                stationToLists.Add(stationToList);
-            }
-            foreach (var customerToList in tempCustomerToLists)
-            {
-                customerToLists.Add(customerToList);
-            }
-            //DronesListView.ItemsSource = droneToLists;
-            StationListView.ItemsSource = stationToLists;
-            CustomerListView.ItemsSource = customerToLists;
+            DronesListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             StatusSelector.SelectedIndex = 3;
             WeightSelector.SelectedItem = 3;
 
-            StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
-            WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
-           // droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
-            parcelToLists.CollectionChanged += ParcelToLists_CollectionChanged;
         }
 
         /// <summary>
@@ -351,6 +290,41 @@ namespace PL
         private void CancelCustomer_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void StationTabItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            IEnumerable<StationToList> temp = bl.GetAllStation();
+            stationToLists = (from stationtolist in temp
+                             group stationtolist by
+                             stationtolist.AvailableChargeSlots
+                            ).ToDictionary(x => x.Key, x => x.ToList());
+            StationListView.ItemsSource = stationToLists.Values.SelectMany(x => x);
+        }
+
+        private void CustomerTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            customerToLists = new();
+            List<CustomerToList> tempCustomerToLists = bl.GetAllCustomers().ToList();
+            foreach (var customerToList in tempCustomerToLists)
+            {
+                customerToLists.Add(customerToList);
+            }
+            CustomerListView.ItemsSource = customerToLists;
+        }
+
+        private void ParcelTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("hey I was clicked");
+            StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
+            WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+            IEnumerable<ParcelToList> temp = bl.GetAllParcels();
+            parcelToLists = (from parceltolist in temp
+                             group parceltolist by
+                             parceltolist.SenderId
+                            ).ToDictionary(x => x.Key, x => x.ToList());
+            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
         }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
