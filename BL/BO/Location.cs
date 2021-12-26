@@ -17,7 +17,7 @@ using System.Threading.Tasks;
             public string _Longitude {
                 get => " " + $"{Bonus.DecimalToSexagesimal(Longitude, 'n')}";
               
-                set { }
+                set {}
             }
      
 
