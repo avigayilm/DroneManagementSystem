@@ -34,7 +34,7 @@ namespace PL
         {
             string charString = value as string; //casting to string
             if (charString.Length < MinimumCharacters)
-                return new ValidationResult(false, $" no{MinimumCharacters}characters.");// there was an error give tis message as error
+                return new ValidationResult(false, $" no {MinimumCharacters} characters.");// there was an error give tis message as error
             // we can add here a lot of iff statement
             return new ValidationResult(true, null);
         }

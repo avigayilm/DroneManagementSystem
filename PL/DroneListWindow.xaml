@@ -9,9 +9,9 @@
         Title="DroneListWindow" Height="640" Width="870"
   AllowsTransparency="True" >
 
-    <Window.Background>
+    <!--<Window.Background>
         <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
-    </Window.Background>
+    </Window.Background>-->
 
 
     <Grid>
@@ -45,8 +45,8 @@
             <TabItem Name="DroneTab" Margin="0,-1,-5,-1">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>-->
-                        <!--<TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 
@@ -173,11 +173,12 @@ VerticalAlignment="Stretch" Width="auto">
                 </Grid>
             </TabItem>
 
-            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1">
-                <TabItem.Header>
+            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1" MouseLeftButtonDown="ParcelTab_MouseLeftButtonDown">
+                <TabItem.Header >
+                    
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center" ></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="ParcelGridWindow" ShowGridLines="True">
@@ -291,11 +292,11 @@ VerticalAlignment="Stretch" Width="auto">
 
             </TabItem>
 
-            <TabItem Name="StationTab" Margin="0,-1,-5,-1">
+            <TabItem Name="StationTab" Margin="0,-1,-5,-1" MouseLeftButtonDown="StationTabItem_MouseLeftButtonDown">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Name="imgStation" Height="162" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\StationIcon.png" ToolTip="ShowStationList"></Image>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgStation" Height="162" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\StationIcon.png"  ToolTip="ShowStationList"></Image>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center" ></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
@@ -368,11 +369,11 @@ VerticalAlignment="Stretch" Width="auto">
                 </Grid>
             </TabItem>
 
-            <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" >
+            <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" MouseLeftButtonDown="CustomerTab_MouseLeftButtonDown">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\CustomerIcon.png" ToolTip="ShowCustomerList"/>-->
-                        <!--<TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\CustomerIcon.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
