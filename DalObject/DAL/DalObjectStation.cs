@@ -114,7 +114,7 @@ namespace Dal
             if (name != null)
                 tempStation.Name = name;
             if (chargeSlots != -1)// chekc if chargeslots was enetered
-                tempStation.AvailableChargeSlots = AvailableAndOccupiedSlots(stationId).Item2;// input=total chargeslots, we only save the availablechargeslots
+                tempStation.AvailableChargeSlots = chargeSlots; /*AvailableAndOccupiedSlots(stationId).Item2;*/// input=total chargeslots, we only save the availablechargeslots
             DataSource.stationList[index] = tempStation;
         }
 

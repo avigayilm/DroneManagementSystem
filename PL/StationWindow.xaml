@@ -18,7 +18,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
                     <Setter Property="Background" Value="Transparent"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -27,7 +27,7 @@
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Content" Value="Update Station"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add Station"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -44,7 +44,7 @@
         <Style x:Key="ButtonaddorUpdateStyle" TargetType="Button" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="Content" Value="Update"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -128,11 +128,11 @@
             <TextBlock Name="latTblk" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
             <TextBlock Name="CustmoerDisplay" Text="Station" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-            <TextBox Name="nameTbx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+            <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
             <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
             <TextBox Name="phoneTx" Text="{Binding AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
-            <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude" />
-            <TextBox Name="LatitudeTx" Text="{Binding Loc.Latitude}" Grid.Row="5" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude" />
+        <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude" />
+        <TextBox Name="LatitudeTx" Text="{Binding Loc._Latitude}" Grid.Row="5" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Latitude" />
 
 
         <!--</Grid>-->
@@ -171,8 +171,8 @@
         </Grid>
 
         <TextBlock Name="DronesInchargetxt" Text="DronesInchargeList" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                   Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" />
-        <ListView x:Name="DronesInchargeListview" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Grid.RowSpan="5" >
+                   Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Hidden" />
+        <ListView x:Name="DronesInchargeListview" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Grid.RowSpan="5" Visibility="Hidden" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -191,7 +191,7 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="CancelButton" Content="Cancel" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource buttonStyle}"/>
-        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="3" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}"/>
+        <Button x:Name="CancelButton" Content="Cancel" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource buttonStyle}" Click="CancelButton_Click"/>
+        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="3" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click"/>
     </Grid>
 </Window>

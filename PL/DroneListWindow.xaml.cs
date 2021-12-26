@@ -260,13 +260,13 @@ namespace PL
 
         private void StationListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(this, bl).Show();
+            stationToList = (StationToList)StationListView.SelectedItem;
+            new StationWindow(this, bl).Show();
         }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl, this).Show();
+            new StationWindow(bl, this).Show();
             //this.Close();
         }
         private void CancelStation_Click(object sender, RoutedEventArgs e)
