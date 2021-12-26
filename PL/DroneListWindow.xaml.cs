@@ -37,7 +37,7 @@ namespace PL
     {
         Created, Assigned, PickedUp, Delivered,All
     }
-    public class WeightAndStatus
+    public struct WeightAndStatus
     {
         public WeightCategories Weight { get; set; }
         public DroneStatuses Status { get; set; }
@@ -49,7 +49,7 @@ namespace PL
     public partial class DroneListWindow
     {
         BlApi.Ibl bl;
-        public ObservableCollection<IGrouping<WeightAndStatus, DroneToList>> droneToLists;
+        public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
         public ObservableCollection<ParcelToList> parcelToLists;
         public ObservableCollection<CustomerToList> customerToLists;
         public ObservableCollection<StationToList> stationToLists;
@@ -62,27 +62,28 @@ namespace PL
             InitializeComponent();
 
             bl = IblObj;
-            droneToLists = new ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>();
+            droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
+           
+            IEnumerable<DroneToList> temp = bl.GetAllDrones();
 
-            //IEnumerable<DroneToList> temp = bl.GetAllDrones();
 
             //var temp = /*(ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>)*/
             //               (from droneToList in bl.GetAllDrones()
             //                group droneToList by new WeightAndStatus { Weight = droneToList.Weight, Status = droneToList.Status });
             //droneToLists= new ObservableCollection<IGrouping<WeightAndStatus, DroneToList>>(temp);
 
-            (from droneToList in bl.GetAllDrones()
+            droneToLists = (from droneToList in temp
 
-             group droneToList by
+                            group droneToList by
+                            
+                            new WeightAndStatus()
+                            {
 
-             new WeightAndStatus()
-             {
+                                Status = (DroneStatuses)droneToList.Status,
 
-                 Status = (DroneStatuses)droneToList.Status,
+                                Weight = (WeightCategories)droneToList.Weight
 
-                 Weight = (WeightCategories)droneToList.Weight
-
-             }).ToList().ForEach(x => droneToLists.Add(x));
+                            }).ToDictionary(x => x.Key, x => x.ToList());
 
 
             //var item = 
@@ -91,7 +92,7 @@ namespace PL
             //               orderby NewGroup.Sum(x => x.Battery)
             //               select new
             //               {
-            //                   key = droneToList.Status,
+            //                   key = droneToList.Status,S
             //                   avg = NewGroup.Average(x => x.Battery),
             //                   sum = NewGroup.Sum(x => x.Battery),
             //                   sumMulti = (from l in NewGroup where l.Battery > 20 select l.Battery * 5).Sum()
@@ -99,13 +100,13 @@ namespace PL
             //List<string> vs = new List<string>();
             //string s = vs.Aggregate((x, y) => x.Length > y.Length ? x : y);
 
-            DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
+            DronesListView.ItemsSource = droneToLists.Values.SelectMany(x => x);
 
-           // droneToLists = new();
+            // droneToLists = new();
             parcelToLists = new();
             customerToLists = new();
             stationToLists = new();
-           // List<DroneToList> tempDroneToLists = bl.GetAllDrones().OrderBy(d => d.Weight).ToList();
+            // List<DroneToList> tempDroneToLists = bl.GetAllDrones().OrderBy(d => d.Weight).ToList();
             List<ParcelToList> tempParcelToLists = bl.GetAllParcels().OrderBy(p => p.Weight).ToList();
             List<CustomerToList> tempCustomerToLists = bl.GetAllCustomers().ToList();
             List<StationToList> tempStationToLists = bl.GetAllStation().ToList();
@@ -131,10 +132,13 @@ namespace PL
             CustomerListView.ItemsSource = customerToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            StatusSelector.SelectedIndex = 3;
+            WeightSelector.SelectedItem = 3;
+
             StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
             WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
-            droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
+           // droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
             parcelToLists.CollectionChanged += ParcelToLists_CollectionChanged;
         }
 
@@ -150,19 +154,26 @@ namespace PL
         /// <summary>
         /// determines how to filter the list
         /// </summary>
-        private void checkComboBoxesDrone()
+        public void checkComboBoxesDrone()
         {
-            DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedItem;
-            WeightCategories wInd =(WeightCategories) WeightSelector.SelectedItem;
+            DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedIndex;
+            WeightCategories wInd = (WeightCategories)WeightSelector.SelectedIndex;
             if (wInd == WeightCategories.All && sInd == DroneStatuses.All)
-                DronesListView.ItemsSource = droneToLists.SelectMany(x => x);
+                DronesListView.ItemsSource = droneToLists.Values.SelectMany(x => x);
             if (wInd == WeightCategories.All && sInd != DroneStatuses.All)
-                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Status == (DroneStatuses)sInd).SelectMany(x => x);
-                    
+                DronesListView.ItemsSource = droneToLists
+                    .Where(x => x.Key
+                    .Status == (DroneStatuses)sInd).SelectMany(x => x.Value);
+
             if (wInd != WeightCategories.All && sInd == DroneStatuses.All)
-                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Weight == (WeightCategories)wInd).SelectMany(x => x);
+                DronesListView.ItemsSource = droneToLists
+                    .Where(x => x.Key
+                    .Weight == (WeightCategories)wInd).SelectMany(x => x.Value);
             if (wInd != WeightCategories.All && sInd != DroneStatuses.All)
-                DronesListView.ItemsSource = droneToLists.Where(x => x.Key.Status == (DroneStatuses)sInd && x.Key.Weight == (WeightCategories)wInd).SelectMany(x => x);
+                DronesListView.ItemsSource = droneToLists
+                    .Where(x => x.Key
+                    .Status == (DroneStatuses)sInd && x.Key.Weight == (WeightCategories)wInd)
+                    .SelectMany(x => x.Value);
         }
 
         /// <summary>
@@ -231,7 +242,7 @@ namespace PL
             int wIndp = WeightSelectorParcel.SelectedIndex;
             int sIndp = StatusSelectorParcel.SelectedIndex;
             int pIndp = PrioritySelectorParcel.SelectedIndex;
-            if (wIndp == 3&& sIndp==4 && pIndp==3)
+            if (wIndp == 3 && sIndp == 4 && pIndp == 3)
                 ParcelListView.ItemsSource = parcelToLists;
             //if (wIndp == 3 && sIndp != 4)
             //    ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
@@ -254,8 +265,8 @@ namespace PL
 
 
 
-            //this.Close();
-        }
+        //this.Close();
+
         private void CancelParcel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -342,10 +353,10 @@ namespace PL
             this.Close();
         }
 
-    //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-    //{
-    //    droneToLists.OrderBy(x => x.Id);
-    //}
+        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //{
+        //    droneToLists.OrderBy(x => x.Id);
+        //}
+    }
+}
 
-}
-}

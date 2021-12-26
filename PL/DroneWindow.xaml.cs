@@ -25,7 +25,7 @@ namespace PL
     /// </summary>
     public partial class Check : ValidationRule, IDataErrorInfo, INotifyPropertyChanged// I notifypropertychanged is an interface so that we can make varaibles update on events. meaning we make them dependency property
     {
-        IBL.Ibl bl;
+        BlApi.Ibl bl;
         DroneToList droneToList = new();
         public int MinimumCharacters { get; set; }
 
@@ -97,6 +97,7 @@ namespace PL
     public partial class DroneWindow
     {
         BlApi.Ibl bl;
+        WeightAndStatus wAndS;
         public int StationId { get; set; }
         private Drone Drone { get; set; }
         DroneListWindow lastW;
@@ -132,11 +133,19 @@ namespace PL
             StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             DroneLabel.Content = $"adding drone to the list";
             bl.AddDrone(Drone, StationId);
-            foreach (var item in lastW.droneToLists.Where(x => x.Key.Status == (DroneStatuses)Drone.Status && x.Key.Weight == (WeightCategories)Drone.Weight))
+            wAndS.Status = (DroneStatuses)Drone.Status;
+            wAndS.Weight = (WeightCategories)Drone.Weight;
+            if (lastW.droneToLists.ContainsKey(wAndS))
+                lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
+            else
             {
-                item.Append(bl.GetAllDrones().First(x => x.Id == Drone.Id));
-                break;
-            }// after drone is updated in bl now updates listview
+                lastW.droneToLists.Add(wAndS, bl.GetAllDrones().Where(x => x.Id == Drone.Id).ToList());
+            }
+            //lastW.droneToLists.ContainsKey(wAndS)? 
+            //    lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id)) :
+            //    lastW.droneToLists.Add(wAndS, bl.GetAllDrones().TakeWhile(x => x.Id == Drone.Id).ToList());
+            lastW.checkComboBoxesDrone();
+            // after drone is updated in bl now updates listview
         }
         /// <summary>
         /// calls add drone function and displays added drone
@@ -205,13 +214,13 @@ namespace PL
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
               
                 lastW.droneToList.Model = Drone.Model;
-                var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
-                && i.Key.Weight == (WeightCategories)Drone.Weight).First();
-                item.ToList().Remove(lastW.droneToList);
-                item.Append(lastW.droneToList);
-                int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
-                && i.Key.Weight == (WeightCategories)Drone.Weight);
-                lastW.droneToLists[index] = item;
+                //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
+                //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();
+                //item.ToList().Remove(lastW.droneToList);
+                //item.Append(lastW.droneToList);
+                //int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
+                //&& i.Key.Weight == (WeightCategories)Drone.Weight);
+                //lastW.droneToLists[index] = item;
                 
                 
                

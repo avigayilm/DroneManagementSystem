@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO
+using BO;
 
 namespace PL
 {
@@ -48,7 +48,7 @@ namespace PL
             lastW = last;
             Station = bl.GetStation(lastW.droneToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
-            DataContext = ;
+            DataContext = Station;
         }
 
     }
