@@ -24,6 +24,7 @@ namespace DalApi
         //public void ChangeDroneStatus(int DroneId, DroneStatuses st);
         //public IEnumerable<Parcel> UnAssignedParcels();
         List<Customer> CustomersDeliverdTo();
+        public int CheckExistingCustomer(string customerId);
 
         void ChangeChargeSlots(int stationId, int n);
         /// <summary>

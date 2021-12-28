@@ -53,7 +53,7 @@ namespace Dal
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        internal int CheckExistingCustomer(string customerId)
+        public int CheckExistingCustomer(string customerId)
         {
             int index = DataSource.customerList.FindIndex(c => c.Id == customerId);
             if (index == -1)

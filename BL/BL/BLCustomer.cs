@@ -40,7 +40,7 @@ namespace BL
             }
         }
 
-        public void Register(BO.Customer cus, string user, string password, bool cusOrStff)
+        public void Register(BO.Customer cus, string user, string password)
         {
             try
             {
@@ -98,8 +98,10 @@ namespace BL
                 DO.Customer customerDal = idal1.GetCustomer(customerId);
                 customerDal.CopyProperties(customer);
                 customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
-                List<DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
+                List<DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.ReceiverId == customerId && p.Delivered != null).ToList();
                 List<DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
+                customer.ReceivedParcels = new();
+                customer.SentParcels = new();
                 ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
                 SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
                 return customer;
@@ -129,6 +131,18 @@ namespace BL
                 cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
             }
             return tempList;
+        }
+        public bool CustomerExists(string id)
+        {
+            try
+            {
+                idal1.CheckExistingCustomer(id);
+                return true;
+            }
+            catch(MissingIdException ex)
+            {
+                throw new AddingException(ex.Message);
+            }
         }
     }
 }

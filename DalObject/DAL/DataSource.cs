@@ -38,7 +38,7 @@ namespace Dal
             CreateStation();
             CreateCustomer();
             CreateParcel();
-
+            CreateLogin();
         }
         //initializes five drones
         public static void CreateDrone()
@@ -158,6 +158,23 @@ namespace Dal
                     AvailableChargeSlots = rand.Next(2, 10),
                     Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
                     Longitude = GetRandomNumber(34.57149, 35.57212)
+                });
+            }
+        }
+
+        public static void CreateLogin()
+        {
+            loginList.Add(new Login()
+            {
+                UserName = "Manager",
+                Password = "YehuditAvigayil"
+            });
+            foreach(Customer cus in customerList)
+            {
+                loginList.Add(new Login()
+                {
+                    UserName = cus.Id,
+                    Password = "miniProject"
                 });
             }
         }

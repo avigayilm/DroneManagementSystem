@@ -46,7 +46,7 @@ namespace BL
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);
                 if (tempDro != default)// if there is a drone assigned to the parcel
                 {
-                    tempDro.Status = DroneStatuses.Delivery;
+                    tempDro.Status = DroneStatuses.Delivery;// the drone is in delivery
                     tempDro.Battery = rand.Next(40, 100);// random battery level so that the drone can still fly
                     tempDro.Loc = DroneLocation(p, tempDro);//location of drone
                     tempDro.ParcelId = p.Id;
@@ -57,7 +57,7 @@ namespace BL
                 if (dr.Status != DroneStatuses.Delivery)
                 {
                     dr.Status = (DroneStatuses)rand.Next(2);
-                    if (dr.Status == DroneStatuses.Available)
+                    if (dr.Status == DroneStatuses.Available)//if the drone is available
                     {
                         List<DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
                         DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];

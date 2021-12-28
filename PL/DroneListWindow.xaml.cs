@@ -278,13 +278,13 @@ namespace PL
 
         private void CustomerListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(this, bl).Show();
+            customerToList = (CustomerToList)CustomerListView.SelectedItem;
+            new CustomerWindow(this, bl).Show();
         }
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl, this).Show();
+            new CustomerWindow(bl, this).Show();
             //this.Close();
         }
         private void CancelCustomer_Click(object sender, RoutedEventArgs e)

@@ -28,7 +28,15 @@ namespace PL
         private Station Station { get; set; }
         List<DroneInCharge> tempDroneInCharge { get; set; }
         DroneListWindow lastW;
-        bool addOrUpdate;
+        public bool addOrUpdate
+        {
+            get { return (bool)GetValue(addOrUpdateProperty); }
+            set { SetValue(addOrUpdateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for addOrUpdate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty addOrUpdateProperty =
+            DependencyProperty.Register("addOrUpdate", typeof(bool), typeof(StationWindow));
         public ObservableCollection<DroneInCharge> DroneChargeObservable = new();
 
         public StationWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a station
@@ -38,7 +46,7 @@ namespace PL
             addOrUpdate = Globals.add;
             lastW = last;
             Station = new Station();
-            DataContext = Station;
+            DataContext = this;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
@@ -60,7 +68,7 @@ namespace PL
                 DronesInchargeListview.ItemsSource = DroneChargeObservable;
             }
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
-            DataContext = Station;
+            DataContext = this;
         }
 
         private void droneInChargeList_Click(object sender, RoutedEventArgs e)
@@ -95,6 +103,7 @@ namespace PL
             {
                 try
                 {
+                
                     bl.AddStation(Station);
                     MessageBox.Show(Station.ToString(), "added station");
                     this.Close();

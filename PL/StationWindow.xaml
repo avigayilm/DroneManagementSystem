@@ -27,7 +27,7 @@
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Content" Value="Update Station"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
+                <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add Station"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -43,10 +43,21 @@
 
         <Style x:Key="ButtonaddorUpdateStyle" TargetType="Button" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="Content" Value="Update"/>
+            <Setter Property="IsEnabled" Value="True"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
+                <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add"/>
                 </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path= addOrUpdate}" Value="false"/>
+                        <Condition Binding="{Binding ElementName= nameTbx, Path=Text}" Value=""/>
+                        <Condition Binding="{Binding ElementName=chargeSlotsTx, Path=Text}" Value=""/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
             </Style.Triggers>
         </Style>
 
@@ -71,10 +82,10 @@
 
     </Window.Resources>
 
-    <Grid ShowGridLines="False">
+    <Grid ShowGridLines="False" DataContext="{Binding Station}">
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -128,9 +139,9 @@
             <TextBlock Name="latTblk" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
             <TextBlock Name="CustmoerDisplay" Text="Station" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-            <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-            <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
-            <TextBox Name="phoneTx" Text="{Binding AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
+        <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
+        <TextBox Name="chargeSlotsTx" Text="{Binding AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
         <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude" />
         <TextBox Name="LatitudeTx" Text="{Binding Loc._Latitude}" Grid.Row="5" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Latitude" />
 

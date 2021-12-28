@@ -11,11 +11,11 @@
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
             <Setter Property="Background" Value="AliceBlue"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            
+
             <Setter Property="TextDecorations" Value="Underline"/>
             <Setter Property="FontFamily" Value="Constantia"/>
             <Setter Property="FontSize" Value="14" />
-           <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
@@ -31,6 +31,8 @@
             <Setter Property="FontFamily" Value="Constantia"/>
             <Setter Property="Padding" Value="0, 10, 0 , 0"></Setter>
         </Style>
+        
+        
 
         <Style x:Key="buttonStyle" TargetType="Button">
             <Setter Property="BorderBrush" Value="White"/>
@@ -40,6 +42,15 @@
             <Setter Property="Background" Value="LightBlue"/>
         </Style>
 
+        <Style x:Key="ButtonaddorUpdateStyle" TargetType="Button" BasedOn="{StaticResource buttonStyle}">
+            <Setter Property="Content" Value="Update"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
+                    <Setter Property="Content" Value="Add"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="enabledTextbox" TargetType="TextBox" BasedOn="{StaticResource ResourceKey=textboxStyle}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
@@ -47,18 +58,19 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-       
+
 
 
     </Window.Resources>
-    
+
     <Grid>
         <Grid.Background>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -70,14 +82,19 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.6*"/>
-                <ColumnDefinition Width="1.6*"/>
-                <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
 
-        <Grid x:Name="regularGrid" Grid.ColumnSpan="3" Grid.RowSpan="6" ShowGridLines="True" Visibility="Visible">
+
+        <Grid x:Name="regularGrid" Grid.ColumnSpan="4" Grid.RowSpan="6" ShowGridLines="False" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.6*"/>
@@ -94,55 +111,59 @@
             </Grid.RowDefinitions>
 
 
-            <Label  x:Name="CustomerLabel" Content="Update Customer"  Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                    FontWeight="Bold" Grid.ColumnSpan="6" Margin="34,0,33,11" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFEEEEEE" />
-            <TextBlock Name="nameTblk" Text="Name" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+            <Label  x:Name="CustomerLabel" Content="Update Customer"  Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    FontWeight="Bold" Margin="0,0,-205,11" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFEEEEEE" />
+            <TextBlock Name="nameTblk" Grid.ColumnSpan="2" Text="Name" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                    Grid.Column="0" Grid.Row="1" />
-            <TextBlock Name="idTblk" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+            <TextBlock Name="idTblk" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Id"/>
-            <TextBlock Name="phoneTblk" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+            <TextBlock Name="phoneTblk" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Phone"/>
-            <TextBlock Name="LongTblk" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+            <TextBlock Name="LongTblk" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Longitude"/>
-            <TextBlock Name="latTblk" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+            <TextBlock Name="latTblk" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
             <Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\profile-Icon-SVG.jpg"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="1" MouseDown="profile_MouseDown"/>
-           
 
 
 
-            <TextBlock Name="CustmoerDisplay" Text="Customer" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-            <TextBox Name="nameTbx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="1" Grid.Column="1" Style="{StaticResource textboxStyle}"/>
-            <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"  Style="{StaticResource textboxStyle}" />
-            <TextBox Name="phoneTx" Text="{Binding PhoneNumber}" Grid.Row="3" Grid.Column="1" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
-            <TextBox Name="LogitudeTx" Text="{Binding Longitude}"  Grid.Row="4" Grid.Column="1" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude" />
-            <TextBox Name="LatitudeTx" Text="{Binding Latitude}" Grid.Row="5" Grid.Column="1" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude" />
+
+            <TextBlock Name="CustmoerDisplay" Text="Customer" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFFCFBFB" Width="162" Grid.ColumnSpan="2" Margin="4,3,0,40" Grid.RowSpan="2"/>
+            <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}"/>
+            <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource textboxStyle}" />
+            <TextBox Name="phoneTx" Text="{Binding PhoneNumber}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
+            <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude" />
+            <TextBox Name="LatitudeTx" Text="{Binding Loc._Latitude}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude" />
 
 
         </Grid>
-        <Grid x:Name="UpdateGrid" Grid.Row="6" Grid.ColumnSpan="3" Grid.RowSpan="5" ShowGridLines="True" Visibility="Visible" >
+        <Grid x:Name="UpdateGrid" Grid.Row="6" Grid.ColumnSpan="3" Grid.RowSpan="5" ShowGridLines="False" Visibility="Visible" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.6*"/>
                 <ColumnDefinition Width="1.6*"/>
-               
+
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                
+
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="1.5*"/>
             </Grid.RowDefinitions>
 
-           
-            <Button Name="sentButton" 
-                    Grid.Row="0"
+
+            <Button Name="sentButton"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="1"
+                    Grid.Column="1"
                     Style="{StaticResource buttonStyle}"
                     HorizontalAlignment="Left"
                     Content="Sent parcels" 
                     ToolTip="Show sent parcel list"
-                    Width="105">
+                    Width="130"
+                    Click="sentButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10" />
@@ -151,12 +172,15 @@
             </Button>
 
             <Button Name="Receivedbutton" 
-                    Grid.Row="1"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    Grid.Column="1"
                     Style="{StaticResource buttonStyle}"
                     HorizontalAlignment="Left"
                     Content="received parcels" 
                     ToolTip="Show received parcel list"
-                    Width="105">
+                    Width="130"
+                    Click="Receivedbutton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10" />
@@ -166,8 +190,8 @@
         </Grid>
 
         <TextBlock Name="sentList" Text="Sent Parcels" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                   Grid.Column="3" Grid.Row="1" />
-        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                   Grid.Column="5" Grid.Row="1" Visibility="Visible" Grid.ColumnSpan="2"/>
+        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Visible">
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -178,11 +202,21 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
-           
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                    <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                    <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
+                    <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                </GridView>
+            </ListView.View>
+
         </ListView>
-        <TextBlock Name="receivedList" Text="Recieved Parcels" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                   Grid.Column="3" Grid.Row="5" />
-        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3">
+
+        <TextBlock Name="receivedList" Text="Recieved Parcels" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                   Grid.Column="5" Grid.Row="5" Visibility="Visible" />
+        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Visible" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -192,9 +226,18 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
-
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                    <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                    <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
+                    <GridViewColumn Header="Sender" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                </GridView>
+            </ListView.View>
         </ListView>
-
+        <Button x:Name="CancelButton" Content="Cancel" Grid.Row="9" Grid.Column="5" Margin="10" Style="{StaticResource buttonStyle}" Click="CancelButton_Click" />
+        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click"/>
 
     </Grid>
 </Window>

@@ -11,7 +11,7 @@
             <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
             <Separator></Separator>
             <Label Content="Username" Foreground="White"/>
-            <TextBox Name="txtusername" Text="{Binding username, Mode=OneWayToSource}" Background="#545d6a" Foreground="White" FontSize="18"/>
+            <TextBox Name="txtusername" Text="{Binding userName, Mode=TwoWay}" Background="#545d6a" Foreground="White" FontSize="18"/>
             <Label Content="Password" Foreground="White"/>
             <PasswordBox Name="textPass"  Background="#545d6a" Foreground="White" FontSize="18"/>
             <Button Click="btnSubmit_Click" Name="btnSubmit" Content="Submit" Margin=" 60 10" Background="#545d6a" Foreground="White" FontSize="18" Width="64"/>
