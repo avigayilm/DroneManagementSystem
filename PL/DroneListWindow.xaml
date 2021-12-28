@@ -10,10 +10,28 @@
   AllowsTransparency="True" >
 
     <Window.Background>
+        <LinearGradientBrush ></LinearGradientBrush>
         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"></ImageBrush>-->
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
+        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>-->
     </Window.Background>
 
+    <Window.Resources>
+        <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="10" />
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <TabControl TabStripPlacement="Left" >
@@ -22,19 +40,19 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
-                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Transparent" CornerRadius="4,4,0,0" Margin="2,0">
                                     <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
+                                        VerticalAlignment="Top"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
                                         Margin="10,2"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                        <Setter TargetName="Border" Property="Background" Value="#323232" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="False">
-                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                        <Setter TargetName="Border" Property="Background" Value="#2C2B2B" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -43,22 +61,26 @@
                 </Style>
             </TabControl.Resources>
 
-            <TabItem Name="DroneTab" Margin="0,-1,-5,-1" MouseEnter="DroneTab_MouseEnter">
+            <TabItem Name="DroneTab" Margin="0,-1,-5,-1" MouseEnter="DroneTab_MouseEnter" Background="{x:Null}">>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
                         <TextBlock Text="Drone List" Margin="2" VerticalAlignment="Center"></TextBlock>
                         <!--<Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
                         <TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Foreground="White" Margin="2" VerticalAlignment="Center"></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
 
-                <Grid Name="MainGrid" ShowGridLines="True">
-                    <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-                    </Grid.Background>
+                <Grid Name="MainGrid" ShowGridLines="True" Background="#FF3D3D3F">
+                    <!--<Grid.Background>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        -->
+                    <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+                    <!--
+                    </Grid.Background>-->
                     <!--<Grid.Background
        >
             <LinearGradientBrush
@@ -77,7 +99,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
                         <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -91,19 +113,23 @@ VerticalAlignment="Stretch" Width="auto">
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
+
                         <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10, 30, 10, 10" 
-                      Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF3C4497" Foreground="#FF70C9EB">
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="0,129,0,-74" 
+                      Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="{x:Null}" Foreground="#FF70C9EB" HorizontalAlignment="Center" Width="161" Grid.ColumnSpan="2">
                             <ComboBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="Yellow" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                     <Setter Property="BorderBrush" Value="#FF3C4497"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
                                 </Style>
                             </ComboBox.Resources>
                         </ComboBox>
 
                         <ComboBox x:Name="WeightSelector" FontWeight="Bold"   
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="10, 30, 10, 10" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB">
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="2" Margin="139,129,63,-74" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="#FF5B65C9" Foreground="#FF70C9EB" Grid.ColumnSpan="2">
                             <ComboBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -118,16 +144,16 @@ VerticalAlignment="Stretch" Width="auto">
                             </ComboBox.Background>
                         </ComboBox>
 
-                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="10,0,0,0" Text="DroneList" TextWrapping="Wrap" 
-                     VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
-                     FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="139,30,0,0" Text="DroneList" TextWrapping="Wrap" 
+                     VerticalAlignment="Top" Grid.Column="2" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
+                     FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2" Width="187" Height="40"/>
 
                         <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
                   FontWeight="Bold"   
-                       Margin="10,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
+                        BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0" Background="#FF2C2B2B" RenderTransformOrigin="-0.556,0.584" Margin="45,438,37,-444" >
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="5"/>
+                                    <Setter Property="CornerRadius" Value="50"/>
                                     <Setter Property="BorderBrush" Value="#FF3C4497"/>
                                 </Style>
                             </Button.Resources>
@@ -136,31 +162,38 @@ VerticalAlignment="Stretch" Width="auto">
 
 
 
-                    <ListView x:Name="DronesListView" MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding droneToLists}" >
+                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding droneToLists}" Background="#FF3D3D3F" Margin="0,96,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
                                 <MenuItem Header="Delete Drone" Background="WhiteSmoke" Click="DeleteDrone_Click" />
                             </ContextMenu>
                         </ListView.Resources>
+                        <ListView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="-0.776"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-1.486"/>
+                            </TransformGroup>
+                        </ListView.RenderTransform>
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}" >
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 <Setter Property="Margin" Value="10"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="8"/>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.Background>
-                            <ImageBrush Opacity="0.5"/>
-                        </ListView.Background>
                         <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
-                                <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="120"/>
-                                <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="120"/>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="80"/>
+                                <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="80"/>
+                                <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="100"/>
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
-                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="120"/>
+                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                                 <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
                             </GridView>
                         </ListView.View>
@@ -279,12 +312,12 @@ VerticalAlignment="Stretch" Width="auto">
                         </ListView.Background>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="120"/>
-                                <GridViewColumn Header="SenderId" DisplayMemberBinding="{Binding SenderId}" Width="120"/>
-                                <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="120"/>
-                                <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
-                                <GridViewColumn Header="Priorities" DisplayMemberBinding="{Binding Priority}" Width="129"/>
-                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="150"/>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                                <GridViewColumn Header="SenderId" DisplayMemberBinding="{Binding SenderId}" Width="100"/>
+                                <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="100"/>
+                                <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="100"/>
+                                <GridViewColumn Header="Priorities" DisplayMemberBinding="{Binding Priority}" Width="100"/>
+                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="100"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -313,8 +346,8 @@ VerticalAlignment="Stretch" Width="auto">
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -329,7 +362,7 @@ VerticalAlignment="Stretch" Width="auto">
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+                        <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent"  FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
 
                         <Button Content="Add Station" Grid.Column="3" Click="AddStationButton_Click"
                   FontWeight="Bold"   
@@ -412,7 +445,7 @@ VerticalAlignment="Stretch" Width="auto">
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+                        <TextBlock x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="CustomerList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
 
                         <Button Content="Add Customer" Grid.Column="3" Click="AddCustomerButton_Click"
                   FontWeight="Bold"   
@@ -447,14 +480,13 @@ VerticalAlignment="Stretch" Width="auto">
                         </ListView.Background>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="70"/>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="70"/>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="80"/>
                                 <GridViewColumn Header="PhoneNumber" DisplayMemberBinding="{Binding PhoneNumber}" Width="100"/>
-                                <GridViewColumn Header="NumPacksReceived" DisplayMemberBinding="{Binding  NumPacksReceived}" Width="120"/>
-                                <GridViewColumn Header="NumPackSentDel" DisplayMemberBinding="{Binding  NumPackSentDel}" Width="100"/>
-                                <GridViewColumn Header="NumPackSentUnDel" DisplayMemberBinding="{Binding  NumPackSentUnDel}" Width="120"/>
-                                <GridViewColumn Header="NumPackExp" DisplayMemberBinding="{Binding NumPackExp}" Width="80"/>
-                                <GridViewColumn Header="NumPacksReceived" DisplayMemberBinding="{Binding NumPacksReceived}" Width="120"/>
+                                <GridViewColumn Header=" Parcels Received" DisplayMemberBinding="{Binding  NumPacksReceived}" Width="100"/>
+                                <GridViewColumn Header="Parcels Delivered" DisplayMemberBinding="{Binding  NumPackSentDel}" Width="100"/>
+                                <GridViewColumn Header="Parcels Undelivered" DisplayMemberBinding="{Binding  NumPackSentUnDel}" Width="100"/>
+                                <GridViewColumn Header="Expected" DisplayMemberBinding="{Binding NumPackExp}" Width="80"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

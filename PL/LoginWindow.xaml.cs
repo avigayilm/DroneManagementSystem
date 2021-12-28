@@ -20,18 +20,26 @@ namespace PL
     /// 
     public partial class LoginWindow : Window
     {
-        BlApi.Ibl bl;
-        string username;
+        BlApi.Ibl IblObj = BlApi.BlFactory.GetBl();
+        public string userName 
+        {
+            get { return (string)GetValue(userNameProperty); }
+            set { SetValue(userNameProperty, value); }
+        }
+        public static readonly DependencyProperty userNameProperty =
+            DependencyProperty.Register("userName", typeof(string), typeof(LoginWindow));
         string password;
         bool userType;
         public LoginWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-           // bl.Register();
+            new CustomerWindow(IblObj, this).Show();
+            this.Close();
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -39,12 +47,15 @@ namespace PL
             try
             {
                 password = textPass.Password;
-                userType=bl.Login(username, password);
-                
+                userType = IblObj.Login(userName, password);
+                new DroneListWindow(IblObj).Show();
+                this.Close();
+
+
             }
             catch(BO.LoginBLException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message,"LoginIssue", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

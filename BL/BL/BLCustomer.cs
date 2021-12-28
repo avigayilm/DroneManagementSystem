@@ -40,7 +40,7 @@ namespace BL
             }
         }
 
-        public void Register(BO.Customer cus, string user, string password, bool cusOrStff)
+        public void Register(BO.Customer cus, string user, string password)
         {
             try
             {
@@ -141,6 +141,18 @@ namespace BL
                 cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
             }
             return tempList;
+        }
+        public bool CustomerExists(string id)
+        {
+            try
+            {
+                idal1.CheckExistingCustomer(id);
+                return true;
+            }
+            catch(MissingIdException ex)
+            {
+                throw new AddingException(ex.Message);
+            }
         }
     }
 }

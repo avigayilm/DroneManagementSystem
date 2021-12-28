@@ -29,9 +29,14 @@ namespace PL
 
         private Customer Customer { get; set; }
         DroneListWindow lastW;
+        LoginWindow lastLogin;
         bool addOrUpdate;
+        public ObservableCollection<ParcelAtCustomer> senderParcelsObserverable = new();
+        public ObservableCollection<ParcelAtCustomer> receiverParcelsObserverable = new();
+        List<ParcelAtCustomer> tempSenderParcels { get; set; }
+        List<ParcelAtCustomer> tempReceiverParcels { get; set; }
 
-        public CustomerWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
+        public CustomerWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a Customer
         {
             InitializeComponent();
             bl = IblObj;
@@ -39,17 +44,50 @@ namespace PL
             lastW = last;
             Customer = new Customer();
             DataContext = Customer;
+            UpdateGrid.Visibility = Visibility.Hidden;
         }
 
+        public CustomerWindow(BlApi.Ibl IblObj, LoginWindow last)// constructor to register a Customer
+        {
+            InitializeComponent();
+            bl = IblObj;
+            addOrUpdate = Globals.add;
+            Customer = new Customer();
+            DataContext = Customer;
+            idTbx.Text = last.userName;
+            idTbx.IsReadOnly = true;
+            UpdateGrid.Visibility = Visibility.Hidden;
+            UpdateorAddButton.Content = "Register";
+        }
         public CustomerWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
         {
             InitializeComponent();
             bl = ibl;
             addOrUpdate = Globals.update;
             lastW = last;
-           // Customer = bl.GetCustomer(lastW.droneToList.Id);
+            Customer = bl.GetCustomer(lastW.customerToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = Customer;
+
+            tempSenderParcels = Customer.SentParcels;
+            tempReceiverParcels = Customer.ReceivedParcels;
+            if (tempSenderParcels.Count != 0)
+            {
+                foreach (var senderParcel in tempSenderParcels)
+                {
+                    senderParcelsObserverable.Add(senderParcel);
+                }
+                SentparcelsList.ItemsSource = senderParcelsObserverable;
+            }
+            if (tempReceiverParcels.Count != 0)
+            {
+                foreach (var receiverParcel in tempReceiverParcels)
+                {
+                    receiverParcelsObserverable.Add(receiverParcel);
+                }
+                receivedparcelsList.ItemsSource = receiverParcelsObserverable;
+            }
+            UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
         }
 
         private void profile_MouseDown(object sender, MouseButtonEventArgs e)
@@ -64,5 +102,86 @@ namespace PL
                 profile.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
+
+        private void sentButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sentList.Visibility == Visibility.Visible)// if it's already visible
+            {
+                sentList.Visibility = Visibility.Hidden;
+                SentparcelsList.Visibility = Visibility.Hidden;
+            }
+            else// if it's hidden
+            {
+                if (Customer.SentParcels.Count == 0)
+                {
+                    MessageBox.Show($"{Customer.Name} hasn't sent any parcels","SentParcels", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    sentList.Visibility = Visibility.Visible;
+                    SentparcelsList.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void Receivedbutton_Click(object sender, RoutedEventArgs e)
+        {
+            if (receivedList.Visibility == Visibility.Visible)// if it's already visible
+            {
+                receivedList.Visibility = Visibility.Hidden;
+                receivedparcelsList.Visibility = Visibility.Hidden;
+            }
+            else// if it's hidden
+            {
+                if (Customer.ReceivedParcels.Count == 0)
+                {
+                    MessageBox.Show($"{Customer.Name} hasn't received any parcels","ReceivedParcels", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    receivedList.Visibility = Visibility.Visible;
+                    receivedparcelsList.Visibility = Visibility.Visible;
+                }
+            }
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void UpdateorAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (addOrUpdate == Globals.add)// if we add
+            {
+                try
+                {
+
+                    bl.AddCustomer(Customer);
+                    MessageBox.Show(Customer.ToString(), "added station");
+                    this.Close();
+                }
+                catch (AddingException ex)
+                {
+                    MessageBox.Show(ex.Message, "Adding issue");
+                }
+            }
+            else// if we update
+            {
+                try
+                {
+                    bl.UpdateCustomer(Customer.Id, Customer.Name, Customer.PhoneNumber);
+                    MessageBox.Show(bl.GetCustomer(Customer.Id).ToString(), "Updated Customer");
+                    lastW.CustomerListView.Items.Refresh();
+                    this.Close();
+                }
+                catch (UpdateIssueException ex)
+                {
+                    MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
     }
+    
 }

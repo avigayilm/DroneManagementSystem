@@ -41,11 +41,11 @@ namespace PL
         public string UserName { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public int Id2
         {
-        get{return droneToList.Id;}
-        set
+            get { return droneToList.Id; }
+            set
             {
                 Id2 = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));// invoke show that something changed in the dictionary
@@ -53,6 +53,7 @@ namespace PL
         }
         public string Error => throw new NotImplementedException();
         public string this[string columnName] => throw new NotImplementedException();
+    }
         //public Dictionary<string, string> ErrorMessages { get; private set; } = new Dictionary<string, string>
 
         //public string this[string name]
@@ -89,7 +90,7 @@ namespace PL
         //}
 
 
-    }
+    
     public enum UpdateOptions
     {
         updateModel = 0, SendingToCharge, ReleaseFromCharge, Assign, CollectingAParcel, DeliveringAParcel
