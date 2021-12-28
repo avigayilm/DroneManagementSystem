@@ -90,5 +90,12 @@ namespace DalApi
         IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
         public bool ValidateLogin(string user, string pass);
 
+        /// <summary>
+        /// updates the parcel receiver
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="recId"></param>
+        public void UpdateParcel(int parcelId, string recId);
+
     }
 }

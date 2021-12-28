@@ -101,6 +101,13 @@ namespace BL
                 DO.Station stationDal = idal1.GetStation(stationId); //get the station from DAL
                 stationDal.CopyProperties(station); // copy its preperties to BL
                 station.Loc = new Location() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
+                station.Charging = from item in idal1.GetDroneChargeList(d => d.StationId == stationId)
+                                   let temp = droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
+                                   select new DroneInCharge
+                                   {
+                                       Id = item.DroneId,
+                                       Battery = temp != default ? temp.Battery : throw new RetrievalException("the Id number doesnt exist\n")
+                                   };
                 station.Charging = getAllDroneInCharge(stationId).Item1.ToList();
                 return station;
             }

@@ -98,12 +98,22 @@ namespace BL
                 DO.Customer customerDal = idal1.GetCustomer(customerId);
                 customerDal.CopyProperties(customer);
                 customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
-                List<DO.Parcel> ReceivedParcelListDal = idal1.GetAllParcels(p => p.ReceiverId == customerId && p.Delivered != null).ToList();
-                List<DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
-                customer.ReceivedParcels = new();
-                customer.SentParcels = new();
-                ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
-                SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
+                customer.ReceivedParcels = from item in GetAllParcels(p => p.SenderId == customerId && p.Delivered != null)
+                                           let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
+                                           select temp;
+                customer.SentParcels = from item in GetAllParcels(p => p.SenderId == customerId && p.PickedUp != null)
+                                           let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
+                                           select temp;
+
+                //select new DroneInCharge
+                //{
+                //    Id = item.DroneId,
+                //    Battery = temp != default ? temp.Battery : throw new RetrievalException("the Id number doesnt exist\n")
+                //};
+                //List < DO.Parcel > ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
+                //List<DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
+                //ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
+                //SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
                 return customer;
             }
             catch (DO.MissingIdException ex)

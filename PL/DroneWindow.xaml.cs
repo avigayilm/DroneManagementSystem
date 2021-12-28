@@ -222,10 +222,10 @@ namespace PL
                 //int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight);
                 //lastW.droneToLists[index] = item;
-                
-                
-               
-                lastW.DronesListView.Items.Refresh();
+
+
+                lastW.checkComboBoxesDrone();
+                //lastW.DronesListView.Items.Refresh();
                 this.Close();
 
             }

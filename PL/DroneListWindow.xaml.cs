@@ -72,13 +72,14 @@ namespace PL
                                 Status = (DroneStatuses)droneToList.Status,
                                 Weight = (WeightCategories)droneToList.Weight
                             }).ToDictionary(x => x.Key, x => x.ToList());
-            DronesListView.ItemsSource = droneToLists.Values.SelectMany(x => x);
-            DronesListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            //StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
+            //PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
             StatusSelector.SelectedIndex = 3;
             WeightSelector.SelectedItem = 3;
-
+            //PrioritySelectorParcel.SelectedIndex = 3;
+            //StatusSelectorParcel.SelectedIndex = 4;
         }
 
         /// <summary>
@@ -98,7 +99,9 @@ namespace PL
             DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedIndex;
             WeightCategories wInd = (WeightCategories)WeightSelector.SelectedIndex;
             if (wInd == WeightCategories.All && sInd == DroneStatuses.All)
-                DronesListView.ItemsSource = droneToLists.Values.SelectMany(x => x);
+                DronesListView.ItemsSource = from el in droneToLists.Values.SelectMany(x => x)
+                                             orderby el.Weight, el.Status
+                                             select el;
             if (wInd == WeightCategories.All && sInd != DroneStatuses.All)
                 DronesListView.ItemsSource = droneToLists
                     .Where(x => x.Key
@@ -166,60 +169,22 @@ namespace PL
 
         // parcelwindow
 
-        private void ParcelToLists_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            checkComboBoxesParcel();
-        }
+        
 
         /// <summary>
         /// allows user to cancel and return to main window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkComboBoxesParcel()
-        {
-            int wIndp = WeightSelectorParcel.SelectedIndex;
-            int sIndp = StatusSelectorParcel.SelectedIndex;
-            int pIndp = PrioritySelectorParcel.SelectedIndex;
-            if (wIndp == 3 && sIndp == 4 && pIndp == 3)
-                ParcelListView.ItemsSource = parcelToLists;
-            //if (wIndp == 3 && sIndp != 4)
-            //    ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
-            //if (wIndp != 3 && sIndp == 3)
-            //    ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Weight == WeightSelector.SelectedIndex);
-            //if (wIndp != 3 && sIndp != 3)
-            //    ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.Weight == WeightSelector.SelectedIndex);
-        }
-        private void StatusSelectorParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            checkComboBoxesParcel();                                                                                                                                                                                                              //being called th                                                                                                   //check the combo boxes...
-        }
-        private void ParcelListView_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            new DroneWindow(this, bl).Show();
-        }
-
+       
+       
 
 
 
 
         //this.Close();
 
-        private void CancelParcel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void ShowParcel_Click(object sender, RoutedEventArgs e)
-        {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            Drone drone = bl.GetDrone(droneToList.Id);
-            if (drone.ParcelInTrans != null)
-                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
-            else
-                MessageBox.Show("Drone has no parcel");
-        }
+       
 
         private void ShowSender_Click(object sender, RoutedEventArgs e)
         {
@@ -251,10 +216,7 @@ namespace PL
                 MessageBox.Show("Drone has no parcel");
         }
 
-        private void DeleteParcel_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Deleted the Parcel");
-        }
+        
 
         //stationwindow
 
@@ -292,17 +254,122 @@ namespace PL
             this.Close();
         }
 
-        private void StationTabItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    
+
+    
+
+       
+
+       
+
+        
+
+        private void DroneTab_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //{
+        //    droneToLists.OrderBy(x => x.Id);
+        //}
+
+        #region parcel
+        private void MouseEnterParcelTab(object sender, MouseEventArgs e)
+        {
+            
+            IEnumerable<ParcelToList> temp = bl.GetAllParcels();
+            parcelToLists = (from parceltolist in temp
+                             group parceltolist by
+                             parceltolist.SenderId
+                            ).ToDictionary(x => x.Key, x => x.ToList());
+            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+            StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
+            StatusSelectorParcel.SelectedIndex = 4;
+
+            //WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+            PrioritySelectorParcel.SelectedIndex = 3;
+        }
+        private void AddParcelClicked(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(bl, this).Show();
+        }
+        private void ParcelToLists_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CheckComboBoxesParcel();
+        }
+
+        private void DeleteParcel_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Deleted the Parcel");
+        }
+
+        private void CancelParcel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ShowParcel_Click(object sender, RoutedEventArgs e)
+        {
+            droneToList = (DroneToList)DronesListView.SelectedItem;
+            Drone drone = bl.GetDrone(droneToList.Id);
+            if (drone.ParcelInTrans != null)
+                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            else
+                MessageBox.Show("Drone has no parcel");
+        }
+
+        private void StatusSelectorParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckComboBoxesParcel();                                                                                                                                                                                                              //being called th                                                                                                   //check the combo boxes...
+        }
+        private void ParcelListView_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            parcelToList = (ParcelToList)ParcelListView.SelectedItem;
+            new ParcelWindow(this, bl).Show();
+        }
+        public void CheckComboBoxesParcel()
+        {
+            //int wIndp = WeightSelectorParcel.SelectedIndex;
+            int sIndp = StatusSelectorParcel.SelectedIndex;
+            int pIndp = PrioritySelectorParcel.SelectedIndex;
+            if (sIndp == 4 && pIndp == 3)
+                ParcelListView.ItemsSource = from el in parcelToLists.Values.SelectMany(x => x)
+                                             orderby el.Priority, el.ParcelStatus
+                                             select el;
+            if (pIndp == 3 && sIndp != 4)
+                ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.ParcelStatus == sIndp));
+                   // .Where(x => x.Value.Where(p=> (int)p.ParcelStatus == sIndp).).SelectMany(x => x.Value);
+            //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
+            if(pIndp != 3 && sIndp == 4)
+                ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.Priority == pIndp));
+            //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.priority == PrioritySelectorParcel.SelectedIndex);
+            if (pIndp != 3 && sIndp != 3)
+                ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.ParcelStatus == sIndp && (int)p.Priority == pIndp));
+            //ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.priority == PrioritySelectorParcel.SelectedIndex);
+        }
+
+        #endregion parcel
+
+        private void PrioritySelectorParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckComboBoxesParcel();
+        }
+
+        private void StationTab_MouseEnter(object sender, MouseEventArgs e)
         {
             IEnumerable<StationToList> temp = bl.GetAllStation();
             stationToLists = (from stationtolist in temp
-                             group stationtolist by
-                             stationtolist.AvailableChargeSlots
+                              group stationtolist by
+                              stationtolist.AvailableChargeSlots
                             ).ToDictionary(x => x.Key, x => x.ToList());
             StationListView.ItemsSource = stationToLists.Values.SelectMany(x => x);
         }
 
-        private void CustomerTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+       
+
+        private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
             customerToLists = new();
             List<CustomerToList> tempCustomerToLists = bl.GetAllCustomers().ToList();

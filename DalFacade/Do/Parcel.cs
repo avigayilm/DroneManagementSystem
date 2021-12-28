@@ -12,7 +12,7 @@
             public int DroneId { get; set; }
             public DateTime? Created { get; set; }
             public DateTime? Assigned { get; set; }
-            public DateTime? PickedUpTime { get; set; }
+            public DateTime? PickedUp { get; set; }
             public DateTime? Delivered { get; set; }
 
             public override string ToString()
@@ -26,7 +26,7 @@
                 result += $"The parcel was requested at {Created},\n";
                 result += $"Droneid is {DroneId}, \n";
                 result += $" The Parcel is scheduled for {Assigned},\n";
-                result += $"The Parcel was picked up at{PickedUpTime},\n";
+                result += $"The Parcel was picked up at{PickedUp},\n";
                 result += $"The parcel was delivered at { Delivered},\n";
                 return result;
             }
