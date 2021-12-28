@@ -98,12 +98,8 @@ namespace BL
                 DO.Customer customerDal = idal1.GetCustomer(customerId);
                 customerDal.CopyProperties(customer);
                 customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
-                customer.ReceivedParcels = from item in GetAllParcels(p => p.SenderId == customerId && p.Delivered != null)
-                                           let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
-                                           select temp;
-                customer.SentParcels = from item in GetAllParcels(p => p.SenderId == customerId && p.PickedUp != null)
-                                           let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
-                                           select temp;
+                customer.SentParcels = GetParcelsAtCustomer(customerId, true);
+                customer.ReceivedParcels = GetParcelsAtCustomer(customerId, false);
 
                 //select new DroneInCharge
                 //{
@@ -120,6 +116,12 @@ namespace BL
             {
                 throw new RetrievalException("Couldn't get the Customer.", ex);
             }
+        }
+
+        private IEnumerable<ParcelAtCustomer> GetParcelsAtCustomer(string customerId, bool flag)
+        {
+            return from item in GetAllParcels(p => flag? (p.SenderId == customerId && p.PickedUp != null) : (p.ReceiverId == customerId && p.Delivered != null))
+                                       select GetParcelAtCustomer(item.Id);
         }
 
         public CustomerInParcel GetCustomerInParcel(string customerId)

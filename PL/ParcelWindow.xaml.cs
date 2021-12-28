@@ -125,7 +125,6 @@ namespace PL
                 {
                     bl.UpdateParcel(parcel.Id, parcel.Receiver.Id);
                     MessageBox.Show(bl.GetParcel(parcel.Id).ToString(), "Updated parcel");
-
                     lastW.parcelToList.ReceiverId = parcel.Receiver.Id;
                     lastW.CheckComboBoxesParcel();
                     lastW.ParcelListView.Items.Refresh();
