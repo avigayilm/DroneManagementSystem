@@ -169,5 +169,12 @@ namespace BlApi
         public void Register(BO.Customer cus, string user, string password, bool cusOrStff);
         public bool Login(string user, string pass);
         public (IEnumerable<DroneInCharge>, int) getAllDroneInCharge(int stationId);
+
+        /// <summary>
+        /// updates the parcel receiver so long as parcel isnt in transit
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="recId"></param>
+        public void UpdateParcel(int parcelId, string recId);
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
             public string Name { get; set; }
             public int AvailableChargeSlots { get; set; }
             public Location Loc { get; set; }
-            public List<DroneInCharge> Charging { get; set; }
+            public IEnumerable<DroneInCharge> Charging { get; set; }
 
             public override string ToString()
             {

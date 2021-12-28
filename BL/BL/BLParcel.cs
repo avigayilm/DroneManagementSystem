@@ -16,8 +16,8 @@ namespace BL
         {
             try
             {
-                if (newParcel.Id < 0)
-                    throw new InvalidInputException("invalid Id input");
+                //if (newParcel.Id < 0)
+                //    throw new InvalidInputException("invalid Id input");
                 if (newParcel.Priority != BO.Priorities.Emergency && newParcel.Priority != BO.Priorities.Fast && newParcel.Priority != BO.Priorities.Normal)
                     throw new InvalidInputException("Invalid priority");
                 if (newParcel.Weight != BO.WeightCategories.Heavy && newParcel.Weight != BO.WeightCategories.Light && newParcel.Weight != BO.WeightCategories.Medium)
@@ -101,7 +101,7 @@ namespace BL
                 DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
                 DO.Parcel tempPack = idal1.GetParcel(drone.ParcelId); //retrieve parcel assigned
                 // checks that the drone is indeed ready to deliver it parcel
-                if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUpTime == null))
+                if (!(drone.Status == DroneStatuses.Delivery && tempPack.PickedUp == null))
                     throw new DeliveryIssueException("Parcel cannot be picked up by drone\n");
                 drone.Battery -= BatteryUsage(DroneDistanceFromParcel(drone, tempPack), 0);
                 DO.Customer tempCus = idal1.GetCustomer(tempPack.SenderId);
@@ -153,11 +153,11 @@ namespace BL
             parcel.CopyProperties(parcelInTrans);
             parcelInTrans.Sender = GetCustomerInParcel(parcel.SenderId);
             parcelInTrans.Receiver = GetCustomerInParcel(parcel.ReceiverId);
-            parcelInTrans.PickedUp = new Location() {Longitude=tempCus.Longitude,Latitude= tempCus.Latitude };
+            parcelInTrans.PickedUpFrom = new Location() {Longitude=tempCus.Longitude,Latitude= tempCus.Latitude };
             tempCus = idal1.GetCustomer(parcel.ReceiverId);
             parcelInTrans.DeliverdTo= new Location() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
-            parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUp.Longitude, parcelInTrans.PickedUp.Latitude);
-            if (parcel.PickedUpTime == null)
+            parcelInTrans.Distance = Bonus.Haversine(parcelInTrans.DeliverdTo.Longitude, parcelInTrans.DeliverdTo.Latitude, parcelInTrans.PickedUpFrom.Longitude, parcelInTrans.PickedUpFrom.Latitude);
+            if (parcel.PickedUp == null)
                 parcelInTrans.Status = true;
             else
                 parcelInTrans.Status = false;
@@ -238,6 +238,25 @@ namespace BL
                 tempList.Add(parcel);
             }
             return tempList;
+        }
+
+        public void UpdateParcel(int parcelId, string recId)
+        {
+            try
+            {
+                if(idal1.GetParcel(parcelId).PickedUp != null)
+                    throw new UpdateIssueException("Couldn't update the parcel.");
+                idal1.UpdateParcel(parcelId, recId);
+                //DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+                //if (tempDron == default)
+                //    throw new RetrievalException("Couldn't get the Drone.");
+                //else
+                //    tempDron.Model = model;
+            }
+            catch (DO.MissingIdException ex)
+            {
+                throw new UpdateIssueException("Couldn't update the parcel.", ex);
+            }
         }
 
 

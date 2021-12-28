@@ -23,6 +23,15 @@ namespace Dal
             
         }
 
+        public void UpdateParcel(int parcelId, string recId)
+        {
+            int index = CheckExistingParcel(parcelId);
+            Parcel tempParcel = DataSource.parcelList[index];
+            tempParcel.ReceiverId = recId;
+            DataSource.parcelList[index] = tempParcel;
+
+        }
+
         /// <summary>
         /// the drone picks up the parcel, therefore updating the drone's status to delivery 
         /// and updating the picked up time
@@ -35,7 +44,7 @@ namespace Dal
             //var temp2 = DataSource.dronesList[droneIndex];
             // temp2.status = DroneStatuses.Delivery;
             var temp = DataSource.parcelList[parcelIndex];
-            temp.PickedUpTime = DateTime.Now;
+            temp.PickedUp = DateTime.Now;
             //DataSource.dronesList[droneIndex] = temp2;
             DataSource.parcelList[parcelIndex] = temp;
         }

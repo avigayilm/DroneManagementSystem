@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 
+
 namespace PL
 {
     /// <summary>
@@ -20,11 +21,121 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
-        DateTime created;
-        public ParcelWindow()
+        public DateTime? created { get; set; }
+        public Parcel parcel { get; set; }
+        DroneListWindow lastW;
+        BlApi.Ibl bl;
+
+
+        public bool addOrUpdate
+        {
+            get { return (bool)GetValue(addOrUpdateProperty); }
+            set { SetValue(addOrUpdateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for addOrUpdate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty addOrUpdateProperty =
+            DependencyProperty.Register("addOrUpdate", typeof(bool), typeof(ParcelWindow));
+
+
+        //bool addOrUpdate { get; set; }
+        public ParcelWindow(BlApi.Ibl IblObj, DroneListWindow last) // to add
         {
             InitializeComponent();
             created = DateTime.Now;
+            bl = IblObj;
+            lastW = last;
+            parcel = new();
+            DataContext = this;
+            addOrUpdate = Globals.add;
+            weiCBx.ItemsSource  = Enum.GetValues(typeof(WeightCategories));
+            prioCbx.ItemsSource = Enum.GetValues(typeof(Priorities));
+            sendIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
+            recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
+        }
+
+        public ParcelWindow( DroneListWindow last, BlApi.Ibl IblObj) // to update
+        {
+            InitializeComponent();
+            
+            bl = IblObj;
+            lastW = last;
+            parcel = bl.GetParcel(lastW.parcelToList.Id);
+            created = parcel.Created;
+            weiCBx.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            prioCbx.ItemsSource = Enum.GetValues(typeof(Priorities));
+            recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
+            UpdateGrid.Visibility = Visibility.Visible;
+            DataContext = this;
+            addOrUpdate = Globals.update;
+
+        }
+        private void AddParcel()
+        {
+            //StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
+            //DroneLabel.Content = $"adding drone to the list";
+            bl.AddParcel(parcel);
+            //wAndS.Status = (DroneStatuses)Drone.Status;
+           // wAndS.Weight = (WeightCategories)Drone.Weight;
+            if (lastW.parcelToLists.ContainsKey(parcel.Sender.Id))
+                lastW.parcelToLists[parcel.Sender.Id].Add(bl.GetAllParcels().First(x => x.Id == parcel.Id));
+            else
+            {
+                lastW.parcelToLists.Add(parcel.Sender.Id, bl.GetAllParcels().Where(x => x.Id == parcel.Id).ToList());
+            }
+            lastW.CheckComboBoxesParcel();
+            // after drone is updated in bl now updates listview
+        }
+
+   
+
+        private void clickedReceiver(object sender, MouseButtonEventArgs e)
+        {
+            recIdCBx.Visibility = Visibility.Visible;
+            ReceiverTblk.Visibility = Visibility.Collapsed;
+        }
+
+        private void cancelClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void sendTblk_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            sendIdCBx.Visibility = Visibility.Visible;
+            SenderTblk.Visibility = Visibility.Collapsed;
+        }
+
+        private void submit_Click(object sender, RoutedEventArgs e)
+        {
+            if (addOrUpdate == Globals.add)
+                try
+                {
+                    AddParcel();
+                    MessageBox.Show(parcel.ToString(), "added Parcel");
+                    this.Close();
+                }
+                catch (AddingException ex)
+                {
+                    MessageBox.Show(ex.Message, "Adding issue");
+                }
+            else //update was clicked
+            {
+                try
+                {
+                    bl.UpdateParcel(parcel.Id, parcel.Receiver.Id);
+                    MessageBox.Show(bl.GetParcel(parcel.Id).ToString(), "Updated parcel");
+
+                    lastW.parcelToList.ReceiverId = parcel.Receiver.Id;
+                    lastW.CheckComboBoxesParcel();
+                    lastW.ParcelListView.Items.Refresh();
+                    this.Close();
+                }
+                catch (UpdateIssueException ex)
+                {
+                    MessageBox.Show(ex.Message, "Updating issue");
+                }
+            }
         }
     }
 }

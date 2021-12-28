@@ -116,10 +116,10 @@ namespace Dal
 
                     if (statusStats >= 20) // picked up
                     {
-                        temp.PickedUpTime = ((DateTime) temp.Assigned).AddMinutes(60);
+                        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
                         if (statusStats >= 30) // delivered
                         {
-                            temp.Delivered = ((DateTime)temp.PickedUpTime).AddMinutes(60);
+                            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
                             temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
                         }
                     }

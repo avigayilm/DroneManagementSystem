@@ -14,7 +14,7 @@ using System.Threading.Tasks;
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Receiver { get; set; }
             public WeightCategories Weight { get; set; }
-            public Location PickedUp { get; set; }
+            public Location PickedUpFrom { get; set; }
             public Location DeliverdTo { get; set; }
             public double Distance { get; set; }
 
@@ -25,7 +25,7 @@ using System.Threading.Tasks;
                 + $"Priority is: {Priority}\n"
                 + $"Parcel weight: {Weight}\n"
                 + $"stat is: {Status}\n"
-                + $"Collecting location: {PickedUp}\n"
+                + $"Collecting location: {PickedUpFrom}\n"
                 + $"Delivering location: {DeliverdTo}\n"
                 + $"Delivery distance: {Distance}\n"
                 + $"sender: {Sender}\n"

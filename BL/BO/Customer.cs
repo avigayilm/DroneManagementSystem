@@ -12,8 +12,8 @@ using System.Threading.Tasks;
             public string Name { get; set; }
             public string PhoneNumber { get; set; }
             public Location Loc { get; set; }
-            public List<ParcelAtCustomer> ReceivedParcels { get; set; }
-            public List<ParcelAtCustomer> SentParcels { get; set; }
+            public IEnumerable<ParcelAtCustomer> ReceivedParcels { get; set; }
+            public IEnumerable<ParcelAtCustomer> SentParcels { get; set; }
             public override string ToString()
             {
                 String result = " ";
