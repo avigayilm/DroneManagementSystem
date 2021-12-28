@@ -315,7 +315,6 @@ namespace PL
 
         private void ParcelTab_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("hey I was clicked");
             StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
             WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
