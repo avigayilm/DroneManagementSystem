@@ -43,10 +43,10 @@ namespace PL
         {
             InitializeComponent();
             bl = IblObj;
+            addOrUpdate = Globals.add;
             lastW = last;
             Station = new Station();
             DataContext = this;
-            addOrUpdate = Globals.add;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
@@ -54,6 +54,7 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
+            addOrUpdate = Globals.update;
             lastW = last;
             Station = bl.GetStation(lastW.stationToList.Id);
            // droneInChargeList = new();
@@ -68,7 +69,6 @@ namespace PL
             }
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = this;
-            addOrUpdate = Globals.update;
         }
 
         private void droneInChargeList_Click(object sender, RoutedEventArgs e)

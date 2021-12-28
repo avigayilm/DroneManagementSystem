@@ -18,7 +18,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="false">
+                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
                     <Setter Property="Background" Value="Transparent"/>
                 </DataTrigger>
             </Style.Triggers>

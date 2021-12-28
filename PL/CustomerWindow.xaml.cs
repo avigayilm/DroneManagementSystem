@@ -43,7 +43,6 @@ namespace PL
             addOrUpdate = Globals.add;
             lastW = last;
             Customer = new Customer();
-            Customer.Loc = new();
             DataContext = Customer;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
@@ -54,7 +53,6 @@ namespace PL
             bl = IblObj;
             addOrUpdate = Globals.add;
             Customer = new Customer();
-            Customer.Loc = new();
             DataContext = Customer;
             idTbx.Text = last.userName;
             idTbx.IsReadOnly = true;
@@ -159,10 +157,9 @@ namespace PL
             {
                 try
                 {
-                  
+
                     bl.AddCustomer(Customer);
                     MessageBox.Show(Customer.ToString(), "added station");
-                    lastW.CustomerListView.Items.Refresh();
                     this.Close();
                 }
                 catch (AddingException ex)
