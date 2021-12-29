@@ -329,7 +329,7 @@
                                 <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="100"/>
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="100"/>
                                 <GridViewColumn Header="Priorities" DisplayMemberBinding="{Binding Priority}" Width="100"/>
-                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="100"/>
+                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="100"/> 
                                 <GridViewColumn Header="" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
