@@ -33,7 +33,7 @@ namespace BlApi
         /// adds a parcel to the parcelList
         /// </summary>
         /// <param name="newParcel"></param>
-        void AddParcel(Parcel newParcel);
+        int AddParcel(Parcel newParcel);
 
         /// <summary>
         /// updates the drone's model

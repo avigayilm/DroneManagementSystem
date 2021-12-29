@@ -414,15 +414,15 @@ namespace PL
             CustomerListView.ItemsSource = customerToLists;
         }
 
-        private void ParcelTab_MouseEnter(object sender, MouseEventArgs e)
+        private void ParcelTab_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //parcelToLists = new Dictionary<string, List<ParcelToList>>();
             IEnumerable<ParcelToList> temp = bl.GetAllParcels();
             parcelToLists = (from parceltolist in temp
                              group parceltolist by
                              parceltolist.SenderId
                             ).ToDictionary(x => x.Key, x => x.ToList());
-            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x); /// order by!!!
+
             StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
             PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
             StatusSelectorParcel.SelectedIndex = 4;
@@ -431,15 +431,7 @@ namespace PL
 
             PrioritySelectorParcel.SelectedIndex = 3;
 
-            //StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
-            //// WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            //PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
-            //IEnumerable<ParcelToList> temp = bl.GetAllParcels();
-            //parcelToLists = (from parceltolist in temp
-            //                 group parceltolist by
-            //                 parceltolist.SenderId
-            //                ).ToDictionary(x => x.Key, x => x.ToList());
-            //ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+            
         }
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)

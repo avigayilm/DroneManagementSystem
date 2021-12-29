@@ -106,18 +106,7 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
         }
 
-        private void profile_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog op = new();
-            op.Title = "select a picture";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-        "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-            {
-                profile.Source = new BitmapImage(new Uri(op.FileName));
-            }
-        }
+       
 
         private void sentButton_Click(object sender, RoutedEventArgs e)
         {
@@ -200,6 +189,19 @@ namespace PL
                 {
                     MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+            }
+        }
+
+        private void profile_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog op = new();
+            op.Title = "select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                profile.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-        public void AddParcel(BO.Parcel newParcel)// do I have to check customer and receiver
+        public int AddParcel(BO.Parcel newParcel)// do I have to check customer and receiver
         {
             try
             {
@@ -36,7 +36,7 @@ namespace BL
                 parcelTemp = (DO.Parcel)obj1;
                 parcelTemp.SenderId = newParcel.Sender.Id;// only insert if sender exists?
                 parcelTemp.ReceiverId = newParcel.Receiver.Id;
-                idal1.AddParcel(parcelTemp);// can we print the parcelId here
+                return idal1.AddParcel(parcelTemp);// can we print the parcelId here
             }
             catch (DO.DuplicateIdException ex)
             {
