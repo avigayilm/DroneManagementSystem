@@ -458,6 +458,26 @@ namespace PL
             }
         }
 
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            DronesListView.Items.Refresh();
+        }
+
+        private void Image_MouseEnter_1(object sender, MouseEventArgs e)
+        {
+            ParcelListView.Items.Refresh();
+        }
+
+        private void Image_MouseEnter_2(object sender, MouseEventArgs e)
+        {
+            StationListView.Items.Refresh();
+        }
+
+        private void Image_MouseEnter_3(object sender, MouseEventArgs e)
+        {
+            CustomerListView.Items.Refresh();
+        }
+
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
         //    droneToLists.OrderBy(x => x.Id);
