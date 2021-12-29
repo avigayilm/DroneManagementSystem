@@ -27,10 +27,19 @@ namespace PL
 
         BlApi.Ibl bl;
 
-        private Customer Customer { get; set; }
+        public Customer Customer { get; set; }
         DroneListWindow lastW;
         LoginWindow lastLogin;
-        bool addOrUpdate;
+        public bool addOrUpdate { get; set; }
+        //public bool addOrUpdate
+        //{
+        //    get { return (bool)GetValue(addOrUpdateProperty); }
+        //    set { SetValue(addOrUpdateProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for addOrUpdate.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty addOrUpdateProperty =
+        //    DependencyProperty.Register("addOrUpdate", typeof(bool), typeof(StationWindow));
         //public IEnumerable<ParcelAtCustomer> senderParcelsObserverable ;
         //public IEnumerable<ParcelAtCustomer> receiverParcelsObserverable ;
         //List<ParcelAtCustomer> tempSenderParcels { get; set; }
@@ -43,7 +52,8 @@ namespace PL
             addOrUpdate = Globals.add;
             lastW = last;
             Customer = new Customer();
-            DataContext = Customer;
+            Customer.Loc = new();
+            DataContext = this;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
@@ -52,8 +62,9 @@ namespace PL
             InitializeComponent();
             bl = IblObj;
             addOrUpdate = Globals.add;
-            Customer = new Customer();
-            DataContext = Customer;
+            Customer = new Customer(); 
+            Customer.Loc = new();
+            DataContext = this;
             idTbx.Text = last.userName;
             idTbx.IsReadOnly = true;
             UpdateGrid.Visibility = Visibility.Hidden;
@@ -67,7 +78,7 @@ namespace PL
             lastW = last;
             Customer = bl.GetCustomer(lastW.customerToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
-            DataContext = Customer;
+            DataContext = this;
 
             //senderParcelsObserverable = from item in Customer.SentParcels
             //                            let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)

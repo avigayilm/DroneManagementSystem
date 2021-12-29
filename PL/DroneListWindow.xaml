@@ -74,7 +74,7 @@
                     </StackPanel>
                 </TabItem.Header>
 
-                <Grid Name="MainGrid" ShowGridLines="True" Background="#323232">
+                <Grid Name="MainGrid" ShowGridLines="False" Background="#323232">
                     <!--<Grid.Background>
                         <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
                         -->
@@ -99,7 +99,7 @@
                         <RowDefinition Height="82*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Background="#FF3D3D3F">
+                    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Background="#FF323232" ShowGridLines="False">
                         <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -112,7 +112,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
+                        <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="109,102,120,-42" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" Grid.ColumnSpan="2" />
 
                         <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="0,129,0,-74" 
@@ -148,9 +148,17 @@
                      VerticalAlignment="Top" Grid.Column="2" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
                      FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2" Width="187" Height="40"/>
 
-                        <Button Content="Add drone" Grid.Column="3" Click="AddDroneButton_Click"
+                        <Button Grid.Column="3" Click="AddDroneButton_Click"
                   FontWeight="Bold"   
-                        BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0" Background="#FF2C2B2B" RenderTransformOrigin="-0.556,0.584" Margin="45,438,37,-444" >
+                        Foreground="White"  BorderThickness="0,0,0,0" Background="#FF2C2B2B"  Margin="45,438,37,-444" >
+                            <StackPanel>
+                                <Image x:Name="addpic" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
+                                <TextBlock Text="Add Drone"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                            <!--<StackPanel>
+                                <TextBlock><TextBlock.Text=""</TextBlock>
+                                <Image Source="‪C:\Users\aviga\Pictures\IconsB\plus.png" Stretch="None" />
+                            </StackPanel>-->
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="50"/>
@@ -206,6 +214,7 @@
                             </Style>
                         </Button.Resources>
                     </Button>
+                    <Label Content="Select Status" Foreground="White" Grid.Row="1"  Margin="512,17,96,0" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />
                     <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
                 </Grid>
             </TabItem>
@@ -222,7 +231,7 @@
 
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Name="ParcelGridWindow" ShowGridLines="True">
+                <Grid Name="ParcelGridWindow" ShowGridLines="True" Background="#FF323232">
                     <!--<Grid.Background>
                         -->
                     <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
@@ -276,11 +285,11 @@
                                 </Style>
                             </ComboBox.Resources>
                         </ComboBox>-->
-                        <TextBox x:Name="textParcellist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="ParcelList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
+                        <TextBox x:Name="textParcellist" HorizontalAlignment="Right" Margin="10,0,0,0" Text="ParcelList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0"/>
 
                         <Button x:Name="addParcel" Content="Add Parcel" Grid.Column="3"
                   FontWeight="Bold"   
-                       Margin="100,30,10,0" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533" Height="42" VerticalAlignment="Top" Click="AddParcelClicked">
+                       Margin="100,30,10,0" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="#FF2C2B2B" RenderTransformOrigin="0.3,0.533" Height="42" VerticalAlignment="Top" Click="AddParcelClicked" Foreground="White">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -292,7 +301,7 @@
 
 
 
-                    <ListView x:Name="ParcelListView" MouseDoubleClick="ParcelListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding parcelToLists}" >
+                    <ListView x:Name="ParcelListView" MouseDoubleClick="ParcelListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding parcelToLists}" Background="#FF323232" Foreground="White" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
@@ -301,12 +310,6 @@
                                 <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
                             </ContextMenu>
                         </ListView.Resources>
-                        <ListView.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="Black"/>
-                                <GradientStop Color="#FF3A84BE" Offset="1"/>
-                            </LinearGradientBrush>
-                        </ListView.Background>
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}" >
@@ -316,7 +319,7 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.View>
-                            <GridView>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
                                 <GridViewColumn Header="SenderId" DisplayMemberBinding="{Binding SenderId}" Width="100"/>
                                 <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="100"/>
@@ -384,10 +387,7 @@
                     <ListView x:Name="StationListView" MouseDoubleClick="StationListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding stationToLists}" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
-                                <MenuItem Header="Show Sender" Background="WhiteSmoke" Click="ShowSender_Click" />
-                                <MenuItem Header="Show Receiver" Background="WhiteSmoke" Click="ShowReceiver_Click" />
                                 <MenuItem Header="Show Drone" Background="WhiteSmoke" Click="ShowDrone_Click" />
-                                <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
                             </ContextMenu>
                         </ListView.Resources>
 
