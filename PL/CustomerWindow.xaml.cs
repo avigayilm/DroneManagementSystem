@@ -33,8 +33,8 @@ namespace PL
         bool addOrUpdate;
         public ObservableCollection<ParcelAtCustomer> senderParcelsObserverable = new();
         public ObservableCollection<ParcelAtCustomer> receiverParcelsObserverable = new();
-        List<ParcelAtCustomer> tempSenderParcels { get; set; }
-        List<ParcelAtCustomer> tempReceiverParcels { get; set; }
+        IEnumerable<ParcelAtCustomer> tempSenderParcels { get; set; }
+        IEnumerable<ParcelAtCustomer> tempReceiverParcels { get; set; }
 
         public CustomerWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a Customer
         {
@@ -73,7 +73,7 @@ namespace PL
 
             tempSenderParcels = Customer.SentParcels;
             tempReceiverParcels = Customer.ReceivedParcels;
-            if (tempSenderParcels.Count != 0)
+            if (tempSenderParcels.Count() != 0)
             {
                 foreach (var senderParcel in tempSenderParcels)
                 {
@@ -81,7 +81,7 @@ namespace PL
                 }
                 SentparcelsList.ItemsSource = senderParcelsObserverable;
             }
-            if (tempReceiverParcels.Count != 0)
+            if (tempReceiverParcels.Count() != 0)
             {
                 foreach (var receiverParcel in tempReceiverParcels)
                 {
@@ -114,7 +114,7 @@ namespace PL
             }
             else// if it's hidden
             {
-                if (Customer.SentParcels.Count == 0)
+                if (Customer.SentParcels.Count() == 0)
                 {
                     MessageBox.Show($"{Customer.Name} hasn't sent any parcels","SentParcels", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -135,7 +135,7 @@ namespace PL
             }
             else// if it's hidden
             {
-                if (Customer.ReceivedParcels.Count == 0)
+                if (Customer.ReceivedParcels.Count() == 0)
                 {
                     MessageBox.Show($"{Customer.Name} hasn't received any parcels","ReceivedParcels", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -162,7 +162,8 @@ namespace PL
                   
                     bl.AddCustomer(Customer);
                     MessageBox.Show(Customer.ToString(), "added station");
-                    lastW.CustomerListView.Items.Refresh();
+                    //lastW.customerToLists.Add()
+                    //lastW.CustomerListView.Items.Refresh();
                     this.Close();
                 }
                 catch (AddingException ex)
