@@ -76,12 +76,12 @@ namespace PL
             //DroneLabel.Content = $"adding drone to the list";
             bl.AddParcel(parcel);
             //wAndS.Status = (DroneStatuses)Drone.Status;
-           // wAndS.Weight = (WeightCategories)Drone.Weight;
+            // wAndS.Weight = (WeightCategories)Drone.Weight;
             if (lastW.parcelToLists.ContainsKey(parcel.Sender.Id))
-                lastW.parcelToLists[parcel.Sender.Id].Add(bl.GetAllParcels().First(x => x.Id == parcel.Id));
+                lastW.parcelToLists[parcel.Sender.Id].Add(bl.GetAllParcels(x => x.Id == parcel.Id).Single());
             else
             {
-                lastW.parcelToLists.Add(parcel.Sender.Id, bl.GetAllParcels().Where(x => x.Id == parcel.Id).ToList());
+                lastW.parcelToLists.Add(parcel.Sender.Id, bl.GetAllParcels(x => x.Id == parcel.Id).ToList());
             }
             lastW.CheckComboBoxesParcel();
             // after drone is updated in bl now updates listview
@@ -125,7 +125,6 @@ namespace PL
                 {
                     bl.UpdateParcel(parcel.Id, parcel.Receiver.Id);
                     MessageBox.Show(bl.GetParcel(parcel.Id).ToString(), "Updated parcel");
-
                     lastW.parcelToList.ReceiverId = parcel.Receiver.Id;
                     lastW.CheckComboBoxesParcel();
                     lastW.ParcelListView.Items.Refresh();

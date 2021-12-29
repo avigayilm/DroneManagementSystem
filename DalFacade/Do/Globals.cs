@@ -8,7 +8,7 @@ using System.Threading.Tasks;
     {
         public static int customer = 0;
         public static  int staff = 1;
-        public static int update = 1;
-        public static int add = 0;
+    public static bool update = true;
+        public static bool add;
     }
 

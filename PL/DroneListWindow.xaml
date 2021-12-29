@@ -210,7 +210,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1" >
+            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1" MouseEnter="ParcelTab_MouseEnter">
                 <TabItem.Header >
 
                     <StackPanel Orientation="Vertical">

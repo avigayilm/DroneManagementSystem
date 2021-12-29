@@ -380,7 +380,33 @@ namespace PL
             CustomerListView.ItemsSource = customerToLists;
         }
 
-        
+        private void ParcelTab_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //parcelToLists = new Dictionary<string, List<ParcelToList>>();
+            IEnumerable<ParcelToList> temp = bl.GetAllParcels();
+            parcelToLists = (from parceltolist in temp
+                             group parceltolist by
+                             parceltolist.SenderId
+                            ).ToDictionary(x => x.Key, x => x.ToList());
+            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+            StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
+            PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+            StatusSelectorParcel.SelectedIndex = 4;
+
+            //WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+
+            PrioritySelectorParcel.SelectedIndex = 3;
+
+            //StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
+            //// WeightSelectorParcel.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            //PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
+            //IEnumerable<ParcelToList> temp = bl.GetAllParcels();
+            //parcelToLists = (from parceltolist in temp
+            //                 group parceltolist by
+            //                 parceltolist.SenderId
+            //                ).ToDictionary(x => x.Key, x => x.ToList());
+            //ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+        }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
