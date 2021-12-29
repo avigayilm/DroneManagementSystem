@@ -122,6 +122,7 @@ namespace BL
             }
         }
 
+
         public CustomerInParcel GetCustomerInParcel(string customerId)
         {
             CustomerInParcel customerInParcelTemp = new CustomerInParcel();
@@ -129,10 +130,10 @@ namespace BL
             customerInParcelTemp = new CustomerInParcel() { Id = customerTemp.Id, Name = customerTemp.Name };
             return customerInParcelTemp;
         }
-        public IEnumerable<CustomerToList> GetAllCustomers()
+        public IEnumerable<CustomerToList> GetAllCustomers(Predicate<DO.Customer> predicate = null)
         {
             List<CustomerToList> tempList = new List<CustomerToList>();
-            idal1.GetAllCustomers().CopyPropertyListtoIBLList(tempList);
+            idal1.GetAllCustomers(predicate).CopyPropertyListtoIBLList(tempList);
             foreach (CustomerToList cus in tempList)
             {
                 cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();

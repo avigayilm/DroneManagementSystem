@@ -106,6 +106,12 @@ namespace PL
                 
                     bl.AddStation(Station);
                     MessageBox.Show(Station.ToString(), "added station");
+                    if(lastW.stationToLists.ContainsKey(Station.AvailableChargeSlots))
+                        lastW.stationToLists[Station.AvailableChargeSlots].Add(bl.GetAllStation(c => c.Id == Station.Id).Single());
+                    else
+                    {
+                        lastW.stationToLists.Add(Station.AvailableChargeSlots, bl.GetAllStation(s => s.Id == Station.Id).ToList());
+                    }
                     this.Close();
                 }
                 catch (AddingException ex)
@@ -119,6 +125,8 @@ namespace PL
                 {
                     bl.UpdateStation(Station.Id, Station.Name, Station.AvailableChargeSlots);
                     MessageBox.Show(bl.GetStation(Station.Id).ToString(), "Updated Station");
+                    lastW.stationToList.Name = Station.Name;
+                    lastW.stationToList.AvailableChargeSlots = Station.AvailableChargeSlots;
                     lastW.StationListView.Items.Refresh();
                     this.Close();
                 }

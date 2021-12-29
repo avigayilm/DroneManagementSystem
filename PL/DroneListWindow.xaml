@@ -61,20 +61,20 @@
                 </Style>
             </TabControl.Resources>
 
-            <TabItem Name="DroneTab" Margin="0,-1,-5,-1" MouseEnter="DroneTab_MouseEnter" Background="{x:Null}">>
+            <TabItem Name="DroneTab" Margin="0,-1,-5,-1" MouseEnter="DroneTab_MouseEnter" Background="#FFE5E5E5">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
-                        <TextBlock Text="Drone List" Margin="2" VerticalAlignment="Center"></TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <!--<Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png"  ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Drone List" Margin="2" VerticalAlignment="Center"></TextBlock-->
                         <!--<Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\DroneIcons.png" ToolTip="ShowDroneList" ></Image>
                         <TextBlock Text="Dronelist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
-                        <Image Name="imgDrone" Height="149" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
-                        <TextBlock Text="Dronelist" Foreground="White" Margin="2" VerticalAlignment="Center"></TextBlock>
+                        <Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
 
-                <Grid Name="MainGrid" ShowGridLines="True" Background="#FF3D3D3F">
+                <Grid Name="MainGrid" ShowGridLines="True" Background="#323232">
                     <!--<Grid.Background>
                         <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
                         -->
@@ -93,13 +93,13 @@
         </Grid.Background>-->
 
                     <Grid.RowDefinitions >
-                        <RowDefinition Height="70*"/>
-                        <RowDefinition Height="400*"/>
-                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="82*"/>
+                        <RowDefinition Height="39*"/>
+                        <RowDefinition Height="431*"/>
+                        <RowDefinition Height="82*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
+                    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Background="#FF3D3D3F">
                         <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -162,7 +162,7 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
 
 
 
-                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="1" ItemsSource= "{Binding droneToLists}" Background="#FF3D3D3F" Margin="0,96,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
+                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="#FF323232" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
@@ -199,14 +199,13 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
                         </ListView.View>
                     </ListView>
 
-                    <Button x:Name="Cancel" Content="Cancel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelDrone_Click">
+                    <Button x:Name="Cancel" Content="Cancel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue"  Width="289" Click="CancelDrone_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />
                             </Style>
                         </Button.Resources>
                     </Button>
-
                     <!--<Button Content="Button"  Grid.Column="3" HorizontalAlignment="Left" Margin="67,48,0,0" VerticalAlignment="Top" Grid.Row="1" Click="Button_Click"/>-->
                 </Grid>
             </TabItem>
@@ -214,19 +213,21 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
             <TabItem Name="ParcelTab" Margin="0,-1,-5,-1" MouseEnter="MouseEnterParcelTab">
                 <TabItem.Header >
 
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>
-                        <TextBlock Text="Parcel list" Margin="2" VerticalAlignment="Center" ></TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <Image Name="imgParcel" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\parcel.png"  ToolTip="ShowParcelList"></Image>
+                        <TextBlock Text="Parcel list"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
                         <!--<Image Name="imgParcel" Height="169" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\ParcelsIcon.png" ToolTip="ShowParcelList"></Image>
                         <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
 
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="ParcelGridWindow" ShowGridLines="True">
-                    <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+                    <!--<Grid.Background>
+                        -->
+                    <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+                    <!--
                         <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-                    </Grid.Background>
+                    </Grid.Background>-->
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="400*"/>
@@ -299,6 +300,12 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
                                 <MenuItem Header="Delete Parcel" Background="WhiteSmoke" Click="DeleteParcel_Click" />
                             </ContextMenu>
                         </ListView.Resources>
+                        <ListView.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black"/>
+                                <GradientStop Color="#FF3A84BE" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ListView.Background>
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}" >
@@ -307,9 +314,6 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
                                 <Setter Property="Margin" Value="10"/>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.Background>
-                            <ImageBrush Opacity="0.5"/>
-                        </ListView.Background>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
@@ -336,9 +340,9 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
 
             <TabItem Name="StationTab" Margin="0,-1,-5,-1" MouseEnter="StationTab_MouseEnter" >
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="imgStation" Height="162" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\StationIcon.png"  ToolTip="ShowStationList"></Image>
-                        <TextBlock Text="Station List" Margin="2" VerticalAlignment="Center" ></TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <Image Name="imgStation" Height="92" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\stations.png"  ToolTip="ShowStationList"></Image>
+                        <TextBlock Text="Station List"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
                         <!--<Image Name="imgStation" Height="162" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\StationIcon.png" ToolTip="ShowStationList"></Image>
                         <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
 
@@ -417,18 +421,18 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
 
             <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" MouseEnter="CustomerTab_MouseEnter" >
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\CustomerIcon.png" ToolTip="ShowCustomerList"/>
-                        <TextBlock Text="Customer list" Margin="2" VerticalAlignment="Center"></TextBlock>
-                        <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\aviga\Pictures\Mini Project\CustomerIcon.png" ToolTip="ShowCustomerList"/>
-                        <TextBlock Text="Parcellist" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                    <StackPanel Orientation="Vertical">
+                        <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\CustomerIcon.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Customer list" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image x:Name="imgCustomer" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Parcellist"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="7*"/>
@@ -502,6 +506,4 @@ VerticalAlignment="Stretch" Width="auto" Background="#FF3D3D3F">
             </TabItem>
         </TabControl>
     </Grid>
-
-
 </Window>

@@ -92,7 +92,7 @@ namespace BlApi
         /// returns a list of customers
         /// </summary>
         /// <returns></returns>
-        IEnumerable<CustomerToList> GetAllCustomers();
+        public IEnumerable<CustomerToList> GetAllCustomers(Predicate<DO.Customer> predicate = null);
         /// <summary>
         /// returns a DroneToList
         /// </summary>

@@ -31,10 +31,10 @@ namespace PL
         DroneListWindow lastW;
         LoginWindow lastLogin;
         bool addOrUpdate;
-        public ObservableCollection<ParcelAtCustomer> senderParcelsObserverable = new();
-        public ObservableCollection<ParcelAtCustomer> receiverParcelsObserverable = new();
-        List<ParcelAtCustomer> tempSenderParcels { get; set; }
-        List<ParcelAtCustomer> tempReceiverParcels { get; set; }
+        //public IEnumerable<ParcelAtCustomer> senderParcelsObserverable ;
+        //public IEnumerable<ParcelAtCustomer> receiverParcelsObserverable ;
+        //List<ParcelAtCustomer> tempSenderParcels { get; set; }
+        //List<ParcelAtCustomer> tempReceiverParcels { get; set; }
 
         public CustomerWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a Customer
         {
@@ -69,24 +69,29 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             DataContext = Customer;
 
-            tempSenderParcels = Customer.SentParcels;
-            tempReceiverParcels = Customer.ReceivedParcels;
-            if (tempSenderParcels.Count != 0)
-            {
-                foreach (var senderParcel in tempSenderParcels)
-                {
-                    senderParcelsObserverable.Add(senderParcel);
-                }
-                SentparcelsList.ItemsSource = senderParcelsObserverable;
-            }
-            if (tempReceiverParcels.Count != 0)
-            {
-                foreach (var receiverParcel in tempReceiverParcels)
-                {
-                    receiverParcelsObserverable.Add(receiverParcel);
-                }
-                receivedparcelsList.ItemsSource = receiverParcelsObserverable;
-            }
+            //senderParcelsObserverable = from item in Customer.SentParcels
+            //                            let temp = GetParcelAtCustomer(item.Id)//droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
+            //                            select temp;
+
+            //tempSenderParcels = Customer.SentParcels;
+            //tempReceiverParcels = Customer.ReceivedParcels;
+            //if (tempSenderParcels.Count != 0)
+            //{
+            //    foreach (var senderParcel in tempSenderParcels)
+            //    {
+            //        senderParcelsObserverable.Add(senderParcel);
+            //    }
+               SentparcelsList.ItemsSource = Customer.SentParcels;
+            //}
+            //if (tempReceiverParcels.Count != 0)
+            //{
+            //    foreach (var receiverParcel in tempReceiverParcels)
+            //    {
+            //        receiverParcelsObserverable.Add(receiverParcel);
+            //    }
+                receivedparcelsList.ItemsSource = Customer.ReceivedParcels;// receiverParcelsObserverable;
+           // }
+
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
         }
 
@@ -112,7 +117,7 @@ namespace PL
             }
             else// if it's hidden
             {
-                if (Customer.SentParcels.Count == 0)
+                if (Customer.SentParcels.Count() == 0)
                 {
                     MessageBox.Show($"{Customer.Name} hasn't sent any parcels","SentParcels", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -133,7 +138,7 @@ namespace PL
             }
             else// if it's hidden
             {
-                if (Customer.ReceivedParcels.Count == 0)
+                if (Customer.ReceivedParcels.Count() == 0)
                 {
                     MessageBox.Show($"{Customer.Name} hasn't received any parcels","ReceivedParcels", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -159,7 +164,9 @@ namespace PL
                 {
 
                     bl.AddCustomer(Customer);
-                    MessageBox.Show(Customer.ToString(), "added station");
+                    MessageBox.Show(Customer.ToString(), "added Customer");
+                    lastW.customerToLists.Add(bl.GetAllCustomers(c => c.Id == Customer.Id).Single());
+                    lastW.CustomerListView.Items.Refresh();
                     this.Close();
                 }
                 catch (AddingException ex)
@@ -173,6 +180,8 @@ namespace PL
                 {
                     bl.UpdateCustomer(Customer.Id, Customer.Name, Customer.PhoneNumber);
                     MessageBox.Show(bl.GetCustomer(Customer.Id).ToString(), "Updated Customer");
+                    lastW.customerToList.Name = Customer.Name;
+                    lastW.customerToList.PhoneNumber = Customer.PhoneNumber;
                     lastW.CustomerListView.Items.Refresh();
                     this.Close();
                 }
