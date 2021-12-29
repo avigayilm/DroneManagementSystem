@@ -24,11 +24,20 @@
             </Style.Triggers>
         </Style>
         
-        <Style x:Key="LabelStyle" TargetType="Label">
+        <!--<Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="Content" Value="Update Station"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add Station"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>-->
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Content" Value="Add Station"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding  Path=addOrUpdate}" Value="true">
+                    <Setter Property="Content" Value="Update Station"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -72,7 +81,7 @@
 
         <Style x:Key="enabledTextbox" TargetType="TextBox" BasedOn="{StaticResource ResourceKey=textboxStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding addOrUpdate}" Value="true">
                     <Setter Property="IsReadOnly" Value="True"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -82,10 +91,10 @@
 
     </Window.Resources>
 
-    <Grid ShowGridLines="False" DataContext="{Binding Station}">
+    <Grid ShowGridLines="False" >
         <Grid.Background>
-            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
-            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>

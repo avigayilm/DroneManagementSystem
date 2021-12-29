@@ -46,10 +46,12 @@ namespace PL
             bl = IblObj;
             lastW = last;
             parcel = new();
+            parcel.Sender = new();
+            parcel.Receiver = new();
             DataContext = this;
             addOrUpdate = Globals.add;
-            weiCBx.ItemsSource  = Enum.GetValues(typeof(WeightCategories));
-            prioCbx.ItemsSource = Enum.GetValues(typeof(Priorities));
+            weiCBx.ItemsSource  = Enum.GetValues(typeof(BO.WeightCategories));
+            prioCbx.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             sendIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
             recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
         }
@@ -74,14 +76,14 @@ namespace PL
         {
             //StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             //DroneLabel.Content = $"adding drone to the list";
-            bl.AddParcel(parcel);
+            int id = bl.AddParcel(parcel);
             //wAndS.Status = (DroneStatuses)Drone.Status;
             // wAndS.Weight = (WeightCategories)Drone.Weight;
             if (lastW.parcelToLists.ContainsKey(parcel.Sender.Id))
-                lastW.parcelToLists[parcel.Sender.Id].Add(bl.GetAllParcels(x => x.Id == parcel.Id).Single());
+                lastW.parcelToLists[parcel.Sender.Id].Add(bl.GetAllParcels(x => x.Id == id).First());
             else
             {
-                lastW.parcelToLists.Add(parcel.Sender.Id, bl.GetAllParcels(x => x.Id == parcel.Id).ToList());
+                lastW.parcelToLists.Add(parcel.Sender.Id, bl.GetAllParcels(x => x.Id == id).ToList());
             }
             lastW.CheckComboBoxesParcel();
             // after drone is updated in bl now updates listview

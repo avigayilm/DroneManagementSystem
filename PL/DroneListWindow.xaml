@@ -144,15 +144,15 @@
                             </ComboBox.Background>
                         </ComboBox>
 
-                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="139,30,0,0" Text="DroneList" TextWrapping="Wrap" 
-                     VerticalAlignment="Top" Grid.Column="2" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
-                     FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2" Width="187" Height="40"/>
+                        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png"></Image>
+                        <TextBox x:Name="textTBD" HorizontalAlignment="Left" Margin="139,30,0,12" Text="DroneList" TextWrapping="Wrap" Grid.Column="2" Background="Transparent" BorderBrush="{x:Null}" FontSize="35" 
+                     FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2" Width="187"/>
 
                         <Button Grid.Column="3" Click="AddDroneButton_Click"
                   FontWeight="Bold"   
                         Foreground="White"  BorderThickness="0,0,0,0" Background="#FF2C2B2B"  Margin="45,438,37,-444" >
                             <StackPanel>
-                                <Image x:Name="addpic" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
+                                <Image x:Name="addpic" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\plus.jpeg"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
                                 <TextBlock Text="Add Drone"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                             <!--<StackPanel>
@@ -219,7 +219,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1" MouseEnter="ParcelTab_MouseEnter">
+            <TabItem Name="ParcelTab" Margin="0,-1,-5,-1"  MouseDoubleClick="ParcelTab_MouseDoubleClick">
                 <TabItem.Header >
 
                     <StackPanel Orientation="Vertical">

@@ -15,12 +15,12 @@ namespace Dal
         /// adds a parcel to the parcellist
         /// </summary>
         /// <param name="pack"></param>
-        public void AddParcel(Parcel pack)
+        public int AddParcel(Parcel pack)
         {
             CheckDuplicateParcel(pack.Id);
             pack.Id = ++DataSource.Config.LastParcelNumber;
             DataSource.parcelList.Add(pack);
-            
+            return pack.Id;
         }
 
         public void UpdateParcel(int parcelId, string recId)

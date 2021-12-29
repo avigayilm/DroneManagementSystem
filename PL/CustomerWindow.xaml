@@ -65,8 +65,8 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -123,8 +123,11 @@
                     Text="Longitude"/>
             <TextBlock Name="latTblk" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
-            <Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\profile-Icon-SVG.jpg"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="1" MouseDown="profile_MouseDown"/>
-
+            <!--<Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\profile-Icon-SVG.jpg"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="1" MouseDown="profile_MouseDown"/>-->
+            <StackPanel Grid.Row="1" Grid.RowSpan="2">
+                <Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\profile-Icon-SVG.jpg"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>
+                <TextBlock Text="Add picture"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
 
 
 
