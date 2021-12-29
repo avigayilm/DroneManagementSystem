@@ -255,7 +255,19 @@ namespace BL
             }
             catch (DO.MissingIdException ex)
             {
-                throw new UpdateIssueException("Couldn't update the parcel.", ex);
+                throw new UpdateIssueException($"{ex.Message}, Couldn't update the parcel.", ex);
+            }
+        }
+
+        public void DeleteParcel(int parcelId)
+        {
+            try
+            {
+                idal1.DeleteParcel(parcelId);
+            }
+            catch(MissingIdException ex)
+            {
+                throw new RetrievalException(ex.Message);
             }
         }
 
