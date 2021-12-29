@@ -39,7 +39,12 @@ using System.Threading.Tasks;
             {
                 get => " " + $", {Bonus.DecimalToSexagesimal(Latitude, 't')}";
 
-                set { }
+                set {
+                double check;
+                bool b = double.TryParse(value, out check);
+                if (b)
+                    Latitude = check;
+            }
             }
 
             public override string ToString()

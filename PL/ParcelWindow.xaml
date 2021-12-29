@@ -114,10 +114,10 @@
 
     </Window.Resources>
 
-    <Grid Name="RegularGrid" >
+    <Grid Name="RegularGrid"  >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>

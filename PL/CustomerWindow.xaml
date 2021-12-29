@@ -94,7 +94,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <Grid x:Name="regularGrid" Grid.ColumnSpan="4" Grid.RowSpan="6" ShowGridLines="False" Visibility="Visible">
+        <Grid x:Name="regularGrid" DataContext="{Binding Customer}"  Grid.ColumnSpan="4" Grid.RowSpan="6" ShowGridLines="False" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.6*"/>
@@ -130,7 +130,7 @@
 
             <TextBlock Name="CustmoerDisplay" Text="Customer" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFFCFBFB" Width="162" Grid.ColumnSpan="2" Margin="4,3,0,40" Grid.RowSpan="2"/>
             <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}"/>
-            <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource textboxStyle}" />
+            <TextBox Name="idTbx" Text="{Binding Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource textboxStyle}" />
             <TextBox Name="phoneTx" Text="{Binding PhoneNumber}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
             <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude" />
             <TextBox Name="LatitudeTx" Text="{Binding Loc._Latitude}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude" />
@@ -190,8 +190,8 @@
         </Grid>
 
         <TextBlock Name="sentList" Text="Sent Parcels" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                   Grid.Column="5" Grid.Row="1" Visibility="Visible" Grid.ColumnSpan="2"/>
-        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Visible">
+                   Grid.Column="5" Grid.Row="1" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden">
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -215,8 +215,8 @@
         </ListView>
 
         <TextBlock Name="receivedList" Text="Recieved Parcels" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                   Grid.Column="5" Grid.Row="5" Visibility="Visible" />
-        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Visible" >
+                   Grid.Column="5" Grid.Row="5" Visibility="Hidden" />
+        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>

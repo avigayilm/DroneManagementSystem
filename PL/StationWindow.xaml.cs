@@ -25,7 +25,7 @@ namespace PL
 
 
         BlApi.Ibl bl;
-        private Station Station { get; set; }
+        public Station Station { get; set; }
         List<DroneInCharge> tempDroneInCharge { get; set; }
         DroneListWindow lastW;
         public bool addOrUpdate
@@ -46,6 +46,7 @@ namespace PL
             addOrUpdate = Globals.add;
             lastW = last;
             Station = new Station();
+            Station.Loc = new Location();
             DataContext = this;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
