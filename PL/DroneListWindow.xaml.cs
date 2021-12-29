@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 using BO;
 using BlApi;
 
+/// <summary>
+/// window to show all the lists with tabs
+/// </summary>
 namespace PL
 {
     public enum DroneStatuses
@@ -33,16 +36,20 @@ namespace PL
     {
         Normal , Fast, Emergency, All
     }
-    public enum ParcelStatuses
+    public enum ParcelStatuses 
     {
         Created, Assigned, PickedUp, Delivered,All
     }
+    /// <summary>
+    /// struct to use for the dictionary
+    /// </summary>
     public struct WeightAndStatus
     {
         public WeightCategories Weight { get; set; }
         public DroneStatuses Status { get; set; }
     }
 
+ 
 
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
@@ -58,6 +65,7 @@ namespace PL
         public ParcelToList parcelToList;
         public StationToList stationToList;
         public CustomerToList customerToList;
+
         public DroneListWindow(BlApi.Ibl IblObj)
         {
             InitializeComponent();
@@ -71,7 +79,7 @@ namespace PL
                             {
                                 Status = (DroneStatuses)droneToList.Status,
                                 Weight = (WeightCategories)droneToList.Weight
-                            }).ToDictionary(x => x.Key, x => x.ToList());
+                            }).ToDictionary(x => x.Key, x => x.ToList());//Grouping the drones
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             //StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
@@ -147,73 +155,99 @@ namespace PL
             new DroneWindow(bl, this).Show();
             //this.Close();
         }
+        /// <summary>
+        /// if the cancel button is clicked it will close the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelDrone_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// shows parcel for contextmenu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowParcelInTransfer_Click(object sender, RoutedEventArgs e)
         {
             droneToList = (DroneToList)DronesListView.SelectedItem;
-            Drone drone = bl.GetDrone(droneToList.Id);
-            if (drone.ParcelInTrans != null)
-                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
-            else
-                MessageBox.Show("Drone has no parcel");
+            if (droneToList.ParcelId != 0)
+            {
+                parcelToList = new();
+                parcelToList.Id = droneToList.ParcelId;// To show the correct parcel for the next window
+                new ParcelWindow(this, bl).Show();
+            }
+
+        //    Drone drone = bl.GetDrone(droneToList.Id);
+        //    if (drone.ParcelInTrans != null)
+        //        MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+           else
+               MessageBox.Show("Drone has no parcel");
         }
 
-        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Deleted the drone");
-        }
-
-        // parcelwindow
-
-        
-
+        // parcelTab
         /// <summary>
         /// allows user to cancel and return to main window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-       
-       
-
-
-
-
-        //this.Close();
-
-       
-
         private void ShowSender_Click(object sender, RoutedEventArgs e)
         {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            Drone drone = bl.GetDrone(droneToList.Id);
-            if (drone.ParcelInTrans != null)
-                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            parcelToList = (ParcelToList)ParcelListView.SelectedItem;
+            if (parcelToList.SenderId != null)
+            {
+                customerToList = new();
+                customerToList.Id = parcelToList.SenderId;// To show the correct parcel for the next window
+                new CustomerWindow(this, bl).Show();
+            }
             else
-                MessageBox.Show("Drone has no parcel");
+                MessageBox.Show("Parcel has no sender");
+            //droneToList = (DroneToList)DronesListView.SelectedItem;
+            //Drone drone = bl.GetDrone(droneToList.Id);
+            //if (drone.ParcelInTrans != null)
+            //    MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            //else
+            //    MessageBox.Show("Drone has no parcel");
         }
 
         private void ShowReceiver_Click(object sender, RoutedEventArgs e)
         {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            Drone drone = bl.GetDrone(droneToList.Id);
-            if (drone.ParcelInTrans != null)
-                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            parcelToList = (ParcelToList)ParcelListView.SelectedItem;
+            if (parcelToList.ReceiverId != null)
+            {
+                customerToList = new();
+                customerToList.Id = parcelToList.ReceiverId;// To show the correct parcel for the next window
+                new CustomerWindow(this, bl).Show();
+            }
             else
-                MessageBox.Show("Drone has no parcel");
+                MessageBox.Show("Parcel has no receiver");
+            //droneToList = (DroneToList)DronesListView.SelectedItem;
+            //Drone drone = bl.GetDrone(droneToList.Id);
+            //if (drone.ParcelInTrans != null)
+            //    MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            //else
+            //    MessageBox.Show("Drone has no parcel");
         }
 
         private void ShowDrone_Click(object sender, RoutedEventArgs e)
         {
-            droneToList = (DroneToList)DronesListView.SelectedItem;
-            Drone drone = bl.GetDrone(droneToList.Id);
-            if (drone.ParcelInTrans != null)
-                MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            parcelToList = (ParcelToList)ParcelListView.SelectedItem;
+            Parcel parcel=bl.GetParcel(parcelToList.Id);
+            if (parcel.Dr.Id != 0)
+            {
+                droneToList = new();
+                droneToList.Id = parcel.Dr.Id;// To show the correct parcel for the next window
+                new DroneWindow(this, bl).Show();
+            }
             else
-                MessageBox.Show("Drone has no parcel");
+                MessageBox.Show("Parcel has no Drone");
+            //droneToList = (DroneToList)DronesListView.SelectedItem;
+            //Drone drone = bl.GetDrone(droneToList.Id);
+            //if (drone.ParcelInTrans != null)
+            //    MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            //else
+            //    MessageBox.Show("Drone has no parcel");
         }
 
         
@@ -406,6 +440,30 @@ namespace PL
             //                 parceltolist.SenderId
             //                ).ToDictionary(x => x.Key, x => x.ToList());
             //ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+        }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                FrameworkElement framework = sender as FrameworkElement;
+                ParcelToList CurrentParcel = framework.DataContext as ParcelToList;
+                if (CurrentParcel.ParcelStatus == (BO.ParcelStatuses)ParcelStatuses.Created)// You could only delete if not assigned
+                {
+                    bl.DeleteParcel(CurrentParcel.Id);
+                    parcelToLists[CurrentParcel.SenderId].RemoveAll(i => i.Id == CurrentParcel.Id);
+                    ParcelListView.Items.Refresh();
+                    CheckComboBoxesParcel();
+                }
+                else
+                {
+                    MessageBox.Show("Can't Delete parcel, it's in process", "Delete Exception", MessageBoxButton.OK, MessageBoxImage.Hand);
+                }
+            }
+            catch(RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

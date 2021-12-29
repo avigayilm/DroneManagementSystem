@@ -86,7 +86,7 @@ namespace BL
             }
             catch (DO.MissingIdException ex)
             {
-                throw new UpdateIssueException("Couldn't Update the Customer.\n,", ex);
+                throw new UpdateIssueException("couldn't Update the Customer.\n,");
             }
         }
 

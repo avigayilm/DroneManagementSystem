@@ -99,7 +99,20 @@ namespace Dal
         /// <returns></returns>
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null)
         { 
-            return DataSource.parcelList.FindAll(x => predicate == null ? true : predicate(x));
+            return DataSource.parcelList.FindAll(x => predicate == null ? true : predicate(x)&&!x.Delete);
+        }
+
+        /// <summary>
+        /// bonus: Doesn't completely delete the parcel but it has a sign that it is deleted
+        /// </summary>
+        /// <param name="parcelId"></param>
+
+        public void DeleteParcel(int parcelId)
+        {
+            int index = CheckExistingParcel(parcelId);
+            var temp = DataSource.parcelList[index];
+            temp.Delete = true;
+            DataSource.parcelList[index] = temp;
         }
 
         
@@ -116,17 +129,23 @@ namespace Dal
             {
                 throw new MissingIdException($"No parcel with { parcelId } id exists\n");
             }
+            if(DataSource.parcelList[index].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
+            }
+
             return index;
         }
 
         /// <summary>
-        /// checks if a station already exists, if it does it throws a duplicateIdException
+        /// checks if a station already exists, if it does exists it checks if it was deleted if it does it throws a duplicateIdException
         /// </summary>
         /// <param name="stationId"></param>
         /// <exception cref="IDAL.DO.DuplicateIdException"></exception>
         void CheckDuplicateParcel(int parcelId)
         {
-            if (DataSource.parcelList.Exists(s => s.Id == parcelId))
+            
+            if (DataSource.parcelList.Exists(p => p.Id == parcelId && !p.Delete))
             {
                 throw new DuplicateIdException($"Parcel with { parcelId } id already exists\n");
             }

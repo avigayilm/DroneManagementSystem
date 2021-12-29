@@ -96,6 +96,7 @@ namespace DalApi
         /// <param name="parcelId"></param>
         /// <param name="recId"></param>
         public void UpdateParcel(int parcelId, string recId);
+        public void DeleteParcel(int parcelId);
 
     }
 }
