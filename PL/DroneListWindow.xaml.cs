@@ -388,7 +388,8 @@ namespace PL
                              group parceltolist by
                              parceltolist.SenderId
                             ).ToDictionary(x => x.Key, x => x.ToList());
-            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x);
+            ParcelListView.ItemsSource = parcelToLists.Values.SelectMany(x => x); /// order by!!!
+
             StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
             PrioritySelectorParcel.ItemsSource = Enum.GetValues(typeof(Priorities));
             StatusSelectorParcel.SelectedIndex = 4;
