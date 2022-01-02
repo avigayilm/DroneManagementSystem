@@ -40,11 +40,11 @@ namespace Dal
             CreateCustomer();
             CreateParcel();
             CreateLogin();
-            //XMLTools.SaveListToXMLSerializer(dronesList, DroneXml);
-            //XMLTools.SaveListToXMLSerializer(stationList, StationXml);
-            //XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
-            //XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
-            //XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
+            XMLTools.SaveListToXMLSerializer(dronesList, DroneXml);
+            XMLTools.SaveListToXMLSerializer(stationList, StationXml);
+            XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
+            XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
+            XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
         }
 
         private static string DroneXml = @"DroneXml.xml";
