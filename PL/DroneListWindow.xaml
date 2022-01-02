@@ -250,8 +250,12 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+
+                            
                         </Grid.ColumnDefinitions>
                         <!--<Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />-->
+
+                        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter_1"></Image>
                         <ComboBox x:Name="PrioritySelectorParcel" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10,30,0,10" 
                       Background="#FF2476BD"  SelectedIndex="3" SelectionChanged="PrioritySelectorParcel_SelectionChanged" BorderBrush="#FF3C4497" Foreground="#FF70C9EB" HorizontalAlignment="Left" Width="102">
@@ -325,7 +329,7 @@
                                 <GridViewColumn Header="ReceiverId" DisplayMemberBinding="{Binding ReceiverId}" Width="100"/>
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="100"/>
                                 <GridViewColumn Header="Priorities" DisplayMemberBinding="{Binding Priority}" Width="100"/>
-                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="100"/>
+                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="100"/> 
                                 <GridViewColumn Header="" >
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -391,8 +395,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
+                        
                         <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent"  FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
-
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter_2"></Image>-->
                         <Button Content="Add Station" Grid.Column="3" Click="AddStationButton_Click"
                   FontWeight="Bold"   
                        Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
@@ -472,7 +478,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="CustomerList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
-
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter_3"></Image>-->
                         <Button Content="Add Customer" Grid.Column="3" Click="AddCustomerButton_Click"
                   FontWeight="Bold"   
                        Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">

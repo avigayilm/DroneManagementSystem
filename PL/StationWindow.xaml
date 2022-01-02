@@ -51,11 +51,11 @@
         </Style>
 
         <Style x:Key="ButtonaddorUpdateStyle" TargetType="Button" BasedOn="{StaticResource buttonStyle}">
-            <Setter Property="Content" Value="Update"/>
-            <Setter Property="IsEnabled" Value="True"/>
+            <Setter Property="Content" Value="Add"/>
+            
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="false">
-                    <Setter Property="Content" Value="Add"/>
+                <DataTrigger Binding="{Binding Path=addOrUpdate}" Value="true">
+                    <Setter Property="Content" Value="Update"/>
                 </DataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
@@ -148,11 +148,11 @@
             <TextBlock Name="latTblk" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
             <TextBlock Name="CustmoerDisplay" Text="Station" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-        <TextBox Name="nameTbx" Text="{Binding Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
-        <TextBox Name="idTbx" Text="{Binding Path=Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
-        <TextBox Name="chargeSlotsTx" Text="{Binding AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
-        <TextBox Name="LogitudeTx" Text="{Binding Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude" />
-        <TextBox Name="LatitudeTx" Text="{Binding Loc._Latitude}" Grid.Row="5" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Latitude" />
+        <TextBox Name="nameTbx" Text="{Binding Station.Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="idTbx" Text="{Binding Path=Station.Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
+        <TextBox Name="chargeSlotsTx" Text="{Binding Station.AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
+        <TextBox Name="LogitudeTx" Text="{Binding Station.Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude" />
+        <TextBox Name="LatitudeTx" Text="{Binding Station.Loc._Latitude}" Grid.Row="5" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Latitude" />
 
 
         <!--</Grid>-->
@@ -205,8 +205,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
-                    <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="100"/>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Station.Id}" Width="100"/>
+                    <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Station.Battery}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
