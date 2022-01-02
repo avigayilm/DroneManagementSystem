@@ -130,26 +130,29 @@ namespace Dal
 
         public void AddLogin(Login log)
         {
-            if (DataSource.loginList.Exists(c => c.UserName == log.UserName))
+            List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            if (logins.Exists(c => c.UserName == log.UserName))
                 throw new DuplicateIdException("User already exists\n");
-            DataSource.loginList.Add(log);
+            logins.Add(log);
+            XMLTools.SaveListToXMLSerializer(logins, LoginXml);
         }
 
         public bool ValidateLogin(string user, string pass)
         {
-            int index = DataSource.loginList.FindIndex(c => c.UserName == user);
+            List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            int index = logins.FindIndex(c => c.UserName == user);
             if (index == -1)
             {
                 throw new LoginException("username doesnt exists");
             }
             else
             {
-                if (DataSource.loginList[index].Password != pass)
+                if (logins[index].Password != pass)
                 {
                     throw new LoginException("password is incorrect");
                 }
                 else
-                    return DataSource.loginList[index].StaffOrUser;
+                    return logins[index].StaffOrUser;
             }
         }
     }

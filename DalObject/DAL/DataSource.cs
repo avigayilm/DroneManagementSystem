@@ -44,6 +44,7 @@ namespace Dal
             //XMLTools.SaveListToXMLSerializer(stationList, StationXml);
             //XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
             //XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
+            //XMLTools.SaveListToXMLSerializer(loginList, LoginXml);
             //XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
         }
 
@@ -52,6 +53,7 @@ namespace Dal
         private static string StationXml = @"StationXml.xml";
         private static string DroneChargeXml = @"DroneChargeXml.xml";
         private static string CustomerXml = @"CustomerXml.xml";
+        private static string LoginXml = @"LoginXml.xml";
         //initializes five drones
         public static void CreateDrone()
         {   //loop for updete 5 drone
