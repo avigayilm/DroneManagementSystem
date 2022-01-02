@@ -478,6 +478,16 @@ namespace PL
             CustomerListView.Items.Refresh();
         }
 
+        private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
         //    droneToLists.OrderBy(x => x.Id);

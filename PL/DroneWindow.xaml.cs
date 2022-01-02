@@ -123,6 +123,7 @@ namespace PL
             lastW = last;
             Drone = bl.GetDrone(lastW.droneToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
+            addGrid.Visibility = Visibility.Hidden;
             DataContext = Drone;
             ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
         }
