@@ -3,54 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DalApi;
+
 using DO;
 
 namespace Dal
 {
     internal sealed partial class DalXml
     {
-        //public int AddParcel(Parcel pack)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void ParcelDrone(int parcelId, int droneId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void ParcelPickedUp(int parcelId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void ParcelDelivered(int parcelId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Parcel GetParcel(int ID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void UpdateParcel(int parcelId, string recId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void DeleteParcel(int parcelId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         /// <summary>
         /// adds a parcel to the parcellist
         /// </summary>
@@ -61,13 +22,17 @@ namespace Dal
             //pack.Id = ++DataSource.Config.LastParcelNumber;
             //DataSource.parcelList.Add(pack);
             //return pack.Id;
+            loadingToList(ref parcels, ParcelXml);
 
-            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
-            if (parcels.Exists(p => p.Id == pack.Id))
-                throw new DuplicateIdException("Customer already exists\n");
-            pack.Id = ++DataSource.Config.LastParcelNumber;
+            //parcels =  XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            if (parcels.Exists(p => p.Id == pack.Id && !p.Delete))
+                throw new DuplicateIdException("Parcel already exists\n");
+            XElement serialNum = XElement.Load(@"runNumXml.xml");
+            pack.Id = 1 + int.Parse(serialNum.Element("runNumber").Value);
+            serialNum.Element("runNumber").Value = pack.Id.ToString();
             parcels.Add(pack);
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
+            XMLTools.SaveListToXMLElement(serialNum, "runNumXml.xml");
             return pack.Id;
         }
 
@@ -77,11 +42,16 @@ namespace Dal
             //Parcel tempParcel = DataSource.parcelList[index];
             //tempParcel.ReceiverId = recId;
             //DataSource.parcelList[index] = tempParcel;
-            List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            //List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int index = parcels.FindIndex(p => p.Id == parcelId);
             if (index == -1)
             {
                 throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[index].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
             Parcel tempParcel = parcels[index];
             tempParcel.ReceiverId = recId;
@@ -97,11 +67,16 @@ namespace Dal
         /// <param name="parcelId"></param>
         public void ParcelPickedUp(int parcelId)
         {
-            parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int pIndex = parcels.FindIndex(p => p.Id == parcelId);
             if (pIndex == -1)
             {
                 throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[pIndex].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
             var parcelTemp = parcels[pIndex];
             //temp2.status = DroneStatuses.Available;
@@ -120,11 +95,16 @@ namespace Dal
         /// <param name="day"></param>
         public void ParcelDelivered(int parcelId)//when the parcel is delivered, the drone will be available again
         {
-            parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int pIndex = parcels.FindIndex(p => p.Id == parcelId);
             if (pIndex == -1)
             {
                 throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[pIndex].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
             //int dIndex = drones.FindIndex(d => d.Id == parcels[pIndex].DroneId);
             // var droneTemp = drones[dIndex];
@@ -143,11 +123,16 @@ namespace Dal
         /// <param name="droneId"></param>
         public void ParcelDrone(int parcelId, int droneId)
         {
-            parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int index = parcels.FindIndex(p => p.Id == parcelId);
             if (index == -1)
             {
                 throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[index].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
             Parcel temp = parcels[index];
             temp.DroneId = droneId;
@@ -163,12 +148,17 @@ namespace Dal
         /// <returns></returns>
         public Parcel GetParcel(int parcelId)
         {
- 
-            parcels = XMLTools. LoadListFromXMLSerializer<Parcel>(ParcelXml);
+
+            //parcels = XMLTools. LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int index = parcels.FindIndex(p => p.Id == parcelId);
             if (index == -1)
             {
                 throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[index].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
             Parcel tempParcel = parcels[index];
             return tempParcel;
@@ -179,7 +169,8 @@ namespace Dal
         /// <returns></returns>
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null) 
         {
-            parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml); //there is usage of parcels so as to avoid multiple loading 
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml); //there is usage of parcels so as to avoid multiple loading 
+            loadingToList(ref parcels, ParcelXml);
             return parcels.FindAll(x => predicate == null ? true : predicate(x) && !x.Delete);
         }
 
@@ -190,8 +181,17 @@ namespace Dal
 
         public void DeleteParcel(int parcelId)
         {
-            parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref parcels, ParcelXml);
             int pIndex = parcels.FindIndex(p => p.Id == parcelId);
+            if (pIndex == -1)
+            {
+                throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.parcelList[pIndex].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
+            }
             Parcel tempParcel = parcels[pIndex];
             tempParcel.Delete = true;
             parcels[pIndex] =  tempParcel;

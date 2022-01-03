@@ -13,7 +13,8 @@ namespace Dal
 
         public void CheckDuplicateStation(int stationId)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            loadingToList(ref stations, StationXml);
             if (DataSource.stationList.Exists(s => s.Id == stationId))
             {
                 throw new DuplicateIdException("station already exists\n");
@@ -22,12 +23,13 @@ namespace Dal
 
         public void AddStation(Station stat)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
-            if (stations.Exists(s => s.Id == stat.Id))
-            {
-                throw new DuplicateIdException("station already exists\n");
-            }
-            //CheckDuplicateStation(stat.Id);
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //if (stations.Exists(s => s.Id == stat.Id))
+            //{
+            //    throw new DuplicateIdException("station already exists\n");
+            //}
+            loadingToList(ref stations, StationXml);
+            CheckDuplicateStation(stat.Id);
             stations.Add(stat);
             XMLTools.SaveListToXMLSerializer(stations, StationXml);
         }

@@ -10,55 +10,14 @@ namespace Dal
 {
     internal sealed partial class DalXml
     {
-        //public void AddCustomer(Customer cus)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public List<Customer> CustomersDeliverdTo()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public int CheckExistingCustomer(string customerId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public Customer GetCustomer(string ID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void UpdateCustomer(string customerId, string name, string phone)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool ValidateLogin(string user, string pass)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void AddLogin(Login log)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //{
         /// <summary>
         /// ading a customer to the cusotmer list
         /// </summary>
         /// <param name="cus"></param>
         public void AddCustomer(Customer cus)
         {
-            List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
+            //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
+            loadingToList(ref customers, CustomerXml);
             if (customers.Exists(c => c.Id == cus.Id))
                 throw new DuplicateIdException("Customer already exists\n");
             customers.Add(cus);
@@ -69,30 +28,37 @@ namespace Dal
         public Customer GetCustomer(string customerId)
         {
             int index = CheckExistingCustomer(customerId);
-            return DataSource.customerList[index];
+            return customers[index];
         }
 
 
         public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null)
         {
             //return DataSource.customerList.FindAll(c => predicate == null ? true : predicate(c));
-            return XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml).FindAll(c => predicate == null ? true : predicate(c));
+            loadingToList(ref customers, CustomerXml);
+            return customers.FindAll(c => predicate == null ? true : predicate(c));
         }
 
         public void UpdateCustomer(string customerId, string name, string phone)
         {
 
-            List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
-            int index = customers.FindIndex(c => c.Id == customerId);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such Customer exists\n");
-            }
-            Customer tempCustomer = customers[index];
+            //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
+            int index = CheckExistingCustomer(customerId);
+            Customer tempCustomer = DataSource.customerList[index];
             if (name != null)
                 tempCustomer.Name = name;
             if (phone != null)
                 tempCustomer.PhoneNumber = phone;
+            //int index = customers.FindIndex(c => c.Id == customerId);
+            //if (index == -1)
+            //{
+            //    throw new MissingIdException("No such Customer exists\n");
+            //}
+            //Customer tempCustomer = customers[index];
+            //if (name != null)
+            //    tempCustomer.Name = name;
+            //if (phone != null)
+            //    tempCustomer.PhoneNumber = phone;
             customers[index] = tempCustomer;
             XMLTools.SaveListToXMLSerializer(customers, CustomerXml);
         }
@@ -106,7 +72,9 @@ namespace Dal
         /// <returns></returns>
         public int CheckExistingCustomer(string customerId)
         {
-            List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
+            //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
+            loadingToList(ref customers, CustomerXml);
+
             int index = DataSource.customerList.FindIndex(c => c.Id == customerId);
             if (index == -1)
             {
@@ -130,7 +98,8 @@ namespace Dal
 
         public void AddLogin(Login log)
         {
-            List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            //List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            loadingToList(ref logins, LoginXml);
             if (logins.Exists(c => c.UserName == log.UserName))
                 throw new DuplicateIdException("User already exists\n");
             logins.Add(log);
@@ -139,7 +108,8 @@ namespace Dal
 
         public bool ValidateLogin(string user, string pass)
         {
-            List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            //List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+            loadingToList(ref logins, LoginXml);
             int index = logins.FindIndex(c => c.UserName == user);
             if (index == -1)
             {

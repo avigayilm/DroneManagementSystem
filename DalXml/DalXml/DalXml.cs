@@ -21,13 +21,22 @@ namespace Dal
         private List<Station> stations;
         private List<Parcel> parcels;
         private List<Drone> drones;
+        List<Customer> customers;
+        List<Login> logins;
+        private void loadingToList<T>(ref List<T> tempList,string fileName)
+        {
+            if(tempList == null)
+            {
+                tempList = XMLTools.LoadListFromXMLSerializer<T>(fileName);
+            }
+        }
 
         /// <summary>
         /// constructor to initialize the dalobject
         /// </summary>
         internal static DalXml instance { get { return Instance.Value; } }
         private static Lazy<DalXml> Instance = new Lazy<DalXml>(() => new ());
-        static DalXml() { }
+        static DalXml() { XMLTools.SaveListToXMLSerializer(new List<int> { 0 }, "runNumXml.xml"); }
         private DalXml() { }
         public double[] DronePwrUsg()
         {

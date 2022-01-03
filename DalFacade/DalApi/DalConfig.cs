@@ -5,37 +5,6 @@ using System.Xml.Linq;
 
 namespace DalApi
 {
-    //class DalConfig
-    //{
-    //    internal static string DalName;
-    //    internal static Dictionary<string, string> DalPackages;
-    //    static DalConfig()
-    //    {
-    //        XElement dalConfig = XElement.Load(@"xmlFiles\config.xml");
-    //        DalName = dalConfig.Element("dal").Value;
-    //        DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements()
-    //                       select pkg).ToDictionary(p => "" + p.Name, p => p.Value);
-
-    //    }
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     internal static class DalConfig
     {
