@@ -18,6 +18,10 @@ namespace Dal
         private static string CustomerXml = @"CustomerXml.xml";
         private static string LoginXml = @"LoginXml.xml";
 
+        private List<Station> stations;
+        private List<Parcel> parcels;
+        private List<Drone> drones;
+
         /// <summary>
         /// constructor to initialize the dalobject
         /// </summary>
