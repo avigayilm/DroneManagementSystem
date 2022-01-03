@@ -28,7 +28,7 @@ namespace Dal
             //{
             //    throw new DuplicateIdException("station already exists\n");
             //}
-            loadingToList(ref stations, StationXml);
+            //loadingToList(ref stations, StationXml);
             CheckDuplicateStation(stat.Id);
             stations.Add(stat);
             XMLTools.SaveListToXMLSerializer(stations, StationXml);
@@ -41,12 +41,13 @@ namespace Dal
         /// <param name="n"></param>
         public void ChangeChargeSlots(int stationId, int n)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
-            int index = stations.FindIndex(s=> s.Id == stationId);
-            if (index==-1)
-            {
-                throw new MissingIdException("station doesn't exists\n");
-            }
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //int index = stations.FindIndex(s=> s.Id == stationId);
+            //if (index==-1)
+            //{
+            //    throw new MissingIdException("station doesn't exists\n");
+            //}
+            int index = CheckExistingStation(stationId);
             var temp = stations[index];
             temp.AvailableChargeSlots += n;
             stations[index] = temp;
@@ -60,18 +61,22 @@ namespace Dal
         /// <returns></returns>
         public Station GetStation(int stationId)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
-            int index = stations.FindIndex(s => s.Id == stationId);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such Drone exists\n");
-            }
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //int index = stations.FindIndex(s => s.Id == stationId);
+            //if (index == -1)
+            //{
+            //    throw new MissingIdException("No such Drone exists\n");
+            //
+            //}
+            int index = CheckExistingStation(stationId);
             return stations[index];
         }
 
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
-            return XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
+            loadingToList(ref stations, StationXml);
+            return stations.FindAll(s => predicate == null ? true : predicate(s))
+                //XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
         }
         /// <summary>
         /// returns the nearest station to a customer
@@ -84,7 +89,8 @@ namespace Dal
             double minDistance = double.PositiveInfinity;//starting with unlimited
             double distancekm;
             int index = -1;
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            loadingToList(ref stations, StationXml);
             IEnumerator<Station> iter = stations.GetEnumerator();
             for (int i = 0; i < stations.Count; i++)
             {
@@ -111,12 +117,13 @@ namespace Dal
         /// <param name="chargeSlots"></param>
         public void UpdateStation(int stationId, string name, int chargeSlots)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
-            int index = stations.FindIndex(s => s.Id == stationId);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such Customer exists\n");
-            }
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //int index = stations.FindIndex(s => s.Id == stationId);
+            //if (index == -1)
+            //{
+            //    throw new MissingIdException("No such Customer exists\n");
+            //}
+            int index = CheckExistingStation(stationId);
             Station tempStation = stations[index];
             if (name != null)
                 tempStation.Name = name;
@@ -132,13 +139,15 @@ namespace Dal
         public (int, int) AvailableAndOccupiedSlots(int id)
         {
             Station st = GetStation(id);
-            return (XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).Where(s => s.StationId == st.Id).Count(), st.AvailableChargeSlots);
+            loadingToList(ref droneCharges, DroneChargeXml);
+            return (droneCharges.Where(s => s.StationId == st.Id).Count(), st.AvailableChargeSlots);
         }
 
 
         public int CheckExistingStation(int stationId)
         {
-            List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
+            loadingToList(ref stations, StationXml);
             int index = stations.FindIndex(s => s.Id == stationId);
             if (index == -1)
             {

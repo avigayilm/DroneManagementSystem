@@ -17,9 +17,10 @@ namespace Dal
         /// <param name="dro"></param>
         public void AddDrone(Drone dro)
         {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            if (drones.Exists(d => d.Id == d.Id))
-                throw new DuplicateIdException("Drone already exists\n");
+            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            //if (drones.Exists(d => d.Id == d.Id))
+            //    throw new DuplicateIdException("Drone already exists\n");
+            CheckDuplicateDrone(dro.Id);
             drones.Add(dro);
             XMLTools.SaveListToXMLSerializer(drones, DroneXml);
         }
@@ -49,19 +50,21 @@ namespace Dal
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            int index = drones.FindIndex(d => d.Id == droneId);
-            if (index == -1)
-            {
-                throw new MissingIdException("No such Drone exists\n");
-            }
+            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            //int index = drones.FindIndex(d => d.Id == droneId);
+            //if (index == -1)
+            //{
+            //    throw new MissingIdException("No such Drone exists\n");
+            //}
+            int index = CheckExistingDrone(droneId);
             return drones[index];
         }
 
 
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null)
         {
-            return XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml).FindAll(d => predicate == null ? true : predicate(d));
+            loadingToList(ref drones, DroneXml);
+            return drones.FindAll(d => predicate == null ? true : predicate(d));
         }
         /// <summary>
         /// updates the model of the drone, used in BL
@@ -70,12 +73,13 @@ namespace Dal
         /// <param name="model"></param>
         public void UpdateDrone(int droneId, string model)
         {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            int index = drones.FindIndex(d => d.Id == droneId);
-            if(index==-1)
-            {
-                throw new MissingIdException("No such Drone exists\n");
-            }
+            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            //int index = drones.FindIndex(d => d.Id == droneId);
+            //if(index==-1)
+            //{
+            //    throw new MissingIdException("No such Drone exists\n");
+            //}
+            int index = CheckExistingDrone(droneId);
             Drone tempDrone = drones[index];
             tempDrone.Model = model;
             drones[index] = tempDrone;
@@ -89,7 +93,8 @@ namespace Dal
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new List<Drone>();
-            XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); });
+            loadingToList(ref droneCharges, DroneChargeXml);
+            droneCharges.ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); });
             return charging;
         }
 

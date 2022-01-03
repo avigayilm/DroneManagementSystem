@@ -23,6 +23,7 @@ namespace Dal
         private List<Drone> drones;
         List<Customer> customers;
         List<Login> logins;
+        private List<DroneCharge> droneCharges;
         private void loadingToList<T>(ref List<T> tempList,string fileName)
         {
             if(tempList == null)
