@@ -48,7 +48,10 @@ namespace PL
             {
                 password = textPass.Password;
                 userType = IblObj.Login(userName, password);
-                new DroneListWindow(IblObj).Show();
+                if (userName != "Manager")
+                    new DroneListWindow(IblObj).Show();
+                else
+                    new CustomerInterface(IblObj, this).Show();
                 this.Close();
 
 

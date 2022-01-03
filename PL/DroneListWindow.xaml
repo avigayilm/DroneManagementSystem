@@ -192,7 +192,10 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 <Setter Property="Margin" Value="10"/>
                                 <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="FontSize" Value="8"/>
+                                <Setter Property="FontSize" Value="11"/>
+                                <Setter Property="FontFamily" Value="Roboto"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.View>
