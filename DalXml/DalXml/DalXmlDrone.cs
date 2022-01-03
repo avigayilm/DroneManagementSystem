@@ -49,9 +49,13 @@ namespace Dal
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-            XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml)
-            int index = CheckExistingDrone(droneId);
-            return DataSource.dronesList[index];
+            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            int index = drones.FindIndex(d => d.Id == droneId);
+            if (index == -1)
+            {
+                throw new MissingIdException("No such Drone exists\n");
+            }
+            return drones[index];
         }
 
 
