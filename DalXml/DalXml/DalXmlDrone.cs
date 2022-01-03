@@ -85,9 +85,7 @@ namespace Dal
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new List<Drone>();
-            charging= XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); });
-
-
+            charging= XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); })
         }
 
         /// <summary>
