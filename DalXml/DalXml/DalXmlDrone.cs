@@ -49,7 +49,7 @@ namespace Dal
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-           // XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml)
+            XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml)
             int index = CheckExistingDrone(droneId);
             return DataSource.dronesList[index];
         }
@@ -85,7 +85,8 @@ namespace Dal
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new List<Drone>();
-            charging= XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); })
+            XMLTools.LoadListFromXMLSerializer<DroneCharge>(DroneChargeXml).ForEach(d => { if (d.StationId == stationId) charging.Add(GetDrone(d.DroneId)); });
+            return charging;
         }
 
         /// <summary>
