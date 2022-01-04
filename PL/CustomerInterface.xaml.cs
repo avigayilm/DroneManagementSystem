@@ -27,6 +27,21 @@ namespace PL
         LoginWindow lastW;
         Customer me;
         Parcel parcel;
+        bool Register;
+        public string MailAddress
+        {
+            get { return (string)GetValue(MailAddressProperty); }
+            set { SetValue(MailAddressProperty, value); }
+        }
+        public static readonly DependencyProperty MailAddressProperty =
+            DependencyProperty.Register("email Adress", typeof(string), typeof(CustomerInterface));
+        public string password
+        {
+            get { return (string)GetValue(passwordProperty); }
+            set { SetValue(passwordProperty, value); }
+        }
+        public static readonly DependencyProperty passwordProperty =
+            DependencyProperty.Register("password", typeof(string), typeof(CustomerInterface));
         public CustomerInterface(BlApi.Ibl IblObj, LoginWindow last)
         {
             bl = IblObj;
@@ -35,7 +50,7 @@ namespace PL
             prioCbx.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
             lastW = last;
-            me=bl.GetCustomer(lastW.userName);
+            me = bl.GetCustomer(lastW.userName);
             parcel = new();
             parcel.Sender = new();
             parcel.Receiver = new();
@@ -44,15 +59,44 @@ namespace PL
             receivedparcelsList.ItemsSource = me.ReceivedParcels;
         }
 
+        public CustomerInterface(LoginWindow last, BlApi.Ibl IblObj) //to register a customer
+        {
+            bl = IblObj;
+            InitializeComponent();
+            //weiCBx.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
+            //prioCbx.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
+            //recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
+            lastW = last;
+            me = new();
+            Register = true;
+            //parcel = new();
+            //parcel.Sender = new();
+            //parcel.Receiver = new();
+            DataContext = this;
+            SentparcelsList.ItemsSource = me.SentParcels;
+            receivedparcelsList.ItemsSource = me.ReceivedParcels;
+        }
+
         private void Email()
         {
+
             MailMessage email = new()
             {
                 From = new MailAddress(@"deliveriesskyhigh@gmail.com"),
                 Body = msgTxt.Text,
                 Subject = nameTxt.Text,
             };
-            email.To.Add(@"deliveriesskyhigh@gmail.com");
+
+            if (Register)
+            {
+
+                email.Body = $"Dear {me.Name}!\n Welcome to our delivery system! \n your saved details are {me.ToString()}\n All the bes!";
+                email.Subject = "Registration complete";
+                email.To.Add(MailAddress);
+
+            }
+            else
+                email.To.Add(@"deliveriesskyhigh@gmail.com");
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
             {
                 Credentials = new NetworkCredential(@"deliveriesskyhigh@gmail.com", "dronesskyhi"),
@@ -76,6 +120,10 @@ namespace PL
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
+           if(Register)
+            {
+                bl.
+            }
             Email();
         }
 
@@ -92,6 +140,19 @@ namespace PL
                 MessageBox.Show(ex.Message, "Adding issue");
             }
 
+        }
+
+        private void profileAdd_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog op = new();
+            op.Title = "select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                profileAdd.Source = new BitmapImage(new Uri(op.FileName));
+            }
         }
     }
 }

@@ -40,17 +40,17 @@ namespace BL
             }
         }
 
-        public void Register(BO.Customer cus, string user, string password)
+        public void Register(BO.Customer cus, string user, string password, string imageSrc)
         {
             try
             {
-                DO.Login login = new() { UserName = user, Password = password };
+                DO.Login login = new() { UserName = user, Password = password, profileSource = imageSrc };
                 idal1.AddLogin(login);
                 try
                 {
                     AddCustomer(cus);
                 }
-                catch(DO.DuplicateIdException ex)
+                catch (DO.DuplicateIdException ex)
                 {
 
                 }

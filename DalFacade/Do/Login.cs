@@ -8,8 +8,9 @@ namespace DO
 {
     public struct Login
     {
-        public string UserName;
-        public string Password;
-        public bool StaffOrUser;
+        public string UserName { get; set; }
+        public string Password  { get; set; }
+        public bool StaffOrUser  { get; set; }
+        public string profileSource { get; set; }
     }
 }
