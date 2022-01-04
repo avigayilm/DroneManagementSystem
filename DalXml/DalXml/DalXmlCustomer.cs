@@ -104,7 +104,7 @@ namespace Dal
                 throw new DuplicateIdException("User already exists\n");
             logins.Add(log);
             XMLTools.SaveListToXMLSerializer(logins, LoginXml);
-        }
+        } 
 
         public bool ValidateLogin(string user, string pass)
         {
