@@ -59,7 +59,7 @@ namespace BL
                     int droneChargeIndex = tempDroneChargeList.FindIndex(dc => dc.DroneId == droneId);// finding the index of drone to get the station id
                     int stationId = tempDroneChargeList[droneChargeIndex].StationId;
                     // update drone
-                    TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList().First(x => x.DroneId == tempDron.Id).ChargingTime;
+                    TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList(x => x.DroneId == tempDron.Id).First().ChargingTime;
                     //double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
                     int batteryCharge =(int) (timeInCharging.TotalHours * idal1.DronePwrUsg()[4]);
                     tempDron.Battery += batteryCharge;
