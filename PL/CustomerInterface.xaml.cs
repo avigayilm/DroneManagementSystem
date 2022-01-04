@@ -123,7 +123,7 @@ namespace PL
         {
            if(Register)
             {
-                bl.
+              //  bl.
             }
             Email();
         }

@@ -49,7 +49,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[index].Delete)
+            if (parcels[index].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -74,7 +74,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[pIndex].Delete)
+            if (parcels[pIndex].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -102,7 +102,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[pIndex].Delete)
+            if (parcels[pIndex].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -130,7 +130,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[index].Delete)
+            if (parcels[index].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -156,7 +156,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[index].Delete)
+            if (parcels[index].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -188,7 +188,7 @@ namespace Dal
             {
                 throw new MissingIdException("No such parcel exists\n");
             }
-            if (DataSource.parcelList[pIndex].Delete)
+            if (parcels[pIndex].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -214,12 +214,12 @@ namespace Dal
         /// <returns>index of the parcel in the list</returns>
         int CheckExistingParcel(int parcelId)
         {
-            int index = DataSource.parcelList.FindIndex(p => p.Id == parcelId);
+            int index = parcels.FindIndex(p => p.Id == parcelId);
             if (index == -1)
             {
                 throw new MissingIdException($"No parcel with { parcelId } id exists\n");
             }
-            if (DataSource.parcelList[index].Delete)
+            if (parcels[index].Delete)
             {
                 throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");
             }
@@ -235,7 +235,7 @@ namespace Dal
         void CheckDuplicateParcel(int parcelId)
         {
 
-            if (DataSource.parcelList.Exists(p => p.Id == parcelId && !p.Delete))
+            if (parcels.Exists(p => p.Id == parcelId && !p.Delete))
             {
                 throw new DuplicateIdException($"Parcel with { parcelId } id already exists\n");
             }

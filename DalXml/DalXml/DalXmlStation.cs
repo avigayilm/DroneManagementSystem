@@ -15,7 +15,7 @@ namespace Dal
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
             loadingToList(ref stations, StationXml);
-            if (DataSource.stationList.Exists(s => s.Id == stationId))
+            if (stations.Exists(s => s.Id == stationId))
             {
                 throw new DuplicateIdException("station already exists\n");
             }
@@ -75,7 +75,7 @@ namespace Dal
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
             loadingToList(ref stations, StationXml);
-            return stations.FindAll(s => predicate == null ? true : predicate(s))
+            return stations.FindAll(s => predicate == null ? true : predicate(s));
                 //XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
         }
         /// <summary>

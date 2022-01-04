@@ -166,7 +166,7 @@ namespace BlApi
         /// <returns></returns>
         CustomerInParcel GetCustomerInParcel(string customerId);
 
-        public void Register(BO.Customer cus, string user, string password);
+        public void Register(BO.Customer cus, string user, string password, string imageSrc);
         public bool Login(string user, string pass);
         public (IEnumerable<DroneInCharge>, int) getAllDroneInCharge(int stationId);
 

@@ -379,7 +379,7 @@ namespace PL
             if(pIndp != 3 && sIndp == 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.Priority == pIndp));
             //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.priority == PrioritySelectorParcel.SelectedIndex);
-            if (pIndp != 3 && sIndp != 3)
+            if (pIndp != 3 && sIndp != 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.ParcelStatus == sIndp && (int)p.Priority == pIndp));
             //ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.priority == PrioritySelectorParcel.SelectedIndex);
         }
