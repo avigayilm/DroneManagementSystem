@@ -42,6 +42,7 @@ namespace PL
         }
         public static readonly DependencyProperty passwordProperty =
             DependencyProperty.Register("password", typeof(string), typeof(CustomerInterface));
+        int parcelId;
         public CustomerInterface(BlApi.Ibl IblObj, LoginWindow last)
         {
             bl = IblObj;
@@ -140,6 +141,34 @@ namespace PL
                 MessageBox.Show(ex.Message, "Adding issue");
             }
 
+        }
+
+        private void ReceivedParcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeliverParcelByDrone(parcelId);
+            }
+            catch(DeliveryIssueException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PickedUpParcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.CollectingParcelByDrone(parcelId);
+            }
+            catch(DeliveryIssueException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void profileAdd_MouseEnter(object sender, MouseEventArgs e)

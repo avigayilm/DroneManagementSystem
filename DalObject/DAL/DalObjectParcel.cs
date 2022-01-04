@@ -63,7 +63,7 @@ namespace Dal
             var temp2 = DataSource.dronesList[droneIndex];
             var temp = DataSource.parcelList[parcelIndex];
             //temp2.status = DroneStatuses.Available;
-            temp.Created = DateTime.Now;
+            temp.Delivered = DateTime.Now;
             DataSource.dronesList[droneIndex] = temp2;
             DataSource.parcelList[parcelIndex] = temp;
         }

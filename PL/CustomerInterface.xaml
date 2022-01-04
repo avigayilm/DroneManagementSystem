@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CustomerInterface" Height="450" Width="800">
     <Grid>
-        <TabControl BorderBrush="Transparent" TabStripPlacement="Top" Margin="20">
+        <TabControl BorderBrush="Transparent" TabStripPlacement="Left" Margin="20">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Style.Triggers>
@@ -241,6 +241,14 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -248,9 +256,19 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Received Parcel" Grid.Column="1" Grid.Row="1"/>
-                    <Button Content="Parcel was Picked Up" Grid.Column="3" Grid.Row="1"/>
+                    <TextBlock  Text="Have you received your parcel?" Grid.ColumnSpan="6" FontSize="30" Grid.Column="2" Grid.Row="0" />
+                    <TextBlock Text="ParcelId" Grid.Column="3" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding parcelId}"/>
+                    <Button  Name="ReceivedParcel" Content="Received Parcel" Grid.Column="3" Grid.Row="3" Click="ReceivedParcel_Click"/>
+                    <TextBlock  Text="Is your ParcelPicked up?" Grid.ColumnSpan="6" FontSize="30" Grid.Row="6" Grid.Column="2" />
+                    <TextBlock Text="ParcelId" Grid.Column="3" Grid.Row="8"/>
+                    <TextBox Grid.Row="8" Grid.Column="4" Text="{Binding parcelId}"/>
+                    <Button Name="PickedUpParcel" Content="Parcel was Picked Up" Grid.Column="3" Grid.Row="9" Click="PickedUpParcel_Click"/>
                 </Grid>
                 
             </TabItem>
@@ -285,7 +303,7 @@
                     <TextBlock Text="Email(required)" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" FontWeight="Bold" FontSize="15"/>
                     <TextBox Name="emailTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" BorderBrush="Gray"/>
                     <TextBlock Text="Message(required)" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" FontWeight="Bold" FontSize="15"/>
-                    <TextBox Name="msgTxt" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="6" BorderBrush="Gray" Margin="113,37,0,18"/>
+                    <TextBox Name="msgTxt" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="7" Grid.Column="1" BorderBrush="Gray" />
                     <Button Content="Submit" Grid.Column="1" Grid.Row="10" Margin="5" Click="Submit_Click" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
