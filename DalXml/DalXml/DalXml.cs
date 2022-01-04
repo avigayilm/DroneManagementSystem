@@ -18,6 +18,12 @@ namespace Dal
         private static string CustomerXml = @"CustomerXml.xml";
         private static string LoginXml = @"LoginXml.xml";
 
+        internal static double pwrUsgEmpty = 3;
+        internal static double pwrUsgLight = 5;
+        internal static double pwrUsgMedium = 10;
+        internal static double pwrUsgHeavy = 15;
+        internal static double chargePH = 30;
+
         private List<Station> stations;
         private List<Parcel> parcels;
         private List<Drone> drones;
@@ -41,12 +47,12 @@ namespace Dal
         private DalXml() { }
         public double[] DronePwrUsg()
         {
-            double[] pwrUsg = { DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight, DataSource.Config.pwrUsgMedium, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH };
+            double[] pwrUsg = { pwrUsgEmpty, pwrUsgLight, pwrUsgMedium, pwrUsgHeavy, chargePH };
             return pwrUsg;
         }
         public (double, double, double, double, double) DronePwrUsg1()
         {
-            return (DataSource.Config.pwrUsgEmpty, DataSource.Config.pwrUsgLight, DataSource.Config.pwrUsgMedium, DataSource.Config.pwrUsgHeavy, DataSource.Config.chargePH);
+            return (pwrUsgEmpty, pwrUsgLight, pwrUsgMedium, pwrUsgHeavy, chargePH);
         }
     }
 }
