@@ -123,7 +123,7 @@ namespace PL
         {
            if(Register)
             {
-              //  bl.
+                bl.Register(me, me.Id, password, profileAdd.Source.ToString());
             }
             Email();
         }

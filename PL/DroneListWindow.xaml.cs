@@ -463,19 +463,19 @@ namespace PL
             DronesListView.Items.Refresh();
         }
 
-        private void Image_MouseEnter_1(object sender, MouseEventArgs e)
-        {
-            ParcelListView.Items.Refresh();
-        }
+        //private void Image_MouseEnter_1(object sender, MouseEventArgs e)
+        //{
+        //    ParcelListView.Items.Refresh();
+        //}
 
-        private void Image_MouseEnter_2(object sender, MouseEventArgs e)
-        {
-            StationListView.Items.Refresh();
-        }
+        //private void Image_MouseEnter_2(object sender, MouseEventArgs e)
+        //{
+        //    StationListView.Items.Refresh();
+        //}
 
-        private void Image_MouseEnter_3(object sender, MouseEventArgs e)
-        {
-            CustomerListView.Items.Refresh();
+        //private void Image_MouseEnter_3(object sender, MouseEventArgs e)
+        //{
+        //    CustomerListView.Items.Refresh();
         }
 
         private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
@@ -486,6 +486,11 @@ namespace PL
         private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Image_MouseEnter_4(object sender, MouseEventArgs e)
+        {
+            DronesListView.Items.Refresh();
         }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

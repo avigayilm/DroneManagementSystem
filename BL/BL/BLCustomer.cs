@@ -52,7 +52,7 @@ namespace BL
                 }
                 catch (DO.DuplicateIdException ex)
                 {
-
+                    throw new AddingException("couldnt add customer", ex);
                 }
             }
             catch (DO.DuplicateIdException ex)
