@@ -439,11 +439,8 @@
                     </Grid.RowDefinitions>
                     <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\About.png" Grid.Column="1" Grid.RowSpan="3"/>
                     <Label Content="About" VerticalAlignment="Bottom" Foreground="#1361AB" FontFamily="Roboto" FontSize="30" FontWeight="Bold"/>
-                    <TextBlock Text="Welcome to Yehudit's and Avigayil's parcelserive, which started on 06/01/2022.&#x0a;
-                               This ParcelService works with the newest technology and is made especially for you &#x0a;
-                               if you are looking for the fastest way to get your parcel sent. &#x0a;If you have any problems
-                               feel free to contact us.&#x0a; By us you are always in good hands." Grid.Row="1" Foreground="#1361AB"
-                               FontFamily="Roboto" FontSize="11"/>
+                    <TextBlock Grid.Row="1" Foreground="#1361AB"
+                               FontFamily="Roboto" FontSize="11" HorizontalAlignment="Left" ><Run Text="Welcome to Yehudit's and Avigayil's parcelserive, which started "/><LineBreak/><Run Text="on 06/01/2022.. This ParcelService works with the newest technology"/><LineBreak/><Run Text=" and is made especially for you if you are looking for the fastest way "/><LineBreak/><Run Text="to get your parcel sent. If you have any problems  feel free to contact us.&#xA; By us you are always in good hands."/></TextBlock>
                 </Grid>
             </TabItem>
             <TabItem Name="DroneTab" Header="Contact us" BorderBrush="Transparent" Background="{x:Null}">
@@ -525,6 +522,27 @@
                         <ProgressBar Name="pbStatus" Minimum="0" Maximum="4" Value="{Binding Battery}"  />
                         <!--<TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
                     </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="Logout" Header="Logout" BorderBrush="{x:Null}" Background="{x:Null}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\11. receive parcel.png"  Grid.Column="1" Grid.RowSpan="3"/>
+                    <Button Grid.Column="0" Grid.Row="1" Background="#DFE959" Foreground="Black" Content="Logout" BorderBrush="Transparent" Margin="30 30 29 40">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="40" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </Grid>
             </TabItem>
 
