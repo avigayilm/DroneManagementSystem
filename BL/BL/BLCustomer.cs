@@ -141,7 +141,7 @@ namespace BL
                 cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();
                 cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count();
                 cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count();
-                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
+                cus.NumPackSentUnDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
             }
             return tempList;
         }

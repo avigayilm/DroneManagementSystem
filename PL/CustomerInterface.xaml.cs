@@ -58,6 +58,7 @@ namespace PL
         }
         public static readonly DependencyProperty passwordProperty =
             DependencyProperty.Register("password", typeof(string), typeof(CustomerInterface));
+         
         public CustomerInterface(BlApi.Ibl IblObj, LoginWindow last)
         {
             bl = IblObj;
@@ -74,7 +75,7 @@ namespace PL
             //  SentparcelsList.ItemsSource = me.SentParcels;
             //  receivedparcelsList.ItemsSource = me.ReceivedParcels;
             confirmParcels = new();
-            IEnumerable<ParcelToList> tempParcels= bl.GetAllParcels(x => ((x.ReceiverId == me.Id && x.Delivered == null && x.PickedUp!=null)|| (x.SenderId == me.Id&&x.PickedUp==null&& x.Assigned!=null))).OrderBy(p=>p.ParcelStatus);// list wist parcels that arent yet deliveres or picked up
+            IEnumerable<ParcelToList> tempParcels = bl.GetAllParcels(x => ((x.ReceiverId == me.Id && x.Delivered == null && x.PickedUp != null) || (x.SenderId == me.Id && x.PickedUp == null && x.Assigned != null)));//.OrderBy(p=>p.ParcelStatus);// list wist parcels that arent yet deliveres or picked up
             foreach(var parcelToList in tempParcels)
             {
                 confirmParcels.Add(parcelToList);
@@ -91,7 +92,7 @@ namespace PL
             {
                 receivedParcels.Add(customerInParcel);
             }
-            SentparcelsList.ItemsSource = sendParcels;
+            receivedparcelsList.ItemsSource = receivedParcels;
         }
 
         public CustomerInterface(LoginWindow last, BlApi.Ibl IblObj) //to register a customer
