@@ -8,39 +8,48 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="blueimage.png" />
     <None Remove="b_round.jpg" />
+    <None Remove="Icons\About.png" />
+    <None Remove="Icons\ContactUs.png" />
     <None Remove="Icons\customers.png" />
     <None Remove="Icons\drone.png" />
+    <None Remove="Icons\Login.png" />
     <None Remove="Icons\parcel.png" />
     <None Remove="Icons\plus.png" />
+    <None Remove="Icons\Profile.png" />
     <None Remove="Icons\prullebak.png" />
     <None Remove="Icons\stations.png" />
     <None Remove="images (1).jpg" />
     <None Remove="images.jpg" />
+    <None Remove="profile-Icon-SVG.jpg" />
     <None Remove="sky.jpg" />
     <None Remove="thumbnail-drone-companies.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Icons\customers.png">
+    <Content Include="Icons\About.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\drone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\Login.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\parcel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\plus.png">
+    <Content Include="Icons\Profile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Icons\prullebak.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\stations.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="profile-Icon-SVG.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -50,11 +59,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="b_round.jpg" />
-    <Resource Include="images (1).jpg" />
-    <Resource Include="images.jpg" />
-    <Resource Include="sky.jpg" />
-    <Resource Include="thumbnail-drone-companies.jpg" />
+    <Content Include="b_round.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\ContactUs.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\customers.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="blueimage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images (1).jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sky.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="thumbnail-drone-companies.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

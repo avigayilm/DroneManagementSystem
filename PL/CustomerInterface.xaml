@@ -5,39 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="CustomerInterface" Height="450" Width="800">
+        Title="CustomerInterface" Height="450" Width="800" Background="#E5E5E5">
+
+    <Window.Resources>
+        <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="10" />
+        </Style>
+
+    </Window.Resources>
     <Grid>
-        <TabControl BorderBrush="Transparent" TabStripPlacement="Left" Margin="20">
+        <TabControl BorderBrush="Transparent" TabStripPlacement="Top"  Margin="20" Background="#E5E5E5">
             <TabControl.Resources>
-                <Style TargetType="{x:Type TabItem}">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="#48637E" />
-                            <Setter Property="HeaderTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock Text="{TemplateBinding Content}" TextDecorations="Underline"></TextBlock>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Foreground" Value="#B4B4B4" />
-                            <Setter Property="HeaderTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock Text="{TemplateBinding Content}" ></TextBlock>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
+                <Style TargetType="TabPanel">
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                </Style>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Transparent" CornerRadius="4,4,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <!--<Setter TargetName="Border" Property="Background" Value="Yellow" />
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="10" />
+                                        <Setter TargetName="Border" Property="Width" Value="150" />-->
+                                        <Setter Property="HeaderTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{TemplateBinding Content}"> <!--TextDecorations="Underline">-->
+                                                        <TextBlock.TextDecorations>
+                                                            <TextDecoration>
+                                                                <TextDecoration.Pen>
+                                                                    <Pen Brush="Red" Thickness="2" />
+                                                                </TextDecoration.Pen>
+                                                            </TextDecoration>
+                                                        </TextBlock.TextDecorations>
+
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <!--<Setter TargetName="Border" Property="Height" Value="30" />-->
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </TabControl.Resources>
+
             <TabItem Header="My Account" BorderBrush="{x:Null}" Background="{x:Null}">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.5*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -58,8 +98,8 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!--<Image Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png">-->
-                    <Image Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png">
+                    <Image Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png">
+                    <!--<Image Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png">-->
                         <Image.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="50" />
@@ -108,6 +148,17 @@
 
 
                     </Grid>
+                    <!--<Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\Profile.png" Grid.ColumnSpan="10" Grid.RowSpan="5"/>
+                    <TextBlock Text="Name" Grid.Column="3" Grid.Row="4"/>
+                    <TextBox Text="{Binding me.Name, Mode=TwoWay}" Grid.Column="5" Grid.Row="4"/>
+                    <TextBlock Text="Id" Grid.Column="3" Grid.Row="5"/>
+                    <TextBox Text="{Binding me.Id, Mode=TwoWay}" Grid.Column="5" Grid.Row="5"/>
+                    <TextBlock Text="PhoneNumber" Grid.Column="3" Grid.Row="6"/>
+                    <TextBox Text="{Binding me.PhoneNumber, Mode=TwoWay}" Grid.Column="5" Grid.Row="6"/>
+                    <TextBlock Text="Longitude" Grid.Column="3" Grid.Row="7"/>
+                    <TextBox Text="{Binding me.Loc.Longitude, Mode=TwoWay}" Grid.Column="5" Grid.Row="7"/>
+                    <TextBlock Text="Latitude" Grid.Column="3" Grid.Row="8"/>
+                    <TextBox Text="{Binding me.Loc.Latitude, Mode=TwoWay}" Grid.Column="5" Grid.Row="8"/>-->
                 </Grid>
             </TabItem>
 
@@ -157,24 +208,20 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="See Parcels" BorderBrush="{x:Null}" Background="{x:Null}">
+
+            <TabItem Header="See Parcels" BorderBrush="{x:Null}" Background="#E5E5E5" Height="21" VerticalAlignment="Top" >
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="44*"/>
-                        <ColumnDefinition Width="13*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="57*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -185,95 +232,274 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <Label Content="Your Parcel History" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontFamily="Roboto" FontWeight="Bold" FontSize="30" Foreground="#1361AB"/>
+                    <TabControl TabStripPlacement="Top"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="5" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Transparent" CornerRadius="4,4,0,0" Margin="2,0">
+                                                <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <!--<Setter TargetName="Border" Property="Background" Value="Yellow" />
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="10" />
+                                        <Setter TargetName="Border" Property="Width" Value="150" />-->
+                                                    <Setter Property="HeaderTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{TemplateBinding Content}"> <!--TextDecorations="Underline">-->
+                                                                    <TextBlock.TextDecorations>
+                                                                        <TextDecoration>
+                                                                            <TextDecoration.Pen>
+                                                                                <Pen Brush="#DFE959" Thickness="2" />
+                                                                            </TextDecoration.Pen>
+                                                                        </TextDecoration>
+                                                                    </TextBlock.TextDecorations>
 
-                    <TextBlock Name="sentList" Text="Sent Parcels"
-                   Grid.Column="1" Grid.Row="1"  Grid.ColumnSpan="2"/>
-                    <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="5" Margin="0,0,0,50" >
-                        <ListView.Background>
-                            <ImageBrush Opacity="0.5"/>
-                        </ListView.Background>
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                                </TextBlock>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <!--<Setter TargetName="Border" Property="Height" Value="30" />-->
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="False">
+                                                    <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
-                        </ListView.ItemContainerStyle>
-
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Customer.Id}" Width="40"/>
-                                <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Customer.Weight}" Width="70"/>
-                                <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Customer.Priority}" Width="80"/>
-                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding Customer.ParcelStatus}" Width="90"/>
-                                <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding Customer.CustomerInP}" Width="110"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-
-                    <TextBlock Name="receivedList" Text="Recieved Parcels" Grid.ColumnSpan="2" HorizontalAlignment="Left"
-                   Grid.Column="9" Grid.Row="1" />
-                    <ListView x:Name="receivedparcelsList" Grid.Row="2" Grid.Column="9" Grid.ColumnSpan="5" Grid.RowSpan="5" Margin="0,0,0,50">
-                        <ListView.Background>
-                            <ImageBrush Opacity="0.5"/>
-                        </ListView.Background>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </TabControl.Resources>
+                        <!--<TabControl.Resources>
+                            <Style TargetType="{x:Type TabItem}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Foreground" Value="#48637E" />
+                                        <Setter Property="HeaderTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{TemplateBinding Content}" TextDecorations="Underline" ></TextBlock>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter Property="Foreground" Value="#B4B4B4" />
+                                        <Setter Property="HeaderTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{TemplateBinding Content}" ></TextBlock>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
-                        </ListView.ItemContainerStyle>
+                        </TabControl.Resources>-->
+                        <TabItem Header="All"  VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <Grid ShowGridLines="False">
+                                <Grid.ColumnDefinitions>
 
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Customer.Id}" Width="40"/>
-                                <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Customer.Weight}" Width="70"/>
-                                <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Customer.Priority}" Width="80"/>
-                                <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding Customer.ParcelStatus}" Width="90"/>
-                                <GridViewColumn Header="Sender" DisplayMemberBinding="{Binding Customer.CustomerInP}" Width="110"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!--<TextBlock Name="sentList" Text="Sent Parcels"  Grid.ColumnSpan="2"  Grid.RowSpan="4" Margin="0,0,0,22"/>-->
+                                <ListView x:Name="AllParcels" MouseDoubleClick="AllParcels_MouseDoubleClick"  Grid.Row="0" Grid.ColumnSpan="10"   Grid.RowSpan="10" BorderBrush="{x:Null}" Background="{x:Null}" >
+
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
+                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                                            <GridViewColumn Header="SenderId" DisplayMemberBinding="{Binding SenderId}" Width="60"/>
+                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding ReceiverId}" Width="70"/>
+                                            <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                                            <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="80"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Sent Parcel"  VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <Grid ShowGridLines="False">
+                                <Grid.ColumnDefinitions>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!--<TextBlock Name="sentList" Text="Sent Parcels"  Grid.ColumnSpan="2"  Grid.RowSpan="4" Margin="0,0,0,22"/>-->
+                                <ListView x:Name="SentparcelsList" Grid.Row="0" Grid.ColumnSpan="10"   Grid.RowSpan="10" >
+                                    <ListView.Background>
+                                        <ImageBrush Opacity="0.5"/>
+                                    </ListView.Background>
+
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                                            <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                                            <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
+                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Received Parcels" HorizontalAlignment="Left"  VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <Grid ShowGridLines="False">
+                                <Grid.ColumnDefinitions>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!--<TextBlock Name="receivedList" Text="Received Parcels"  Grid.ColumnSpan="3"  Grid.RowSpan="3"/>-->
+
+                                <ListView x:Name="receivedparcelsList" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderBrush="{x:Null}" >
+                                    <ListView.Background>
+                                        <ImageBrush Opacity="0.5"/>
+                                    </ListView.Background>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                                            <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                                            <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
+                                            <GridViewColumn Header="Sender" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem Header="Confirmation" BorderBrush="{x:Null}" Background="{x:Null}">
+
+            <TabItem Name="about" Header="About" BorderBrush="Transparent" Background="{x:Null}">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock  Text="Have you received your parcel?" Grid.ColumnSpan="6" FontSize="30" Grid.Column="2" Grid.Row="0" />
-                    <TextBlock Text="ParcelId" Grid.Column="3" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding parcelId}"/>
-                    <Button  Name="ReceivedParcel" Content="Received Parcel" Grid.Column="3" Grid.Row="3" Click="ReceivedParcel_Click"/>
-                    <TextBlock  Text="Is your ParcelPicked up?" Grid.ColumnSpan="6" FontSize="30" Grid.Row="6" Grid.Column="2" />
-                    <TextBlock Text="ParcelId" Grid.Column="3" Grid.Row="8"/>
-                    <TextBox Grid.Row="8" Grid.Column="4" Text="{Binding parcelId}"/>
-                    <Button Name="PickedUpParcel" Content="Parcel was Picked Up" Grid.Column="3" Grid.Row="9" Click="PickedUpParcel_Click"/>
+                    <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\About.png" Grid.Column="1" Grid.RowSpan="3"/>
+                    <Label Content="About" VerticalAlignment="Bottom" Foreground="#1361AB" FontFamily="Roboto" FontSize="30" FontWeight="Bold"/>
+                    <TextBlock Text="Welcome to Yehudit's and Avigayil's parcelserive, which started on 06/01/2022.&#x0a;
+                               This ParcelService works with the newest technology and is made especially for you &#x0a;
+                               if you are looking for the fastest way to get your parcel sent. &#x0a;If you have any problems
+                               feel free to contact us.&#x0a; By us you are always in good hands." Grid.Row="1" Foreground="#1361AB"
+                               FontFamily="Roboto" FontSize="11"/>
                 </Grid>
-                
             </TabItem>
             <TabItem Name="DroneTab" Header="Contact us" BorderBrush="Transparent" Background="{x:Null}">
                 <Grid Name="customerGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<Border BorderThickness="10" BorderBrush="Gray" Grid.Row="1" Grid.RowSpan="9" Grid.ColumnSpan="4" Margin="57,79,90,20"/>-->
+                    <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\ContactUs.png" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="13"/>
+                    <TextBlock Text="We'd Love to hear from you!" FontSize="25" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Text="We're here to help and answer any question you might have. &#x0a; We look forward to hearing from you:)" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" TextAlignment="Center" Margin="0,35" Grid.RowSpan="2" VerticalAlignment="Top" />
+                    <TextBlock Text="Name(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="4" FontWeight="Bold" FontSize="15"/>
+                    <TextBox Name="nameTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="5" BorderBrush="Gray"/>
+                    <TextBlock Text="Email(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="6" FontWeight="Bold" FontSize="15"/>
+                    <TextBox Name="emailTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="7" BorderBrush="Gray"/>
+                    <TextBlock Text="Message(required)" VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="8" FontWeight="Bold" FontSize="15"/>
+                    <TextBox Name="msgTxt" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="9" Grid.Column="4" BorderBrush="Gray" />
+                    <Button Content="Submit" Grid.Column="1" Grid.Row="10" Margin="5" Click="Submit_Click" >
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBlock Text="Contactinfo:" Grid.Column="1" Grid.Row="5" FontSize="20" Grid.ColumnSpan="2" />
+                    <TextBlock Text="PhoneNumber:" Grid.Column="1" Grid.Row="6" />
+                    <TextBlock Text="0532372158:" Grid.Column="2" Grid.Row="6" />
+                    <TextBlock Text="Adress:" Grid.Column="1" Grid.Row="7"/>
+                    <TextBlock Text="TalSreet, Jerusalem" Grid.Column="2" Grid.Row="7"/>
+                    <TextBlock Text="email:" Grid.Column="1" Grid.Row="8" />
+                    <TextBlock Text="SkyHigh@tal.com" Grid.Column="2" Grid.Row="8"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Name="TrackTrace" Header="Track and Trace" BorderBrush="{x:Null}" Background="{x:Null}">
+                <Grid Name="TrackGrid" ShowGridLines="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="2*"/>
@@ -295,29 +521,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!--<Border BorderThickness="10" BorderBrush="Gray" Grid.Row="1" Grid.RowSpan="9" Grid.ColumnSpan="4" Margin="57,79,90,20"/>-->
-                    <TextBlock Text="We'd Love to hear from you!" FontSize="25" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Top"/>
-                    <TextBlock Text="We're here to help and answer any question you might have. &#x0a; We look forward to hearing from you:)" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" TextAlignment="Center" Margin="0,35" Grid.RowSpan="2" VerticalAlignment="Top" />
-                    <TextBlock Text="Name(required)" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" FontWeight="Bold" FontSize="15"/>
-                    <TextBox Name="nameTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="3" BorderBrush="Gray"/>
-                    <TextBlock Text="Email(required)" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" FontWeight="Bold" FontSize="15"/>
-                    <TextBox Name="emailTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" BorderBrush="Gray"/>
-                    <TextBlock Text="Message(required)" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" FontWeight="Bold" FontSize="15"/>
-                    <TextBox Name="msgTxt" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="7" Grid.Column="1" BorderBrush="Gray" />
-                    <Button Content="Submit" Grid.Column="1" Grid.Row="10" Margin="5" Click="Submit_Click" >
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10" />
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                    <TextBlock Text="Contactinfo:" Grid.Column="4" Grid.Row="3" FontSize="20" Grid.ColumnSpan="2" />
-                    <TextBlock Text="PhoneNumber:" Grid.Column="4" Grid.Row="4" />
-                    <TextBlock Text="0532372158:" Grid.Column="5" Grid.Row="4" />
-                    <TextBlock Text="Adress:" Grid.Column="4" Grid.Row="5"/>
-                    <TextBlock Text="TalSreet, Jerusalem" Grid.Column="5" Grid.Row="5"/>
-                    <TextBlock Text="email:" Grid.Column="4" Grid.Row="6" />
-                    <TextBlock Text="SkyHigh@tal.com" Grid.Column="5" Grid.Row="6"/>
+                    <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Width="600" Height="20">
+                        <ProgressBar Name="pbStatus" Minimum="0" Maximum="4" Value="{Binding Battery}"  />
+                        <!--<TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                    </Grid>
                 </Grid>
             </TabItem>
 
