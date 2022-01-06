@@ -9,10 +9,40 @@
 
   <ItemGroup>
     <None Remove="b_round.jpg" />
+    <None Remove="Icons\customers.png" />
+    <None Remove="Icons\drone.png" />
+    <None Remove="Icons\parcel.png" />
+    <None Remove="Icons\plus.png" />
+    <None Remove="Icons\prullebak.png" />
+    <None Remove="Icons\stations.png" />
     <None Remove="images (1).jpg" />
     <None Remove="images.jpg" />
     <None Remove="sky.jpg" />
     <None Remove="thumbnail-drone-companies.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icons\customers.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\drone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\parcel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\plus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icons\prullebak.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\stations.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
