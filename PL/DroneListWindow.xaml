@@ -113,7 +113,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="109,102,120,-42" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" Grid.ColumnSpan="2" />
-
+                        <Button Name="logout" Content=" Logout" Click="logout_Click"/>
                         <ComboBox x:Name="StatusSelector" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="0,129,0,-74" 
                       Background="#FF2476BD" SelectionChanged="StatusSelector_SelectionChanged" SelectedIndex="3" BorderBrush="{x:Null}" Foreground="#FF70C9EB" HorizontalAlignment="Center" Width="161" Grid.ColumnSpan="2">

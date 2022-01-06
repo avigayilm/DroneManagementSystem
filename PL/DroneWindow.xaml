@@ -178,7 +178,7 @@
             <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
         </Grid.Background>
 
-        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Visible">
+        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
@@ -293,7 +293,7 @@
 
 
         <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
-         Visibility="Hidden">
+         Visibility="Visible">
 
 
             <Grid.ColumnDefinitions>
@@ -478,7 +478,12 @@
             <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc._Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc._Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
-            <TextBlock Name="bTx" Grid.Row="8" Text="{Binding Path=Battery}" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource TextBlockStyle}" />
+            <Grid Grid.Column="1" Grid.Row="8">
+                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}"  />
+                <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            <!--<ProgressBar Name="BaterryProgress" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding Battery, Mode=OneWay, Converter}"/>-->
+            <!--<TextBlock Name="bTx" Grid.Row="8" Text="{Binding Path=Battery}" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource TextBlockStyle}" />-->
             <ComboBox Name="ComboUpdateOption" Text="Choose update Option" ToolTip="Choose UpdateOption" SelectedItem="{Binding UpdateOptions}" Grid.Row="0" Grid.Column="6"  Margin="10,24,0,24" Grid.ColumnSpan="2" Foreground="#FF1076A0"/>
             <Button Name="submitUpdate" 
                 Grid.Row="9" 

@@ -75,7 +75,7 @@ namespace Dal
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
             loadingToList(ref stations, StationXml);
-            return stations.FindAll(s => predicate == null ? true : predicate(s))
+            return stations.FindAll(s => predicate == null ? true : predicate(s));
                 //XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
         }
         /// <summary>

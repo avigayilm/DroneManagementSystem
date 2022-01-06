@@ -190,6 +190,11 @@ namespace BL
             parcel.CopyProperties(parcelAtCustomer);
             parcelAtCustomer.ParcelStatus = GetParcelStatus(parcelId);
             DO.Customer dalCustomer = idal1.GetCustomer(parcel.Sender.Id);
+            if(parcel.Dr==null)
+            {
+                parcel.Dr = new();
+                parcel.Dr.Loc = new();
+            }
             if (parcel.Dr.Loc.Longitude == dalCustomer.Longitude && parcel.Dr.Loc.Latitude==dalCustomer.Latitude)// if the location is same as sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else

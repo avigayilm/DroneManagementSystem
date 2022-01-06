@@ -488,6 +488,13 @@ namespace PL
 
         }
 
+        private void logout_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow().Show();
+            this.Close();
+
+        }
+
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
         //    droneToLists.OrderBy(x => x.Id);

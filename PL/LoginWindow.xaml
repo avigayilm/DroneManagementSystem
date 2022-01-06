@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-         Title="Login" Height="350" Width="300" FontSize="14" Background="#FF7BD3E0">
-    <Border Background="#2e3137" CornerRadius="20" Margin="20">
+         Title="Login" Height="450" Width="800" FontSize="14"><!--Background="#FF7BD3E0"-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\Login.png" Grid.RowSpan="13" Margin="10,0" />
+        <Label Content="Login" Grid.Column="1" Grid.Row="2" FontFamily="Roboto" FontSize="30" FontWeight="Bold" Foreground="#1361AB"/>
+        <TextBlock  Text="Sign in as a customer or manager" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontFamily="Roboto" FontSize="10" Foreground="#B9B9B9"/>
+        <TextBlock Text="Username" Grid.Column="1" Grid.Row="4" Foreground="#7E7E7E" VerticalAlignment="Center"/>
+        <TextBox Name="txtusername" Text="{Binding userName, Mode=TwoWay}"  Foreground="Black" Grid.Column="1" Grid.Row="5" Width="200" HorizontalAlignment="Left"/>
+        <TextBlock Text="Password" Grid.Column="1" Grid.Row="6" Foreground="#7E7E7E" VerticalAlignment="Center"/>
+        <PasswordBox Name="textPass" Foreground="Black" FontSize="18" Grid.Row="7" Grid.Column="1" Width="200" HorizontalAlignment="Left"/>
+        <Button Click="btnSubmit_Click" Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Background="#DFE959" Foreground="Black" FontSize="12" Width="64" Grid.Column="1" Grid.Row="8" FontFamily="Roboto" Margin="10,5">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="btnRegister" Click="btnRegister_Click" Content="Register" Background="#DFE959" Foreground="Black" FontSize="12" Width="69" Grid.Column="1" Grid.Row="8" FontFamily="Roboto" Margin="10,5">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+    
+    <!--<Border Background="#2e3137" CornerRadius="20" Margin="20">
         <StackPanel Margin="20">
             <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
             <Separator></Separator>
@@ -17,5 +57,5 @@
             <Button Click="btnSubmit_Click" Name="btnSubmit" Content="Submit" Margin=" 60 10" Background="#545d6a" Foreground="White" FontSize="18" Width="64"/>
             <Button x:Name="btnRegister" Click="btnRegister_Click" Content="Register" Background="#545d6a" Foreground="White" FontSize="18" Width="69" />
         </StackPanel>
-    </Border>
+    </Border>-->
 </Window>
