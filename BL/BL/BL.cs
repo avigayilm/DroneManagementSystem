@@ -19,6 +19,39 @@ namespace BL
         DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static BL Instance
         {
             get
@@ -37,7 +70,7 @@ namespace BL
             double pwrUsgMedium = tempArray[2];
             double pwrUsgHeavy = tempArray[3];
             double chargePH = tempArray[4];
-
+            int count = 0;
             //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
@@ -66,6 +99,7 @@ namespace BL
                         DO.Station tempSt = tempList[rand.Next(tempList.Count())];
                         dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
                         idal1.SendToCharge(dr.Id, tempSt.Id);
+                        count++;
                     }
                     else //the drone is available
                     {

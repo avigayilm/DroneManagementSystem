@@ -54,9 +54,12 @@ namespace PL
                     this.Close();
                 }
                 else
+                {
                     new CustomerInterface(IblObj, this).Show();
+                    txtusername.Text = "";
+                    textPass.Clear();
+                }
                 
-
 
             }
             catch(BO.LoginBLException ex)

@@ -5,5 +5,5 @@
   <pwrUsgLight>5</pwrUsgLight>
   <pwrUsgMedium>10</pwrUsgMedium>
   <pwrUsgHeavy>15</pwrUsgHeavy>
-  <chargePH>30</chargePH>
+  <chargePH>150</chargePH>
 </configLists>

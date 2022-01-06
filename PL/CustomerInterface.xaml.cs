@@ -36,7 +36,14 @@ namespace PL
         public Parcel parcel { get; set; }
         public int parcelId;
         public ParcelToList parcelToList { get; set; }
-        bool Register { get; set; }
+    
+        public bool Register
+        {
+            get { return (bool)GetValue(RegisterProperty); }
+            set { SetValue(RegisterProperty, value); }
+        }
+        public static readonly DependencyProperty RegisterProperty =
+            DependencyProperty.Register("Register", typeof(bool), typeof(CustomerInterface));
         public string MailAddress
         {
             get { return (string)GetValue(MailAddressProperty); }
@@ -51,7 +58,7 @@ namespace PL
         }
         public static readonly DependencyProperty passwordProperty =
             DependencyProperty.Register("password", typeof(string), typeof(CustomerInterface));
-       
+         
         public CustomerInterface(BlApi.Ibl IblObj, LoginWindow last)
         {
             bl = IblObj;
@@ -98,9 +105,11 @@ namespace PL
             lastW = last;
             me = new();
             Register = true;
+
             //parcel = new();
             //parcel.Sender = new();
             //parcel.Receiver = new();
+            registerGrid.Visibility = Visibility.Visible;
             DataContext = this;
             SentparcelsList.ItemsSource = me.SentParcels;
             receivedparcelsList.ItemsSource = me.ReceivedParcels;
@@ -268,6 +277,6 @@ namespace PL
             }
         }
 
-
+        
     }
 }

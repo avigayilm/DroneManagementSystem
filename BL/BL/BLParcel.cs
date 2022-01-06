@@ -239,7 +239,8 @@ namespace BL
             {
                 ParcelToList parcel = new ParcelToList();
                 p.CopyProperties(parcel);
-                parcel.ParcelStatus = GetParcelStatus(p.Id);
+                if(!p.Delete )
+                    parcel.ParcelStatus = GetParcelStatus(p.Id);
                 tempList.Add(parcel);
             }
             return tempList;

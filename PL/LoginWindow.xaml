@@ -23,7 +23,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\Login.png" Grid.RowSpan="13" Margin="10,0" />
+        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\Login.png" Grid.RowSpan="13" Margin="10,0" />
         <Label Content="Login" Grid.Column="1" Grid.Row="2" FontFamily="Roboto" FontSize="30" FontWeight="Bold" Foreground="#1361AB"/>
         <TextBlock  Text="Sign in as a customer or manager" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontFamily="Roboto" FontSize="10" Foreground="#B9B9B9"/>
         <TextBlock Text="Username" Grid.Column="1" Grid.Row="4" Foreground="#7E7E7E" VerticalAlignment="Center"/>
