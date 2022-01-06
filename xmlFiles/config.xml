@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <config>
-	
-	
-	<dal>dalobject</dal>
-	<dal-packages>
-		<dalobject namespace="Dal" class="DalObject">DalObject</dalobject>
 
+
+	<!--<dal>dalobject</dal>-->
+	<dal>dalXml</dal>
+	<dal-packages>
+		<!--<dalobject namespace="Dal" class="DalObject">DalObj ct</dalobject>-->
+		<dalXml namespace="Dal" class="DalXml">DalXml</dalXml>
 		<!--<list>DalObject</list>-->
-		<xml>DalXml</xml>
+		<!--<xml>DalXml</xml>-->
 	</dal-packages>
 </config>

@@ -105,7 +105,8 @@ namespace Dal
         /// <returns></returns>
         internal int CheckExistingDrone(int droneId)
         {
-            List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
+            loadingToList(ref drones, DroneXml);
             int index = drones.FindIndex(d => d.Id == droneId);
             if (index == -1)
             {

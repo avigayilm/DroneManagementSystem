@@ -15,7 +15,7 @@ namespace Dal
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
             loadingToList(ref stations, StationXml);
-            if (DataSource.stationList.Exists(s => s.Id == stationId))
+            if (stations.Exists(s => s.Id == stationId))
             {
                 throw new DuplicateIdException("station already exists\n");
             }

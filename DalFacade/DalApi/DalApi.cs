@@ -33,7 +33,7 @@ namespace DalApi
         /// <param name="id"></param>
         /// <returns></returns>
         (int, int) AvailableAndOccupiedSlots(int id);
-        void SendToCharge(int droneId, int stationId);
+        bool SendToCharge(int droneId, int stationId);
         void BatteryCharged(int droneId, int stationId);
         Parcel GetParcel(int ID);
         /// <summary>

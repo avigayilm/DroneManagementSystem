@@ -379,7 +379,7 @@ namespace PL
             if(pIndp != 3 && sIndp == 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.Priority == pIndp));
             //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.priority == PrioritySelectorParcel.SelectedIndex);
-            if (pIndp != 3 && sIndp != 3)
+            if (pIndp != 3 && sIndp != 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.ParcelStatus == sIndp && (int)p.Priority == pIndp));
             //ParcelListView.ItemsSource = droneToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex && (int)X.priority == PrioritySelectorParcel.SelectedIndex);
         }
@@ -463,20 +463,20 @@ namespace PL
             DronesListView.Items.Refresh();
         }
 
-        private void Image_MouseEnter_1(object sender, MouseEventArgs e)
-        {
-            ParcelListView.Items.Refresh();
-        }
+        //private void Image_MouseEnter_1(object sender, MouseEventArgs e)
+        //{
+        //    ParcelListView.Items.Refresh();
+        //}
 
-        private void Image_MouseEnter_2(object sender, MouseEventArgs e)
-        {
-            StationListView.Items.Refresh();
-        }
+        //private void Image_MouseEnter_2(object sender, MouseEventArgs e)
+        //{
+        //    StationListView.Items.Refresh();
+        //}
 
-        private void Image_MouseEnter_3(object sender, MouseEventArgs e)
-        {
-            CustomerListView.Items.Refresh();
-        }
+        //private void Image_MouseEnter_3(object sender, MouseEventArgs e)
+        //{
+        //    CustomerListView.Items.Refresh();
+        //}
 
         private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
         {
@@ -486,6 +486,11 @@ namespace PL
         private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Image_MouseEnter_4(object sender, MouseEventArgs e)
+        {
+            DronesListView.Items.Refresh();
         }
 
         private void logout_Click(object sender, RoutedEventArgs e)

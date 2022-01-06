@@ -44,7 +44,7 @@ namespace Dal
 
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
             int index = CheckExistingCustomer(customerId);
-            Customer tempCustomer = DataSource.customerList[index];
+            Customer tempCustomer = customers[index];
             if (name != null)
                 tempCustomer.Name = name;
             if (phone != null)
@@ -75,7 +75,7 @@ namespace Dal
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
             loadingToList(ref customers, CustomerXml);
 
-            int index = DataSource.customerList.FindIndex(c => c.Id == customerId);
+            int index = customers.FindIndex(c => c.Id == customerId);
             if (index == -1)
             {
                 throw new MissingIdException("No such Customer exists\n");
@@ -104,7 +104,7 @@ namespace Dal
                 throw new DuplicateIdException("User already exists\n");
             logins.Add(log);
             XMLTools.SaveListToXMLSerializer(logins, LoginXml);
-        }
+        } 
 
         public bool ValidateLogin(string user, string pass)
         {

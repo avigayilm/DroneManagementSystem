@@ -40,19 +40,19 @@ namespace BL
             }
         }
 
-        public void Register(BO.Customer cus, string user, string password)
+        public void Register(BO.Customer cus, string user, string password, string imageSrc, string emailAdd)
         {
             try
             {
-                DO.Login login = new() { UserName = user, Password = password };
+                DO.Login login = new() { UserName = user, Password = password, profileSource = imageSrc, emailAddress = emailAdd };
                 idal1.AddLogin(login);
                 try
                 {
                     AddCustomer(cus);
                 }
-                catch(DO.DuplicateIdException ex)
+                catch (DO.DuplicateIdException ex)
                 {
-
+                    throw new AddingException("couldnt add customer", ex);
                 }
             }
             catch (DO.DuplicateIdException ex)
