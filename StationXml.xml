@@ -5,13 +5,13 @@
     <Name>Station-94</Name>
     <Longitude>35.49237938471447</Longitude>
     <Latitude>30.439081569550815</Latitude>
-    <AvailableChargeSlots>6</AvailableChargeSlots>
+    <AvailableChargeSlots>-3</AvailableChargeSlots>
   </Station>
   <Station>
     <Id>9786</Id>
     <Name>Station-68</Name>
     <Longitude>34.79610535097425</Longitude>
     <Latitude>30.331417256018636</Latitude>
-    <AvailableChargeSlots>0</AvailableChargeSlots>
+    <AvailableChargeSlots>-15</AvailableChargeSlots>
   </Station>
 </ArrayOfStation>

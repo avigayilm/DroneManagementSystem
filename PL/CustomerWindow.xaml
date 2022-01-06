@@ -18,7 +18,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="10"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding addOrUpdate}" Value="true">
                     <Setter Property="Background" Value="Transparent"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -45,7 +45,7 @@
         <Style x:Key="ButtonaddorUpdateStyle" TargetType="Button" BasedOn="{StaticResource buttonStyle}">
             <Setter Property="Content" Value="Update"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="false">
+                <DataTrigger Binding="{Binding addOrUpdate}" Value="false">
                     <Setter Property="Content" Value="Add"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -53,7 +53,7 @@
 
         <Style x:Key="enabledTextbox" TargetType="TextBox" BasedOn="{StaticResource ResourceKey=textboxStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=addOrUpdate}" Value="true">
+                <DataTrigger Binding="{Binding addOrUpdate}" Value="true">
                     <Setter Property="IsReadOnly" Value="True"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -65,8 +65,8 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>

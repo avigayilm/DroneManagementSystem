@@ -67,6 +67,7 @@ namespace Dal
         public void BatteryCharged(int droneId, int stationId)
         {
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
+            droneCharges = GetDroneChargeList();
             int dronecIndex = droneCharges.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (dronecIndex == -1)
                 throw new MissingIdException("No such drone Charge \n");
@@ -77,6 +78,10 @@ namespace Dal
                                                                //var temp = DataSource.dronesList[dronecIndex];
                                                                /////temp.battery = 100.00;// battery is full
                                                                //DataSource.dronesList[dronecIndex] = temp;
+                (from d in droneChargeRoot.Elements()
+                 where Int32.Parse(d.Element("DroneId").Value) == droneId
+                 select d)
+                    .FirstOrDefault().Remove();
                 XMLTools.SaveListToXMLElement(droneChargeRoot, DroneChargeXml);
             }
         }
