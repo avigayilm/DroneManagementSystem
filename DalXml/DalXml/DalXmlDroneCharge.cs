@@ -37,27 +37,26 @@ namespace Dal
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="StationId"></param>
-        public void SendToCharge(int droneId, int stationId)
+        public bool SendToCharge(int droneId, int stationId)
         {
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
-
+            droneCharges = GetDroneChargeList().ToList();
             int droneIndex = CheckExistingDrone(droneId);
                // DataSource.dronesList.FindIndex(d => d.Id == droneId);
             int stationIndex = CheckExistingStation(stationId);
-            //    //DataSource.stationList.FindIndex(s => s.Id == stationId);
-            //if (stationIndex == -1)
-            //    throw new MissingIdException(" No such station in list\n");
-            //if (droneIndex == -1)
-            //    throw new MissingIdException("No  such drone in list \n");
-            //// making a new Dronecharge
             ChangeChargeSlots(stationId, -1);
             DroneCharge DC = new DroneCharge();
-            DC.DroneId = droneId;
-            DC.StationId = stationId;
-            DC.ChargingTime = DateTime.Now;
-            droneCharges.Append(DC);
-            droneChargeRoot.Add(DC);
-            XMLTools.SaveListToXMLElement(droneChargeRoot, DroneChargeXml);
+            XElement x = (from d in droneChargeRoot.Elements()
+                          where d.Element("DroneId").Value == droneId.ToString() && d.Element("StationId").Value == stationId.ToString()
+                          select d).FirstOrDefault();
+            if(x== null)
+            {
+                droneCharges.Add(DC);
+                droneChargeRoot.Add(new XElement("DroneCharge", new XElement("DroneId", droneId), new XElement("StationId", stationId), new XElement("ChargingTime", DateTime.Now)));
+                XMLTools.SaveListToXMLElement(droneChargeRoot, DroneChargeXml);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -88,20 +87,25 @@ namespace Dal
         {
             //return DataSource.chargeList.FindAll(c => predicate == null ? true : predicate(c));
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
-            try
+            if(droneCharges == null)
             {
-                droneCharges = (from dc in droneChargeRoot.Elements()
-                                select new DroneCharge()
-                                {
-                                    DroneId = Convert.ToInt32(dc.Element("DroneId").Value),
-                                    StationId = Convert.ToInt32(dc.Element("StationId").Value),
-                                    ChargingTime = Convert.ToDateTime(dc.Element("ChargingTime").Value)
-                                }).ToList();
+                try
+                {
+
+                    droneCharges = (from dc in droneChargeRoot.Elements()
+                                    select new DroneCharge()
+                                    {
+                                        DroneId = Convert.ToInt32(dc.Element("DroneId").Value),
+                                        StationId = Convert.ToInt32(dc.Element("StationId").Value),
+                                        ChargingTime = Convert.ToDateTime(dc.Element("ChargingTime").Value)
+                                    }).ToList();
+                }
+                catch
+                {
+                    droneCharges = null;
+                }
             }
-            catch
-            {
-                droneCharges = null;
-            }
+           
             return droneCharges.Where(c => predicate == null ? true : predicate(c));
         }
     }

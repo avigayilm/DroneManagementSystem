@@ -16,7 +16,7 @@ namespace Dal
         /// </summary>
         /// <param name="DroneId"></param>
         /// <param name="StationId"></param>
-        public void SendToCharge(int droneId, int stationId)
+        public bool SendToCharge(int droneId, int stationId)
         {
             int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == droneId);
             int stationIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
@@ -31,6 +31,7 @@ namespace Dal
             DC.StationId = stationId;
             DC.ChargingTime = DateTime.Now;
             DataSource.chargeList.Add(DC);
+            return true;
         }
 
         /// <summary>

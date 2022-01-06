@@ -12,5 +12,6 @@ namespace DO
         public string Password  { get; set; }
         public bool StaffOrUser  { get; set; }
         public string profileSource { get; set; }
+        public string emailAddress { get; set; }
     }
 }

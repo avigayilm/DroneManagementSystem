@@ -38,7 +38,7 @@ namespace PL
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(IblObj, this).Show();
+            new CustomerInterface( this, IblObj).Show();
             this.Close();
         }
 
@@ -49,10 +49,13 @@ namespace PL
                 password = textPass.Password;
                 userType = IblObj.Login(userName, password);
                 if (userName == "Manager")
+                {
                     new DroneListWindow(IblObj).Show();
+                    this.Close();
+                }
                 else
                     new CustomerInterface(IblObj, this).Show();
-                this.Close();
+                
 
 
             }

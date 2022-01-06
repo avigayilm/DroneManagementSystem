@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DalApi;
 using DO;
 
@@ -18,11 +19,7 @@ namespace Dal
         private static string CustomerXml = @"CustomerXml.xml";
         private static string LoginXml = @"LoginXml.xml";
 
-        internal static double pwrUsgEmpty = 3;
-        internal static double pwrUsgLight = 5;
-        internal static double pwrUsgMedium = 10;
-        internal static double pwrUsgHeavy = 15;
-        internal static double chargePH = 30;
+      
 
         private List<Station> stations;
         private List<Parcel> parcels;
@@ -43,16 +40,28 @@ namespace Dal
         /// </summary>
         internal static DalXml instance { get { return Instance.Value; } }
         private static Lazy<DalXml> Instance = new Lazy<DalXml>(() => new ());
-        static DalXml() { XMLTools.SaveListToXMLSerializer(new List<int> { 0 }, "runNumXml.xml"); }
-        private DalXml() { }
+        static DalXml() {
+            //XMLTools.SaveListToXMLElement(new XElement("DroneChargeXml.xml"), DroneChargeXml);
+            //XElement rootElem = new XElement("configLists",new XElement("runNum", 1020), 
+            //    new XElement("pwrUsgEmpty", pwrUsgEmpty),
+            //    new XElement("pwrUsgLight", pwrUsgLight),
+            //    new XElement("pwrUsgMedium", pwrUsgMedium),
+            //    new XElement("pwrUsgHeavy", pwrUsgHeavy),
+            //    new XElement("chargePH", chargePH));
+
+            ////rootElem.Add(new int[] { , pwrUsgLight, pwrUsgMedium, pwrUsgHeavy, chargePH });
+            //XMLTools.SaveListToXMLElement(rootElem, "config.xml");
+        }
+        private DalXml()
+        {
+           
+        }
         public double[] DronePwrUsg()
         {
-            double[] pwrUsg = { pwrUsgEmpty, pwrUsgLight, pwrUsgMedium, pwrUsgHeavy, chargePH };
+            XElement tempPwr = XMLTools.LoadListFromXMLElement(@"config.xml");
+            double[] pwrUsg = { int.Parse(tempPwr.Element("pwrUsgEmpty").Value), int.Parse(tempPwr.Element("pwrUsgLight").Value), int.Parse(tempPwr.Element("pwrUsgMedium").Value), int.Parse(tempPwr.Element("pwrUsgHeavy").Value), int.Parse(tempPwr.Element("chargePH").Value) };
             return pwrUsg;
         }
-        public (double, double, double, double, double) DronePwrUsg1()
-        {
-            return (pwrUsgEmpty, pwrUsgLight, pwrUsgMedium, pwrUsgHeavy, chargePH);
-        }
+       
     }
 }

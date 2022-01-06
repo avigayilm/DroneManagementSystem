@@ -476,7 +476,7 @@ namespace PL
         //private void Image_MouseEnter_3(object sender, MouseEventArgs e)
         //{
         //    CustomerListView.Items.Refresh();
-        }
+        //}
 
         private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
         {

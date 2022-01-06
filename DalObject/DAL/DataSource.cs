@@ -21,7 +21,7 @@ namespace Dal
             internal static double pwrUsgLight= 5;
             internal static double pwrUsgMedium = 10;
             internal static double pwrUsgHeavy = 15;
-            internal static double chargePH = 30;
+            internal static double chargePH = 100;
 
         }
 
@@ -120,14 +120,14 @@ namespace Dal
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
-                    DroneId = dronesList[i%5].Id
+                    
                 };
 
                 int statusStats = rand.Next(100);
                 if (statusStats >= 10) // scheduled
                 {
                     temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
-
+                    temp.DroneId = dronesList[i % 5].Id;
                     if (statusStats >= 20) // picked up
                     {
                         temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);

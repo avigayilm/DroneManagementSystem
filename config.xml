@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configLists>
+  <runNum>1020</runNum>
+  <pwrUsgEmpty>3</pwrUsgEmpty>
+  <pwrUsgLight>5</pwrUsgLight>
+  <pwrUsgMedium>10</pwrUsgMedium>
+  <pwrUsgHeavy>15</pwrUsgHeavy>
+  <chargePH>30</chargePH>
+</configLists>

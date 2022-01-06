@@ -40,11 +40,11 @@ namespace BL
             }
         }
 
-        public void Register(BO.Customer cus, string user, string password, string imageSrc)
+        public void Register(BO.Customer cus, string user, string password, string imageSrc, string emailAdd)
         {
             try
             {
-                DO.Login login = new() { UserName = user, Password = password, profileSource = imageSrc };
+                DO.Login login = new() { UserName = user, Password = password, profileSource = imageSrc, emailAddress = emailAdd };
                 idal1.AddLogin(login);
                 try
                 {

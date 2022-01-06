@@ -123,7 +123,14 @@ namespace PL
         {
            if(Register)
             {
-                bl.Register(me, me.Id, password, profileAdd.Source.ToString());
+                try
+                {
+                    bl.Register(me, me.Id, password, profileAdd.Source.ToString(), MailAddress);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "couldnt register user");
+                }
             }
             Email();
         }

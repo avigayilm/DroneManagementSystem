@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using BO;
 using DO;
 using DalApi;
@@ -29,7 +30,7 @@ namespace BL
         {
 
             //DAL.DalObject dal2 = new();
-
+          
             double[] tempArray = idal1.DronePwrUsg();
             double pwrUsgEmpty = tempArray[0];
             double pwrUsgLight = tempArray[1];
@@ -56,9 +57,19 @@ namespace BL
             {
                 if (dr.Status != DroneStatuses.Delivery)
                 {
-                    dr.Status = (DroneStatuses)rand.Next(2);
-                    if (dr.Status == DroneStatuses.Available)//if the drone is available
+                    //dr.Status = (DroneStatuses)rand.Next(2);
+                   if(idal1.GetDroneChargeList(d => d.DroneId == dr.Id).Any()) //it is in maintenance
                     {
+                        dr.Status = DroneStatuses.Maintenance;
+                        dr.Battery = rand.Next(20, 50);// random battery level so that the drone can still fly
+                        List<DO.Station> tempList = (List<DO.Station>)idal1.GetAllStations();
+                        DO.Station tempSt = tempList[rand.Next(tempList.Count())];
+                        dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
+                        idal1.SendToCharge(dr.Id, tempSt.Id);
+                    }
+                    else //the drone is available
+                    {
+                        dr.Status = DroneStatuses.Available;
                         List<DO.Customer> cusDeliveredTo = (idal1.GetAllCustomers(c => idal1.GetAllParcels(p => p.Delivered != null).ToList().Any(p => c.Id == p.ReceiverId))).ToList();//returns a  list of all the customers that have received a parcel
                         DO.Customer tempCus = cusDeliveredTo[rand.Next(cusDeliveredTo.Count())];
                         dr.Loc = new Location() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
@@ -66,14 +77,7 @@ namespace BL
                         int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);
                         dr.Battery = rand.Next(minBat, 100);
                     }
-                    else//it is in maintenance
-                    {
-                        dr.Battery = rand.Next(20,50);// random battery level so that the drone can still fly
-                        List<DO.Station> tempList = (List<DO.Station>)idal1.GetAllStations();
-                        DO.Station tempSt = tempList[rand.Next(tempList.Count())];
-                        dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
-                        idal1.SendToCharge(dr.Id, tempSt.Id);
-                    }
+
                 }
             }
         }
