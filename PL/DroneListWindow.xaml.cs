@@ -163,6 +163,7 @@ namespace PL
         private void CancelDrone_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            new LoginWindow().Show();
         }
         /// <summary>
         /// shows parcel for contextmenu
@@ -268,6 +269,7 @@ namespace PL
         private void CancelStation_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            new LoginWindow().Show();
         }
 
         // customerWindow
@@ -286,6 +288,7 @@ namespace PL
         private void CancelCustomer_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            new LoginWindow().Show();
         }
 
     
@@ -342,6 +345,7 @@ namespace PL
         private void CancelParcel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            new LoginWindow().Show();
         }
 
         private void ShowParcel_Click(object sender, RoutedEventArgs e)

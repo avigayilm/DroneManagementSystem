@@ -9,7 +9,7 @@ using DalApi;
 namespace Dal
 {
 
-     internal sealed partial class DalObject : Idal
+     internal sealed partial class DalObject //: Idal
     {
         /// <summary>
         /// constructor to initialize the dalobject

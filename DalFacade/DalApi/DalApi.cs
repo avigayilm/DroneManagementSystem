@@ -59,7 +59,7 @@ namespace DalApi
         /// returns a list of Dronecharge
         /// </summary>
         /// <returns></returns>
-        IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null);
+        List<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null);
        // public IEnumerable<Parcel> GetvacantParcel();
         double[] DronePwrUsg();
 

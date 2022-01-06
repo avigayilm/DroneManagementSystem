@@ -21,7 +21,7 @@ namespace Dal
             internal static double pwrUsgLight= 5;
             internal static double pwrUsgMedium = 10;
             internal static double pwrUsgHeavy = 15;
-            internal static double chargePH = 30;
+            internal static double chargePH = 150;
 
         }
 
@@ -44,7 +44,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(stationList, StationXml);
             XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
             XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
-            XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
+            //XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
         }
 
         private static string DroneXml = @"DroneXml.xml";
@@ -52,6 +52,7 @@ namespace Dal
         private static string StationXml = @"StationXml.xml";
         private static string DroneChargeXml = @"DroneChargeXml.xml";
         private static string CustomerXml = @"CustomerXml.xml";
+        private static string LoginXml = @"LoginXml.xml";
         //initializes five drones
         public static void CreateDrone()
         {   //loop for updete 5 drone
@@ -118,12 +119,13 @@ namespace Dal
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
-                    DroneId = dronesList[i%5].Id
+                   
                 };
 
                 int statusStats = rand.Next(100);
                 if (statusStats >= 10) // scheduled
                 {
+                    temp.DroneId = dronesList[i % 5].Id;
                     temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
 
                     if (statusStats >= 20) // picked up
@@ -135,18 +137,18 @@ namespace Dal
                             temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
                         }
                     }
-                    if (temp.DroneId == 0)
-                    { 
-                        int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
-                        if(dIndex >= 0)
-                        {
-                            var drone = dronesList[dIndex];
-                            temp.DroneId = drone.Id;
-                            //drone.status = DroneStatuses.Delivery;
-                            dronesList[dIndex] = drone;
-                        }
+                    //if (temp.DroneId == 0)
+                    //{ 
+                    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
+                    //    if(dIndex >= 0)
+                    //    {
+                    //        var drone = dronesList[dIndex];
+                    //        temp.DroneId = drone.Id;
+                    //        //drone.status = DroneStatuses.Delivery;
+                    //        dronesList[dIndex] = drone;
+                    //    }
                         
-                    }
+                    //}
                 }
 
                 parcelList.Add(temp);
@@ -173,6 +175,14 @@ namespace Dal
                 });
             }
         }
+        //public static void createCharges()
+        //{
+        //    int count = 0;
+        //    foreach (var parcel in parcelList)
+        //    {
+        //        if(parcel.DroneId!=0 && parcel.Delivered!=null)
+        //            chargeList.Add(new DroneCharge() { DroneId = parcel.DroneId, StationId = station})
+        //}
 
         public static void CreateLogin()
         {
