@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 
@@ -11,10 +12,7 @@ namespace Dal
     internal sealed partial class DalXml
     {
 
-        /// <summary>
-        /// adds a drone to the dronlist
-        /// </summary>
-        /// <param name="dro"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone dro)
         {
             //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
@@ -43,11 +41,7 @@ namespace Dal
         //    }
         //}
 
-        /// <summary>
-        /// returns the drone according to the given Id
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
             //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
@@ -60,17 +54,14 @@ namespace Dal
             return drones[index];
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null)
         {
             loadingToList(ref drones, DroneXml);
             return drones.FindAll(d => predicate == null ? true : predicate(d));
         }
-        /// <summary>
-        /// updates the model of the drone, used in BL
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="model"></param>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneId, string model)
         {
             //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
@@ -85,11 +76,8 @@ namespace Dal
             drones[index] = tempDrone;
             XMLTools.SaveListToXMLSerializer(drones, DroneXml);
         }
-        /// <summary>
-        /// returns a list of all the drones charging at a station
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new List<Drone>();
@@ -119,7 +107,7 @@ namespace Dal
         /// checks if a customer already exists, if it does it throws a duplicateIdException
         /// </summary>
         /// <param name="customerId"></param>
-        public void CheckDuplicateDrone(int droneId)
+        internal void CheckDuplicateDrone(int droneId)
         {
             List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
             if (drones.Exists(d => d.Id == droneId))

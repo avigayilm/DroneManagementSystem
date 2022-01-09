@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 
 namespace BL
@@ -15,7 +16,7 @@ namespace BL
         /// <param name="cus1"></param>
         /// <param name="cus2"></param>
         /// <returns></returns>
-        public double DistanceBetweenCustomers(DO.Customer cus1, DO.Customer cus2)
+        internal double DistanceBetweenCustomers(DO.Customer cus1, DO.Customer cus2)
         {
             return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
         }

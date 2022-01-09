@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Net.Mail;
 using System.Net;
 using BO;
+using BL;
 using BlApi;
 
 namespace PL
@@ -85,9 +86,12 @@ namespace PL
             }
             AllParcels.ItemsSource = confirmParcels;
             sendParcels = new();
-            foreach (var customerInParcel in me.SentParcels)
+            //sendParcels = from sent in me.SentParcels
+            //              select (sent.CopyProperties(new ObservableCollection<ParcelAtCustomer>()));
+            //    ;
+            foreach (ParcelAtCustomer p in me.SentParcels)
             {
-                sendParcels.Add(customerInParcel);
+                sendParcels.Add(p);
             }
             SentparcelsList.ItemsSource = sendParcels;
             receivedParcels = new();
@@ -113,14 +117,14 @@ namespace PL
             lastW = last;
             me = new();
             Register = true;
-
+            me.Loc = new();
             //parcel = new();
             //parcel.Sender = new();
             //parcel.Receiver = new();
             registerGrid.Visibility = Visibility.Visible;
             DataContext = this;
-            SentparcelsList.ItemsSource = me.SentParcels;
-            receivedparcelsList.ItemsSource = me.ReceivedParcels;
+           // SentparcelsList.ItemsSource = me.SentParcels;
+           // receivedparcelsList.ItemsSource = me.ReceivedParcels;
         }
 
         private void Email()
@@ -191,7 +195,7 @@ namespace PL
                 //parcel.Dr.Loc = new();
                 int parcelId = bl.AddParcel(parcel);
                 
-                sendParcels.Add(bl.GetParcelAtCustomer(parcelId));
+                sendParcels.Add(bl.GetParcelAtCustomer(parcelId, true));
                 MessageBox.Show(parcel.ToString(), "added Parcel");
                 
                

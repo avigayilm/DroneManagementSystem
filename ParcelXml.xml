@@ -85,10 +85,10 @@
     <Weight>heavy</Weight>
     <Priority>emergency</Priority>
     <DroneId>2977</DroneId>
-    <Created>2021-02-17T12:41:00</Created>
+    <Created>2022-01-08T18:14:51.7100076+02:00</Created>
     <Assigned>2021-02-17T15:41:00</Assigned>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-08T19:18:07.8275689+02:00</PickedUp>
+    <Delivered>2022-01-08T19:20:14.2592785+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -124,7 +124,7 @@
     <Weight>heavy</Weight>
     <Priority>emergency</Priority>
     <DroneId>6738</DroneId>
-    <Created>2021-04-21T21:05:00</Created>
+    <Created>2022-01-08T18:08:06.194735+02:00</Created>
     <Assigned>2021-04-22T00:05:00</Assigned>
     <PickedUp xsi:nil="true" />
     <Delivered xsi:nil="true" />

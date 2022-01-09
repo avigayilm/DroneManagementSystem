@@ -276,7 +276,7 @@
                         </Grid.ColumnDefinitions>
                         <!--<Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />-->
 
-                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter"></Image>-->
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>-->
                         <ComboBox x:Name="PrioritySelectorParcel" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10,30,0,10" 
                       Background="#FF2476BD"  SelectedIndex="3" SelectionChanged="PrioritySelectorParcel_SelectionChanged" BorderBrush="#FF3C4497" Foreground="#FF70C9EB" HorizontalAlignment="Left" Width="102">
@@ -421,7 +421,7 @@
 
 
                         <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent"  FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
-                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter"></Image>-->
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>-->
                         <Button Content="Add Station" Grid.Column="3" Click="AddStationButton_Click"
                   FontWeight="Bold"   
                        Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
@@ -474,7 +474,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Vertical">
                         <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png" ToolTip="ShowCustomerList"/>
-                        <TextBlock Text="Customer list" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <TextBlock Text="Customer list" Foreground="White" Margin="2" VerticalAlignment="Center"></TextBlock>-->
                         <Image x:Name="imgCustomer" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png" ToolTip="ShowCustomerList"/>
                         <TextBlock Text="Customerlist"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
 
@@ -500,7 +500,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter"></Image>-->
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="150,30,74,10" MouseEnter="Image_MouseEnter"></Image>-->
                         <TextBlock x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="CustomerList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
                         <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter_3"></Image>-->
                         <Button Content="Add Customer" Grid.Column="3" Click="AddCustomerButton_Click"

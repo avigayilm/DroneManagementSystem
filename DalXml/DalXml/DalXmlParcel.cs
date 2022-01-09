@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using DalApi;
 
 using DO;
@@ -12,10 +13,7 @@ namespace Dal
 {
     internal sealed partial class DalXml
     {
-        /// <summary>
-        /// adds a parcel to the parcellist
-        /// </summary>
-        /// <param name="pack"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel pack)
         {
             //CheckDuplicateParcel(pack.Id);
@@ -35,7 +33,7 @@ namespace Dal
             XMLTools.SaveListToXMLElement(serialNum, "config.xml");
             return pack.Id;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(int parcelId, string recId)
         {
             //int index = CheckExistingParcel(parcelId);
@@ -60,11 +58,7 @@ namespace Dal
 
         }
 
-        /// <summary>
-        /// the drone picks up the parcel, therefore updating the drone's status to delivery 
-        /// and updating the picked up time
-        /// </summary>
-        /// <param name="parcelId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelPickedUp(int parcelId)
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
@@ -87,12 +81,7 @@ namespace Dal
         }
 
 
-        /// <summary>
-        ///  funciton updated the parcel to delivered. It changes the drone's status to available
-        ///  and updates the time of requested
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <param name="day"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelDelivered(int parcelId)//when the parcel is delivered, the drone will be available again
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
@@ -110,17 +99,13 @@ namespace Dal
             // var droneTemp = drones[dIndex];
             var parcelTemp =  parcels[pIndex];
             //temp2.status = DroneStatuses.Available;
-            parcelTemp.Created = DateTime.Now;
+            parcelTemp.Delivered = DateTime.Now;
             // DataSource.[droneIndex] = temp2;
             parcels[pIndex] = parcelTemp;
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
         }
 
-        /// <summary>
-        /// assigning a drone to a parcel
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <param name="droneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ParcelDrone(int parcelId, int droneId)
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
@@ -141,11 +126,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
         }
 
-        /// <summary>
-        /// The get functions return a string with all the information of the lists
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
 
@@ -163,10 +144,8 @@ namespace Dal
             Parcel tempParcel = parcels[index];
             return tempParcel;
         }
-        /// <summary>
-        /// returns a parcellist
-        /// </summary>
-        /// <returns></returns>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null) 
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml); //there is usage of parcels so as to avoid multiple loading 
@@ -174,11 +153,8 @@ namespace Dal
             return parcels.FindAll(x => predicate == null ? true : predicate(x) && !x.Delete);
         }
 
-        /// <summary>
-        /// bonus: Doesn't completely delete the parcel but it has a sign that it is deleted
-        /// </summary>
-        /// <param name="parcelId"></param>
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int parcelId)
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);

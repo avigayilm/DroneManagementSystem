@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
@@ -11,7 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(BO.Drone newDrone, int stationId)
         {
             try
@@ -50,6 +51,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneId, string model)
         {
             try
@@ -98,6 +100,7 @@ namespace BL
             return locTemp;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Drone GetDrone(int droneId)
         {
             DroneToList droneToList = getDroneToList(droneId);
@@ -113,6 +116,7 @@ namespace BL
             return drone;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneToList getDroneToList(int droneId)
         {
             DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
@@ -121,6 +125,7 @@ namespace BL
             return tempDron;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetAllDrones(Predicate<DroneToList> predicate = null)
         {
             return droneBL.FindAll(d => predicate == null ? true : predicate(d));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
@@ -11,6 +12,7 @@ namespace BL
 {
     public partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendingDroneToCharge(int droneId)
         {
             DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
@@ -43,11 +45,7 @@ namespace BL
         }
 
 
-        /// <summary>
-        /// release teh drone from charge, updates the battery according to the charging time
-        /// </summary>
-        /// <param name="droneId"></param>
-        /// <param name="chargingTime"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleasingDroneFromCharge(int droneId)
         {
             try
@@ -88,6 +86,8 @@ namespace BL
             droneInCharge.Id = droneId;
             return droneInCharge;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public (IEnumerable<DroneInCharge>,int) getAllDroneInCharge(int stationId)
         {
             List<DroneInCharge> listDronecharge = new List<DroneInCharge>();

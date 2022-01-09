@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
@@ -12,6 +13,7 @@ namespace BL
 {
     public partial class BL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(BO.Parcel newParcel)// do I have to check customer and receiver
         {
             try
@@ -44,6 +46,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssignParcelToDrone(int droneId)
         {
             try
@@ -92,8 +95,8 @@ namespace BL
                 throw new UpdateIssueException("Couldn't assign", ex);
             }
         }
-        
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectingParcelByDrone(int droneId)
         {
             try
@@ -119,6 +122,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliverParcelByDrone(int droneId)
         {
             try
@@ -143,6 +147,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public ParcelInTransfer GetParcelInTransfer(int parcelId)
         {
             DO.Parcel parcel = new DO.Parcel();
@@ -181,7 +186,8 @@ namespace BL
                 return ParcelStatuses.Created;
         }
 
-        public ParcelAtCustomer GetParcelAtCustomer(int parcelId)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public ParcelAtCustomer GetParcelAtCustomer(int parcelId, bool sender)
         { 
         
             BO.Parcel parcel = new BO.Parcel();
@@ -195,13 +201,15 @@ namespace BL
                 parcel.Dr = new();
                 parcel.Dr.Loc = new();
             }
-            if (parcel.Dr.Loc.Longitude == dalCustomer.Longitude && parcel.Dr.Loc.Latitude==dalCustomer.Latitude)// if the location is same as sender
+            //if (parcel.Dr.Loc.Longitude == dalCustomer.Longitude && parcel.Dr.Loc.Latitude==dalCustomer.Latitude)// if the location is same as sender
+            if(sender) //if the customer with the parcel is the sender
                 parcelAtCustomer.CustomerInP = parcel.Receiver;
             else
                 parcelAtCustomer.CustomerInP = parcel.Sender;
             return parcelAtCustomer;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Parcel GetParcel(int parcelId)
         {
             try
@@ -229,9 +237,9 @@ namespace BL
             }
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetAllParcels(Predicate<DO.Parcel> predicate = null)
-        {
+         {
             List<ParcelToList> tempList = new List<ParcelToList>();
             //idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
             List<DO.Parcel> tempParcelList = idal1.GetAllParcels(predicate).ToList();
@@ -246,6 +254,8 @@ namespace BL
             return tempList;
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(int parcelId, string recId)
         {
             try
@@ -265,6 +275,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int parcelId)
         {
             try
