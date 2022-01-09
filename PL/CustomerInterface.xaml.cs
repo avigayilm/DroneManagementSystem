@@ -33,6 +33,9 @@ namespace PL
         public ObservableCollection<ParcelToList> confirmParcels;
         //public ObservableCollection<ParcelToList> parcelToLists;
         public Customer me { get; set; }
+        public int Assigned { get; set; }
+        public int OnItWay { get; set; }
+        public int Received { get; set; }
         public Parcel parcel { get; set; }
         public int parcelId;
         public ParcelToList parcelToList { get; set; }
@@ -93,6 +96,11 @@ namespace PL
                 receivedParcels.Add(customerInParcel);
             }
             receivedparcelsList.ItemsSource = receivedParcels;
+
+            Assigned= bl.GetAllParcels(x =>  (x.SenderId == me.Id && x.PickedUp == null && x.Assigned != null)).Count();
+            OnItWay = bl.GetAllParcels(x => (x.SenderId == me.Id && x.PickedUp != null && x.Delivered==null)).Count();
+            Received = receivedParcels.Count;
+
         }
 
         public CustomerInterface(LoginWindow last, BlApi.Ibl IblObj) //to register a customer

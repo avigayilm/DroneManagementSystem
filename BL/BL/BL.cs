@@ -18,40 +18,6 @@ namespace BL
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
         DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public static BL Instance
         {
             get
@@ -109,7 +75,8 @@ namespace BL
                         dr.Loc = new Location() { Longitude = tempCus.Longitude, Latitude = tempCus.Latitude };
                         // calculates battery usage of flying to closest station to drone
                         int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);
-                        dr.Battery = rand.Next(minBat, 100);
+                        //dr.Battery = rand.Next(minBat, 100);
+                        dr.Battery = rand.Next(40, 100);
                     }
 
                 }

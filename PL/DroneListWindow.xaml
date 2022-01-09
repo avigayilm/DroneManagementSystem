@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:Converters="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStyle="None"
         Title="DroneListWindow" Height="640" Width="870"
@@ -12,10 +13,11 @@
 
         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"></ImageBrush>-->
         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>-->
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"></ImageBrush>
+        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"></ImageBrush>
     </Window.Background>
 
     <Window.Resources>
+        <Converters:BatteryToColorConverter x:Key="MyBatteryToColorConverter" />
         <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -80,7 +82,7 @@
                     <Grid.Background>
                         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
 
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                     
                     </Grid.Background>
                     <!--<Grid.Background
@@ -208,10 +210,20 @@
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="80"/>
                                 <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="80"/>
-                                <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="100"/>
+                                <GridViewColumn Header="Battery" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}" Width="40"  Height="20" Foreground="{Binding Battery, Converter={StaticResource MyBatteryToColorConverter}}"/>
+                                                <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
                                 <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                                 <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
+                                
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -245,7 +257,7 @@
                         
                     <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
 
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -390,7 +402,7 @@
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
@@ -470,7 +482,7 @@
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
