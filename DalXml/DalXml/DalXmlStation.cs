@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 
@@ -10,6 +11,7 @@ namespace Dal
 {
     internal sealed partial class DalXml
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public void CheckDuplicateStation(int stationId)
         {
@@ -21,6 +23,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(Station stat)
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
@@ -34,11 +37,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(stations, StationXml);
         }
 
-        /// <summary>
-        /// funciton that changes the amount of chargeslots in a station according to the given parameter.
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <param name="n"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ChangeChargeSlots(int stationId, int n)
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
@@ -54,11 +53,8 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(stations, StationXml);
 
         }
-        /// <summary>
-        /// returns a station according to the given Id
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <returns></returns>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
@@ -72,17 +68,15 @@ namespace Dal
             return stations[index];
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
             loadingToList(ref stations, StationXml);
             return stations.FindAll(s => predicate == null ? true : predicate(s));
                 //XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
         }
-        /// <summary>
-        /// returns the nearest station to a customer
-        /// </summary>
-        /// <param name="cusId"></param>
-        /// <returns></returns>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station SmallestDistanceStation(string cusId)
         {
             Customer temp = GetCustomer(cusId);
@@ -109,12 +103,8 @@ namespace Dal
             //DataSource.stationList.ForEach(s => { double distancekm = Bonus.Haversine(s.longitude, s.latitude, temp.longitude, temp.latitude); if (distancekm < minDistance) minDistance = distancekm; });
 
         }
-        /// <summary>
-        /// updates the station with chargeslots and name.
-        /// </summary>
-        /// <param name="stationId"></param>
-        /// <param name="name"></param>
-        /// <param name="chargeSlots"></param>
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationId, string name, int chargeSlots)
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
@@ -133,9 +123,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(stations, StationXml);
         }
 
-
-
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public (int, int) AvailableAndOccupiedSlots(int id)
         {
             Station st = GetStation(id);
@@ -144,6 +132,7 @@ namespace Dal
         }
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int CheckExistingStation(int stationId)
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
@@ -155,41 +144,6 @@ namespace Dal
             }
             return index;
         }
-
-        //public Station GetStation(int ID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void UpdateStation(int stationId, string name, int chargeSlots)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Station SmallestDistanceStation(string cusId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public int CheckExistingStation(int stationId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void ChangeChargeSlots(int stationId, int n)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public (int, int) AvailableAndOccupiedSlots(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
     }
 }

@@ -244,7 +244,7 @@
         <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click"/>
 
 
-        <Grid x:Name="registerGrid" Grid.Column="5" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="3">
+        <!--<Grid x:Name="registerGrid" Grid.Column="5" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="3">
 
             <Grid.RowDefinitions>
                 
@@ -268,13 +268,13 @@
             <TextBox Name="emailTbx" Text="{Binding Customer.Name, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource textboxStyle}"/>
             <TextBox Name="passTbx" Text="{Binding Customer.Id, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"  Style="{StaticResource textboxStyle}" />
             <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center">
-                <!--<Image x:Name="profile" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>-->
+                --><!--<Image x:Name="profile" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>--><!--
                 <Image x:Name="profileAdd" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="65" Width="56" MouseEnter="profile_MouseEnter"/>
                 <TextBlock Text="Add picture"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
 
 
-        </Grid>
+        </Grid>-->
 
     </Grid >
 

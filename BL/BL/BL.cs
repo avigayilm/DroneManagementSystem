@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
-
-
+using System.Threading;
 
 namespace BL
 {
@@ -88,6 +88,7 @@ namespace BL
             }
             foreach (DroneToList dr in droneBL)
             {
+                //Thread.Sleep(19999);
                 if (dr.Status != DroneStatuses.Delivery)
                 {
                     //dr.Status = (DroneStatuses)rand.Next(2);
@@ -114,6 +115,11 @@ namespace BL
 
                 }
             }
+        }
+
+        public void simulation(int droneId, Func<bool> func, Action reportProgress)
+        {
+           new Simulation(this, droneId, func, reportProgress);
         }
     }
 }

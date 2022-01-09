@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 
@@ -57,6 +58,8 @@ namespace Dal
         {
            
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] DronePwrUsg()
         {
             XElement tempPwr = XMLTools.LoadListFromXMLElement(@"config.xml");

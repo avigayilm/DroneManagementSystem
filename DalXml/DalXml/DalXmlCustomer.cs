@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 
@@ -10,10 +11,7 @@ namespace Dal
 {
     internal sealed partial class DalXml
     {
-        /// <summary>
-        /// ading a customer to the cusotmer list
-        /// </summary>
-        /// <param name="cus"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer cus)
         {
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
@@ -24,14 +22,14 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(customers, CustomerXml);
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(string customerId)
         {
             int index = CheckExistingCustomer(customerId);
             return customers[index];
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null)
         {
             //return DataSource.customerList.FindAll(c => predicate == null ? true : predicate(c));
@@ -39,6 +37,7 @@ namespace Dal
             return customers.FindAll(c => predicate == null ? true : predicate(c));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(string customerId, string name, string phone)
         {
 
@@ -65,11 +64,7 @@ namespace Dal
 
 
 
-        /// <summary>
-        /// checks if a customer exists in the customerlist, if it doesn't it throws a MissingIdException
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int CheckExistingCustomer(string customerId)
         {
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
@@ -84,10 +79,7 @@ namespace Dal
         }
 
 
-        /// <summary>
-        /// returns the list of customers having received a parcel
-        /// </summary>
-        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<Customer> CustomersDeliverdTo()
         {
             List<Customer> temp = new List<Customer>();
@@ -96,16 +88,18 @@ namespace Dal
             return temp;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddLogin(Login log)
         {
-            //List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
+           // List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);
             loadingToList(ref logins, LoginXml);
             if (logins.Exists(c => c.UserName == log.UserName))
                 throw new DuplicateIdException("User already exists\n");
             logins.Add(log);
             XMLTools.SaveListToXMLSerializer(logins, LoginXml);
-        } 
+        }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool ValidateLogin(string user, string pass)
         {
             //List<Login> logins = XMLTools.LoadListFromXMLSerializer<Login>(LoginXml);

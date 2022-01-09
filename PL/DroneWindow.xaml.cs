@@ -102,7 +102,9 @@ namespace PL
         public int StationId { get; set; }
         private Drone Drone { get; set; }
         DroneListWindow lastW;
-
+        BackgroundWorker AutoRun;
+        private void UpdatdeTask() => AutoRun.ReportProgress(0);
+        private bool chekEnd() => AutoRun.CancellationPending;
         public DroneWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
         {
             InitializeComponent();
@@ -371,6 +373,30 @@ namespace PL
                 receiverGrid.Visibility = Visibility.Visible;
             else
                 receiverGrid.Visibility = Visibility.Hidden;
+        }
+
+        private void AutoButton_Click(object sender, RoutedEventArgs e)
+        {
+            AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            AutoRun.DoWork += AutoRun_DoWork;
+            AutoRun.ProgressChanged += AutoRun_ProgressChanged;
+            AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+
+        }
+
+        private void AutoRun_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AutoRun_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         //private void add_Click(object sender, RoutedEventArgs e)

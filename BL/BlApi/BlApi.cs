@@ -16,6 +16,8 @@ namespace BlApi
         /// <param name="station"></param>
         void AddStation(Station tempStat);
 
+        void simulation(int droneId, Func<bool> func,Action reportProgress );
+
         /// <summary>
         /// adding a customer in the list of the datalayer
         /// </summary>
@@ -115,7 +117,7 @@ namespace BlApi
         /// </summary>
         /// <param name="parcelId"></param>
         /// <returns></returns>
-        ParcelAtCustomer GetParcelAtCustomer(int parcelId);
+        ParcelAtCustomer GetParcelAtCustomer(int parcelId, bool senderOrReceiver);
         /// <summary>
         /// returns a parcel
         /// </summary>

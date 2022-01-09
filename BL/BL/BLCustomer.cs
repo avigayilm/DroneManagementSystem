@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
@@ -11,7 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(BO.Customer newCustomer)
         {
             try
@@ -40,6 +41,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Register(BO.Customer cus, string user, string password, string imageSrc, string emailAdd)
         {
             try
@@ -61,23 +63,24 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool Login(string user, string pass)
         {
             try
             {
-               bool userType = idal1.ValidateLogin(user, pass);
+                bool userType = idal1.ValidateLogin(user, pass);
                 return userType;
             }
-            catch(DO.LoginException ex)
+            catch (DO.LoginException ex)
             {
                 throw new LoginBLException(ex.Message);
             }
 
-            
+
         }
 
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(string customerId, string name, string phone)
         {
             try
@@ -90,6 +93,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Customer GetCustomer(string customerId)
         {
             try
@@ -120,11 +124,13 @@ namespace BL
 
         private IEnumerable<ParcelAtCustomer> GetParcelsAtCustomer(string customerId, bool flag)
         {
-            return from item in GetAllParcels(p => flag? (p.SenderId == customerId && p.PickedUp != null) : (p.ReceiverId == customerId && p.Delivered != null))
-                                       select GetParcelAtCustomer(item.Id);
+            //_ = GetParcelAtCustomer(1006);
+            return from item in GetAllParcels(p => flag ? (p.SenderId == customerId && p.PickedUp != null) : (p.ReceiverId == customerId && p.Delivered != null))
+                   select GetParcelAtCustomer(item.Id, flag);
+
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public CustomerInParcel GetCustomerInParcel(string customerId)
         {
             CustomerInParcel customerInParcelTemp = new CustomerInParcel();
@@ -132,6 +138,8 @@ namespace BL
             customerInParcelTemp = new CustomerInParcel() { Id = customerTemp.Id, Name = customerTemp.Name };
             return customerInParcelTemp;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetAllCustomers(Predicate<DO.Customer> predicate = null)
         {
             List<CustomerToList> tempList = new List<CustomerToList>();
@@ -152,7 +160,7 @@ namespace BL
                 idal1.CheckExistingCustomer(id);
                 return true;
             }
-            catch(MissingIdException ex)
+            catch (MissingIdException ex)
             {
                 throw new AddingException(ex.Message);
             }

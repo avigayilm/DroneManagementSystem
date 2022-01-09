@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
@@ -11,7 +12,7 @@ namespace BL
 {
     public partial class BL
     {
-        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddStation(BO.Station station)
         {
             try
@@ -46,6 +47,7 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateStation(int stationId, string name, int chargingSlots)
         {
             try
@@ -92,7 +94,8 @@ namespace BL
                 return true;
             throw new BatteryIssueException("Not enough battery to fly to the station");
         }
-      
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Station GetStation(int stationId)
         {
             try
@@ -117,7 +120,8 @@ namespace BL
                 throw new RetrievalException("Couldn't get the Station.", ex);
             }
         }
-    
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationToList> GetAllStation(Predicate<StationToList> predicate = null)
         {
             List<StationToList> tempList = new List<StationToList>();

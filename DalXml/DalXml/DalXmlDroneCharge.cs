@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using DO;
 
 namespace Dal
@@ -32,11 +33,7 @@ namespace Dal
         //    throw new NotImplementedException();
         //}
 
-        /// <summary>
-        /// sending a drone to charge in a station, adding the drone to the dronechargelist
-        /// </summary>
-        /// <param name="DroneId"></param>
-        /// <param name="StationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool SendToCharge(int droneId, int stationId)
         {
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
@@ -60,10 +57,7 @@ namespace Dal
             return false;
         }
 
-        /// <summary>
-        /// Once the drone is charged release the drone from the station, update the chargeslots, and remove the drone from the dronechargelist.
-        /// </summary>
-        /// <param name="Buzzer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void BatteryCharged(int droneId, int stationId)
         {
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
@@ -86,9 +80,9 @@ namespace Dal
             }
         }
 
-        
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null)// Display all the parcels in the array
         {
             //return DataSource.chargeList.FindAll(c => predicate == null ? true : predicate(c));
