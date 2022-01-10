@@ -11,7 +11,7 @@ namespace BL
     public partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
-        int BatteryUsage(double distance, int pwrIndex)
+        internal int BatteryUsage(double distance, int pwrIndex)
         {
             return (int)(idal1.DronePwrUsg()[pwrIndex] * distance);
         }

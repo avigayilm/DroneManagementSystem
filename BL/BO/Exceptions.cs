@@ -183,7 +183,7 @@ namespace BO
         {
         }
 
-       
+
 
     }
     [Serializable]
@@ -202,6 +202,26 @@ namespace BO
         }
 
         protected LoginBLException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class StatusException : Exception
+    {
+        public StatusException() : base()
+        {
+        }
+
+        public StatusException(string message) : base("StatusException: " + message)
+        {
+        }
+
+        public StatusException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected StatusException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

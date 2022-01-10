@@ -34,11 +34,11 @@ namespace PL
 
     public enum Priorities
     {
-        Normal , Fast, Emergency, All
+        Normal, Fast, Emergency, All
     }
-    public enum ParcelStatuses 
+    public enum ParcelStatuses
     {
-        Created, Assigned, PickedUp, Delivered,All
+        Created, Assigned, PickedUp, Delivered, All
     }
     /// <summary>
     /// struct to use for the dictionary
@@ -49,7 +49,7 @@ namespace PL
         public DroneStatuses Status { get; set; }
     }
 
- 
+
 
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
@@ -58,9 +58,9 @@ namespace PL
     {
         BlApi.Ibl bl;
         public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
-        public Dictionary<string,List<ParcelToList>> parcelToLists;
+        public Dictionary<string, List<ParcelToList>> parcelToLists;
         public ObservableCollection<CustomerToList> customerToLists;
-        public Dictionary<int,List<StationToList>> stationToLists;
+        public Dictionary<int, List<StationToList>> stationToLists;
         public DroneToList droneToList;
         public ParcelToList parcelToList;
         public StationToList stationToList;
@@ -74,7 +74,7 @@ namespace PL
             droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
             IEnumerable<DroneToList> temp = bl.GetAllDrones();
             droneToLists = (from droneToList in temp
-                            group droneToList by    
+                            group droneToList by
                             new WeightAndStatus()
                             {
                                 Status = (DroneStatuses)droneToList.Status,
@@ -180,11 +180,11 @@ namespace PL
                 new ParcelWindow(this, bl).Show();
             }
 
-        //    Drone drone = bl.GetDrone(droneToList.Id);
-        //    if (drone.ParcelInTrans != null)
-        //        MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
-           else
-               MessageBox.Show("Drone has no parcel");
+            //    Drone drone = bl.GetDrone(droneToList.Id);
+            //    if (drone.ParcelInTrans != null)
+            //        MessageBox.Show(drone.ParcelInTrans.ToString(), $"Parcel of drone {drone.Id}");
+            else
+                MessageBox.Show("Drone has no parcel");
         }
 
         // parcelTab
@@ -234,7 +234,7 @@ namespace PL
         private void ShowDrone_Click(object sender, RoutedEventArgs e)
         {
             parcelToList = (ParcelToList)ParcelListView.SelectedItem;
-            Parcel parcel=bl.GetParcel(parcelToList.Id);
+            Parcel parcel = bl.GetParcel(parcelToList.Id);
             if (parcel.Dr.Id != 0)
             {
                 droneToList = new();
@@ -251,7 +251,7 @@ namespace PL
             //    MessageBox.Show("Drone has no parcel");
         }
 
-        
+
 
         //stationwindow
 
@@ -291,15 +291,15 @@ namespace PL
             new LoginWindow().Show();
         }
 
-    
 
-    
 
-       
 
-       
 
-        
+
+
+
+
+
 
         private void DroneTab_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -314,7 +314,7 @@ namespace PL
         #region parcel
         //private void MouseEnterParcelTab(object sender, MouseEventArgs e)
         //{
-            
+
         //    IEnumerable<ParcelToList> temp = bl.GetAllParcels();
         //    parcelToLists = (from parceltolist in temp
         //                     group parceltolist by
@@ -378,9 +378,9 @@ namespace PL
                                              select el;
             if (pIndp == 3 && sIndp != 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.ParcelStatus == sIndp));
-                   // .Where(x => x.Value.Where(p=> (int)p.ParcelStatus == sIndp).).SelectMany(x => x.Value);
+            // .Where(x => x.Value.Where(p=> (int)p.ParcelStatus == sIndp).).SelectMany(x => x.Value);
             //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.Status == StatusSelector.SelectedIndex);
-            if(pIndp != 3 && sIndp == 4)
+            if (pIndp != 3 && sIndp == 4)
                 ParcelListView.ItemsSource = parcelToLists.SelectMany(x => x.Value.Where(p => (int)p.Priority == pIndp));
             //ParcelListView.ItemsSource = parcelToLists.ToList().FindAll(X => (int)X.priority == PrioritySelectorParcel.SelectedIndex);
             if (pIndp != 3 && sIndp != 4)
@@ -405,7 +405,7 @@ namespace PL
             StationListView.ItemsSource = stationToLists.Values.SelectMany(x => x);
         }
 
-       
+
 
         private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -435,10 +435,10 @@ namespace PL
 
             PrioritySelectorParcel.SelectedIndex = 3;
 
-            
+
         }
 
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Image_MouseDownParcel(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -456,7 +456,7 @@ namespace PL
                     MessageBox.Show("Can't Delete parcel, it's in process", "Delete Exception", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             }
-            catch(RetrievalException ex)
+            catch (RetrievalException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -507,6 +507,63 @@ namespace PL
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
         //    droneToLists.OrderBy(x => x.Id);
+        //}
+
+        ///// <summary>
+        ///// deletes teh drone, but not actually from the list
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void Image_MouseDownDrone(object sender, MouseButtonEventArgs e)
+        //{
+        //    try
+        //    {
+        //        FrameworkElement framework = sender as FrameworkElement;
+        //        DroneToList CurrentDrone = framework.DataContext as DroneToList;
+        //        bl.DeleteDrone(CurrentDrone.Id);
+        //        DroneToLists[CurrentDrone].RemoveAll(i => i.Id == CurrentParcel.Id);
+        //        DroneListView.Items.Refresh();
+        //        CheckComboBoxesParcel();
+
+        //    }
+        //    catch (RetrievalException ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+
+        //private void Image_MouseDownStation(object sender, MouseButtonEventArgs e)
+        //{
+        //    try
+        //    {
+        //        FrameworkElement framework = sender as FrameworkElement;
+        //        StationToList CurrentStation = framework.DataContext as StationToList;
+        //        bl.DeleteParcel(CurrentStation.Id);
+        //        StationToLists[CurrentStation.SenderId].RemoveAll(i => i.Id == CurrentParcel.Id);
+        //        StationListView.Items.Refresh();
+        //        CheckComboBoxesParcel();
+        //    }
+        //    catch (RetrievalException ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+
+        //private void Image_MouseDownCustomer(object sender, MouseButtonEventArgs e)
+        //{
+        //    try
+        //    {
+        //        FrameworkElement framework = sender as FrameworkElement;
+        //        CustomerToList CurrentCustomer = framework.DataContext as CustomerToList;
+        //        bl.DeleteParcel(CurrentCustomer.Id);
+        //        parcelToLists[CurrentCustomer.SenderId].RemoveAll(i => i.Id == CurrentCustomer.Id);
+        //        CustomerListView.Items.Refresh();
+        //        CheckComboBoxesParcel();
+        //    }
+        //    catch (RetrievalException ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
         //}
     }
 }

@@ -266,8 +266,8 @@
                         </Grid.ColumnDefinitions>
                     <Rectangle Fill="#1361AB" RadiusX="10" RadiusY="10" Grid.ColumnSpan="3"/>
                         <Line X1="10" Y1="10" Stroke="White" StrokeThickness="4"/>
-                        <TextBlock Text="Assigned" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Assigned}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
+                        <TextBlock Text="Created" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Created}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
                         <TextBlock Text="On its way" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding OnItWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Column="1" />
                         <TextBlock Text="Received" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
@@ -413,12 +413,12 @@
                                     </ListView.ItemContainerStyle>
 
                                     <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
+                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding ReceiverId}" Width="70"/>
                                             <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
-                                            <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
-                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
-                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                                            <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="80"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>

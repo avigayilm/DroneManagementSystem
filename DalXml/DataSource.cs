@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DO;
 
 namespace Dal
-{ 
+{
     public static class DataSource// the datasource class just initializes all the classes
     {
         //indexer for parcel list
@@ -18,7 +18,7 @@ namespace Dal
             /// battery usage per km of flying- battery life is 20 hours of flying empty and takes 3+ hours to charge
             /// </summary>
             internal static double pwrUsgEmpty = 3;
-            internal static double pwrUsgLight= 5;
+            internal static double pwrUsgLight = 5;
             internal static double pwrUsgMedium = 10;
             internal static double pwrUsgHeavy = 15;
             internal static double chargePH = 150;
@@ -26,10 +26,10 @@ namespace Dal
         }
 
         internal static List<Drone> dronesList = new();
-        internal static List<Station> stationList = new ();
-        internal static List<Customer> customerList = new ();
-        internal static List<Parcel> parcelList = new ();
-        internal static List<DroneCharge> chargeList = new ();
+        internal static List<Station> stationList = new();
+        internal static List<Customer> customerList = new();
+        internal static List<Parcel> parcelList = new();
+        internal static List<DroneCharge> chargeList = new();
         internal static List<Login> loginList = new();
         internal static Random rand = new Random();
 
@@ -81,7 +81,7 @@ namespace Dal
             //loop for 10 customer
             for (int i = 0; i < 10; i++)
             {
-                string id,phone;// checking if the random Id exists
+                string id, phone;// checking if the random Id exists
                 do
                 {
                     id = "" + $"0{rand.Next(100000000, 999999999)}";
@@ -91,7 +91,7 @@ namespace Dal
                 {
                     phone = $"0{rand.Next(50, 58)}-{rand.Next(1000000, 10000000)}";
                 }
-                while (customerList.Exists(d => d.PhoneNumber==phone ));
+                while (customerList.Exists(d => d.PhoneNumber == phone));
 
                 customerList.Add(new Customer()
                 {
@@ -105,8 +105,10 @@ namespace Dal
             }
         }
 
+
         public static void CreateParcel()//initializes 20 parcels
         {
+            int count = 0;
             DateTime startDate = new DateTime(2021, 1, 1);
             for (int i = 0; i < 20; i++)
             {
@@ -114,46 +116,56 @@ namespace Dal
                 Parcel temp = new Parcel()
                 {
                     Id = DataSource.Config.LastParcelNumber,
-                    SenderId = customerList[rand.Next((customerList.Count-1))].Id,// gets a random number of one of the customers
-                    ReceiverId = customerList[rand.Next((customerList.Count-1))].Id,
+                    SenderId = customerList[rand.Next((customerList.Count - 1))].Id,// gets a random number of one of the customers
+                    ReceiverId = customerList[rand.Next((customerList.Count - 1))].Id,
                     Weight = (WeightCategories)rand.Next(3),
                     Priority = (Priorities)rand.Next(3),
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
-                   
+
                 };
-
-                int statusStats = rand.Next(100);
-                if (statusStats >= 10) // scheduled
+                if (count < 5)
                 {
-                    temp.DroneId = dronesList[i % 5].Id;
-                    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
+                    temp.DroneId = dronesList[count].Id;
+                    temp.Assigned = ((DateTime)temp.Created).AddMinutes(180);
+                    if (count < 2)
+                        temp.PickedUp = ((DateTime)temp.Assigned).AddMinutes(60);
+                    count++;
 
-                    if (statusStats >= 20) // picked up
-                    {
-                        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
-                        if (statusStats >= 30) // delivered
-                        {
-                            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
-                            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
-                        }
-                    }
-                    //if (temp.DroneId == 0)
-                    //{ 
-                    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
-                    //    if(dIndex >= 0)
-                    //    {
-                    //        var drone = dronesList[dIndex];
-                    //        temp.DroneId = drone.Id;
-                    //        //drone.status = DroneStatuses.Delivery;
-                    //        dronesList[dIndex] = drone;
-                    //    }
-                        
-                    //}
                 }
+
+                //int statusStats = rand.Next(100);
+                //if (statusStats >= 10) // scheduled
+                //{
+                //    temp.DroneId = dronesList[i % 5].Id;
+                //    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
+
+                //    if (statusStats >= 20) // picked up
+                //    {
+                //        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
+                //        if (statusStats >= 30) // delivered
+                //        {
+                //            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
+                //            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
+                //        }
+                //    }
+                //    //if (temp.DroneId == 0)
+                //    //{ 
+                //    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
+                //    //    if(dIndex >= 0)
+                //    //    {
+                //    //        var drone = dronesList[dIndex];
+                //    //        temp.DroneId = drone.Id;
+                //    //        //drone.status = DroneStatuses.Delivery;
+                //    //        dronesList[dIndex] = drone;
+                //    //    }
+
+                //    //}
+                //}
 
                 parcelList.Add(temp);
                 DataSource.Config.LastParcelNumber++;
             }
+
         }
         public static void CreateStation()// initializes 2 stations
         {
@@ -191,7 +203,7 @@ namespace Dal
                 UserName = "Manager",
                 Password = "YehuditAvigayil"
             });
-            foreach(Customer cus in customerList)
+            foreach (Customer cus in customerList)
             {
                 loginList.Add(new Login()
                 {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
-
-
+using System.Threading;
 
 namespace BL
 {
@@ -16,7 +16,7 @@ namespace BL
     {
         internal static Random rand = new Random();
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
-        DalApi.Idal idal1 = DalFactory.GetDal();
+        internal DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
         public static BL Instance
         {
@@ -30,7 +30,7 @@ namespace BL
 
             //DAL.DalObject dal2 = new();
           
-            double[] tempArray = idal1.DronePwrUsg();
+            int[] tempArray = idal1.DronePwrUsg();
             double pwrUsgEmpty = tempArray[0];
             double pwrUsgLight = tempArray[1];
             double pwrUsgMedium = tempArray[2];
@@ -54,6 +54,7 @@ namespace BL
             }
             foreach (DroneToList dr in droneBL)
             {
+                //Thread.Sleep(19999);
                 if (dr.Status != DroneStatuses.Delivery)
                 {
                     //dr.Status = (DroneStatuses)rand.Next(2);
@@ -81,6 +82,11 @@ namespace BL
 
                 }
             }
+        }
+
+        public void simulation(int droneId, Func<bool> func, Action reportProgress)
+        {
+            new Simulation(this, droneId, func, reportProgress);
         }
     }
 }

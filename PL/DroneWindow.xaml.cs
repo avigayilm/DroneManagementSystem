@@ -99,6 +99,14 @@ namespace PL
     {
         BlApi.Ibl bl;
         WeightAndStatus wAndS;
+
+        public bool AutoManual// true if auto, false if manual
+        {
+            get { return (bool)GetValue(AutoManualProperty); }
+            set { SetValue(AutoManualProperty, value); }
+        }
+        public static readonly DependencyProperty AutoManualProperty =
+            DependencyProperty.Register("AutoManual", typeof(bool), typeof(DroneWindow));
         public int StationId { get; set; }
         private Drone Drone { get; set; }
         DroneListWindow lastW;
@@ -377,10 +385,18 @@ namespace PL
 
         private void AutoButton_Click(object sender, RoutedEventArgs e)
         {
-            AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-            AutoRun.DoWork += AutoRun_DoWork;
-            AutoRun.ProgressChanged += AutoRun_ProgressChanged;
-            AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+            if (AutoManual==false)// if it's on state of manual
+            {
+                AutoManual = true;
+                AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+                AutoRun.DoWork += AutoRun_DoWork;
+                AutoRun.ProgressChanged += AutoRun_ProgressChanged;
+                AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+            }
+            else
+            {
+                AutoManual = false;
+            }
 
         }
 
