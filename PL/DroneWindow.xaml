@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:Converters="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneWindow" WindowStyle="None" Height="500" Width="800" 
         FontFamily="Constantia" >
 
 
     <Window.Resources >
+        <Converters:BatteryToColorConverter x:Key="MyBatteryToColorConverter" />
         <Style  x:Key="u" TargetType="TextBox">
             <Setter Property="IsEnabled" Value="True"/>
             <Style.Triggers>
@@ -208,14 +210,14 @@
                     Text="WeightCategory"/>
             <TextBlock Name="sTbAdd" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlockStyle}"
                     Text="StationId first charging"/>
-            <TextBox Name="idTxAdd" Grid.Row="2" Validation.ErrorTemplate="{StaticResource errorTemplate}" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="idTxAdd_TextChanged" BorderBrush="{x:Null}" Margin="5" >
+            <TextBox Name="idTxAdd" Grid.Row="2" Validation.ErrorTemplate="{StaticResource errorTemplate}" Grid.Column="2" Style="{StaticResource textboxStyle}"  BorderBrush="{x:Null}" Margin="5" ><!--TextChanged="idTxAdd_TextChanged"-->
                 <TextBox.Text>
                     <Binding Path="Id" ValidatesOnDataErrors="True" 
-                             Mode="TwoWay" UpdateSourceTrigger="LostFocus"  >
-                        <!--<Binding.ValidationRules>
-                            <local:Check MinimumCharacters="5">
-                            </local:Check>
-                        </Binding.ValidationRules>-->
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                        <Binding.ValidationRules>
+                            <local:MinimumCharactersClass MinimumCharacters="5">
+                            </local:MinimumCharactersClass>
+                        </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
@@ -231,7 +233,17 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Name="mTxAdd" Text="{Binding Model, Mode=TwoWay}"  Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" TextChanged="mTxAdd_TextChanged" Margin="5"/>
+            <TextBox Name="mTxAdd" Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" Margin="5"><!--TextChanged="mTxAdd_TextChanged"-->
+                <TextBox.Text>
+                    <Binding Path="Model" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                        <Binding.ValidationRules>
+                            <local:EmptyStringError>
+                            </local:EmptyStringError>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <TextBlock IsHitTestVisible="False" Text="Enter model" FontFamily="Arial"  HorizontalAlignment="Center" Foreground="Gray" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" FontStyle="Italic" Width="129">
                 <TextBlock.Style>
@@ -246,8 +258,8 @@
                 </TextBlock.Style>
             </TextBlock>
 
-            <ComboBox Name="wCbAdd"  Grid.Row="4" Grid.Column="2"  SelectedItem="{Binding Weight , Mode=OneWayToSource, ValidatesOnDataErrors=True}" SelectedIndex="3" SelectionChanged="wCbAdd_SelectionChanged"  Background="AliceBlue" Margin="5"/>
-            <ComboBox Name="sTCBAdd" Grid.Row="5"  Grid.Column="2"  SelectedIndex="0" SelectionChanged="sTCBAdd_SelectionChanged" Foreground="#FF70C9EB" Margin="5"  >
+            <ComboBox Name="wCbAdd"  Grid.Row="4" Grid.Column="2"  SelectedItem="{Binding Weight , Mode=OneWayToSource, ValidatesOnDataErrors=True}" SelectedIndex="3"  Background="AliceBlue" Margin="5"/> <!--SelectionChanged="wCbAdd_SelectionChanged"-->
+            <ComboBox Name="sTCBAdd" Grid.Row="5"  Grid.Column="2"  SelectedIndex="0"  Foreground="#FF70C9EB" Margin="5"  ><!--SelectionChanged="sTCBAdd_SelectionChanged"-->
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -261,10 +273,22 @@
                 Grid.Column="1" 
                 Content="Add drone"
                 Click="submitAdd_Click"
-                IsEnabled="False"
                 Background="AliceBlue"
-                Margin="9,41,10,49"
-                >
+                Margin="9,41,10,49"><!--IsEnabled="False"-->
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError),ElementName=idTxAdd}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError),ElementName=mTxAdd}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />
@@ -480,7 +504,7 @@
             <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc._Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc._Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <Grid Grid.Column="1" Grid.Row="8">
-                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}"  />
+                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}" Foreground="{Binding Battery, Converter={StaticResource MyBatteryToColorConverter}}" />
                 <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
             <!--<ProgressBar Name="BaterryProgress" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding Battery, Mode=OneWay, Converter}"/>-->

@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:Converters="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStyle="None"
         Title="DroneListWindow" Height="640" Width="870"
@@ -12,10 +13,11 @@
 
         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"></ImageBrush>-->
         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>-->
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"></ImageBrush>
+        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"></ImageBrush>
     </Window.Background>
 
     <Window.Resources>
+        <Converters:BatteryToColorConverter x:Key="MyBatteryToColorConverter" />
         <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -67,11 +69,11 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Vertical">
 
-                        <Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\drone.png" ToolTip="ShowDroneList" ></Image>
-                        <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
-
-                        <!--<Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
+                        <!--<Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\drone.png" ToolTip="ShowDroneList" ></Image>
                         <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
+
+                        <Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
@@ -80,7 +82,7 @@
                     <Grid.Background>
                         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
 
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                     
                     </Grid.Background>
                     <!--<Grid.Background
@@ -153,14 +155,14 @@
                         <Button Grid.Column="3" Click="AddDroneButton_Click"
                   FontWeight="Bold"   
                         Foreground="White"  BorderThickness="0,0,0,0" Background="#FF2C2B2B"  Margin="45,438,37,-444" >
-                            <!--<StackPanel>
+                            <StackPanel>
                                 <Image x:Name="addpic" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
                                 <TextBlock Text="Add Drone"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
-                            </StackPanel>-->
-                            <StackPanel>
+                            </StackPanel>
+                            <!--<StackPanel>
                                 <Image x:Name="addpic" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
                                 <TextBlock Text="Add Drone"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
-                            </StackPanel>
+                            </StackPanel>-->
                             <!--<StackPanel>
                                 <TextBlock><TextBlock.Text=""</TextBlock>
                                 <Image Source="‪C:\Users\aviga\Pictures\IconsB\plus.png" Stretch="None" />
@@ -208,10 +210,20 @@
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="80"/>
                                 <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="80"/>
-                                <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="100"/>
+                                <GridViewColumn Header="Battery" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}" Width="40"  Height="20" Foreground="{Binding Battery, Converter={StaticResource MyBatteryToColorConverter}}"/>
+                                                <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
                                 <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                                 <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
+                                
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -232,10 +244,10 @@
                 <TabItem.Header >
 
                     <StackPanel Orientation="Vertical">
-                        <!--<Image Name="imgParcel" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\parcel.png"  ToolTip="ShowParcelList"></Image>
-                        <TextBlock Text="Parcel list"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
-                        <Image Name="imgParcel" Height="134" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\parcel.png"  ToolTip="ShowParcelList"></Image>
+                        <Image Name="imgParcel" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\parcel.png"  ToolTip="ShowParcelList"></Image>
                         <TextBlock Text="Parcel list"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
+                        <!--<Image Name="imgParcel" Height="134" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\parcel.png"  ToolTip="ShowParcelList"></Image>
+                        <TextBlock Text="Parcel list"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
 
 
                     </StackPanel>
@@ -245,7 +257,7 @@
                         
                     <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
 
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -264,7 +276,7 @@
                         </Grid.ColumnDefinitions>
                         <!--<Label Content="Select Weight" Foreground="White" Grid.Column="1" Grid.Row="0"  Margin="10,10,10,50" Width="150" MinHeight="15" MinWidth="150" BorderThickness="5,0,3,0" />-->
 
-                        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>-->
                         <ComboBox x:Name="PrioritySelectorParcel" FontWeight="Bold"   
                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="StatusSelector" Grid.Column="1" Margin="10,30,0,10" 
                       Background="#FF2476BD"  SelectedIndex="3" SelectionChanged="PrioritySelectorParcel_SelectionChanged" BorderBrush="#FF3C4497" Foreground="#FF70C9EB" HorizontalAlignment="Left" Width="102">
@@ -380,18 +392,18 @@
             <TabItem Name="StationTab" Margin="0,-1,-5,-1" MouseEnter="StationTab_MouseEnter" >
                 <TabItem.Header>
                     <StackPanel Orientation="Vertical">
-                        <!--<Image Name="imgStation" Height="92" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\stations.png"  ToolTip="ShowStationList"></Image>
-                        <TextBlock Text="Station List"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
-                        <Image Name="imgStation" Height="92" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\stations.png"  ToolTip="ShowStationList"></Image>
+                        <Image Name="imgStation" Height="92" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\stations.png"  ToolTip="ShowStationList"></Image>
                         <TextBlock Text="Station List"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
+                        <!--<Image Name="imgStation" Height="92" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\stations.png"  ToolTip="ShowStationList"></Image>
+                        <TextBlock Text="Station List"  Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
 
 
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="70*"/>
@@ -409,7 +421,7 @@
 
 
                         <TextBox x:Name="textStationlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="StationList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent"  FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
-                        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="170,20,92,20" MouseEnter="Image_MouseEnter"></Image>-->
                         <Button Content="Add Station" Grid.Column="3" Click="AddStationButton_Click"
                   FontWeight="Bold"   
                        Margin="100,30,10,10" BorderBrush="#FF3C4497"  BorderThickness="0,0,0,0"  Background="AliceBlue" RenderTransformOrigin="0.3,0.533">
@@ -461,17 +473,17 @@
             <TabItem Name="CustomerTab" Margin="0,-1,-5,-1" MouseEnter="CustomerTab_MouseEnter" >
                 <TabItem.Header>
                     <StackPanel Orientation="Vertical">
-                        <Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png" ToolTip="ShowCustomerList"/>
-                        <TextBlock Text="Customer list" Foreground="White" Margin="2" VerticalAlignment="Center"></TextBlock>
-                        <!--<Image x:Name="imgCustomer" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png" ToolTip="ShowCustomerList"/>
-                        <TextBlock Text="Customerlist"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>-->
+                        <!--<Image x:Name="imgCustomer" Height="136" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Customer list" Foreground="White" Margin="2" VerticalAlignment="Center"></TextBlock>-->
+                        <Image x:Name="imgCustomer" Height="134" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png" ToolTip="ShowCustomerList"/>
+                        <TextBlock Text="Customerlist"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
+                        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
                         <RowDefinition Height="7*"/>
@@ -488,7 +500,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="150,30,74,10" MouseEnter="Image_MouseEnter"></Image>
+                        <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="150,30,74,10" MouseEnter="Image_MouseEnter"></Image>-->
                         <TextBlock x:Name="textCustomerlist" HorizontalAlignment="Left" Margin="10,0,0,0" Text="CustomerList" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" Background="Transparent" FontSize="35" FontFamily="Arial Rounded MT Bold" Foreground="#FFF3F0F0" Grid.ColumnSpan="2"/>
                         <!--<Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\refresh.png" Grid.Column="2" Grid.ColumnSpan="2" Margin="139,0,51,0" MouseEnter="Image_MouseEnter_3"></Image>-->
                         <Button Content="Add Customer" Grid.Column="3" Click="AddCustomerButton_Click"

@@ -23,37 +23,37 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneWindow.xaml
     /// </summary>
-    public partial class Check : ValidationRule, IDataErrorInfo, INotifyPropertyChanged// I notifypropertychanged is an interface so that we can make varaibles update on events. meaning we make them dependency property
-    {
-        BlApi.Ibl bl;
-        DroneToList droneToList = new();
-        public int MinimumCharacters { get; set; }
+    //public partial class Check : ValidationRule, IDataErrorInfo, INotifyPropertyChanged// I notifypropertychanged is an interface so that we can make varaibles update on events. meaning we make them dependency property
+    //{
+    //    BlApi.Ibl bl;
+    //    DroneToList droneToList = new();
+    //    public int MinimumCharacters { get; set; }
 
-        // this is just to gove red border
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)//value is the string written in he textbox
-        {
-            string charString = value as string; //casting to string
-            if (charString.Length < MinimumCharacters)
-                return new ValidationResult(false, $" no {MinimumCharacters} characters.");// there was an error give tis message as error
-            // we can add here a lot of iff statement
-            return new ValidationResult(true, null);
-        }
-        public string UserName { get; set; }
+    //    // this is just to gove red border
+    //    public override ValidationResult Validate(object value, CultureInfo cultureInfo)//value is the string written in he textbox
+    //    {
+    //        string charString = value as string; //casting to string
+    //        if (charString.Length < MinimumCharacters)
+    //            return new ValidationResult(false, $" no {MinimumCharacters} characters.");// there was an error give tis message as error
+    //        // we can add here a lot of iff statement
+    //        return new ValidationResult(true, null);
+    //    }
+    //    public string UserName { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    //    public event PropertyChangedEventHandler PropertyChanged;
 
-        public int Id2
-        {
-            get { return droneToList.Id; }
-            set
-            {
-                Id2 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));// invoke show that something changed in the dictionary
-            }
-        }
-        public string Error => throw new NotImplementedException();
-        public string this[string columnName] => throw new NotImplementedException();
-    }
+    //    public int Id2
+    //    {
+    //        get { return droneToList.Id; }
+    //        set
+    //        {
+    //            Id2 = value;
+    //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));// invoke show that something changed in the dictionary
+    //        }
+    //    }
+    //    public string Error => throw new NotImplementedException();
+    //    public string this[string columnName] => throw new NotImplementedException();
+    //}
         //public Dictionary<string, string> ErrorMessages { get; private set; } = new Dictionary<string, string>
 
         //public string this[string name]

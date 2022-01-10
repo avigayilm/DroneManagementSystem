@@ -30,4 +30,13 @@
     <Weight>light</Weight>
     <Deleted>false</Deleted>
   </Drone>
+  <Drone>
+    <Id>222</Id>
+    <Model />
+    <Weight>light</Weight>
+  </Drone>
+  <Drone>
+    <Id>0</Id>
+    <Weight>light</Weight>
+  </Drone>
 </ArrayOfDrone>

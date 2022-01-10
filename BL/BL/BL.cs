@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Runtime.CompilerServices;
 using BO;
 using DO;
 using DalApi;
-using System.Threading;
+
+
 
 namespace BL
 {
@@ -88,6 +88,7 @@ namespace BL
                     // calculates battery usage of flying to closest station to drone
                     int minBat = BatteryUsage(DroneDistanceFromStation(dr, FindClosestStation(dr)), 0);
                     dr.Battery = rand.Next(minBat, 100);
+                    //dr.Battery = rand.Next(40, 100);
                 }
             }
         }

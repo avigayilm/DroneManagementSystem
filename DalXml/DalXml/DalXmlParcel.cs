@@ -25,12 +25,12 @@ namespace Dal
             //parcels =  XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             if (parcels.Exists(p => p.Id == pack.Id && !p.Delete))
                 throw new DuplicateIdException("Parcel already exists\n");
-            XElement serialNum = XElement.Load(@"runNumXml.xml");
-            pack.Id = 1 + int.Parse(serialNum.Element("runNumber").Value);
-            serialNum.Element("runNumber").Value = pack.Id.ToString();
+            XElement serialNum = XElement.Load(@"config.xml");
+            pack.Id = 1 + int.Parse(serialNum.Element("runNum").Value);
+            serialNum.Element("runNum").Value = pack.Id.ToString();
             parcels.Add(pack);
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
-            XMLTools.SaveListToXMLElement(serialNum, "runNumXml.xml");
+            XMLTools.SaveListToXMLElement(serialNum, "config.xml");
             return pack.Id;
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
