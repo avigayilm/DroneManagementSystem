@@ -219,6 +219,10 @@ namespace PL
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
 
                 lastW.droneToList.Model = Drone.Model;
+                if(lastW.droneToList.Status != Drone.Status)//if the status has changed and so the drone belongs to a  differant key in dicitonary
+                {
+
+                }
                 //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();
                 //item.ToList().Remove(lastW.droneToList);

@@ -39,7 +39,7 @@ namespace BL
             //int count = 0;
             //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
-            List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null).ToList();
+            List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null && p.Assigned != null).ToList();
 
             foreach (DO.Parcel p in undeliveredParcel)
             {

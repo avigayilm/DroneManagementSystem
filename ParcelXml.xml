@@ -23,7 +23,7 @@
     <Created>2021-02-23T21:25:00</Created>
     <Assigned>2021-02-24T00:25:00</Assigned>
     <PickedUp>2021-02-24T01:25:00</PickedUp>
-    <Delivered xsi:nil="true" />
+    <Delivered>2022-01-10T23:07:22.6563734+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -35,8 +35,8 @@
     <DroneId>5130</DroneId>
     <Created>2021-05-17T20:28:00</Created>
     <Assigned>2021-05-17T23:28:00</Assigned>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-10T22:48:12.387671+02:00</PickedUp>
+    <Delivered>2022-01-10T22:52:43.4588384+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
