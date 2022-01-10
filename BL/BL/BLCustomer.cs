@@ -33,7 +33,11 @@ namespace BL
                 customer = (DO.Customer)obj1;
                 customer.Longitude = newCustomer.Loc.Longitude;
                 customer.Latitude = newCustomer.Loc.Latitude;
-                idal1.AddCustomer(customer);
+                lock (idal1)
+                {
+                    idal1.AddCustomer(customer);
+                }
+                
             }
             catch (DO.DuplicateIdException ex)
             {
@@ -47,14 +51,18 @@ namespace BL
             try
             {
                 DO.Login login = new() { UserName = user, Password = password, profileSource = imageSrc, emailAddress = emailAdd };
-                idal1.AddLogin(login);
+                lock (idal1)
+                {
+                    idal1.AddLogin(login);
+                }
+               
                 try
                 {
                     AddCustomer(cus);
                 }
-                catch (DO.DuplicateIdException ex)
-                {
-                    throw new AddingException("couldnt add customer", ex);
+                catch (DO.DuplicateIdException ex) 
+                // in this case it doesnt matter if customer exists already because we can have a customer with no login details
+                {       
                 }
             }
             catch (DO.DuplicateIdException ex)
@@ -68,8 +76,12 @@ namespace BL
         {
             try
             {
-                bool userType = idal1.ValidateLogin(user, pass);
-                return userType;
+                lock (idal1)
+                {
+                    bool userType = idal1.ValidateLogin(user, pass);
+                    return userType;
+                }
+                
             }
             catch (DO.LoginException ex)
             {
@@ -85,7 +97,11 @@ namespace BL
         {
             try
             {
-                idal1.UpdateCustomer(customerId, name, phone);
+                lock (this)
+                {
+                    idal1.UpdateCustomer(customerId, name, phone);
+                }
+                
             }
             catch (DO.MissingIdException ex)
             {
@@ -99,9 +115,13 @@ namespace BL
             try
             {
                 BO.Customer customer = new BO.Customer();
-                DO.Customer customerDal = idal1.GetCustomer(customerId);
-                customerDal.CopyProperties(customer);
-                customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
+                lock (this)
+                {
+                    DO.Customer customerDal = idal1.GetCustomer(customerId);
+                    customerDal.CopyProperties(customer);
+                    customer.Loc = new Location() { Longitude = customerDal.Longitude, Latitude = customerDal.Latitude };
+                }
+               
                 customer.SentParcels = GetParcelsAtCustomer(customerId, true);
                 customer.ReceivedParcels = GetParcelsAtCustomer(customerId, false);
 
@@ -134,24 +154,44 @@ namespace BL
         public CustomerInParcel GetCustomerInParcel(string customerId)
         {
             CustomerInParcel customerInParcelTemp = new CustomerInParcel();
-            DO.Customer customerTemp = idal1.GetCustomer(customerId);
-            customerInParcelTemp = new CustomerInParcel() { Id = customerTemp.Id, Name = customerTemp.Name };
+            lock (idal1)
+            {
+                DO.Customer customerTemp = idal1.GetCustomer(customerId);
+                customerInParcelTemp = new CustomerInParcel() { Id = customerTemp.Id, Name = customerTemp.Name };
+            }
             return customerInParcelTemp;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetAllCustomers(Predicate<DO.Customer> predicate = null)
         {
+            lock (idal1)
+            {
+
+            }
             List<CustomerToList> tempList = new List<CustomerToList>();
             idal1.GetAllCustomers(predicate).CopyPropertyListtoIBLList(tempList);
-            foreach (CustomerToList cus in tempList)
-            {
-                cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();
-                cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count();
-                cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count();
-                cus.NumPackSentUnDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
-            }
-            return tempList;
+            return from cus in tempList
+                   select new CustomerToList()
+                   {
+                       Id = cus.Id,
+                       Name = cus.Name,
+                       PhoneNumber = cus.PhoneNumber,
+                       NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count(),
+                       NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count(),
+                       NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count(),
+                       NumPackSentUnDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count()
+                   };
+                      // (cus=>( cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count(), cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count(), cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count(),
+           // cus.NumPackSentUnDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count()));
+            //foreach (CustomerToList cus in tempList)
+            //{
+            //    cus.NumPacksReceived = idal1.GetAllParcels(p => p.Delivered != null && p.ReceiverId == cus.Id).Count();
+            //    cus.NumPackSentDel = idal1.GetAllParcels(p => p.Delivered != null && p.SenderId == cus.Id).Count();
+            //    cus.NumPackExp = idal1.GetAllParcels(p => p.Delivered == null && p.ReceiverId == cus.Id).Count();
+            //    cus.NumPackSentUnDel = idal1.GetAllParcels(p => p.Delivered == null && p.SenderId == cus.Id).Count();
+            //}
+            //return tempList;
         }
         public bool CustomerExists(string id)
         {
@@ -165,5 +205,19 @@ namespace BL
                 throw new AddingException(ex.Message);
             }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(string customerId)
+        {
+            try
+            {
+                idal1.DeleteCustomer(customerId);
+            }
+            catch (MissingIdException ex)
+            {
+                throw new RetrievalException(ex.Message);
+            }
+        }
+
     }
 }

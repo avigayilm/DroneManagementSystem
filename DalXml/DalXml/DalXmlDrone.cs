@@ -115,25 +115,35 @@ namespace Dal
                 throw new DuplicateIdException("Drone already exists\n");
             }
         }
-        //public void AddDrone(Drone dro)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public Drone GetDrone(int ID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public void UpdateDrone(int droneId, string model)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(int droneId)
+        {
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref drones, DroneXml);
+            int dIndex = drones.FindIndex(d => d.Id == droneId);
+            if (dIndex == -1)
+            {
+                throw new MissingIdException("No such drone exists\n");
+            }
+            if (drones[dIndex].Deleted)
+            {
+                throw new MissingIdException($"This Drone:{ droneId } is deleted \n");
+            }
+            Drone tempDrone = drones[dIndex];
+            tempDrone.Deleted = true;
+            drones[dIndex] = tempDrone;
+            XMLTools.SaveListToXMLSerializer(drones, DroneXml);
+            //if (pIndex == -1)
+            //{
+            //    throw new MissingIdException("No such parcel exists\n");
+            //}
+            //var temp = DataSource.parcelList[index];
+            //temp.Delete = true;
+            //DataSource.parcelList[index] = temp;
+        }
 
     }
 }

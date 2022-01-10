@@ -1,73 +1,83 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>0232594140</Id>
+    <Id>0602274789</Id>
     <Name>Frodo</Name>
-    <PhoneNumber>057-8550646</PhoneNumber>
-    <Latitude>30.91647941783981</Latitude>
-    <Longitude>35.07116288769421</Longitude>
+    <PhoneNumber>051-2410503</PhoneNumber>
+    <Latitude>31.788876366603276</Latitude>
+    <Longitude>34.89570996263157</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0436987864</Id>
+    <Id>0869685572</Id>
     <Name>Sam</Name>
-    <PhoneNumber>057-6574270</PhoneNumber>
-    <Latitude>30.0318345271779</Latitude>
-    <Longitude>35.4884245102497</Longitude>
+    <PhoneNumber>055-4708445</PhoneNumber>
+    <Latitude>31.983254525818044</Latitude>
+    <Longitude>34.90636308621885</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0487466464</Id>
+    <Id>0293710366</Id>
     <Name>Gloin</Name>
-    <PhoneNumber>054-5717085</PhoneNumber>
-    <Latitude>31.524253068352994</Latitude>
-    <Longitude>35.5303950076168</Longitude>
+    <PhoneNumber>057-3460629</PhoneNumber>
+    <Latitude>30.75329997005629</Latitude>
+    <Longitude>35.503186138210765</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0820393401</Id>
+    <Id>0480273896</Id>
     <Name>Oin</Name>
-    <PhoneNumber>051-6235335</PhoneNumber>
-    <Latitude>30.279678308213814</Latitude>
-    <Longitude>34.8710789076713</Longitude>
+    <PhoneNumber>056-4151955</PhoneNumber>
+    <Latitude>32.29348159640196</Latitude>
+    <Longitude>34.69793670578926</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0952964342</Id>
+    <Id>0704471933</Id>
     <Name>Sauron</Name>
-    <PhoneNumber>051-1549713</PhoneNumber>
-    <Latitude>31.360147044753365</Latitude>
-    <Longitude>34.87027522861789</Longitude>
+    <PhoneNumber>053-5810040</PhoneNumber>
+    <Latitude>29.985346522893803</Latitude>
+    <Longitude>35.04331708203966</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0650926221</Id>
+    <Id>0960521833</Id>
     <Name>Saruman</Name>
-    <PhoneNumber>054-3388796</PhoneNumber>
-    <Latitude>30.926257831098983</Latitude>
-    <Longitude>35.360806984824485</Longitude>
+    <PhoneNumber>053-6295862</PhoneNumber>
+    <Latitude>30.031657081604603</Latitude>
+    <Longitude>35.20028548905415</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0484273441</Id>
+    <Id>0194612215</Id>
     <Name>Elrond</Name>
-    <PhoneNumber>057-8141949</PhoneNumber>
-    <Latitude>30.744317547720534</Latitude>
-    <Longitude>35.061589864235536</Longitude>
+    <PhoneNumber>053-1758129</PhoneNumber>
+    <Latitude>32.684784689842914</Latitude>
+    <Longitude>34.919710728652426</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0535580119</Id>
+    <Id>0545353692</Id>
     <Name>Galadriel</Name>
-    <PhoneNumber>057-7058180</PhoneNumber>
-    <Latitude>30.529388544924174</Latitude>
-    <Longitude>34.91859825026681</Longitude>
+    <PhoneNumber>056-7131392</PhoneNumber>
+    <Latitude>30.33353387832692</Latitude>
+    <Longitude>34.707131949056816</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0915801074</Id>
+    <Id>0143929359</Id>
     <Name>Legolas</Name>
-    <PhoneNumber>052-2570504</PhoneNumber>
-    <Latitude>30.28775275388305</Latitude>
-    <Longitude>34.99845161819146</Longitude>
+    <PhoneNumber>056-8755522</PhoneNumber>
+    <Latitude>30.279325587109625</Latitude>
+    <Longitude>34.75517635964366</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>0137551894</Id>
+    <Id>0879489498</Id>
     <Name>Aragorn</Name>
-    <PhoneNumber>054-6724062</PhoneNumber>
-    <Latitude>31.81242955135598</Latitude>
-    <Longitude>35.39038362517133</Longitude>
+    <PhoneNumber>057-5927320</PhoneNumber>
+    <Latitude>32.70786118748295</Latitude>
+    <Longitude>34.830751600789874</Longitude>
+    <Deleted>false</Deleted>
   </Customer>
 </ArrayOfCustomer>

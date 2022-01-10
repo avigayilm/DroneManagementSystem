@@ -32,10 +32,13 @@ namespace BL
                     if (tempDron.Battery < 0)
                         tempDron.Battery = 0;
                     tempDron.Status = DroneStatuses.Maintenance;
-                    //update the station
-                    idal1.ChangeChargeSlots(tempStation.Id, -1);
-                    //update dronecharge
-                    idal1.SendToCharge(droneId, tempStation.Id);
+                    lock (idal1)
+                    {
+                        //update the station
+                        //idal1.ChangeChargeSlots(tempStation.Id, -1);
+                        //update dronecharge
+                        idal1.SendToCharge(droneId, tempStation.Id);
+                    }
 
                 }
             }
@@ -56,19 +59,21 @@ namespace BL
                     List<DO.DroneCharge> tempDroneChargeList = (List<DO.DroneCharge>)idal1.GetDroneChargeList();
                     int droneChargeIndex = tempDroneChargeList.FindIndex(dc => dc.DroneId == droneId);// finding the index of drone to get the station id
                     int stationId = tempDroneChargeList[droneChargeIndex].StationId;
-                    // update drone
-                    TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList(x => x.DroneId == tempDron.Id).First().ChargingTime;
-                    //double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
-                    int batteryCharge =(int) (timeInCharging.TotalHours * idal1.DronePwrUsg()[4]);
-                    tempDron.Battery += batteryCharge;
-                    if (tempDron.Battery > 100)
-                        tempDron.Battery = 100;
                     tempDron.Status = DroneStatuses.Available;
-                    //update station
-                    idal1.ChangeChargeSlots(stationId, 1);
-                    //update dronecharge
-                    idal1.BatteryCharged(droneId, stationId);
-
+                    // update drone
+                    lock (idal1)
+                    {
+                        TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList(x => x.DroneId == tempDron.Id).First().ChargingTime;
+                        //double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
+                        int batteryCharge = (int)(timeInCharging.TotalHours * idal1.DronePwrUsg()[4]);
+                        tempDron.Battery += batteryCharge;
+                        if (tempDron.Battery > 100)
+                            tempDron.Battery = 100;
+                        //update station
+                        idal1.ChangeChargeSlots(stationId, 1);
+                        //update dronecharge
+                        idal1.BatteryCharged(droneId, stationId);
+                    }
                 }
                 else
                     throw new DroneChargeException("Couldn't release the drone from charge");// throw approptate acception
@@ -90,13 +95,19 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public (IEnumerable<DroneInCharge>,int) getAllDroneInCharge(int stationId)
         {
-            List<DroneInCharge> listDronecharge = new List<DroneInCharge>();
-            var chargingListIdal = idal1.DronesChargingAtStation(stationId);
-            foreach (DO.Drone d in chargingListIdal)
+            IEnumerable<DroneInCharge> listDronecharge = new List<DroneInCharge>();
+            lock (idal1)
             {
-                listDronecharge.Add(getDroneInCharge(d.Id));
+                listDronecharge = from droneC in idal1.DronesChargingAtStation(stationId)
+                    select (getDroneInCharge(droneC.Id));
+                //var chargingListIdal = idal1.DronesChargingAtStation(stationId);
+                //foreach (DO.Drone d in chargingListIdal)
+                //{
+                //    listDronecharge.Add(getDroneInCharge(d.Id));
+                //}
+                return (listDronecharge, listDronecharge.Count());
             }
-            return (listDronecharge, listDronecharge.Count);
+           
         }
     }
 }

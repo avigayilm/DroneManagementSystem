@@ -150,7 +150,9 @@ namespace Dal
         {
             //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml); //there is usage of parcels so as to avoid multiple loading 
             loadingToList(ref parcels, ParcelXml);
-            return parcels.FindAll(x => predicate == null ? true : predicate(x) && !x.Delete);
+            //return parcels.FindAll(x => predicate == null ? true : predicate(x) && !x.Delete);
+            return parcels
+                .Where(p => predicate == null ? true : predicate(p) && !p.Delete);
         }
 
 

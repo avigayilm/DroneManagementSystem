@@ -21,6 +21,17 @@ namespace BL
             return Bonus.Haversine(cus1.Longitude, cus1.Latitude, cus2.Longitude, cus2.Latitude);
         }
 
+       /// <summary>
+       /// computes distance of drone from a cusotmer
+       /// </summary>
+       /// <param name="drone"></param>
+       /// <param name="cus"></param>
+       /// <returns></returns>
+        internal double DronedistanceFromCustomer(BO.DroneToList drone, BO.Customer cus)
+        {
+            return Bonus.Haversine(cus.Loc.Longitude, cus.Loc.Latitude, drone.Loc.Longitude, drone.Loc.Latitude);
+        }
+
         /// <summary>
         /// returns the distance between a drone and a parcel
         /// </summary>
@@ -49,9 +60,9 @@ namespace BL
         /// <param name="dr"></param>
         /// <param name="st"></param>
         /// <returns></returns>
-        internal double DroneDistanceFromStation(BO.DroneToList dr, DO.Station st)
+        internal double DroneDistanceFromStation(BO.DroneToList dr, DO.Station? st1 = null, BO.Station st2 = null )
         {
-            return Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
+            return Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st1 != null ? ((DO.Station)st1).Longitude : ((BO.Station)st2).Loc.Longitude, st1 != null ? ((DO.Station)st1).Latitude : st2.Loc.Latitude);
         }
     }
 }

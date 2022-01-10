@@ -205,5 +205,25 @@ namespace BO
         {
         }
     }
+
+    [Serializable]
+    public class StatusException : Exception
+    {
+        public StatusException() : base()
+        {
+        }
+
+        public StatusException(string message) : base("StatusException: " + message)
+        {
+        }
+
+        public StatusException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected StatusException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+    }
 }
 

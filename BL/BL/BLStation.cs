@@ -33,7 +33,10 @@ namespace BL
                 st = (DO.Station)obj;
                 st.Latitude = station.Loc.Latitude;
                 st.Longitude = station.Loc.Longitude;
-                idal1.AddStation(st);
+                lock (idal1)
+                {
+                    idal1.AddStation(st);
+                }
                 station.Charging = new List<DroneInCharge>();
             }
 
@@ -52,7 +55,11 @@ namespace BL
         {
             try
             {
-                idal1.UpdateStation(stationId, name, chargingSlots);
+                lock (idal1)
+                {
+                    idal1.UpdateStation(stationId, name, chargingSlots);
+                }
+                
             }
             catch (DO.MissingIdException ex)
             {
@@ -68,17 +75,21 @@ namespace BL
         /// <returns></returns>
         internal DO.Station FindClosestStation(DroneToList dr)
         {
-            double minDistance = double.MaxValue; DO.Station temp = new DO.Station();
-            List<DO.Station> tempList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
-            foreach (DO.Station st in tempList)
+            double minDistance = double.MaxValue;
+            DO.Station temp = new();
+            lock (this)
             {
-                double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude);
-                if (distance < minDistance)
+                List<DO.Station> tempList = idal1.GetAllStations(s => s.AvailableChargeSlots > 0).ToList();
+                foreach (var (st, distance) in from DO.Station st in tempList
+                                               let distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, st.Longitude, st.Latitude)
+                                               where distance < minDistance
+                                               select (st, distance))
                 {
                     minDistance = distance;
                     temp = st;
                 }
             }
+            
             return temp;
         }
 
@@ -101,17 +112,21 @@ namespace BL
             try
             {
                 BO.Station station = new BO.Station();
-                DO.Station stationDal = idal1.GetStation(stationId); //get the station from DAL
-                stationDal.CopyProperties(station); // copy its preperties to BL
-                station.Loc = new Location() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
-                station.Charging = from item in idal1.GetDroneChargeList(d => d.StationId == stationId)
-                                   let temp = droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
-                                   select new DroneInCharge
-                                   {
-                                       Id = item.DroneId,
-                                       Battery = temp != default ? temp.Battery : throw new RetrievalException("the Id number doesnt exist\n")
-                                   };
-                station.Charging = getAllDroneInCharge(stationId).Item1.ToList();
+                lock (idal1)
+                {
+                    DO.Station stationDal = idal1.GetStation(stationId); //get the station from DAL
+                    stationDal.CopyProperties(station); // copy its preperties to BL
+                    station.Loc = new Location() { Longitude = stationDal.Longitude, Latitude = stationDal.Latitude };
+                    station.Charging = from item in idal1.GetDroneChargeList(d => d.StationId == stationId)
+                                       let temp = droneBL.FirstOrDefault(curDrone => curDrone.Id == item.DroneId)
+                                       select new DroneInCharge
+                                       {
+                                           Id = item.DroneId,
+                                           Battery = temp != default ? temp.Battery : throw new RetrievalException("the Id number doesnt exist\n")
+                                       };
+                    station.Charging = getAllDroneInCharge(stationId).Item1.ToList();
+                }
+                
                 return station;
             }
 
@@ -125,16 +140,33 @@ namespace BL
         public IEnumerable<StationToList> GetAllStation(Predicate<StationToList> predicate = null)
         {
             List<StationToList> tempList = new List<StationToList>();
-            
-            idal1.GetAllStations().CopyPropertyListtoIBLList(tempList); //will return a list according to truth value of predicate
-            foreach (StationToList temp in tempList)
+            lock (idal1)
             {
-                var slots = idal1.AvailableAndOccupiedSlots(temp.Id); 
-                temp.OccupiedSlots = slots.Item1;
-                temp.AvailableChargeSlots = slots.Item2;
+                idal1.GetAllStations().CopyPropertyListtoIBLList(tempList); //will return a list according to truth value of predicate
+                foreach (StationToList temp in tempList)
+                {
+                    var slots = idal1.AvailableAndOccupiedSlots(temp.Id);
+                    temp.OccupiedSlots = slots.Item1;
+                    temp.AvailableChargeSlots = slots.Item2;
+                }
             }
+           
             return tempList;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteStation(int stationId)
+        {
+            try
+            {
+                idal1.DeleteStation(stationId);
+            }
+            catch (MissingIdException ex)
+            {
+                throw new RetrievalException(ex.Message);
+            }
+        }
+
     }
 }
 

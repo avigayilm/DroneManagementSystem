@@ -16,7 +16,7 @@ namespace Dal
         {
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
             loadingToList(ref customers, CustomerXml);
-            if (customers.Exists(c => c.Id == cus.Id))
+            if (customers.Exists(c => c.Id == cus.Id && !c.Deleted))
                 throw new DuplicateIdException("Customer already exists\n");
             customers.Add(cus);
             XMLTools.SaveListToXMLSerializer(customers, CustomerXml);
@@ -34,7 +34,7 @@ namespace Dal
         {
             //return DataSource.customerList.FindAll(c => predicate == null ? true : predicate(c));
             loadingToList(ref customers, CustomerXml);
-            return customers.FindAll(c => predicate == null ? true : predicate(c));
+            return customers.FindAll(c => predicate == null ? true : predicate(c) && !c.Deleted);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -70,7 +70,7 @@ namespace Dal
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
             loadingToList(ref customers, CustomerXml);
 
-            int index = customers.FindIndex(c => c.Id == customerId);
+            int index = customers.FindIndex(c => c.Id == customerId && !c.Deleted);
             if (index == -1)
             {
                 throw new MissingIdException("No such Customer exists\n");
@@ -80,12 +80,14 @@ namespace Dal
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public List<Customer> CustomersDeliverdTo()
+        public IEnumerable<Customer> CustomersDeliverdTo()
         {
-            List<Customer> temp = new List<Customer>();
-            foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null))//for every delivered parcel add its customer to the list
-                temp.Add(GetCustomer(p.ReceiverId));
-            return temp;
+            //List<Customer> temp = new List<Customer>();
+            //foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null && !pa.Delete))//for every delivered parcel add its customer to the list
+            //    temp.Add(GetCustomer(p.ReceiverId));
+            //return temp;
+            return from p in GetAllParcels(pa => pa.Delivered != null && !pa.Delete)
+                   select (GetCustomer(p.ReceiverId));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -118,6 +120,26 @@ namespace Dal
                 else
                     return logins[index].StaffOrUser;
             }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(string customerId)
+        {
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref customers,CustomerXml);
+            int cIndex = customers.FindIndex(c => c.Id == customerId);
+            if (cIndex == -1)
+            {
+                throw new MissingIdException("No such parcel exists\n");
+            }
+            if (customers[cIndex].Deleted)
+            {
+                throw new MissingIdException($"This Parcel:{ customerId } is deleted \n");
+            }
+            Customer tempCustomer = customers[cIndex];
+            tempCustomer.Deleted = true;
+            customers[cIndex] = tempCustomer;
+            XMLTools.SaveListToXMLSerializer(customers, CustomerXml);
         }
     }
 }

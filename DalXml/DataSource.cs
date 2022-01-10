@@ -107,6 +107,7 @@ namespace Dal
 
         public static void CreateParcel()//initializes 20 parcels
         {
+            int count = 0;
             DateTime startDate = new DateTime(2021, 1, 1);
             for (int i = 0; i < 20; i++)
             {
@@ -121,43 +122,53 @@ namespace Dal
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
                    
                 };
-
-                int statusStats = rand.Next(100);
-                if (statusStats >= 10) // scheduled
+                if(count < 5)
                 {
-                    temp.DroneId = dronesList[i % 5].Id;
-                    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
+                    temp.DroneId = dronesList[count].Id;
+                    temp.Assigned = ((DateTime)temp.Created).AddMinutes(180);
+                    if (count < 2)
+                        temp.PickedUp = ((DateTime)temp.Assigned).AddMinutes(60);
+                    count++;
 
-                    if (statusStats >= 20) // picked up
-                    {
-                        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
-                        if (statusStats >= 30) // delivered
-                        {
-                            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
-                            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
-                        }
-                    }
-                    //if (temp.DroneId == 0)
-                    //{ 
-                    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
-                    //    if(dIndex >= 0)
-                    //    {
-                    //        var drone = dronesList[dIndex];
-                    //        temp.DroneId = drone.Id;
-                    //        //drone.status = DroneStatuses.Delivery;
-                    //        dronesList[dIndex] = drone;
-                    //    }
-                        
-                    //}
                 }
+                
+                //int statusStats = rand.Next(100);
+                //if (statusStats >= 10) // scheduled
+                //{
+                //    temp.DroneId = dronesList[i % 5].Id;
+                //    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
+
+                //    if (statusStats >= 20) // picked up
+                //    {
+                //        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
+                //        if (statusStats >= 30) // delivered
+                //        {
+                //            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
+                //            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
+                //        }
+                //    }
+                //    //if (temp.DroneId == 0)
+                //    //{ 
+                //    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
+                //    //    if(dIndex >= 0)
+                //    //    {
+                //    //        var drone = dronesList[dIndex];
+                //    //        temp.DroneId = drone.Id;
+                //    //        //drone.status = DroneStatuses.Delivery;
+                //    //        dronesList[dIndex] = drone;
+                //    //    }
+                        
+                //    //}
+                //}
 
                 parcelList.Add(temp);
                 DataSource.Config.LastParcelNumber++;
             }
+        
         }
         public static void CreateStation()// initializes 2 stations
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 int id;// checking if the random Id exists already
                 do
