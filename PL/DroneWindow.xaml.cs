@@ -224,7 +224,7 @@ namespace PL
                 }
 
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
-              
+
                 lastW.droneToList.Model = Drone.Model;
                 //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();
@@ -385,7 +385,7 @@ namespace PL
 
         private void AutoButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AutoManual==false)// if it's on state of manual
+            if (AutoManual == false)// if it's on state of manual
             {
                 AutoManual = true;
                 AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
@@ -398,41 +398,39 @@ namespace PL
                 AutoManual = false;
                 AutoRun?.CancelAsync();
             }
-        //    Auto = true;
-        //    AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
-        //    AutoRun.DoWork += AutoRun_DoWork;
-        //    AutoRun.ProgressChanged += AutoRun_ProgressChanged;
-        //    AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
-        //    AutoRun.RunWorkerAsync(Drone.Id);
-        //}
-        //private void ManualButton_Click(object seder, RoutedEventArgs e) => AutoRun?.CancelAsync();
-            
-
-
-
-        private void AutoRun_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
+            //    Auto = true;
+            //    AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            //    AutoRun.DoWork += AutoRun_DoWork;
+            //    AutoRun.ProgressChanged += AutoRun_ProgressChanged;
+            //    AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+            //    AutoRun.RunWorkerAsync(Drone.Id);
+            //}
+            //private void ManualButton_Click(object seder, RoutedEventArgs e) => AutoRun?.CancelAsync();
         }
+            private void AutoRun_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+            {
+                throw new NotImplementedException();
+            }
 
-        private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            Drone = bl.GetDrone(Drone.Id);
-            DataContext = Drone;
+            private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)
+            {
+                Drone = bl.GetDrone(Drone.Id);
+                DataContext = Drone;
+            }
+
+            private void AutoRun_DoWork(object sender, DoWorkEventArgs e)
+            {
+                bl.simulation(Drone.Id, chekEnd, UpdatedTask);
+            }
+
+            //private void add_Click(object sender, RoutedEventArgs e)
+            //{
+            //    AddDrone();
+            //    MessageBox.Show(droneTemp.ToString());
+            //    new DroneListWindow(bl).Show();
+            //    this.Close();
+            //}
+
         }
-
-        private void AutoRun_DoWork(object sender, DoWorkEventArgs e)
-        {
-            bl.simulation(Drone.Id, chekEnd, UpdatedTask);
-        }
-
-        //private void add_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddDrone();
-        //    MessageBox.Show(droneTemp.ToString());
-        //    new DroneListWindow(bl).Show();
-        //    this.Close();
-        //}
-
-    }
+    
 }

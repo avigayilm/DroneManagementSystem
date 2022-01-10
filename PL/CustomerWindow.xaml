@@ -65,8 +65,8 @@
 
     <Grid>
         <Grid.Background>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -125,8 +125,8 @@
                     Text="Latitude"/>
             
             <StackPanel Grid.Row="1" Grid.RowSpan="2">
-                <!--<Image x:Name="profile" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>-->
-                <Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>
+                <Image x:Name="profile" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>
+                <!--<Image x:Name="profile" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="42" Width="56" MouseEnter="profile_MouseEnter"/>-->
                 <TextBlock Text="Add picture"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
 

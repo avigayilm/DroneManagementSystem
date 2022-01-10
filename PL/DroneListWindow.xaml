@@ -18,6 +18,7 @@
 
     <Window.Resources>
         <Converters:BatteryToColorConverter x:Key="MyBatteryToColorConverter" />
+        <Converters:StatusToColourConverter x:Key="MyStatusToColourConverter"/>
         <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -178,7 +179,7 @@
 
 
 
-                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
+                    <ListView x:Name="DronesListView" Foreground="{Binding Status, Converter={StaticResource MyStatusToColourConverter}}"   MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
@@ -206,7 +207,7 @@
                                 <Setter Property="FontStyle" Value="Normal"/>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.View>
+                        <ListView.View >
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="80"/>
                                 <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="80"/>

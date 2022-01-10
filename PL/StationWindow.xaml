@@ -93,8 +93,8 @@
 
     <Grid ShowGridLines="False" >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -148,7 +148,17 @@
             <TextBlock Name="latTblk" Grid.Row="5" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                     Text="Latitude"/>
             <TextBlock Name="CustmoerDisplay" Text="Station" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-        <TextBox Name="nameTbx" Text="{Binding Station.Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"/>
+        <TextBox Name="nameTbx" Grid.Row="1" Grid.Column="2" Style="{StaticResource textboxStyle}"><!--Text="{Binding Station.Name, Mode=TwoWay}"-->
+            <TextBox.Text>
+                <Binding Path="Station.Name" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                    <Binding.ValidationRules>
+                        <local:EmptyStringError>
+                        </local:EmptyStringError>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBox Name="idTbx" Text="{Binding Path=Station.Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"  Style="{StaticResource textboxStyle}" />
         <TextBox Name="chargeSlotsTx" Text="{Binding Station.AvailableChargeSlots}" Grid.Row="3" Grid.Column="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
         <TextBox Name="LogitudeTx" Text="{Binding Station.Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude" />

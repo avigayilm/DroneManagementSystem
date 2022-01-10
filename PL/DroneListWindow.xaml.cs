@@ -290,20 +290,8 @@ namespace PL
             this.Close();
             new LoginWindow().Show();
         }
-
-
-
-
-
-
-
-
-
-
-
         private void DroneTab_MouseEnter(object sender, MouseEventArgs e)
         {
-
         }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -509,62 +497,64 @@ namespace PL
         //    droneToLists.OrderBy(x => x.Id);
         //}
 
-        ///// <summary>
-        ///// deletes teh drone, but not actually from the list
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void Image_MouseDownDrone(object sender, MouseButtonEventArgs e)
-        //{
-        //    try
-        //    {
-        //        FrameworkElement framework = sender as FrameworkElement;
-        //        DroneToList CurrentDrone = framework.DataContext as DroneToList;
-        //        bl.DeleteDrone(CurrentDrone.Id);
-        //        DroneToLists[CurrentDrone].RemoveAll(i => i.Id == CurrentParcel.Id);
-        //        DroneListView.Items.Refresh();
-        //        CheckComboBoxesParcel();
+        /// <summary>
+        /// deletes teh drone, but not actually from the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDownDrone(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                
+                FrameworkElement framework = sender as FrameworkElement;
+                DroneToList CurrentDrone = framework.DataContext as DroneToList;
+                WeightAndStatus weightstatus = new WeightAndStatus { Weight = (PL.WeightCategories)CurrentDrone.Weight, Status = (PL.DroneStatuses)CurrentDrone.Status };
+                bl.DeleteDrone(CurrentDrone.Id);
+                droneToLists[weightstatus].RemoveAll(i => i.Id == CurrentDrone.Id);
+                DronesListView.Items.Refresh();
+                CheckComboBoxesParcel();
 
-        //    }
-        //    catch (RetrievalException ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+            }
+            catch (RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
-        //private void Image_MouseDownStation(object sender, MouseButtonEventArgs e)
-        //{
-        //    try
-        //    {
-        //        FrameworkElement framework = sender as FrameworkElement;
-        //        StationToList CurrentStation = framework.DataContext as StationToList;
-        //        bl.DeleteParcel(CurrentStation.Id);
-        //        StationToLists[CurrentStation.SenderId].RemoveAll(i => i.Id == CurrentParcel.Id);
-        //        StationListView.Items.Refresh();
-        //        CheckComboBoxesParcel();
-        //    }
-        //    catch (RetrievalException ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+        private void Image_MouseDownStation(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                FrameworkElement framework = sender as FrameworkElement;
+                StationToList CurrentStation = framework.DataContext as StationToList;
+                bl.DeleteStation(CurrentStation.Id);
+                stationToLists[CurrentStation.AvailableChargeSlots].RemoveAll(i => i.Id == CurrentStation.Id);
+                StationListView.Items.Refresh();
+                CheckComboBoxesParcel();
+            }
+            catch (RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
-        //private void Image_MouseDownCustomer(object sender, MouseButtonEventArgs e)
-        //{
-        //    try
-        //    {
-        //        FrameworkElement framework = sender as FrameworkElement;
-        //        CustomerToList CurrentCustomer = framework.DataContext as CustomerToList;
-        //        bl.DeleteParcel(CurrentCustomer.Id);
-        //        parcelToLists[CurrentCustomer.SenderId].RemoveAll(i => i.Id == CurrentCustomer.Id);
-        //        CustomerListView.Items.Refresh();
-        //        CheckComboBoxesParcel();
-        //    }
-        //    catch (RetrievalException ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+        private void Image_MouseDownCustomer(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                FrameworkElement framework = sender as FrameworkElement;
+                CustomerToList CurrentCustomer = framework.DataContext as CustomerToList;
+                bl.DeleteCustomer(CurrentCustomer.Id);
+                customerToLists.Remove(CurrentCustomer);
+                CustomerListView.Items.Refresh();
+                CheckComboBoxesParcel();
+            }
+            catch (RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
 
