@@ -13,25 +13,6 @@ namespace Dal
     internal sealed partial class DalXml
     {
 
-        //public void SendToCharge(int droneId, int stationId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void BatteryCharged(int droneId, int stationId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public IEnumerable<Drone> DronesChargingAtStation(int stationId)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool SendToCharge(int droneId, int stationId)
@@ -39,7 +20,7 @@ namespace Dal
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
             droneCharges = GetDroneChargeList().ToList();
             int droneIndex = CheckExistingDrone(droneId);
-               // DataSource.dronesList.FindIndex(d => d.Id == droneId);
+               //DataSource.dronesList.FindIndex(d => d.Id == droneId);
             int stationIndex = CheckExistingStation(stationId);
             ChangeChargeSlots(stationId, -1);
             DroneCharge DC = new DroneCharge() { StationId = stationId, DroneId = droneId, ChargingTime = DateTime.Now};

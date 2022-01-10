@@ -111,8 +111,8 @@ namespace PL
         private Drone Drone { get; set; }
         DroneListWindow lastW;
         BackgroundWorker AutoRun;
-        private void UpdatdeTask() => AutoRun.ReportProgress(0);
-        private bool chekEnd() => AutoRun.CancellationPending;
+        private void UpdatedTask() => AutoRun.ReportProgress(0); // invokes report progress action for thread updating
+        private bool chekEnd() => AutoRun.CancellationPending; // returns whether to cancel yet or not
         public DroneWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
         {
             InitializeComponent();
@@ -396,9 +396,19 @@ namespace PL
             else
             {
                 AutoManual = false;
+                AutoRun?.CancelAsync();
             }
+        //    Auto = true;
+        //    AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+        //    AutoRun.DoWork += AutoRun_DoWork;
+        //    AutoRun.ProgressChanged += AutoRun_ProgressChanged;
+        //    AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+        //    AutoRun.RunWorkerAsync(Drone.Id);
+        //}
+        //private void ManualButton_Click(object seder, RoutedEventArgs e) => AutoRun?.CancelAsync();
+            
 
-        }
+
 
         private void AutoRun_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -407,12 +417,13 @@ namespace PL
 
         private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            Drone = bl.GetDrone(Drone.Id);
+            DataContext = Drone;
         }
 
         private void AutoRun_DoWork(object sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            bl.simulation(Drone.Id, chekEnd, UpdatedTask);
         }
 
         //private void add_Click(object sender, RoutedEventArgs e)

@@ -60,7 +60,7 @@ namespace DalApi
         /// returns the list of customers having received a parcel
         /// </summary>
         /// <returns></returns>
-        List<Customer> CustomersDeliverdTo();
+        IEnumerable<Customer> CustomersDeliverdTo();
 
         /// <summary>
         /// checks if a customer exists in the customerlist, if it doesn't it throws a MissingIdException
@@ -208,6 +208,25 @@ namespace DalApi
         /// </summary>
         /// <param name="parcelId"></param>
         public void DeleteParcel(int parcelId);
+
+        /// <summary>
+        /// bonus: Doesn't completely delete the station but it has a sign that it is deleted
+        /// </summary>
+        /// <param name="stationId"></param>
+        public void DeleteStation(int stationId);
+
+        /// <summary>
+        /// bonus: Doesn't completely delete the drone but it has a sign that it is deleted
+        /// </summary>
+        /// <param name="droneId"></param>
+        public void DeleteDrone(int droneId);
+
+        /// <summary>
+        /// bonus: Doesn't completely delete the customer but it has a sign that it is deleted
+        /// </summary>
+        /// <param name="customerId"></param>
+        public void DeleteCustomer(string customerId);
+
 
     }
 }

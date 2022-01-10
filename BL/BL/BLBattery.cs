@@ -13,7 +13,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal int BatteryUsage(double distance, int pwrIndex)
         {
-            return (int)(idal1.DronePwrUsg()[pwrIndex] * distance);
+            lock (idal1)
+            {
+                return (int)(idal1.DronePwrUsg()[pwrIndex] * distance);
+            }
+           
         }
     }
 }

@@ -10,8 +10,8 @@
             public String PhoneNumber { get; set; }// we make it string so it can have 0 at beginning
             public double Latitude { get; set; }
             public double Longitude { get; set; }
-
-            public override string ToString()
+            public bool Deleted { get; set; }
+        public override string ToString()
             {
                 String result = " ";
                 result += $"ID is {Id}, \n";

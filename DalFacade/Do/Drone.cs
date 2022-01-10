@@ -7,10 +7,11 @@
             public int Id { get; set; }
             public string Model { get; set; }
             public WeightCategories Weight { get; set; }
-            //public DroneStatuses status { get; set; }
-            //public double battery { get; set;    }
+        //public DroneStatuses status { get; set; }
+        //public double battery { get; set;    }
+        public bool Deleted{ get; set; }
 
-            public override string ToString()
+        public override string ToString()
             {
                 String result = " ";
                 result += $"ID is {Id}, \n";

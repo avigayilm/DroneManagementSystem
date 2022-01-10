@@ -13,8 +13,9 @@ using System.Threading.Tasks;
             public double Longitude { get; set; }
             public double Latitude { get; set; }
             public int AvailableChargeSlots { get; set; }
+            public bool Deleted { get; set; }
 
-            public override string ToString()
+        public override string ToString()
             {
                 String result = " ";
                 result += $"ID is {Id}, \n";

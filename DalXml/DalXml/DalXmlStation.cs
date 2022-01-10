@@ -17,7 +17,7 @@ namespace Dal
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
             loadingToList(ref stations, StationXml);
-            if (stations.Exists(s => s.Id == stationId))
+            if (stations.Exists(s => s.Id == stationId && !s.Deleted))
             {
                 throw new DuplicateIdException("station already exists\n");
             }
@@ -40,19 +40,25 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ChangeChargeSlots(int stationId, int n)
         {
-            //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
-            //int index = stations.FindIndex(s=> s.Id == stationId);
-            //if (index==-1)
-            //{
-            //    throw new MissingIdException("station doesn't exists\n");
-            //}
-            int index = CheckExistingStation(stationId);
-            var temp = stations[index];
-            temp.AvailableChargeSlots += n;
-            stations[index] = temp;
-            XMLTools.SaveListToXMLSerializer(stations, StationXml);
-
+            try
+            {
+                int index = CheckExistingStation(stationId);
+                var temp = stations[index];
+                
+                temp.AvailableChargeSlots += n;
+                if (temp.AvailableChargeSlots < 0)
+                    throw new ArgumentException("number of slots cannot be smaller than 0");
+                stations[index] = temp;
+                XMLTools.SaveListToXMLSerializer(stations, StationXml);
+            }
+            catch (MissingIdException ex)
+            {
+                if(n>=0)
+                throw ex;
+            }  
+            
         }
+
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStation(int stationId)
@@ -72,7 +78,7 @@ namespace Dal
         public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null)
         {
             loadingToList(ref stations, StationXml);
-            return stations.FindAll(s => predicate == null ? true : predicate(s));
+            return stations.FindAll(s => predicate == null ? true : predicate(s) && !s.Deleted);
                 //XMLTools.LoadListFromXMLSerializer<Station>(StationXml).FindAll(d => predicate == null ? true : predicate(d));
         }
 
@@ -89,7 +95,7 @@ namespace Dal
             for (int i = 0; i < stations.Count; i++)
             {
                 distancekm = Bonus.Haversine(stations[i].Longitude, stations[i].Latitude, temp.Longitude, temp.Latitude);
-                if (distancekm < minDistance)
+                if (distancekm < minDistance && !stations[i].Deleted )
                 {
                     minDistance = distancekm;
                     index = i;// the new index is the index with the smallest distance
@@ -137,12 +143,39 @@ namespace Dal
         {
             //List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(StationXml);
             loadingToList(ref stations, StationXml);
-            int index = stations.FindIndex(s => s.Id == stationId);
+            int index = stations.FindIndex(s => s.Id == stationId && !s.Deleted);
             if (index == -1)
             {
                 throw new MissingIdException("No such Station exists\n");
             }
             return index;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteStation(int stationId)
+        {
+            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
+            loadingToList(ref stations, StationXml);
+            int sIndex = stations.FindIndex(s => s.Id == stationId);
+            if (sIndex == -1)
+            {
+                throw new MissingIdException("No such station exists\n");
+            }
+            if (parcels[sIndex].Delete)
+            {
+                throw new MissingIdException($"This Parcel:{ stationId } is deleted \n");
+            }
+            Station tempStation = stations[sIndex];
+            tempStation.Deleted = true;
+            stations[sIndex] = tempStation;
+            XMLTools.SaveListToXMLSerializer(stations,StationXml );
+            //if (pIndex == -1)
+            //{
+            //    throw new MissingIdException("No such parcel exists\n");
+            //}
+            //var temp = DataSource.parcelList[index];
+            //temp.Delete = true;
+            //DataSource.parcelList[index] = temp;
         }
 
     }

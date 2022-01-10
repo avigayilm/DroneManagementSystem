@@ -37,8 +37,12 @@ namespace BL
                 object obj1 = droneTemp;
                 newDrone.CopyProperties(obj1);
                 droneTemp = (DO.Drone)obj1;
-                idal1.AddDrone(droneTemp);// adding the drone to the dallist
-                idal1.SendToCharge(newDrone.Id, stationId);//sending the drone to charge
+                lock (idal1)
+                {
+                    idal1.AddDrone(droneTemp);// adding the drone to the dallist
+                    idal1.SendToCharge(newDrone.Id, stationId);//sending the drone to charge
+                }
+                
             }
 
             catch (DO.MissingIdException ex)
@@ -56,7 +60,10 @@ namespace BL
         {
             try
             {
-                idal1.UpdateDrone(droneId, model);
+                lock (this)
+                {
+                    idal1.UpdateDrone(droneId, model);
+                }
                 DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDron == default)
                     throw new RetrievalException("Couldn't get the Drone.");
@@ -75,7 +82,7 @@ namespace BL
         /// <param name="p"></param>
         /// <param name="tempBl"></param>
         /// <returns></returns>
-        internal Location DroneLocation(DO.Parcel p, DroneToList tempBl)
+        private Location DroneLocation(DO.Parcel p, DroneToList tempBl)
         {
             Location locTemp = new Location();
             if (p.Created != null && p.PickedUp == null)//if assigned but not yet collected
@@ -129,9 +136,20 @@ namespace BL
         public IEnumerable<DroneToList> GetAllDrones(Predicate<DroneToList> predicate = null)
         {
             return droneBL.FindAll(d => predicate == null ? true : predicate(d));
-
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(int droneId)
+        {
+            try
+            {
+                idal1.DeleteDrone(droneId);
+            }
+            catch (MissingIdException ex)
+            {
+                throw new RetrievalException(ex.Message);
+            }
+        }
 
 
 

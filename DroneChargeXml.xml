@@ -1,23 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DroneChargeXml.xml>
   <DroneCharge>
-    <DroneId>9593</DroneId>
-    <StationId>4343</StationId>
-    <ChargingTime>2022-01-06T02:17:43.0088487+02:00</ChargingTime>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>4508</DroneId>
-    <StationId>7736</StationId>
-    <ChargingTime>2022-01-06T16:02:54.7478879+02:00</ChargingTime>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>9615</DroneId>
-    <StationId>4375</StationId>
-    <ChargingTime>2022-01-06T17:09:40.8195374+02:00</ChargingTime>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>9615</DroneId>
-    <StationId>9786</StationId>
-    <ChargingTime>2022-01-07T11:08:50.7380501+02:00</ChargingTime>
+    <DroneId>5502</DroneId>
+    <StationId>2172</StationId>
+    <ChargingTime>2022-01-10T21:22:06.8692871+02:00</ChargingTime>
   </DroneCharge>
 </DroneChargeXml.xml>

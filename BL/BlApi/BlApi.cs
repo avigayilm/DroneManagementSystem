@@ -16,7 +16,7 @@ namespace BlApi
         /// <param name="station"></param>
         void AddStation(Station tempStat);
 
-        void simulation(int droneId, Func<bool> func,Action reportProgress );
+        void simulation(int droneId, Func<bool> func, Action reportProgress);
 
         /// <summary>
         /// adding a customer in the list of the datalayer
@@ -76,6 +76,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"></param>
         void DeliverParcelByDrone(int droneId);
+
 
         /// <summary>
         /// pre assigned drone now collects parcel
@@ -168,7 +169,7 @@ namespace BlApi
         /// <returns></returns>
         CustomerInParcel GetCustomerInParcel(string customerId);
 
-        public void Register(BO.Customer cus, string user, string password, string imageSrc,string emailAdd);
+        public void Register(BO.Customer cus, string user, string password, string imageSrc, string emailAdd);
         public bool Login(string user, string pass);
         public (IEnumerable<DroneInCharge>, int) getAllDroneInCharge(int stationId);
 
@@ -178,6 +179,26 @@ namespace BlApi
         /// <param name="parcelId"></param>
         /// <param name="recId"></param>
         public void UpdateParcel(int parcelId, string recId);
+
+        /// <summary>
+        /// marks parcel as deleted
+        /// </summary>
+        /// <param name="parcelId"></param>
         public void DeleteParcel(int parcelId);
+        /// <summary>
+        /// marks station as deleted
+        /// </summary>
+        /// <param name="stationId"></param>
+        public void DeleteStation(int stationId);
+        /// <summary>
+        /// marks customer as deleted
+        /// </summary>
+        /// <param name="customerId"></param>
+        public void DeleteCustomer(string customerId);
+        /// <summary>
+        /// marks drone as deleted
+        /// </summary>
+        /// <param name="droneId"></param>
+        public void DeleteDrone(int droneId);
     }
 }

@@ -167,7 +167,7 @@ namespace Dal
         }
         public static void CreateStation()// initializes 2 stations
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 int id;// checking if the random Id exists already
                 do

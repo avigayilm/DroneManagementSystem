@@ -64,6 +64,7 @@ namespace BL
                 {
                     case DroneToList { Status: DroneStatuses.Available }:
                         if (!sleepDelayTime()) break;
+
                         lock (bl)
                         {
                             // parcelId = dal.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight && BatteryUsage(droneDisFromPack, 0) + BatteryUsage(toStat, 0) + BatteryUsage(betweenCus, (int)pack.Weight + 1) < drone.Battery)
@@ -115,14 +116,14 @@ namespace BL
                                 lock (Bl)
                                 {
                                     try
-                                    {
-                                        station = Bl.GetStation(StationId ?? dal.GetDroneChargeList(dc => dc.DroneId == drone.Id).First().StationId);
+                                    { 
+                                        station = Bl.GetStation(StationId ?? dal.GetDroneChargeList(dc=> dc.DroneId == drone.Id).First().StationId);
                                     }
                                     catch (ArgumentException ex)
                                     {
                                         throw new RetrievalException("Could not find wanted station", ex);
                                     }
-                                    distance = bl.DroneDistanceFromStation(drone, null, station);
+                                    distance = bl.DroneDistanceFromStation(drone,null,station);
                                     maintenance = Maintenance.Going;
                                 }
                                 break;
@@ -141,7 +142,7 @@ namespace BL
                                     {
                                         double actualDistance = distance < WayTraveled ? distance : WayTraveled;
                                         distance -= actualDistance;
-                                        // drone.Battery = Max(0.0, droneBattery - actualDistance * Bl.BatteryUsages[DRONE_FREE]);
+                                       // drone.Battery = Max(0.0, droneBattery - actualDistance * Bl.BatteryUsages[DRONE_FREE]);
                                         drone.Battery = Math.Max(0, drone.Battery - ((int)Math.Round(actualDistance) * dal.DronePwrUsg()[0]));
                                     }
                                 }
@@ -162,8 +163,8 @@ namespace BL
                                     lock (Bl)
                                     {
                                         //drone.Battery = int.MinValue(100, drone.Battery + Bl.BatteryUsages[DRONE_CHARGE] * SECONDS_PASSED);
-                                        int batteryCharge = (int)(SECONDS_PASSED / 3600) * dal.DronePwrUsg()[4];
-                                        drone.Battery = Math.Min(100, drone.Battery + batteryCharge);
+                                        int batteryCharge = (int)(SECONDS_PASSED/3600) * dal.DronePwrUsg()[4];
+                                        drone.Battery =Math.Min(100, drone.Battery + batteryCharge);
                                     }
                                 }
                                 break;
@@ -198,8 +199,6 @@ namespace BL
                                 }
                                 else
                                 {
-
-
                                     bl.CollectingParcelByDrone(droneId);
                                     //Dal.parcelPickup((int)parcel ? Id);
                                     customer = Bl.GetCustomer(parcel?.ReceiverId);
@@ -214,7 +213,7 @@ namespace BL
                                 double actualDistance = distance < WayTraveled ? distance : WayTraveled;
                                 double Proportion = actualDistance / distance;
                                 int usg = pickedUp ? ((int)((DO.Parcel)parcel).Weight + 1) : 0;
-                                drone.Battery = Math.Max(0, drone.Battery - ((int)Math.Round(actualDistance) * dal.DronePwrUsg()[usg]));
+                                drone.Battery = Math.Max(0,drone.Battery -((int) Math.Round( actualDistance) * dal.DronePwrUsg()[usg]));
                                 double lat = drone.Loc.Latitude + (customer.Loc.Latitude - drone.Loc.Latitude) * Proportion;
                                 double lon = drone.Loc.Longitude + (customer.Loc.Longitude - drone.Loc.Longitude) * Proportion;
                                 drone.Loc = new() { Latitude = lat, Longitude = lon };
