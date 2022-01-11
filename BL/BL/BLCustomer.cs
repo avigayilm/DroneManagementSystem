@@ -88,7 +88,10 @@ namespace BL
                 throw new LoginBLException(ex.Message);
             }
 
-
+        }
+        public string getPic(string cuId)
+        {
+            return idal1.getPic(cuId);
         }
 
 

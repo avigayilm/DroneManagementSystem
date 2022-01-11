@@ -439,7 +439,8 @@ namespace PL
         }
             private void AutoRun_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
             {
-                throw new NotImplementedException();
+            MessageBox.Show("Drone management moved to manual");
+               // throw new NotImplementedException();
             }
 
             private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)

@@ -207,7 +207,9 @@ namespace Dal
                 loginList.Add(new Login()
                 {
                     UserName = cus.Id,
-                    Password = "miniProject"
+                    Password = "miniProject",
+                    profileSource = @"C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg"
+
                 });
             }
         }

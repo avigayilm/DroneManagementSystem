@@ -428,8 +428,10 @@ namespace PL
         {
           
                 IEnumerable<StationToList> temp = bl.GetAllStation();
-            stationToLists = (ObservableCollection<StationToList>)(from st in bl.GetAllStation()
+            temp = (from st in bl.GetAllStation()
                              select st);
+            // IEnumerable<StationToList> temp = new()
+            stationToLists = new(temp);
             //as ObservableCollection<StationToList>;
             //stationToLists = (from stationtolist in temp
             //                  group stationtolist by
@@ -444,7 +446,7 @@ namespace PL
         private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
            // customerToLists = new();
-           customerToLists = (ObservableCollection<CustomerToList>)(from cus in bl.GetAllCustomers()
+           customerToLists = new(from cus in bl.GetAllCustomers()
                                                        select cus);
             //    bl.GetAllCustomers().ToList();
             //foreach (var customerToList in tempCustomerToLists)

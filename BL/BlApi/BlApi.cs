@@ -201,5 +201,11 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"></param>
         public void DeleteDrone(int droneId);
+        /// <summary>
+        /// returns img source for profile pic
+        /// </summary>
+        /// <param name="cuId"></param>
+        /// <returns></returns>
+        public string getPic(string cuId);
     }
 }
