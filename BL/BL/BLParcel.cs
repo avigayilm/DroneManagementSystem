@@ -59,10 +59,10 @@ namespace BL
                 lock (idal1)
                 {
                     tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight &&
-                    BatteryUsage(DroneDistanceFromParcel(drone, p), 0) 
+                    BatteryUsage(DroneDistanceFromParcel(drone, p), 0)
                     + BatteryUsage(StationDistanceFromCustomer(idal1.GetCustomer(p.SenderId), idal1.SmallestDistanceStation(p.SenderId)), 0)
                     + BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(p.SenderId), idal1.GetCustomer(p.ReceiverId)), (int)p.Weight + 1)
-                    < drone.Battery).OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
+                    < drone.Battery).OrderByDescending(i => (int)i.Weight).ThenByDescending(i => (int)i.Priority).ThenBy(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
                 }
                 //int maxW = 0, maxPri = 0;
                 //double minDis = 0.0;
@@ -102,7 +102,7 @@ namespace BL
                         {
                             idal1.ParcelDrone(tempParcelList.First().Id, droneId); // update parcel in IDAL
                         }
-                       
+
                     }
                     else
                         throw new BatteryIssueException("Drone hasn't got enough battery to carry any parcel");
@@ -271,7 +271,7 @@ namespace BL
                         parcel.Dr.Loc = new Location();
                         dr.Loc.CopyProperties(parcel.Dr.Loc);
                     }
-                   
+
                 }
 
                 return parcel;
@@ -285,33 +285,24 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetAllParcels(Predicate<DO.Parcel> predicate = null)
         {
-            List<ParcelToList> tempList = new List<ParcelToList>();
+            //List<ParcelToList> tempList = new List<ParcelToList>();
             //idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
-            lock (this)
-            {
-                List<DO.Parcel> tempParcelList = idal1.GetAllParcels(predicate).ToList();
-                foreach (var (p, parcel) in
-                // return idal1.GetAllParcels(predicate).Select(p => p.CopyProperties(new ParcelToList()))
-                //select (p.CopyProperties(new ParcelToList())) ;
-                //return from p in idal1.GetAllParcels(predicate)
-                //       select (new ParcelToList() a=> p.CopyProperties(a);
-                //return from p in idal1.GetAllParcels(predicate)
-                //       let results = new ParcelToList()
-                //       select p.CopyProperties(results);
-                from DO.Parcel p in tempParcelList
-                let parcel = new ParcelToList()
-                select (p, parcel))
-                {
-                    p.CopyProperties(parcel);
-                    if (!p.Delete)
-                        parcel.ParcelStatus = GetParcelStatus(p.Id);
-                    tempList.Add(parcel);
-                }
-            }
+            lock (idal1)
+                return from p in idal1.GetAllParcels(predicate)
+                       where !p.Delete
+                       select p.CopyProperties(new ParcelToList { ParcelStatus = GetParcelStatus(p.Id) });
 
-            return tempList;
+          
         }
 
+
+        // return idal1.GetAllParcels(predicate).Select(p => p.CopyProperties(new ParcelToList()))
+        //select (p.CopyProperties(new ParcelToList())) ;
+        //return from p in idal1.GetAllParcels(predicate)
+        //       select (new ParcelToList() a=> p.CopyProperties(a);
+        //return from p in idal1.GetAllParcels(predicate)
+        //       let results = new ParcelToList()
+        //       select p.CopyProperties(results);
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(int parcelId, string recId)

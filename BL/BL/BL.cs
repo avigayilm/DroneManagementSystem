@@ -18,6 +18,7 @@ namespace BL
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
         internal DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
+        public Dictionary<int, int> chargeSlotsToAdd ;
         public static BL Instance
         {
             get
@@ -77,6 +78,10 @@ namespace BL
                     DO.Station tempSt = tempList[rand.Next(tempList.Count())];
                     dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
                     idal1.SendToCharge(dr.Id, tempSt.Id);
+                    if (chargeSlotsToAdd.ContainsKey(tempSt.Id))
+                        chargeSlotsToAdd[tempSt.Id]++;
+                    else
+                        chargeSlotsToAdd.Add(tempSt.Id, 1);
                    // count++;
                 }
                 else //the drone is available
@@ -96,6 +101,16 @@ namespace BL
         public void simulation(int droneId, Func<bool> func, Action reportProgress)
         {
             new Simulation(this, droneId, func, reportProgress);
+        }
+
+        public void changechargeSlots()
+        {
+            List<StationToList>temp = GetAllStation().ToList();
+           
+           foreach(var k in chargeSlotsToAdd )
+            {
+                idal1.ChangeChargeSlots(k.Key, k.Value);
+            }
         }
     }
 }

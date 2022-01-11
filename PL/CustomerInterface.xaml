@@ -479,7 +479,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\About.png" Grid.Column="1" Grid.RowSpan="3"/>
+                    <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\About.png" Grid.Column="1" Grid.RowSpan="3"/>
                     <Label Content="About" VerticalAlignment="Bottom" Foreground="#1361AB" FontFamily="Roboto" FontSize="30" FontWeight="Bold"/>
                     <TextBlock Grid.Row="1" Foreground="#1361AB"
                                FontFamily="Roboto" FontSize="11" HorizontalAlignment="Left" ><Run Text="Welcome to Yehudit's and Avigayil's parcelserive, which started "/><LineBreak/><Run Text="on 06/01/2022.. This ParcelService works with the newest technology"/><LineBreak/><Run Text=" and is made especially for you if you are looking for the fastest way "/><LineBreak/><Run Text="to get your parcel sent. If you have any problems  feel free to contact us.&#xA; By us you are always in good hands."/></TextBlock>
