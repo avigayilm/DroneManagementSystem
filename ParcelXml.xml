@@ -61,7 +61,7 @@
     <DroneId>2797</DroneId>
     <Created>2021-06-25T13:42:00</Created>
     <Assigned>2021-06-25T16:42:00</Assigned>
-    <PickedUp xsi:nil="true" />
+    <PickedUp>2022-01-11T23:14:30.5160655+02:00</PickedUp>
     <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
@@ -123,11 +123,11 @@
     <ReceiverId>0602274789</ReceiverId>
     <Weight>light</Weight>
     <Priority>emergency</Priority>
-    <DroneId>0</DroneId>
+    <DroneId>5130</DroneId>
     <Created>2021-07-11T06:22:00</Created>
-    <Assigned xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <Assigned>2022-01-12T00:11:25.4280646+02:00</Assigned>
+    <PickedUp>2022-01-12T00:11:25.4367165+02:00</PickedUp>
+    <Delivered>2022-01-12T00:11:25.4419737+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -203,9 +203,9 @@
     <Priority>normal</Priority>
     <DroneId>5130</DroneId>
     <Created>2022-01-11T21:45:21.5385683+02:00</Created>
-    <Assigned xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <Assigned>2022-01-12T00:11:26.9695462+02:00</Assigned>
+    <PickedUp>2022-01-12T00:11:27.4730303+02:00</PickedUp>
+    <Delivered>2022-01-12T00:11:27.4745643+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -214,11 +214,11 @@
     <ReceiverId>0143929359</ReceiverId>
     <Weight>light</Weight>
     <Priority>emergency</Priority>
-    <DroneId>0</DroneId>
+    <DroneId>5130</DroneId>
     <Created>2021-01-14T17:30:00</Created>
-    <Assigned xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <Assigned>2022-01-12T00:11:25.9504196+02:00</Assigned>
+    <PickedUp>2022-01-12T00:11:26.4547618+02:00</PickedUp>
+    <Delivered>2022-01-12T00:11:26.4624576+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -230,8 +230,8 @@
     <DroneId>5130</DroneId>
     <Created>2021-05-11T15:33:00</Created>
     <Assigned>2022-01-11T22:05:17.9298409+02:00</Assigned>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-11T23:36:28.5109668+02:00</PickedUp>
+    <Delivered>2022-01-12T00:10:21.0959372+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>

@@ -41,7 +41,7 @@ namespace BL
             //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null && p.Assigned != null).ToList();
-
+            chargeSlotsToAdd = new();
             foreach (DO.Parcel p in undeliveredParcel)
             {
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);

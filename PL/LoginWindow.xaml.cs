@@ -40,12 +40,13 @@ namespace PL
         private void LoginWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             IblObj.changechargeSlots();
+            
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             new CustomerInterface( this, IblObj).Show();
-            this.Close();
+           // this.Close();
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -57,7 +58,7 @@ namespace PL
                 if (userName == "Manager")
                 {
                     new DroneListWindow(IblObj).Show();
-                    this.Close();
+                   // this.Close();
                 }
                 else
                 {
