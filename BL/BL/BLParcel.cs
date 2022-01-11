@@ -157,7 +157,7 @@ namespace BL
                 lock (idal1)
                 {
                     DO.Parcel tempPack = idal1.GetParcel(tempDro.ParcelId);
-                    if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered == null))
+                    if (!(tempDro.Status == DroneStatuses.Delivery && tempPack.Delivered != null))
                         throw new DeliveryIssueException("Parcel cannot be delivered by drone\n");
                     DO.Customer tempCus = idal1.GetCustomer(tempPack.ReceiverId);
                     tempDro.Battery -= BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(tempPack.SenderId), tempCus), (int)tempPack.Weight + 1);//calculates the battery usage in delivery according to the weight of the package

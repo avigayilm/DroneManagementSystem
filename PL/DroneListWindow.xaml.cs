@@ -529,7 +529,7 @@ namespace PL
                 bl.DeleteDrone(CurrentDrone.Id);
                 droneToLists[weightstatus].RemoveAll(i => i.Id == CurrentDrone.Id);
                 DronesListView.Items.Refresh();
-                CheckComboBoxesParcel();
+                checkComboBoxesDrone();
 
             }
             catch (RetrievalException ex)
@@ -549,7 +549,7 @@ namespace PL
                 stationToLists.RemoveAt(index);
                // stationToLists[CurrentStation.AvailableChargeSlots].RemoveAll(i => i.Id == CurrentStation.Id);
                 StationListView.Items.Refresh();
-                CheckComboBoxesParcel();
+                
             }
             catch (RetrievalException ex)
             {
@@ -566,7 +566,7 @@ namespace PL
                 bl.DeleteCustomer(CurrentCustomer.Id);
                 customerToLists.Remove(CurrentCustomer);
                 CustomerListView.Items.Refresh();
-                CheckComboBoxesParcel();
+              
             }
             catch (RetrievalException ex)
             {

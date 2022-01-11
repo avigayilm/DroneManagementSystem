@@ -74,8 +74,16 @@ namespace BL
                             //    .OrderByDescending(p => p?.Priority)
                             //    .thenByDescending(parcel => parcel?.Weight)
                             //    .FirstOrDefault()?.Id;
-                            bl.AssignParcelToDrone(drone.Id);
-                            parcelId = drone.ParcelId;
+                            try
+                            {
+                                bl.AssignParcelToDrone(drone.Id);
+                                parcelId = drone.ParcelId;
+                            }
+                            catch (BatteryIssueException)
+                            {
+
+                            }
+                            
                             switch (parcelId, drone.Battery)
                             {
                                 case (null, 100):
@@ -152,8 +160,9 @@ namespace BL
                                 if (drone.Battery == 100)
                                     lock (Bl)
                                     {
-                                        drone.Status = DroneStatuses.Available;
+                                       
                                         Bl.ReleasingDroneFromCharge(droneId);
+                                        drone.Status = DroneStatuses.Available;
                                         //Bl.idal1.StationDroneOut(station.Id);
                                     }
                                 else
@@ -163,8 +172,8 @@ namespace BL
                                     lock (Bl)
                                     {
                                         //drone.Battery = int.MinValue(100, drone.Battery + Bl.BatteryUsages[DRONE_CHARGE] * SECONDS_PASSED);
-                                        int batteryCharge = (int)(SECONDS_PASSED/3600) * dal.DronePwrUsg()[4];
-                                        drone.Battery =Math.Min(100, drone.Battery + batteryCharge);
+                                        double batteryCharge = (SECONDS_PASSED) * dal.DronePwrUsg()[4];// we have to change the dronepwrusg
+                                        drone.Battery =Math.Min(100, drone.Battery +(int) batteryCharge);
                                     }
                                 }
                                 break;
@@ -184,8 +193,15 @@ namespace BL
                             //    {
                             //        throw new BadStatusException("Internal error getting parcel", ex);
                             //    }
-                            distance = bl.DronedistanceFromCustomer(drone, customer);// drone.Distance(customer);
-                                                                                     // pickedUp? drone.Battery==drone.Battery-bl.BatteryUsage(distance, (int)((DO.Parcel)parcel).Weight + 1)
+
+
+                            //parcel = dal.GetParcel(drone.ParcelId);
+                            //customer = bl.GetCustomer(((DO.Parcel)parcel).ReceiverId);
+                            //distance = bl.DronedistanceFromCustomer(drone, customer);
+                            //pickedUp = parcel?.PickedUp is not null;// drone.Distance(customer);
+                            // pickedUp? drone.Battery==drone.Battery-bl.BatteryUsage(distance, (int)((DO.Parcel)parcel).Weight + 1)
+                            initDelivery(drone.ParcelId);
+                            distance = bl.DronedistanceFromCustomer(drone, customer);
                         }
                         if (distance < 0.01 || drone.Battery <= drone.Battery - bl.BatteryUsage(distance, pickedUp ? ((int)((DO.Parcel)parcel).Weight + 1) : 0) + 3)
                             lock (Bl)
