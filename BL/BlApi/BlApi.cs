@@ -36,6 +36,7 @@ namespace BlApi
         /// </summary>
         /// <param name="newParcel"></param>
         int AddParcel(Parcel newParcel);
+        void changechargeSlots();
 
         /// <summary>
         /// updates the drone's model

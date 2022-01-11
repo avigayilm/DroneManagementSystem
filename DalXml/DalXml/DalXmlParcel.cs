@@ -121,7 +121,7 @@ namespace Dal
             }
             Parcel temp = parcels[index];
             temp.DroneId = droneId;
-            temp.Created = DateTime.Now;
+            temp.Assigned = DateTime.Now;
             parcels[index] = temp;
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
         }

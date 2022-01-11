@@ -34,6 +34,12 @@ namespace PL
         {
             InitializeComponent();
             DataContext = this;
+            Closing += LoginWindow_Closing;
+        }
+
+        private void LoginWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            IblObj.changechargeSlots();
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)

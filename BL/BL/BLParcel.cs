@@ -62,7 +62,7 @@ namespace BL
                     BatteryUsage(DroneDistanceFromParcel(drone, p), 0)
                     + BatteryUsage(StationDistanceFromCustomer(idal1.GetCustomer(p.SenderId), idal1.SmallestDistanceStation(p.SenderId)), 0)
                     + BatteryUsage(DistanceBetweenCustomers(idal1.GetCustomer(p.SenderId), idal1.GetCustomer(p.ReceiverId)), (int)p.Weight + 1)
-                    < drone.Battery).OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
+                    < drone.Battery).OrderByDescending(i => (int)i.Weight).ThenByDescending(i => (int)i.Priority).ThenBy(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
                 }
                 //int maxW = 0, maxPri = 0;
                 //double minDis = 0.0;
