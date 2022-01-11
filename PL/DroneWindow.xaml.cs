@@ -179,19 +179,29 @@ namespace PL
         {
             try
             {
-
+                DroneToList tempForUpdate = lastW.droneToList;
                 UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                 switch (inputedOption)
                 {
                     case UpdateOptions.SendingToCharge:
                         {
 
-                            bl.SendingDroneToCharge(Drone.Id);
+                            int tempStationId = bl.SendingDroneToCharge(Drone.Id);
+                            lastW.stationToLists.Values
+                                .First(s => s.Exists(st => st.Id == tempStationId))
+                                .First(s => s.Id == tempStationId)
+                                .AvailableChargeSlots -= 1;
+                            lastW.StationListView.Items.Refresh();
                             break;
                         }
                     case UpdateOptions.ReleaseFromCharge:
                         {
-                            bl.ReleasingDroneFromCharge(Drone.Id);
+                           int tempStationId = bl.ReleasingDroneFromCharge(Drone.Id);
+                            lastW.stationToLists.Values
+                                .First(s => s.Exists(st => st.Id == tempStationId))
+                                .First(s => s.Id == tempStationId)
+                                .AvailableChargeSlots += 1;
+                            lastW.StationListView.Items.Refresh();
                             break;
                         }
                     case UpdateOptions.Assign:
@@ -221,7 +231,20 @@ namespace PL
                 lastW.droneToList.Model = Drone.Model;
                 if(lastW.droneToList.Status != Drone.Status)//if the status has changed and so the drone belongs to a  differant key in dicitonary
                 {
-
+                    
+                    wAndS.Status = (DroneStatuses)Drone.Status;
+                    wAndS.Weight = (WeightCategories)Drone.Weight;
+                    lastW.droneToLists[wAndS].Remove(tempForUpdate); //remove the drone from its original placing
+                    wAndS.Status = (DroneStatuses)lastW.droneToList.Status;
+                    wAndS.Weight = (WeightCategories)lastW.droneToList.Weight;
+                    if (lastW.droneToLists.ContainsKey(wAndS)) // if the dicionary holds a key for the updated drone add it htere
+                        lastW.droneToLists[wAndS].Add(lastW.droneToList);
+                    else // if it doesnt- create the key for the updated drone
+                    {
+                        List<BO.DroneToList> temp = new();
+                        temp.Add(lastW.droneToList);
+                        lastW.droneToLists.Add(wAndS ,temp);
+                    }
                 }
                 //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();

@@ -5,4 +5,19 @@
     <StationId>2172</StationId>
     <ChargingTime>2022-01-10T21:22:06.8692871+02:00</ChargingTime>
   </DroneCharge>
+  <DroneCharge>
+    <DroneId>5502</DroneId>
+    <StationId>9084</StationId>
+    <ChargingTime>2022-01-11T01:55:02.7290618+02:00</ChargingTime>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7205</DroneId>
+    <StationId>2172</StationId>
+    <ChargingTime>2022-01-11T02:34:28.1084104+02:00</ChargingTime>
+  </DroneCharge>
+  <DroneCharge>
+    <DroneId>7205</DroneId>
+    <StationId>9084</StationId>
+    <ChargingTime>2022-01-11T10:31:41.4741793+02:00</ChargingTime>
+  </DroneCharge>
 </DroneChargeXml.xml>
