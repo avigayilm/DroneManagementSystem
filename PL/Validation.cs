@@ -32,16 +32,17 @@ namespace PL
         }
     }
 
-    public class ComboboxError : ValidationRule
+    public class    longitudeCheck : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string index = value as string;
-            if (index=="4")
-                return new ValidationResult(false, "choose appropiate value");
+            string charString = value as string;
+            if (string.IsNullOrWhiteSpace(charString))
+                return new ValidationResult(false, "can't be empty");
             return new ValidationResult(true, null);
         }
     }
+
 }
 //{
 //    public class InputValidation : IDataErrorInfo

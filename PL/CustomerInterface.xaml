@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+         xmlns:Converters="clr-namespace:PL"
         mc:Ignorable="d"
         Title="CustomerInterface" Height="450" Width="800" Background="#E5E5E5">
 
     <Window.Resources>
+        <Converters:HasAllTextConverter x:Key="MyHasAllTextConverter" />
         <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -33,6 +35,18 @@
             </Style.Triggers>
 
         </Style>
+
+        <Style x:Key="EnableButton" TargetType="Button">
+
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=Register}" Value="true">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+
+        </Style>
+
 
 
 
@@ -128,15 +142,15 @@
                         </Image.Resources>
                     </Image>
                     <TextBlock Text="Name" Grid.Column="2" Grid.Row="3"/>
-                    <TextBox Text="{Binding me.Name, Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
+                    <TextBox  Name="Nametxt" Text="{Binding me.Name, Mode=TwoWay}" Grid.Column="3" Grid.Row="3"/>
                     <TextBlock Text="Id" Grid.Column="2" Grid.Row="4"/>
-                    <TextBox Text="{Binding me.Id, Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
+                    <TextBox  Name="Idtxt" Text="{Binding me.Id, Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
                     <TextBlock Text="PhoneNumber" Grid.Column="2" Grid.Row="5"/>
-                    <TextBox Text="{Binding me.PhoneNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+                    <TextBox Name="Phonetxt" Text="{Binding me.PhoneNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
                     <TextBlock Text="Longitude" Grid.Column="2" Grid.Row="6"/>
-                    <TextBox Text="{Binding me.Loc.Longitude, Mode=TwoWay}" Grid.Column="3" Grid.Row="6"/>
+                    <TextBox Name="Longtxt" Text="{Binding me.Loc.Longitude, Mode=TwoWay}" Grid.Column="3" Grid.Row="6"/>
                     <TextBlock Text="Latitude" Grid.Column="2" Grid.Row="7"/>
-                    <TextBox Text="{Binding me.Loc.Latitude, Mode=TwoWay}" Grid.Column="3" Grid.Row="7"/>
+                    <TextBox Name="Lattxt" Text="{Binding me.Loc.Latitude, Mode=TwoWay}" Grid.Column="3" Grid.Row="7"/>
 
                     <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
 
@@ -166,7 +180,19 @@
                             <Image x:Name="profileAdd" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="65" Width="56" MouseEnter="profileAdd_MouseEnter"/>
                             <TextBlock Text="Add picture"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
-                        <Button  Grid.Column="0" Grid.Row="3" Content="Sumbit" Click="Submit_Click"></Button>
+                        <Button  Grid.Column="0" Grid.Row="3" Content="Sumbit" Click="Submit_Click">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource MyHasAllTextConverter}">
+                                    <Binding ElementName="Nametxt" Path="Text" />
+                                    <Binding ElementName="Idtxt" Path="Text" />
+                                    <Binding ElementName="Phonetxt" Path="Text" />
+                                    <Binding ElementName="Longtxt" Path="Text" />
+                                    <Binding ElementName="Lattxt" Path="Text" />
+                                    <Binding ElementName="emailTbx" Path="Text" />
+                                    <Binding ElementName="passTbx" Path="Text" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
 
                     </Grid>
                     <!--<Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\Profile.png" Grid.ColumnSpan="10" Grid.RowSpan="5"/>
