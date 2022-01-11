@@ -63,7 +63,7 @@ namespace BlApi
         /// sends a given drone to charge in apropriate station
         /// </summary>
         /// <param name="droneId"></param>
-        void SendingDroneToCharge(int droneId);
+        int SendingDroneToCharge(int droneId);
 
         /// <summary>
         /// assigns a fitting parcel to given drone updating parcel in idal and drone list in bl
@@ -161,7 +161,7 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="chargingTime"></param>
-        void ReleasingDroneFromCharge(int droneId);
+        int ReleasingDroneFromCharge(int droneId);
         /// <summary>
         /// given a customer id returns customer as customer in parcel
         /// </summary>

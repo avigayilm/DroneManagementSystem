@@ -23,7 +23,7 @@
     <Created>2021-02-23T21:25:00</Created>
     <Assigned>2021-02-24T00:25:00</Assigned>
     <PickedUp>2021-02-24T01:25:00</PickedUp>
-    <Delivered>2022-01-11T16:47:27.8190439+02:00</Delivered>
+    <Delivered>2022-01-10T23:07:22.6563734+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -35,8 +35,8 @@
     <DroneId>5130</DroneId>
     <Created>2021-05-17T20:28:00</Created>
     <Assigned>2021-05-17T23:28:00</Assigned>
-    <PickedUp>2022-01-11T16:48:29.4350136+02:00</PickedUp>
-    <Delivered>2022-01-11T16:48:29.4475068+02:00</Delivered>
+    <PickedUp>2022-01-10T22:48:12.387671+02:00</PickedUp>
+    <Delivered>2022-01-10T22:52:43.4588384+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -48,8 +48,8 @@
     <DroneId>7658</DroneId>
     <Created>2021-01-22T15:44:00</Created>
     <Assigned>2021-01-22T18:44:00</Assigned>
-    <PickedUp>2022-01-11T16:58:12.0333577+02:00</PickedUp>
-    <Delivered>2022-01-11T17:00:09.1203078+02:00</Delivered>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -61,8 +61,8 @@
     <DroneId>2797</DroneId>
     <Created>2021-06-25T13:42:00</Created>
     <Assigned>2021-06-25T16:42:00</Assigned>
-    <PickedUp>2022-01-11T16:54:14.3727457+02:00</PickedUp>
-    <Delivered>2022-01-11T16:54:14.3781377+02:00</Delivered>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -201,11 +201,11 @@
     <ReceiverId>0602274789</ReceiverId>
     <Weight>light</Weight>
     <Priority>normal</Priority>
-    <DroneId>5130</DroneId>
-    <Created>2022-01-11T19:42:24.3578663+02:00</Created>
+    <DroneId>0</DroneId>
+    <Created>2021-01-11T17:45:00</Created>
     <Assigned xsi:nil="true" />
-    <PickedUp>2022-01-11T16:48:29.9766428+02:00</PickedUp>
-    <Delivered>2022-01-11T19:42:14.8010244+02:00</Delivered>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -214,11 +214,11 @@
     <ReceiverId>0143929359</ReceiverId>
     <Weight>light</Weight>
     <Priority>emergency</Priority>
-    <DroneId>5130</DroneId>
-    <Created>2022-01-11T18:30:16.4871899+02:00</Created>
+    <DroneId>0</DroneId>
+    <Created>2021-01-14T17:30:00</Created>
     <Assigned xsi:nil="true" />
-    <PickedUp>2022-01-11T16:54:14.9058641+02:00</PickedUp>
-    <Delivered>2022-01-11T18:30:16.488612+02:00</Delivered>
+    <PickedUp xsi:nil="true" />
+    <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
   <Parcel>

@@ -13,9 +13,10 @@ namespace BL
     public partial class BL
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void SendingDroneToCharge(int droneId)
+        public int SendingDroneToCharge(int droneId)
         {
             DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
+            int stationId = 0;
             if (tempDron.Status == DroneStatuses.Available)
             {
 
@@ -24,6 +25,7 @@ namespace BL
                 if (hasEnoughBattery)//if it's available and there is enough battery
                 {
                     //update the drone
+                    stationId = tempStation.Id;
                     double distance = Bonus.Haversine(tempDron.Loc.Longitude, tempDron.Loc.Latitude, tempStation.Longitude, tempStation.Latitude);
                     tempDron.Loc.Longitude = tempStation.Longitude;
                     tempDron.Loc.Latitude = tempStation.Latitude;
@@ -44,12 +46,12 @@ namespace BL
             }
             else
                 throw new DroneChargeException("Can't send the drone to charge");// throw approptate acception
-
+            return stationId;
         }
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void ReleasingDroneFromCharge(int droneId)
+        public int ReleasingDroneFromCharge(int droneId)
         {
             try
             {
@@ -74,9 +76,11 @@ namespace BL
                         //update dronecharge
                         idal1.BatteryCharged(droneId, stationId);
                     }
+                    return stationId;
                 }
                 else
                     throw new DroneChargeException("Couldn't release the drone from charge");// throw approptate acception
+                return 0;
             }
             catch (DO.MissingIdException ex)
             {

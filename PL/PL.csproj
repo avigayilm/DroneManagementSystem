@@ -12,6 +12,7 @@
     <None Remove="b_round.jpg" />
     <None Remove="Icons\11. receive parcel.png" />
     <None Remove="Icons\About.png" />
+    <None Remove="Icons\B. background.png" />
     <None Remove="Icons\ContactUs.png" />
     <None Remove="Icons\customers.png" />
     <None Remove="Icons\drone.png" />
@@ -33,6 +34,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\About.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\B. background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\drone.png">

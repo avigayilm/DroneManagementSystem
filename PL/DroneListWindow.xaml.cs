@@ -143,6 +143,15 @@ namespace PL
         private void DroneListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             droneToList = (DroneToList)DronesListView.SelectedItem;
+            //because we use the station list in some case of updating - if the stationlist isnt initialized it will be initailize here
+            if (stationToLists == null) 
+            {
+                IEnumerable<StationToList> temp = bl.GetAllStation();
+                stationToLists = (from stationtolist in temp
+                                  group stationtolist by
+                                  stationtolist.AvailableChargeSlots
+                                ).ToDictionary(x => x.Key, x => x.ToList());
+            }
             new DroneWindow(this, bl).Show();
         }
         /// <summary>
@@ -385,11 +394,14 @@ namespace PL
 
         private void StationTab_MouseEnter(object sender, MouseEventArgs e)
         {
-            IEnumerable<StationToList> temp = bl.GetAllStation();
-            stationToLists = (from stationtolist in temp
-                              group stationtolist by
-                              stationtolist.AvailableChargeSlots
-                            ).ToDictionary(x => x.Key, x => x.ToList());
+            if (stationToLists == null)
+            {
+                IEnumerable<StationToList> temp = bl.GetAllStation();
+                stationToLists = (from stationtolist in temp
+                                  group stationtolist by
+                                  stationtolist.AvailableChargeSlots
+                                ).ToDictionary(x => x.Key, x => x.ToList());
+            }
             StationListView.ItemsSource = stationToLists.Values.SelectMany(x => x);
         }
 
