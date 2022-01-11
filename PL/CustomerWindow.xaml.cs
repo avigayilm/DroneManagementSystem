@@ -31,6 +31,7 @@ namespace PL
         DroneListWindow lastW;
         LoginWindow lastLogin;
         public bool addOrUpdate { get; set; }
+        string imgSrc { get; set; }
         //public bool addOrUpdate
         //{
         //    get { return (bool)GetValue(addOrUpdateProperty); }
@@ -53,24 +54,26 @@ namespace PL
             lastW = last;
             Customer = new Customer();
             Customer.Loc = new();
+            imgSrc = @"C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\Profile.png";
             DataContext = this;
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
-        public CustomerWindow(BlApi.Ibl IblObj, LoginWindow last)// constructor to register a Customer
-        {
-            InitializeComponent();
-            bl = IblObj;
-            addOrUpdate = Globals.add;
-            Customer = new Customer(); 
-            Customer.Loc = new();
-            DataContext = this;
-            idTbx.Text = last.userName;
-            idTbx.IsReadOnly = true;
-            UpdateGrid.Visibility = Visibility.Hidden;
-            UpdateorAddButton.Content = "Register";
-        }
-        public CustomerWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
+        //public CustomerWindow(BlApi.Ibl IblObj, LoginWindow last)// constructor to register a Customer
+        //{
+        //    InitializeComponent();
+        //    bl = IblObj;
+        //    addOrUpdate = Globals.add;
+        //    Customer = new Customer(); 
+        //    Customer.Loc = new();
+        //    imgSrc = bl.getPic()
+        //    DataContext = this;
+        //    idTbx.Text = last.userName;
+        //    idTbx.IsReadOnly = true;
+        //    UpdateGrid.Visibility = Visibility.Hidden;
+        //    UpdateorAddButton.Content = "Register";
+        //}
+        public CustomerWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a customer
         {
             InitializeComponent();
             bl = ibl;
@@ -78,6 +81,14 @@ namespace PL
             lastW = last;
             Customer = bl.GetCustomer(lastW.customerToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
+            try {
+                imgSrc = bl.getPic(Customer.Id);
+            }
+            catch(Exception ex)
+            {
+                imgSrc = @"C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\Profile.png";
+            }
+            imgSrc = bl.getPic(Customer.Id);
             DataContext = this;
 
             //senderParcelsObserverable = from item in Customer.SentParcels

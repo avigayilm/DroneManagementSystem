@@ -141,5 +141,20 @@ namespace Dal
             customers[cIndex] = tempCustomer;
             XMLTools.SaveListToXMLSerializer(customers, CustomerXml);
         }
+
+        public string getPic(string cuId)
+        {
+            loadingToList(ref logins, LoginXml);
+            int index = logins.FindIndex(c => c.UserName == cuId);
+            if (index == -1)
+            {
+                throw new LoginException("username doesnt exists");
+            }
+            else
+            {
+                return logins[index].profileSource;
+            }
+        }
+      
     }
 }

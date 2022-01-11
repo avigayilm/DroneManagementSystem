@@ -66,6 +66,7 @@ namespace Dal
             int[] pwrUsg = { int.Parse(tempPwr.Element("pwrUsgEmpty").Value), int.Parse(tempPwr.Element("pwrUsgLight").Value), int.Parse(tempPwr.Element("pwrUsgMedium").Value), int.Parse(tempPwr.Element("pwrUsgHeavy").Value), int.Parse(tempPwr.Element("chargePH").Value) };
             return pwrUsg;
         }
+
        
     }
 }

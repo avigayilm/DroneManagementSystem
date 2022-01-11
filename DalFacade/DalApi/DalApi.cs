@@ -94,6 +94,7 @@ namespace DalApi
         /// </summary>
         /// <param name="Buzzer"></param>
         void BatteryCharged(int droneId, int stationId);
+        string getPic(string cuId);
 
         /// <summary>
         /// The get functions return a string with all the information of the lists

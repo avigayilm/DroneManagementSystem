@@ -77,7 +77,6 @@ namespace BL
                         {
                             idal1.ParcelDrone(tempParcelList.First().Id, droneId); // update parcel in IDAL
                         }
-
                     }
                     else
                         throw new BatteryIssueException("Drone hasn't got enough battery to carry any parcel");
