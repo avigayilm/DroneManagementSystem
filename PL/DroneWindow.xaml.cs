@@ -392,6 +392,7 @@ namespace PL
                 AutoRun.DoWork += AutoRun_DoWork;
                 AutoRun.ProgressChanged += AutoRun_ProgressChanged;
                 AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+                AutoRun.RunWorkerAsync(Drone.Id);
             }
             else
             {

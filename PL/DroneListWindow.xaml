@@ -179,7 +179,7 @@
 
 
 
-                    <ListView x:Name="DronesListView" Foreground="{Binding Status, Converter={StaticResource MyStatusToColourConverter}}"   MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
+                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
@@ -200,7 +200,7 @@
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 <Setter Property="Margin" Value="10"/>
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Foreground" Value="{Binding Status, Converter={StaticResource MyStatusToColourConverter}}" />
                                 <Setter Property="FontSize" Value="11"/>
                                 <Setter Property="FontFamily" Value="Roboto"/>
                                 <Setter Property="FontWeight" Value="Normal"/>

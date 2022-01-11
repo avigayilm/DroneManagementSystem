@@ -35,6 +35,11 @@ namespace PL
         public ObservableCollection<ParcelToList> confirmParcels;
         //public ObservableCollection<ParcelToList> parcelToLists;
         public Customer me { get; set; }
+        bool created { get; set; }
+        bool assigned { get; set; }
+        bool pickedUp { get; set; }
+        bool delivered { get; set; }
+        int parcelIdInput { get; set; }
        // public int Created { get; set; }
         private int _created;
         public int Created
@@ -327,6 +332,15 @@ namespace PL
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void sumbmitId_Click(object sender, RoutedEventArgs e)
+        {
+           Parcel tempParcel= bl.GetParcel(parcelIdInput);
+            created = tempParcel.Created != null ? true : false;
+            assigned = tempParcel.Assigned != null ? true : false;
+            pickedUp = tempParcel.PickedUp != null ? true : false;
+            delivered = tempParcel.Delivered != null ? true : false;
         }
     }
 }

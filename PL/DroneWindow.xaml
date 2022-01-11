@@ -171,7 +171,7 @@
         <Style x:Key="AutoOrManual" TargetType="Button">
             <Setter Property="Content" Value="Auto"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=AutoManual}" Value="false">
+                <DataTrigger Binding="{Binding AutoManual}" Value="true">
                     <Setter Property="Content" Value="Manual"></Setter>
                 </DataTrigger>
             </Style.Triggers>
@@ -189,7 +189,7 @@
             <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
         </Grid.Background>
 
-        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Visible">
+        <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
@@ -324,23 +324,10 @@
                 </Button.Resources>
             </Button>
             <!--<Button Name="AutoManualButton" Click="AutoButton_Click" Style="{StaticResource AutoOrManual}"></Button>-->
-            <Button Name="AutoManualButton" 
-                IsCancel="True"
-                Grid.Row="6" 
-                Grid.Column="3" 
-                Width="200"
-                Margin="9,41,10,49" 
-                    Background="AliceBlue"
-                    Click="AutoButton_Click" Style="{StaticResource AutoOrManual}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+          
         </Grid>
         <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
-         Visibility="Hidden">
+         Visibility="Visible">
 
 
             <Grid.ColumnDefinitions>
@@ -550,6 +537,20 @@
                 Grid.Row="9" 
                 Grid.Column="5" 
                  Click="cancel_Click" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="10,0,0,36" >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Name="AutoManualButton" 
+                IsCancel="True"
+                Grid.Row="9" 
+                Grid.Column="8" 
+                Width="200" 
+                    Background="AliceBlue"
+                    Click="AutoButton_Click" Style="{StaticResource AutoOrManual}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
