@@ -26,5 +26,21 @@ namespace PL
             throw new NotImplementedException();
 
     }
+
+    internal class StatusToColourConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            value switch
+            {
+                DroneStatuses.Available => Brushes.DarkRed,
+                DroneStatuses.Delivery=> Brushes.Yellow,
+                DroneStatuses.Maintenance=>Brushes.Orange,
+                _ => Brushes.White
+            };
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+
+    }
 }
     

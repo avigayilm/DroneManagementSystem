@@ -215,7 +215,15 @@ namespace BL
                 return ParcelStatuses.Created;
         }
 
+        /// <summary>
+        /// true=sender
+        /// </summary>
+        /// <param name="parcelId"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+
         [MethodImpl(MethodImplOptions.Synchronized)]
+
         public ParcelAtCustomer GetParcelAtCustomer(int parcelId, bool sender)
         {
             BO.Parcel parcel = new BO.Parcel();

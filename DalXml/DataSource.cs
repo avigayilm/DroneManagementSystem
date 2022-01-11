@@ -202,7 +202,7 @@ namespace Dal
                 UserName = "Manager",
                 Password = "YehuditAvigayil"
             });
-            foreach(Customer cus in customerList)
+            foreach (Customer cus in customerList)
             {
                 loginList.Add(new Login()
                 {

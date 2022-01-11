@@ -19,24 +19,48 @@ using System.Net;
 using BO;
 using BL;
 using BlApi;
+using System.ComponentModel;
 
 namespace PL
 {
     /// <summary>
     /// Interaction logic for CustomerInterface.xaml
     /// </summary>
-    public partial class CustomerInterface : Window
+    public partial class CustomerInterface : Window, INotifyPropertyChanged
     {
         BlApi.Ibl bl;
         LoginWindow lastW;
-        public ObservableCollection<ParcelAtCustomer> sendParcels;
+        public ObservableCollection<ParcelToList> sendParcels;
         public ObservableCollection<ParcelAtCustomer> receivedParcels;
         public ObservableCollection<ParcelToList> confirmParcels;
         //public ObservableCollection<ParcelToList> parcelToLists;
         public Customer me { get; set; }
-        public int Assigned { get; set; }
-        public int OnItWay { get; set; }
-        public int Received { get; set; }
+       // public int Created { get; set; }
+        private int _created;
+        public int Created
+        {
+            get { return _created; }
+            set { _created = value; NotifyPropertyChanged(nameof(Created)); }
+        }
+        internal void NotifyPropertyChanged(string propertyName) =>
+       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        private int _onItWay;
+        public int OnItWay
+        {
+            get { return _onItWay; }
+            set { _onItWay = value; NotifyPropertyChanged(nameof(OnItWay)); }
+        }
+
+        private int _received;
+        public int Received
+        {
+            get { return _received; }
+            set { _received= value; NotifyPropertyChanged(nameof(Received)); }
+        }
+
         public Parcel parcel { get; set; }
         public int parcelId;
         public ParcelToList parcelToList { get; set; }
@@ -89,7 +113,9 @@ namespace PL
             //sendParcels = from sent in me.SentParcels
             //              select (sent.CopyProperties(new ObservableCollection<ParcelAtCustomer>()));
             //    ;
-            foreach (ParcelAtCustomer p in me.SentParcels)
+
+            IEnumerable<ParcelToList> sendParcelsToList = bl.GetAllParcels(x => (x.SenderId == me.Id));
+            foreach (ParcelToList p in sendParcelsToList)
             {
                 sendParcels.Add(p);
             }
@@ -101,7 +127,7 @@ namespace PL
             }
             receivedparcelsList.ItemsSource = receivedParcels;
 
-            Assigned= bl.GetAllParcels(x =>  (x.SenderId == me.Id && x.PickedUp == null && x.Assigned != null)).Count();
+            Created= sendParcels.Count();
             OnItWay = bl.GetAllParcels(x => (x.SenderId == me.Id && x.PickedUp != null && x.Delivered==null)).Count();
             Received = receivedParcels.Count;
 
@@ -193,9 +219,11 @@ namespace PL
                 parcel.Created = DateTime.Now;
                 //parcel.Dr = new();
                 //parcel.Dr.Loc = new();
-                int parcelId = bl.AddParcel(parcel);
-                
-                sendParcels.Add(bl.GetParcelAtCustomer(parcelId, true));
+               parcel.Id = bl.AddParcel(parcel);
+                ParcelToList temp = bl.GetAllParcels(x => x.Id == parcel.Id).First();
+
+                sendParcels.Add(temp);
+               Created++;
                 MessageBox.Show(parcel.ToString(), "added Parcel");
                 
                
@@ -249,11 +277,15 @@ namespace PL
                     ParcelToList CurrentParcel = framework.DataContext as ParcelToList;
                     confirmParcels.Remove(parcelToList);
                     bl.DeliverParcelByDrone(parcel.Dr.Id);
-                   
+                    receivedParcels.Add(bl.GetParcelAtCustomer(parcel.Id,false));
+                    Received++;
+                    parcel = new();
+
+
                 }
                 else if (Result == MessageBoxResult.No)
                 {
-                    Environment.Exit(0);
+                    
                 }
             }
             else if(parcelToList.SenderId==me.Id)// if I am supposed to send the parcel
@@ -262,16 +294,19 @@ namespace PL
                 if (Result == MessageBoxResult.Yes)
                 {
                     parcelToList.ParcelStatus = BO.ParcelStatuses.PickedUp;
+                    sendParcels.First(x => x.Id == parcelToList.Id).ParcelStatus = BO.ParcelStatuses.PickedUp;
                     FrameworkElement framework = sender as FrameworkElement;
                     ParcelToList CurrentParcel = framework.DataContext as ParcelToList;
                     confirmParcels.Remove(parcelToList);
                     bl.CollectingParcelByDrone(parcel.Dr.Id);
-                    //confirmParcels.Items.Refresh();
+                    OnItWay++;
+                    parcel = new();
+                    SentparcelsList.Items.Refresh();
                 }
 
                 else if (Result == MessageBoxResult.No)
                 {
-                    Environment.Exit(0);
+                  
                 }
             }
         }
@@ -289,6 +324,9 @@ namespace PL
             }
         }
 
-        
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

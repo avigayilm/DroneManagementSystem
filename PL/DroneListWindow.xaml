@@ -18,6 +18,7 @@
 
     <Window.Resources>
         <Converters:BatteryToColorConverter x:Key="MyBatteryToColorConverter" />
+        <Converters:StatusToColourConverter x:Key="MyStatusToColourConverter"/>
         <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -178,7 +179,7 @@
 
 
 
-                    <ListView x:Name="DronesListView"  MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
+                    <ListView x:Name="DronesListView" Foreground="{Binding Status, Converter={StaticResource MyStatusToColourConverter}}"   MouseDoubleClick="DroneListView_DoubleClick" Grid.Row="2" ItemsSource= "{Binding droneToLists}" Background="{x:Null}" Opacity="0.5" Margin="0,57,10,113" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5" >
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Show Parcel" Background="WhiteSmoke" Click="ShowParcelInTransfer_Click" />
@@ -206,7 +207,7 @@
                                 <Setter Property="FontStyle" Value="Normal"/>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.View>
+                        <ListView.View >
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="80"/>
                                 <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Model}" Width="80"/>
@@ -223,6 +224,16 @@
                                 <GridViewColumn Header="WeightCategories" DisplayMemberBinding="{Binding  Weight}" Width="120"/>
                                 <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                                 <GridViewColumn Header="Longitude | latitude" DisplayMemberBinding="{Binding Loc}" Width="200"/>
+                                <GridViewColumn Header="" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <Image x:Name="Garbageimage" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\prullebak.png" Width="15"  MouseDown="Image_MouseDownDrone"/>
+                                                <!--<Image x:Name="Garbageimage" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\prullebak.png" Width="15"  MouseDown="Image_MouseDown"/>-->
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
 
                             </GridView>
                         </ListView.View>
@@ -357,20 +368,8 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel>
-                                                <Image x:Name="Garbageimage" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\prullebak.png" Width="15"  MouseDown="Image_MouseDown"/>
+                                                <Image x:Name="Garbageimage" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\prullebak.png" Width="15"  MouseDown="Image_MouseDownParcel"/>
                                                 <!--<Image x:Name="Garbageimage" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\prullebak.png" Width="15"  MouseDown="Image_MouseDown"/>-->
-
-                                                <!--<Image.Style>
-                                                        <Style>
-                                                            <Setter Property="Visibility Value="Hidden"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding  Path=Assigned}" Value="false">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>-->
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -459,6 +458,16 @@
                                 <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="120"/>
                                 <GridViewColumn Header="OccupiedSlots" DisplayMemberBinding="{Binding OccupiedSlots}" Width="120"/>
                                 <GridViewColumn Header="AvailableChargeSlots" DisplayMemberBinding="{Binding  AvailableChargeSlots}" Width="120"/>
+                                <GridViewColumn Header="" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <Image x:Name="Garbageimage" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\prullebak.png" Width="15"  MouseDown="Image_MouseDownStation"/>
+                                                <!--<Image x:Name="Garbageimage" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\prullebak.png" Width="15"  MouseDown="Image_MouseDown"/>-->
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -550,6 +559,17 @@
                                 <GridViewColumn Header="Parcels Delivered" DisplayMemberBinding="{Binding  NumPackSentDel}" Width="100"/>
                                 <GridViewColumn Header="Parcels Undelivered" DisplayMemberBinding="{Binding  NumPackSentUnDel}" Width="100"/>
                                 <GridViewColumn Header="Expected" DisplayMemberBinding="{Binding NumPackExp}" Width="80"/>
+                                <GridViewColumn Header="" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <Image x:Name="Garbageimage" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\prullebak.png" Width="15"  MouseDown="Image_MouseDownCustomer"/>
+                                                <!--<Image x:Name="Garbageimage" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\prullebak.png" Width="15"  MouseDown="Image_MouseDown"/>-->
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
                             </GridView>
                         </ListView.View>
                     </ListView>

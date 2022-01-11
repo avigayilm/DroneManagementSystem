@@ -33,8 +33,8 @@
             </Style.Triggers>
 
         </Style>
-        
-        
+
+
 
     </Window.Resources>
     <Grid>
@@ -88,7 +88,7 @@
                 <Style x:Key="tabEnable" TargetType="TabItem" BasedOn="{StaticResource regularTab }">
                     <Setter Property="IsEnabled" Value="True"></Setter>
                     <Style.Triggers>
-                        
+
                         <DataTrigger Binding="{Binding Register}" Value="true">
                             <Setter Property="IsEnabled" Value="False"></Setter>
                         </DataTrigger>
@@ -211,14 +211,15 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Send A parcel" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" FontSize="20"/>
-                    <TextBlock Name="wghtTxt" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" Text="Weight"/>
-                    <TextBlock Name="prioTxt" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Text="Priority"/>
-                    <TextBlock Name="recTxt" Grid.Row="4" Grid.Column="6" HorizontalAlignment="Center" Text="ReceiverId"/>
-                    <ComboBox Name="weiCBx"  Grid.Row="5" Grid.Column="2"  SelectedItem="{Binding parcel.Weight , Mode=TwoWay}" SelectedIndex="3"  Background="AliceBlue" Margin="10" />
-                    <ComboBox Name="prioCbx"  Grid.Row="5" Grid.Column="4"  SelectedItem="{Binding parcel.Priority ,Mode=TwoWay}" SelectedIndex="3"   Background="AliceBlue" Margin="10" />
-                    <ComboBox Name="recIdCBx" Grid.Row="5" Grid.Column="6"  SelectedItem="{Binding parcel.Receiver.Id , Mode=TwoWay, ValidatesOnDataErrors=True}" SelectedIndex="0"  Background="AliceBlue" Margin="10" />
-                    <Button Content="Send" Grid.Row="8" Grid.Column="4" Click="Send_Click" >
+                    <Label Content="Send A parcel" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" FontSize="27" FontFamily="Roboto" Foreground="#1361AB" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Foreground="#1361AB" FontSize="9" Grid.RowSpan="2" VerticalAlignment="Center"><Run Text="Please"/><Run Text=" choose the correct details in "/><LineBreak/><Run Text="order to send your new parcel." /></TextBlock>
+                    <TextBlock Name="wghtTxt" VerticalAlignment="Center" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" Text="Weight" FontFamily="Roboto" FontSize="13" Foreground="#7E7E7E"/>
+                    <TextBlock Name="prioTxt" VerticalAlignment="Center" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Center" Text="Priority" FontFamily="Roboto" FontSize="13" Foreground="#7E7E7E"/>
+                    <TextBlock Name="recTxt" VerticalAlignment="Center" Grid.Row="7" Grid.Column="6" HorizontalAlignment="Center" Text="ReceiverId" FontFamily="Roboto" FontSize="13" Foreground="#7E7E7E"/>
+                    <ComboBox Name="weiCBx"  Grid.Row="4" Grid.Column="6"  SelectedItem="{Binding parcel.Weight , Mode=TwoWay}" SelectedIndex="3"  Background="AliceBlue" Grid.ColumnSpan="2" />
+                    <ComboBox Name="prioCbx"  Grid.Row="6" Grid.Column="6"  SelectedItem="{Binding parcel.Priority ,Mode=TwoWay}" SelectedIndex="3"   Background="AliceBlue" Grid.ColumnSpan="2"/>
+                    <ComboBox Name="recIdCBx" Grid.Row="8" Grid.Column="6"  SelectedItem="{Binding parcel.Receiver.Id , Mode=TwoWay, ValidatesOnDataErrors=True}" SelectedIndex="0"  Background="AliceBlue" Grid.ColumnSpan="2" />
+                    <Button Content="Send Parcel" Grid.Row="9" Grid.Column="6" Grid.ColumnSpan="2" Click="Send_Click" Background="#DFE959" Width="100" BorderBrush="Transparent" Margin="19,11,18,22" Grid.RowSpan="2" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />
@@ -257,24 +258,24 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Your parcel Dashboard" FontFamily="Roboto" Foreground="Black" FontSize="8" Grid.ColumnSpan="2" Grid.Column="7" Grid.Row="1"/>
+                    <Label Content="Your parcel Dashboard" FontFamily="Roboto" Foreground="Black" FontSize="9" Grid.ColumnSpan="2" Grid.Column="7" Grid.Row="1" VerticalAlignment="Center"/>
                     <Grid Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                    <Rectangle Fill="#1361AB" RadiusX="10" RadiusY="10" Grid.ColumnSpan="3"/>
+                        <Rectangle Fill="#1361AB" RadiusX="10" RadiusY="10" Grid.ColumnSpan="3"/>
                         <Line X1="10" Y1="10" Stroke="White" StrokeThickness="4"/>
-                        <TextBlock Text="Assigned" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Assigned}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
+                        <TextBlock Text="Created" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Created}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
                         <TextBlock Text="On its way" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding OnItWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Column="1" />
                         <TextBlock Text="Received" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         <TextBlock Text="{Binding  Received}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Column="2" />
-                        
+
                     </Grid>
-                <Label Content="Your Parcel History" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontFamily="Roboto" FontWeight="Bold" FontSize="30" Foreground="#1361AB"/>
+                    <Label Content="Your Parcel History" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" FontFamily="Roboto" FontWeight="Bold" FontSize="30" Foreground="#1361AB"/>
                     <TabControl TabStripPlacement="Top"  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="5" Background="{x:Null}" BorderBrush="{x:Null}">
                         <TabControl.Resources>
                             <Style TargetType="TabItem">
@@ -347,7 +348,7 @@
                             </Style>
                         </TabControl.Resources>-->
 
-                        <TabItem Header="All"  VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <TabItem Header="Confirmation"  VerticalAlignment="Bottom" BorderBrush="{x:Null}" Background="{x:Null}">
                             <Grid ShowGridLines="False">
                                 <Grid.ColumnDefinitions>
 
@@ -413,12 +414,12 @@
                                     </ListView.ItemContainerStyle>
 
                                     <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
+                                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding ReceiverId}" Width="70"/>
                                             <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
-                                            <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
-                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
-                                            <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
+                                            <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                                            <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="80"/>
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
@@ -510,29 +511,29 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <!--<Border BorderThickness="10" BorderBrush="Gray" Grid.Row="1" Grid.RowSpan="9" Grid.ColumnSpan="4" Margin="57,79,90,20"/>-->
-                    <Image Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\ContactUs.png" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="13"/>
-                    <TextBlock Text="We'd Love to hear from you!" FontSize="25" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Top"/>
-                    <TextBlock Text="We're here to help and answer any question you might have. &#x0a; We look forward to hearing from you:)" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" TextAlignment="Center" Margin="0,35" Grid.RowSpan="2" VerticalAlignment="Top" />
-                    <TextBlock Text="Name(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="4" FontWeight="Bold" FontSize="15"/>
+                    <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\ContactUs.png" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="13"/>
+                    <TextBlock Text="We'd Love to hear from you!" FontSize="25" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" VerticalAlignment="Top" Foreground="#1361AB" FontWeight="Bold"/>
+                    <TextBlock Text="We're here to help and answer any question you might have. &#x0a; We look forward to hearing from you:)" Foreground="#1361AB" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" TextAlignment="Center" Margin="0,35" Grid.RowSpan="2" VerticalAlignment="Top" />
+                    <TextBlock Text="Name(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="4"  FontSize="15" Foreground="#7E7E7E"/>
                     <TextBox Name="nameTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="5" BorderBrush="Gray"/>
-                    <TextBlock Text="Email(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="6" FontWeight="Bold" FontSize="15"/>
+                    <TextBlock Text="Email(required)" VerticalAlignment="Center" Grid.Column="4" Grid.Row="6"  FontSize="15" Foreground="#7E7E7E"/>
                     <TextBox Name="emailTxt" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="7" BorderBrush="Gray"/>
-                    <TextBlock Text="Message(required)" VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="8" FontWeight="Bold" FontSize="15"/>
+                    <TextBlock Text="Message(required)" VerticalAlignment="Center" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="8" Foreground="#7E7E7E" FontSize="15"/>
                     <TextBox Name="msgTxt" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="9" Grid.Column="4" BorderBrush="Gray" />
-                    <Button Content="Submit" Grid.Column="1" Grid.Row="10" Margin="5" Click="Submit_Click" >
+                    <Button Content="Submit" Grid.Column="1" Grid.Row="10"  Click="Submit_Click" Background="#DFE959" BorderBrush="Transparent" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <TextBlock Text="Contactinfo:" Grid.Column="1" Grid.Row="5" FontSize="20" Grid.ColumnSpan="2" />
-                    <TextBlock Text="PhoneNumber:" Grid.Column="1" Grid.Row="6" />
-                    <TextBlock Text="0532372158:" Grid.Column="2" Grid.Row="6" />
-                    <TextBlock Text="Adress:" Grid.Column="1" Grid.Row="7"/>
-                    <TextBlock Text="TalSreet, Jerusalem" Grid.Column="2" Grid.Row="7"/>
-                    <TextBlock Text="email:" Grid.Column="1" Grid.Row="8" />
-                    <TextBlock Text="SkyHigh@tal.com" Grid.Column="2" Grid.Row="8"/>
+                    <TextBlock Text="Contactinfo:" Grid.Column="1" Grid.Row="5" Foreground="#1361AB" FontWeight="Bold" FontSize="20" Grid.ColumnSpan="2" />
+                    <TextBlock Text="PhoneNumber:" Grid.Column="1" Grid.Row="6" Foreground="#1361AB"/>
+                    <TextBlock Text="0532372158:" Grid.Column="2" Grid.Row="6" Foreground="#1361AB"/>
+                    <TextBlock Text="Adress:" Grid.Column="1" Grid.Row="7" Foreground="#1361AB"/>
+                    <TextBlock Text="TalSreet, Jerusalem" Grid.Column="2" Grid.Row="7" Foreground="#1361AB"/>
+                    <TextBlock Text="email:" Grid.Column="1" Grid.Row="8" Foreground="#1361AB" />
+                    <TextBlock Text="SkyHigh@tal.com" Grid.Column="2" Grid.Row="8" Foreground="#1361AB"/>
                 </Grid>
             </TabItem>
 
@@ -577,7 +578,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\11. receive parcel.png"  Grid.Column="1" Grid.RowSpan="3"/>
-                    <Button Grid.Column="0" Grid.Row="1" Background="#DFE959" Foreground="Black" Content="Logout" BorderBrush="Transparent" Margin="30 30 29 40">
+                    <Button x:Name="LogoutButton" Grid.Column="0" Grid.Row="1" Background="#DFE959" Foreground="Black" Content="Logout" BorderBrush="Transparent" Margin="30 30 29 40" Click="LogoutButton_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="40" />
