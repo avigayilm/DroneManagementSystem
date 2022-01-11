@@ -194,21 +194,23 @@ namespace PL
                         {
 
                             int tempStationId = bl.SendingDroneToCharge(Drone.Id);
-                            lastW.stationToLists.Values
-                                .First(s => s.Exists(st => st.Id == tempStationId))
-                                .First(s => s.Id == tempStationId)
-                                .AvailableChargeSlots -= 1;
-                            lastW.StationListView.Items.Refresh();
+                            //lastW.stationToLists.Values
+                            //    .First(s => s.Exists(st => st.Id == tempStationId))
+                            //    .First(s => s.Id == tempStationId)
+                            //    .AvailableChargeSlots -= 1;
+                            //lastW.StationListView.Items.Refresh();
+                            lastW.UpdateChargeSlots(tempStationId, 1);
                             break;
                         }
                     case UpdateOptions.ReleaseFromCharge:
                         {
                            int tempStationId = bl.ReleasingDroneFromCharge(Drone.Id);
-                            lastW.stationToLists.Values
-                                .First(s => s.Exists(st => st.Id == tempStationId))
-                                .First(s => s.Id == tempStationId)
-                                .AvailableChargeSlots += 1;
-                            lastW.StationListView.Items.Refresh();
+                            //lastW.stationToLists.Values
+                            //    .First(s => s.Exists(st => st.Id == tempStationId))
+                            //    .First(s => s.Id == tempStationId)
+                            //    .AvailableChargeSlots += 1;
+                            //lastW.StationListView.Items.Refresh();
+                            lastW.UpdateChargeSlots(tempStationId,-1);
                             break;
                         }
                     case UpdateOptions.Assign:
@@ -419,6 +421,7 @@ namespace PL
                 AutoRun.DoWork += AutoRun_DoWork;
                 AutoRun.ProgressChanged += AutoRun_ProgressChanged;
                 AutoRun.RunWorkerCompleted += AutoRun_RunWorkerCompleted;
+                AutoRun.RunWorkerAsync(Drone.Id);
             }
             else
             {

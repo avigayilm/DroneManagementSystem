@@ -20,7 +20,7 @@ namespace BL
         /// <param name="source"></param>
         /// <param name="target"></param>
 
-        public static void CopyProperties<Source, Target>(this Source source, Target target)//from idal to bl
+        public static Target CopyProperties<Source, Target>(this Source source, Target target)//from idal to bl
         {
             PropertyInfo[] propertyInfos = target.GetType().GetProperties();
             foreach (var targetProp in propertyInfos)//goes over all source props
@@ -41,6 +41,7 @@ namespace BL
                 //           CopyProperties(source, targetProp);
 
             }
+            return target;
         }
 
         /// <summary>

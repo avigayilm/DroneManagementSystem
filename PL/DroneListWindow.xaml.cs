@@ -60,7 +60,7 @@ namespace PL
         public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
         public Dictionary<string, List<ParcelToList>> parcelToLists;
         public ObservableCollection<CustomerToList> customerToLists;
-        public Dictionary<int, List<StationToList>> stationToLists;
+        public ObservableCollection<StationToList> stationToLists;
         public DroneToList droneToList;
         public ParcelToList parcelToList;
         public StationToList stationToList;
@@ -144,14 +144,14 @@ namespace PL
         {
             droneToList = (DroneToList)DronesListView.SelectedItem;
             //because we use the station list in some case of updating - if the stationlist isnt initialized it will be initailize here
-            if (stationToLists == null) 
-            {
-                IEnumerable<StationToList> temp = bl.GetAllStation();
-                stationToLists = (from stationtolist in temp
-                                  group stationtolist by
-                                  stationtolist.AvailableChargeSlots
-                                ).ToDictionary(x => x.Key, x => x.ToList());
-            }
+            //if (stationToLists == null) 
+            //{
+            //    IEnumerable<StationToList> temp = bl.GetAllStation();
+            //    stationToLists = (from stationtolist in temp
+            //                      group stationtolist by
+            //                      stationtolist.AvailableChargeSlots
+            //                    ).ToDictionary(x => x.Key, x => x.ToList());
+            //}
             new DroneWindow(this, bl).Show();
         }
         /// <summary>
@@ -394,28 +394,32 @@ namespace PL
 
         private void StationTab_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (stationToLists == null)
-            {
+          
                 IEnumerable<StationToList> temp = bl.GetAllStation();
-                stationToLists = (from stationtolist in temp
-                                  group stationtolist by
-                                  stationtolist.AvailableChargeSlots
-                                ).ToDictionary(x => x.Key, x => x.ToList());
-            }
-            StationListView.ItemsSource = stationToLists.Values.SelectMany(x => x);
+            stationToLists = (ObservableCollection<StationToList>)(from st in bl.GetAllStation()
+                             select st);
+            //as ObservableCollection<StationToList>;
+            //stationToLists = (from stationtolist in temp
+            //                  group stationtolist by
+            //                  stationtolist.AvailableChargeSlots
+            //                ).ToDictionary(x => x.Key, x => x.ToList());
+
+            StationListView.ItemsSource = stationToLists;//.Values.SelectMany(x => x);
         }
 
 
 
         private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
-            customerToLists = new();
-            List<CustomerToList> tempCustomerToLists = bl.GetAllCustomers().ToList();
-            foreach (var customerToList in tempCustomerToLists)
-            {
-                customerToLists.Add(customerToList);
-            }
-            CustomerListView.ItemsSource = customerToLists;
+           // customerToLists = new();
+           customerToLists = (ObservableCollection<CustomerToList>)(from cus in bl.GetAllCustomers()
+                                                       select cus);
+            //    bl.GetAllCustomers().ToList();
+            //foreach (var customerToList in tempCustomerToLists)
+            //{
+            //    customerToLists.Add(customerToList);
+            //}
+              CustomerListView.ItemsSource = customerToLists;
         }
 
         private void ParcelTab_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -541,7 +545,9 @@ namespace PL
                 FrameworkElement framework = sender as FrameworkElement;
                 StationToList CurrentStation = framework.DataContext as StationToList;
                 bl.DeleteStation(CurrentStation.Id);
-                stationToLists[CurrentStation.AvailableChargeSlots].RemoveAll(i => i.Id == CurrentStation.Id);
+                int index = stationToLists.IndexOf(CurrentStation);
+                stationToLists.RemoveAt(index);
+               // stationToLists[CurrentStation.AvailableChargeSlots].RemoveAll(i => i.Id == CurrentStation.Id);
                 StationListView.Items.Refresh();
                 CheckComboBoxesParcel();
             }
@@ -566,6 +572,20 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        /// <summary>
+        /// updates charge slots in station for listView- receivces number to add to occupied slots and take of available ones
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <param name="num"></param>
+        internal void UpdateChargeSlots(int stationId, int num)
+        {
+            StationToList tempSt = stationToLists.First(s => s.Id == stationId);
+            int index = stationToLists.IndexOf(tempSt);
+            stationToLists.Remove(tempSt);
+            tempSt.OccupiedSlots += num;
+            tempSt.AvailableChargeSlots -= num;
+            stationToLists.Insert(index,tempSt);
         }
     }
 }
