@@ -2,11 +2,6 @@
 <DroneChargeXml.xml>
   <DroneCharge>
     <DroneId>5502</DroneId>
-    <StationId>2172</StationId>
-    <ChargingTime>2022-01-11T18:59:39.4171482+02:00</ChargingTime>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>5502</DroneId>
     <StationId>9084</StationId>
     <ChargingTime>2022-01-11T01:55:02.7290618+02:00</ChargingTime>
   </DroneCharge>
