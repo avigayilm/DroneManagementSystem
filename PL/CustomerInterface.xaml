@@ -97,7 +97,7 @@
             </TabControl.Resources>
 
             <TabItem Header="My Account" BorderBrush="{x:Null}" Background="{x:Null}" Style="{StaticResource regularTab}" >
-                <Grid>
+                <Grid Visibility="Visible">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -138,7 +138,7 @@
                     <TextBlock Text="Latitude" Grid.Column="2" Grid.Row="7"/>
                     <TextBox Text="{Binding me.Loc.Latitude, Mode=TwoWay}" Grid.Column="3" Grid.Row="7"/>
 
-                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Collapsed">
+                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
 
                         <Grid.RowDefinitions>
 
