@@ -6,7 +6,7 @@
     <PhoneNumber>051-2410503</PhoneNumber>
     <Latitude>31.788876366603276</Latitude>
     <Longitude>34.89570996263157</Longitude>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Customer>
   <Customer>
     <Id>0869685572</Id>

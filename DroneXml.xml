@@ -4,25 +4,25 @@
     <Id>5502</Id>
     <Model>A7189</Model>
     <Weight>heavy</Weight>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Drone>
   <Drone>
     <Id>7205</Id>
     <Model>A5865</Model>
     <Weight>light</Weight>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Drone>
   <Drone>
     <Id>5130</Id>
     <Model>A5334</Model>
     <Weight>light</Weight>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Drone>
   <Drone>
     <Id>7658</Id>
     <Model>A1734</Model>
     <Weight>medium</Weight>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Drone>
   <Drone>
     <Id>2797</Id>
