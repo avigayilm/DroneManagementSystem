@@ -15,8 +15,9 @@ using System.Threading.Tasks;
             public DroneStatuses Status { get; set; }
             public Location Loc { get; set; }
             public int ParcelId { get; set; }
+            public bool Deleted { get; set; }
 
-            public override string ToString()
+        public override string ToString()
             {
                 return " "
                     + $"Drone id: {Id}\n"

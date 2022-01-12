@@ -13,7 +13,7 @@
                            VerticalAlignment="Center">
                     </Image>
                     <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"
-                    VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+                     Margin="0,0,25,0"/> <!--VerticalAlignment="Center" HorizontalAlignment="Right"-->
                 </Grid>
             </Border>
         </ControlTemplate>

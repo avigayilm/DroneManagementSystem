@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:Converters="clr-namespace:PL"
         mc:Ignorable="d"
         Title="StationWindow" Height="450" Width="800">
     <Window.Resources>
+        <Converters:HasAllTextConverter x:Key="MyHasAllTextConverter" />
         <Style x:Key="textboxStyle" TargetType="TextBox"  >
             <Setter Property="TextWrapping" Value="Wrap"></Setter>
             <Setter Property="Background" Value="AliceBlue"/>
@@ -93,8 +95,8 @@
 
     <Grid ShowGridLines="False" >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -222,6 +224,16 @@
         </ListView>
 
         <Button x:Name="CancelButton" Content="Cancel" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource buttonStyle}" Click="CancelButton_Click"/>
-        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="3" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click"/>
+        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="3" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click">
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource MyHasAllTextConverter}">
+                    <Binding ElementName="nameTbx" Path="Text" />
+                    <Binding ElementName="idTbx" Path="Text" />
+                    <Binding ElementName="chargeSlotsTx" Path="Text" />
+                    <Binding ElementName="LogitudeTx" Path="Text" />
+                    <Binding ElementName="LatitudeTx" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
     </Grid>
 </Window>

@@ -10,19 +10,19 @@
     <Id>7205</Id>
     <Model>A5865</Model>
     <Weight>light</Weight>
-    <Deleted>true</Deleted>
+    <Deleted>false</Deleted>
   </Drone>
   <Drone>
     <Id>5130</Id>
-    <Model>A5334</Model>
+    <Model>avigayil</Model>
     <Weight>light</Weight>
-    <Deleted>true</Deleted>
+    <Deleted>false</Deleted>
   </Drone>
   <Drone>
     <Id>7658</Id>
     <Model>A1734</Model>
     <Weight>medium</Weight>
-    <Deleted>true</Deleted>
+    <Deleted>false</Deleted>
   </Drone>
   <Drone>
     <Id>2797</Id>

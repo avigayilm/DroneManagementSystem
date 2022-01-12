@@ -81,11 +81,59 @@
     <Deleted>false</Deleted>
   </Customer>
   <Customer>
-    <Id>123456789</Id>
-    <Name>voldemort</Name>
-    <PhoneNumber>0331234567</PhoneNumber>
-    <Latitude>34.12345</Latitude>
-    <Longitude>31.12345</Longitude>
+    <Id>123</Id>
+    <Name>Avigayil</Name>
+    <PhoneNumber>2345</PhoneNumber>
+    <Latitude>34</Latitude>
+    <Longitude>23</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>234</Id>
+    <Name>Yehudit</Name>
+    <PhoneNumber>234567</PhoneNumber>
+    <Latitude>34</Latitude>
+    <Longitude>12</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>111</Id>
+    <Name>chaya</Name>
+    <PhoneNumber>234</PhoneNumber>
+    <Latitude>32</Latitude>
+    <Longitude>23</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>1999</Id>
+    <Name>Avigayil</Name>
+    <PhoneNumber>0624554812</PhoneNumber>
+    <Latitude>34</Latitude>
+    <Longitude>23</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>19999</Id>
+    <Name>Avigayil</Name>
+    <PhoneNumber>11</PhoneNumber>
+    <Latitude>45</Latitude>
+    <Longitude>13</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>2000</Id>
+    <Name>Avigayil</Name>
+    <PhoneNumber>2234566</PhoneNumber>
+    <Latitude>32</Latitude>
+    <Longitude>34</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
+  <Customer>
+    <Id>2001</Id>
+    <Name>Yehudit</Name>
+    <PhoneNumber>223</PhoneNumber>
+    <Latitude>23</Latitude>
+    <Longitude>32</Longitude>
     <Deleted>false</Deleted>
   </Customer>
 </ArrayOfCustomer>

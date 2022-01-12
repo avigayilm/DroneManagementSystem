@@ -61,6 +61,55 @@
     <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
+    <UserName>123</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/2020-12-19 Batsheva pels wedding/20201219_231141.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>234</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/source/repos/avigayilm/DotNet5782_9033_6996/PL/Icons/customers.png</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>111</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/2020-12-19 Batsheva pels wedding/20201219_231141.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>1999</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/source/repos/avigayilm/DotNet5782_9033_6996/PL/Icons/customers.png</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>19999</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/Camera Roll/WIN_20210728_13_38_48_Pro.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>2000</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/source/repos/avigayilm/DotNet5782_9033_6996/PL/Icons/customers.png</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
+    <UserName>2001</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/Camera Roll/WIN_20210728_13_38_48_Pro.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
+  <Login>
     <UserName>123456789</UserName>
     <Password>123456</Password>
     <StaffOrUser>false</StaffOrUser>

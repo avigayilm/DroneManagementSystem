@@ -238,23 +238,23 @@ namespace PL
                 MessageBox.Show(bl.GetDrone(Drone.Id).ToString(), "Updated Drone");
 
                 lastW.droneToList.Model = Drone.Model;
-                if(lastW.droneToList.Status != Drone.Status)//if the status has changed and so the drone belongs to a  differant key in dicitonary
-                {
-                    
-                    wAndS.Status = (DroneStatuses)Drone.Status;
-                    wAndS.Weight = (WeightCategories)Drone.Weight;
-                    lastW.droneToLists[wAndS].Remove(tempForUpdate); //remove the drone from its original placing
-                    wAndS.Status = (DroneStatuses)lastW.droneToList.Status;
-                    wAndS.Weight = (WeightCategories)lastW.droneToList.Weight;
-                    if (lastW.droneToLists.ContainsKey(wAndS)) // if the dicionary holds a key for the updated drone add it htere
-                        lastW.droneToLists[wAndS].Add(lastW.droneToList);
-                    else // if it doesnt- create the key for the updated drone
-                    {
-                        List<BO.DroneToList> temp = new();
-                        temp.Add(lastW.droneToList);
-                        lastW.droneToLists.Add(wAndS ,temp);
-                    }
-                }
+                //if(lastW.droneToList.Status != Drone.Status)//if the status has changed and so the drone belongs to a  differant key in dicitonary
+                //{
+
+                //    wAndS.Status = (DroneStatuses)Drone.Status;
+                //    wAndS.Weight = (WeightCategories)Drone.Weight;
+                //    lastW.droneToLists[wAndS].Remove(tempForUpdate); //remove the drone from its original placing
+                //    wAndS.Status = (DroneStatuses)lastW.droneToList.Status;
+                //    wAndS.Weight = (WeightCategories)lastW.droneToList.Weight;
+                //    if (lastW.droneToLists.ContainsKey(wAndS)) // if the dicionary holds a key for the updated drone add it htere
+                //        lastW.droneToLists[wAndS].Add(lastW.droneToList);
+                //    else // if it doesnt- create the key for the updated drone
+                //    {
+                //        List<BO.DroneToList> temp = new();
+                //        temp.Add(lastW.droneToList);
+                //        lastW.droneToLists.Add(wAndS ,temp);
+                //    }
+                //}
                 //var item = lastW.droneToLists.Where(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight).First();
                 //item.ToList().Remove(lastW.droneToList);
@@ -262,8 +262,13 @@ namespace PL
                 //int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight);
                 //lastW.droneToLists[index] = item;
-
-
+                lastW.DronesListView.Items.Refresh();
+                IEditableCollectionView items = lastW.DronesListView.Items as IEditableCollectionView;
+                if (items != null)
+                {
+                    items.EditItem(lastW.droneToList);
+                    items.CommitEdit();
+                }
                 lastW.checkComboBoxesDrone();
                 //lastW.DronesListView.Items.Refresh();
                 this.Close();

@@ -31,17 +31,6 @@ namespace PL
             return new ValidationResult(true, null);
         }
     }
-
-    public class ComboboxError : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            string index = value as string;
-            if (index=="4")
-                return new ValidationResult(false, "choose appropiate value");
-            return new ValidationResult(true, null);
-        }
-    }
 }
 //{
 //    public class InputValidation : IDataErrorInfo

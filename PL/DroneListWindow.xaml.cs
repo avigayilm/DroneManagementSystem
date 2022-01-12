@@ -73,7 +73,7 @@ namespace PL
 
             bl = IblObj;
             droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
-            IEnumerable<DroneToList> temp = bl.GetAllDrones();
+            IEnumerable<DroneToList> temp = bl.GetAllDrones(x=>x.Deleted==false);
             droneToListsOb = new();
           //  droneToListsOb = bl.GetAllDrones().ToList();
             foreach (var droneToList in temp)
@@ -85,6 +85,7 @@ namespace PL
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             view.GroupDescriptions.Add(groupDescription);
+
             //comboBox.ItemsSource = view;
             droneToLists = (from droneToList in temp
                             group droneToList by
@@ -117,6 +118,7 @@ namespace PL
         /// </summary>
         public void checkComboBoxesDrone()
         {
+
             DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedIndex;
             WeightCategories wInd = (WeightCategories)WeightSelector.SelectedIndex;
             if (wInd == WeightCategories.All && sInd == DroneStatuses.All)
