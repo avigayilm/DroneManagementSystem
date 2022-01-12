@@ -49,7 +49,7 @@
     <Created>2021-01-22T15:44:00</Created>
     <Assigned>2021-01-22T18:44:00</Assigned>
     <PickedUp>2022-01-12T09:46:45.3698375+02:00</PickedUp>
-    <Delivered xsi:nil="true" />
+    <Delivered>2022-01-12T12:52:59.2837746+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>
@@ -62,7 +62,7 @@
     <Created>2021-06-25T13:42:00</Created>
     <Assigned>2021-06-25T16:42:00</Assigned>
     <PickedUp>2022-01-11T23:14:30.5160655+02:00</PickedUp>
-    <Delivered xsi:nil="true" />
+    <Delivered>2022-01-12T13:01:12.6272112+02:00</Delivered>
     <Delete>false</Delete>
   </Parcel>
   <Parcel>

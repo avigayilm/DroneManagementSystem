@@ -118,6 +118,7 @@ namespace PL
         /// </summary>
         public void checkComboBoxesDrone()
         {
+
             DroneStatuses sInd = (DroneStatuses)StatusSelector.SelectedIndex;
             WeightCategories wInd = (WeightCategories)WeightSelector.SelectedIndex;
             if (wInd == WeightCategories.All && sInd == DroneStatuses.All)

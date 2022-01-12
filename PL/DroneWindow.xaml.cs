@@ -262,8 +262,13 @@ namespace PL
                 //int index = lastW.droneToLists.ToList().FindIndex(i => i.Key.Status == (DroneStatuses)Drone.Status
                 //&& i.Key.Weight == (WeightCategories)Drone.Weight);
                 //lastW.droneToLists[index] = item;
-
                 lastW.DronesListView.Items.Refresh();
+                IEditableCollectionView items = lastW.DronesListView.Items as IEditableCollectionView;
+                if (items != null)
+                {
+                    items.EditItem(lastW.droneToList);
+                    items.CommitEdit();
+                }
                 lastW.checkComboBoxesDrone();
                 //lastW.DronesListView.Items.Refresh();
                 this.Close();
