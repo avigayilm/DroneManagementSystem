@@ -18,7 +18,7 @@ namespace BL
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
         internal DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
-        public Dictionary<int, int> chargeSlotsToAdd ;
+        //public Dictionary<int, int> chargeSlotsToAdd ;
         public static BL Instance
         {
             get
@@ -41,7 +41,7 @@ namespace BL
             //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null && p.Assigned != null).ToList();
-            chargeSlotsToAdd = new();
+            //chargeSlotsToAdd = new();
             foreach (DO.Parcel p in undeliveredParcel)
             {
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);
@@ -74,14 +74,14 @@ namespace BL
                 {
                     dr.Status = DroneStatuses.Maintenance;
                     dr.Battery = rand.Next(20, 50);// random battery level so that the drone can still fly
-                    List<DO.Station> tempList = (List<DO.Station>)idal1.GetAllStations();
-                    DO.Station tempSt = tempList[rand.Next(tempList.Count())];
+                    DO.Station tempSt = idal1.GetStation( idal1.GetDroneChargeList(d => d.DroneId == dr.Id).First().StationId);
+//= tempList[rand.Next(tempList.Count())];
                     dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
-                    idal1.SendToCharge(dr.Id, tempSt.Id);
-                    if (chargeSlotsToAdd.ContainsKey(tempSt.Id))
-                        chargeSlotsToAdd[tempSt.Id]++;
-                    else
-                        chargeSlotsToAdd.Add(tempSt.Id, 1);
+                    //idal1.SendToCharge(dr.Id, tempSt.Id);
+                    //if (chargeSlotsToAdd.ContainsKey(tempSt.Id))
+                    //    chargeSlotsToAdd[tempSt.Id]++;
+                    //else
+                    //    chargeSlotsToAdd.Add(tempSt.Id, 1);
                    // count++;
                 }
                 else //the drone is available
@@ -103,15 +103,15 @@ namespace BL
             new Simulation(this, droneId, func, reportProgress);
         }
 
-        public void changechargeSlots()
-        {
-            List<StationToList>temp = GetAllStation().ToList();
-           
-           foreach(var k in chargeSlotsToAdd )
-            {
-                idal1.ChangeChargeSlots(k.Key, k.Value);
-            }
-        }
+        //public void changechargeSlots()
+        //{
+        //    List<StationToList> temp = GetAllStation().ToList();
+
+        //    foreach (var k in chargeSlotsToAdd)
+        //    {
+        //        idal1.ChangeChargeSlots(k.Key, k.Value);
+        //    }
+        //}
     }
 }
 

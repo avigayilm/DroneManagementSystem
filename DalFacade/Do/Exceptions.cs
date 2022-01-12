@@ -44,8 +44,9 @@ using System.Runtime.Serialization;
             public MissingIdException(string message, Exception innerException) : base(message, innerException)
             {
             }
+      
 
-            protected MissingIdException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected MissingIdException(SerializationInfo info, StreamingContext context) : base(info, context)
             {
             }
             

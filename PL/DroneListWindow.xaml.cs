@@ -177,14 +177,13 @@ namespace PL
         {
             droneToList = (DroneToList)DronesListView.SelectedItem;
             //because we use the station list in some case of updating - if the stationlist isnt initialized it will be initailize here
-            //if (stationToLists == null) 
-            //{
-            //    IEnumerable<StationToList> temp = bl.GetAllStation();
-            //    stationToLists = (from stationtolist in temp
-            //                      group stationtolist by
-            //                      stationtolist.AvailableChargeSlots
-            //                    ).ToDictionary(x => x.Key, x => x.ToList());
-            //}
+            if (stationToLists == null)
+            {
+                IEnumerable<StationToList> temp = bl.GetAllStation();
+                temp = (from st in bl.GetAllStation()
+                        select st);
+                stationToLists = new(temp);
+            }
             new DroneWindow(this, bl).Show();
         }
         /// <summary>
@@ -427,12 +426,15 @@ namespace PL
 
         private void StationTab_MouseEnter(object sender, MouseEventArgs e)
         {
-          
+          if(stationToLists == null) {
                 IEnumerable<StationToList> temp = bl.GetAllStation();
-            temp = (from st in bl.GetAllStation()
-                             select st);
+                temp = (from st in bl.GetAllStation()
+                        select st);
+                stationToLists = new(temp);
+            }
+               
             // IEnumerable<StationToList> temp = new()
-            stationToLists = new(temp);
+           
             //as ObservableCollection<StationToList>;
             //stationToLists = (from stationtolist in temp
             //                  group stationtolist by
