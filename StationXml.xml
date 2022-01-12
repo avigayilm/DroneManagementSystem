@@ -16,4 +16,12 @@
     <AvailableChargeSlots>5</AvailableChargeSlots>
     <Deleted>false</Deleted>
   </Station>
+  <Station>
+    <Id>1232</Id>
+    <Name>avi</Name>
+    <Longitude>43</Longitude>
+    <Latitude>34</Latitude>
+    <AvailableChargeSlots>2</AvailableChargeSlots>
+    <Deleted>false</Deleted>
+  </Station>
 </ArrayOfStation>

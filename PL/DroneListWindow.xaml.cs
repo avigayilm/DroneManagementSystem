@@ -72,7 +72,7 @@ namespace PL
             InitializeComponent();
 
             bl = IblObj;
-            droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
+           // droneToLists = new Dictionary<WeightAndStatus, List<DroneToList>>();
             IEnumerable<DroneToList> temp = bl.GetAllDrones(x=>x.Deleted==false);
             droneToListsOb = new();
           //  droneToListsOb = bl.GetAllDrones().ToList();
@@ -87,13 +87,13 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
 
             //comboBox.ItemsSource = view;
-            droneToLists = (from droneToList in temp
-                            group droneToList by
-                            new WeightAndStatus()
-                            {
-                                Status = (DroneStatuses)droneToList.Status,
-                                Weight = (WeightCategories)droneToList.Weight
-                            }).ToDictionary(x => x.Key, x => x.ToList());//Grouping the drones
+            //droneToLists = (from droneToList in temp
+            //                group droneToList by
+            //                new WeightAndStatus()
+            //                {
+            //                    Status = (DroneStatuses)droneToList.Status,
+            //                    Weight = (WeightCategories)droneToList.Weight
+            //                }).ToDictionary(x => x.Key, x => x.ToList());//Grouping the drones
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
             WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             //StatusSelectorParcel.ItemsSource = Enum.GetValues(typeof(ParcelStatuses));
