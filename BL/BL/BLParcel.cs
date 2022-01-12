@@ -59,7 +59,7 @@ namespace BL
                     DroneToList drone = droneBL.FirstOrDefault(d => d.Id == droneId);
                     var tempParcelList = idal1.GetAllParcels(p => p.Assigned == null && (int)p.Weight <= (int)drone.Weight);//.OrderBy(i => (int)i.Priority).ThenBy(i => (int)i.Weight).ThenByDescending(i => DroneDistanceFromParcel(drone, i)); //data layer parcel list
                     int maxW = 0, maxPri = 0;
-                    double minDis = 0.0;
+                    double minDis = double.MaxValue;
                     if (drone.Status == DroneStatuses.Available)
                     {
                         DO.Parcel? fittingPack = null; // new null temp parcel
