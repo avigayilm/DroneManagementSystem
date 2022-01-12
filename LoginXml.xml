@@ -116,4 +116,11 @@
     <profileSource>file:///C:/Users/Hudis/Pictures/bbc2.jpeg</profileSource>
     <emailAddress>yf56229@gmail.com</emailAddress>
   </Login>
+  <Login>
+    <UserName>1111</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/Camera Roll/WIN_20210728_13_38_48_Pro.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
 </ArrayOfLogin>

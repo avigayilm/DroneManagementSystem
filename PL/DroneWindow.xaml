@@ -324,7 +324,7 @@
                 </Button.Resources>
             </Button>
             <!--<Button Name="AutoManualButton" Click="AutoButton_Click" Style="{StaticResource AutoOrManual}"></Button>-->
-          
+
         </Grid>
         <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
          Visibility="Visible">
@@ -395,10 +395,10 @@
                     </Button.Resources>
                 </Button>
 
-                <TextBlock Name="packIdb" Text="{Binding Path=ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="2"/>
-                <TextBlock Name="packPriorb" Text="{Binding Path=ParcelInTrans.Priority, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="3"/>
-                <TextBlock Name="packStatb" Text="{Binding Path=ParcelInTrans.Status, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1"  Grid.Row="4"/>
-                <TextBlock Name="packdistance" Text="{Binding Path=ParcelInTrans.Distance, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="5"/>
+                <TextBlock Name="packIdb" Text="{Binding Path=Drone.ParcelInTrans.Id}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="2"/>
+                <TextBlock Name="packPriorb" Text="{Binding Path=Drone.ParcelInTrans.Priority, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="3"/>
+                <TextBlock Name="packStatb" Text="{Binding Path=Drone.ParcelInTrans.Status, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1"  Grid.Row="4"/>
+                <TextBlock Name="packdistance" Text="{Binding Path=Drone.ParcelInTrans.Distance, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}" Grid.Column="1" Grid.Row="5"/>
             </Grid>
 
             <Grid x:Name="senderGrid" Grid.Column="8" Grid.RowSpan="10" Visibility="Hidden" Grid.ColumnSpan="2">
@@ -426,13 +426,13 @@
                 <TextBlock Name="senderLongitude" Text="Longitude:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
                 <TextBlock Name="senderLatitude" Text="Latitude:" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
 
-                <TextBlock Name="senderIdb" Text="{Binding ParcelInTrans.Sender.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Name="senderNameb" Text="{Binding ParcelInTrans.Sender.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="senderLongitudeb" Text="{Binding ParcelInTrans.PickedUp._Longitude}" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-                <TextBlock Name="senderLatitudeb" Text="{Binding ParcelInTrans.PickedUp._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Name="senderIdb" Text="{Binding Drone.ParcelInTrans.Sender.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Name="senderNameb" Text="{Binding Drone.ParcelInTrans.Sender.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
+                <TextBlock Name="senderLongitudeb" Text="{Binding Drone.ParcelInTrans.PickedUp._Longitude}" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Name="senderLatitudeb" Text="{Binding Drone.ParcelInTrans.PickedUp._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
-            <Grid x:Name="receiverGrid" Grid.Column="8" Grid.Row="3" Grid.RowSpan="8" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39">
+            <Grid x:Name="receiverGrid" Grid.Column="8" Grid.Row="3" Grid.RowSpan="8" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -452,10 +452,10 @@
                 <TextBlock Name="ReceiverLongitude" Text="Latitude:" Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
                 <TextBlock Name="ReceiverLatitude" Text="Latitude:" Grid.Column="0" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="24" VerticalAlignment="Top"/>
 
-                <TextBlock Name="receiverIdb" Text="{Binding ParcelInTrans.Receiver.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Name="receiverNameb" Text="{Binding ParcelInTrans.Receiver.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
-                <TextBlock Name="receiverLongitudeb" Text="{Binding ParcelInTrans.DeliverdTo._Longitude}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,26,0,0" Grid.RowSpan="3"/>
-                <TextBlock Name="receiverLatitudeb" Text="{Binding ParcelInTrans.DeliverdTo._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                <TextBlock Name="receiverIdb" Text="{Binding Drone.ParcelInTrans.Receiver.Id}" Grid.Row="2" Grid.Column="1" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Name="receiverNameb" Text="{Binding Drone.ParcelInTrans.Receiver.Name}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" />
+                <TextBlock Name="receiverLongitudeb" Text="{Binding Drone.ParcelInTrans.DeliverdTo._Longitude}" Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,26,0,0" Grid.RowSpan="3"/>
+                <TextBlock Name="receiverLatitudeb" Text="{Binding Drone.ParcelInTrans.DeliverdTo._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
 
@@ -506,14 +506,14 @@
                 </TextBlock.Style>
             </TextBlock>-->
             <TextBlock Name="DroneDisplay" Text="Drone" Grid.Row="1" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#FFFCFBFB"/>
-            <TextBlock Name="idTx" Text="{Binding Id, Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
-            <TextBlock Name="wCb" Text="{Binding Path=Weight, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" />
-            <TextBox Name="mTx" Text="{Binding Model}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource modelEnable}" ToolTip="Enter new Model" BorderBrush="{x:Null}" Background="Transparent" TextDecorations="Underline" FontFamily="Constantia" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
-            <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Loc._Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
-            <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Loc._Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="idTx" Text="{Binding Drone.Id, Mode=TwoWay}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Name="wCb" Text="{Binding Path=Drone.Weight, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" />
+            <TextBox Name="mTx" Text="{Binding Drone.Model}" Grid.Row="4"  Grid.Column="1" Style="{StaticResource modelEnable}" ToolTip="Enter new Model" BorderBrush="{x:Null}" Background="Transparent" TextDecorations="Underline" FontFamily="Constantia" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Name="statCb" Grid.Row="5" Text="{Binding Drone.Status}"  Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="lnTx" Grid.Row="6" Text="{Binding Path=Drone.Loc._Longitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
+            <TextBlock Name="ltTx" Grid.Row="7" Text="{Binding Path=Drone.Loc._Latitude}" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource TextBlockStyle}" />
             <Grid Grid.Column="1" Grid.Row="8">
-                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Battery}" Foreground="{Binding Battery, Converter={StaticResource MyBatteryToColorConverter}}" />
+                <ProgressBar Name="pbStatus" Minimum="0" Maximum="100" Value="{Binding Drone.Battery}" Foreground="{Binding Drone.Battery, Converter={StaticResource MyBatteryToColorConverter}}" />
                 <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
             <!--<ProgressBar Name="BaterryProgress" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding Battery, Mode=OneWay, Converter}"/>-->
@@ -546,9 +546,9 @@
 
             <Button Name="AutoManualButton" 
                 IsCancel="True"
+                Grid.ColumnSpan="1"
                 Grid.Row="9" 
                 Grid.Column="8" 
-                Width="200" 
                     Background="AliceBlue"
                     Click="AutoButton_Click" Style="{StaticResource AutoOrManual}">
                 <Button.Resources>

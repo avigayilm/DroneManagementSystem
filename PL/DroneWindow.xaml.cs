@@ -108,7 +108,7 @@ namespace PL
         public static readonly DependencyProperty AutoManualProperty =
             DependencyProperty.Register("AutoManual", typeof(bool), typeof(DroneWindow));
         public int StationId { get; set; }
-        private Drone Drone { get; set; }
+        public Drone Drone { get; set; }
         DroneListWindow lastW;
         BackgroundWorker AutoRun;
         private void UpdatedTask() => AutoRun.ReportProgress(0); // invokes report progress action for thread updating
@@ -119,11 +119,13 @@ namespace PL
             bl = IblObj;
             lastW = last;
             wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            
             Drone = new Drone();
-            DataContext = Drone;
+           
             //sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
             sTCBAdd.ItemsSource = bl.GetAllStation().Select(s => s.Id);
             addGrid.Visibility = Visibility.Visible;
+            DataContext = this;
         }
 
         public DroneWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
@@ -131,11 +133,12 @@ namespace PL
             InitializeComponent();
             bl = ibl;
             lastW = last;
+            
             Drone = bl.GetDrone(lastW.droneToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             addGrid.Visibility = Visibility.Hidden;
-            DataContext = Drone;
             ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
+            DataContext = this;
         }
         /// <summary>
         /// adds the drone to list view and list in bl

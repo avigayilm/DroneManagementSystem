@@ -53,6 +53,20 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="Inputvalidation" TargetType="Button" BasedOn="{StaticResource ButtonaddorUpdateStyle}">
+                <Setter Property="IsEnabled" Value="False"/>
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(Validation.HasError),ElementName=LatitudeTx}" Value="False"/>
+                            <Condition Binding="{Binding Path=(Validation.HasError),ElementName=LogitudeTx}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="IsEnabled" Value="True"/>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
+
         <Style x:Key="enabledTextbox" TargetType="TextBox" BasedOn="{StaticResource ResourceKey=textboxStyle}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding addOrUpdate}" Value="true">
@@ -138,8 +152,29 @@
             <TextBox Name="nameTbx" Text="{Binding Customer.Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}"/>
             <TextBox Name="idTbx" Text="{Binding Customer.Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource textboxStyle}" />
             <TextBox Name="phoneTx" Text="{Binding Customer.PhoneNumber}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
-            <TextBox Name="LogitudeTx" Text="{Binding Customer.Loc._Longitude}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude" />
-            <TextBox Name="LatitudeTx" Text="{Binding Customer.Loc._Latitude}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude" />
+            <TextBox Name="LogitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude"><!--Text="{Binding Customer.Loc._Longitude}"-->
+                <TextBox.Text>
+                    <Binding Path="Customer.Loc._Longitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                        <Binding.ValidationRules>
+                            <local:LongitudeCheck>
+                            </local:LongitudeCheck>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox Name="LatitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude"><!--Text="{Binding Customer.Loc._Latitude}"-->
+                <TextBox.Text>
+                    <Binding Path="Customer.Loc._Latitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                            <Binding.ValidationRules>
+                                <local:LatitudeCheck >
+                                </local:LatitudeCheck>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
 
         </Grid>
@@ -243,7 +278,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="CancelButton" Content="Cancel" Grid.Row="9" Grid.Column="5" Margin="10" Style="{StaticResource buttonStyle}" Click="CancelButton_Click" />
-        <Button x:Name="UpdateorAddButton" Grid.Row="9" Grid.Column="4" Margin="10" Style="{StaticResource ButtonaddorUpdateStyle}" Click="UpdateorAddButton_Click">
+        <Button x:Name="UpdateorAddButton" Grid.Row="9" Style="{StaticResource Inputvalidation}" Grid.Column="4" Margin="10" Click="UpdateorAddButton_Click">
             <Button.IsEnabled>
                 <MultiBinding Converter="{StaticResource MyHasAllTextConverter}">
                     <Binding ElementName="nameTbx" Path="Text" />

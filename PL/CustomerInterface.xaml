@@ -146,11 +146,31 @@
                     <TextBlock Text="Id" Grid.Column="2" Grid.Row="4"/>
                     <TextBox  Name="Idtxt" Text="{Binding me.Id, Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
                     <TextBlock Text="PhoneNumber" Grid.Column="2" Grid.Row="5"/>
-                    <TextBox Name="Phonetxt" Text="{Binding me.PhoneNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+                    <TextBox Name="Phonetxt" Text="{Binding me.PhoneNumber, ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="5"/>
                     <TextBlock Text="Longitude" Grid.Column="2" Grid.Row="6"/>
-                    <TextBox Name="Longtxt" Text="{Binding me.Loc.Longitude,  ValidatesOnDataErrors=True}"  Grid.Column="3" Grid.Row="6"/>
+                    <TextBox Name="Longtxt"  Validation.ErrorTemplate="{StaticResource errorTemplate}" Grid.Column="3" Grid.Row="6"><!--Text="{Binding me.Loc.Longitude,  ValidatesOnDataErrors=True}"-->
+                        <TextBox.Text>
+                            <Binding Path="me.Loc.Longitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                                <Binding.ValidationRules>
+                                    <local:LongitudeCheck>
+                                    </local:LongitudeCheck>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Latitude" Grid.Column="2" Grid.Row="7"/>
-                    <TextBox Name="Lattxt" Text="{Binding me.Loc.Latitude,  ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="7"/>
+                    <TextBox Name="Lattxt" Grid.Column="3" Grid.Row="7"  Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="me.Loc.Latitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                                <Binding.ValidationRules>
+                                    <local:LatitudeCheck >
+                                    </local:LatitudeCheck>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
                     <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Collapsed">
 
@@ -173,7 +193,7 @@
                    Grid.Column="0" Grid.Row="0" />
                         <TextBlock Name="passTblk" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"
                     Text="password"/>
-                        <TextBox Name="emailTbx" Text="{Binding MailAddress, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"/>
+                        <TextBox Name="emailTbx" Text="{Binding MailAddress, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"/>
                         <TextBox Name="passTbx" Text="{Binding password, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"   />
                         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center">
                             <Image x:Name="profileAdd" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56"  MouseLeftButtonDown="profileAdd_MouseEnter"/>
@@ -192,6 +212,20 @@
                                     <Binding ElementName="passTbx" Path="Text" />
                                 </MultiBinding>
                             </Button.IsEnabled>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=Lattxt}" Value="False"/>
+                                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=Longtxt}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                         </Button>
 
                     </Grid>

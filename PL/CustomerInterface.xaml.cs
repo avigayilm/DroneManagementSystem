@@ -175,11 +175,17 @@ namespace PL
             Created= sendParcels.Count();
             OnItWay = bl.GetAllParcels(x => (x.SenderId == me.Id && x.PickedUp != null && x.Delivered==null)).Count();
             Received = receivedParcels.Count;
-
-            string temp = bl.getPic(me.Id);
-            if (temp != null)
-                Image = temp;
-            else Image = @"C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png";
+            try
+            {
+                string temp = bl.getPic(me.Id);
+                if (temp != null)
+                    Image = temp;
+                else Image = @"C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png";
+            }
+            catch(RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 

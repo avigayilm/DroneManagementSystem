@@ -31,7 +31,7 @@ namespace PL
         DroneListWindow lastW;
         LoginWindow lastLogin;
         public bool addOrUpdate { get; set; }
-        string imgSrc { get; set; }
+        public string imgSrc { get; set; }
         //public bool addOrUpdate
         //{
         //    get { return (bool)GetValue(addOrUpdateProperty); }
@@ -82,13 +82,14 @@ namespace PL
             Customer = bl.GetCustomer(lastW.customerToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             try {
-                imgSrc = bl.getPic(Customer.Id);
+                string temp = bl.getPic(Customer.Id);
+                imgSrc = temp;
             }
-            catch(Exception ex)
+            catch(RetrievalException ex)
             {
                 imgSrc = @"C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\Profile.png";
             }
-            imgSrc = bl.getPic(Customer.Id);
+            
             DataContext = this;
 
             //senderParcelsObserverable = from item in Customer.SentParcels

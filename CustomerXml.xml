@@ -136,4 +136,12 @@
     <Longitude>32</Longitude>
     <Deleted>false</Deleted>
   </Customer>
+  <Customer>
+    <Id>1111</Id>
+    <Name>Avi</Name>
+    <PhoneNumber>9888</PhoneNumber>
+    <Latitude>45</Latitude>
+    <Longitude>34</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
 </ArrayOfCustomer>

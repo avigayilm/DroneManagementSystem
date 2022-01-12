@@ -332,9 +332,6 @@ namespace PL
             this.Close();
             new LoginWindow().Show();
         }
-        private void DroneTab_MouseEnter(object sender, MouseEventArgs e)
-        {
-        }
 
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         //{
@@ -449,17 +446,30 @@ namespace PL
 
         private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
-           // customerToLists = new();
-           customerToLists = new(from cus in bl.GetAllCustomers()
-                                                       select cus);
-            //    bl.GetAllCustomers().ToList();
-            //foreach (var customerToList in tempCustomerToLists)
-            //{
-            //    customerToLists.Add(customerToList);
-            //}
-              CustomerListView.ItemsSource = customerToLists;
+            // customerToLists = new();
+
+            if (customerToLists == null)
+            {
+                customerToLists = new(from cus in bl.GetAllCustomers()
+                                      select cus);
+                //    bl.GetAllCustomers().ToList();
+                //foreach (var customerToList in tempCustomerToLists)
+                //{
+                //    customerToLists.Add(customerToList);
+                //}
+                CustomerListView.ItemsSource = customerToLists;
+            }
         }
 
+        private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void ParcelTab_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             IEnumerable<ParcelToList> temp = bl.GetAllParcels();
@@ -523,16 +533,6 @@ namespace PL
         //{
         //    CustomerListView.Items.Refresh();
         //}
-
-        private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void Image_MouseEnter_4(object sender, MouseEventArgs e)
         {
