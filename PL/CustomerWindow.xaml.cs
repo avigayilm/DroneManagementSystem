@@ -31,7 +31,7 @@ namespace PL
         DroneListWindow lastW;
         LoginWindow lastLogin;
         public bool addOrUpdate { get; set; }
-        string imgSrc { get; set; }
+        public string imgSrc { get; set; }
         //public bool addOrUpdate
         //{
         //    get { return (bool)GetValue(addOrUpdateProperty); }
