@@ -191,7 +191,7 @@ namespace ConsoleUI_BL
                                         {
                                             Console.WriteLine("Enter the droneId and the charging time in minutes");
                                             int droneId = int.Parse(Console.ReadLine());
-                                            double chargeTime = double.Parse(Console.ReadLine());
+                                            //double chargeTime = double.Parse(Console.ReadLine());
                                             ibl1.ReleasingDroneFromCharge(droneId);
                                             break;
                                         }

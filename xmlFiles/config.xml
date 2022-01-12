@@ -6,7 +6,7 @@
 	<!--<dal>dalobject</dal>-->
 	<dal>dalXml</dal>
 	<dal-packages>
-		<!--<dalobject namespace="Dal" class="DalObject">DalObj ct</dalobject>-->
+		<dalobject namespace="Dal" class="DalObject">DalObj ct</dalobject>
 		<dalXml namespace="Dal" class="DalXml">DalXml</dalXml>
 		<!--<list>DalObject</list>-->
 		<!--<xml>DalXml</xml>-->

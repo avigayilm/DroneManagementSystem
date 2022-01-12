@@ -97,7 +97,7 @@ namespace BL
                             throw new BatteryIssueException("Drone cannot carry any parcel");
                     }
                     else
-                        throw new UpdateIssueException("Couldn't assign the parcel");
+                        throw new UpdateIssueException("Parcel is not available.Couldn't assign the parcel");
                 }
                
             }
