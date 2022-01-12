@@ -212,6 +212,8 @@ namespace BL
                                     bl.DeliverParcelByDrone(droneId);
                                     //bl.DeliverParcelByDrone((int)parcel?.Id);
                                     drone.Status = DroneStatuses.Available;
+                                    parcel = null;
+                                    parcelId = null;
                                 }
                                 else
                                 {

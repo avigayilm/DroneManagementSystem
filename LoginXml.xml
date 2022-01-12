@@ -4,60 +4,67 @@
     <UserName>Manager</UserName>
     <Password>YehuditAvigayil</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0879489498</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	<profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>143929359</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0545353692</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0194612215</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0960521833</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0704471933</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0480273896</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	  <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0293710366</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	 <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
   <Login>
     <UserName>0869685572</UserName>
     <Password>miniProject</Password>
     <StaffOrUser>false</StaffOrUser>
-	 <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+    <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
+  </Login>
+  <Login>
+    <UserName>123456789</UserName>
+    <Password>123456</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/Hudis/Pictures/bbc2.jpeg</profileSource>
+    <emailAddress>yf56229@gmail.com</emailAddress>
   </Login>
 </ArrayOfLogin>

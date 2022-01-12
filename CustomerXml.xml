@@ -80,4 +80,12 @@
     <Longitude>34.830751600789874</Longitude>
     <Deleted>false</Deleted>
   </Customer>
+  <Customer>
+    <Id>123456789</Id>
+    <Name>voldemort</Name>
+    <PhoneNumber>0331234567</PhoneNumber>
+    <Latitude>34.12345</Latitude>
+    <Longitude>31.12345</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
 </ArrayOfCustomer>

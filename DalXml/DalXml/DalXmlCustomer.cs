@@ -71,7 +71,7 @@ namespace Dal
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);
             loadingToList(ref customers, CustomerXml);
 
-            int index = customers.FindIndex(c => c.Id == customerId && !c.Deleted);
+            int index = customers.FindIndex(c => c.Id == customerId);
             if (index == -1)
             {
                 throw new MissingIdException("No such Customer exists\n");

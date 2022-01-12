@@ -96,6 +96,7 @@ namespace PL
         {
             bl = IblObj;
             InitializeComponent();
+            registerGrid.Visibility = Visibility.Collapsed;
             weiCBx.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
             prioCbx.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
             recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
@@ -105,8 +106,6 @@ namespace PL
             parcel.Sender = new();
             parcel.Receiver = new();
             DataContext = this;
-            //  SentparcelsList.ItemsSource = me.SentParcels;
-            //  receivedparcelsList.ItemsSource = me.ReceivedParcels;
             confirmParcels = new();
             IEnumerable<ParcelToList> tempParcels = bl.GetAllParcels(x => ((x.ReceiverId == me.Id && x.Delivered == null && x.PickedUp != null) || (x.SenderId == me.Id && x.PickedUp == null && x.Assigned != null)));//.OrderBy(p=>p.ParcelStatus);// list wist parcels that arent yet deliveres or picked up
             foreach(var parcelToList in tempParcels)
@@ -142,20 +141,12 @@ namespace PL
         {
             bl = IblObj;
             InitializeComponent();
-            //weiCBx.ItemsSource = Enum.GetValues(typeof(BO.WeightCategories));
-            //prioCbx.ItemsSource = Enum.GetValues(typeof(BO.Priorities));
-            //recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
             lastW = last;
             me = new();
             Register = true;
             me.Loc = new();
-            //parcel = new();
-            //parcel.Sender = new();
-            //parcel.Receiver = new();
             registerGrid.Visibility = Visibility.Visible;
             DataContext = this;
-           // SentparcelsList.ItemsSource = me.SentParcels;
-           // receivedparcelsList.ItemsSource = me.ReceivedParcels;
         }
 
         private void Email()
