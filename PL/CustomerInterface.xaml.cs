@@ -35,11 +35,42 @@ namespace PL
         public ObservableCollection<ParcelToList> confirmParcels;
         //public ObservableCollection<ParcelToList> parcelToLists;
         public Customer me { get; set; }
-        bool created { get; set; }
-        bool assigned { get; set; }
-        bool pickedUp { get; set; }
-        bool delivered { get; set; }
-        int parcelIdInput { get; set; }
+        bool created
+        {
+            get { return (bool)GetValue(CreatedProperty); }
+            set { SetValue(CreatedProperty, value); }
+        }
+        public static readonly DependencyProperty CreatedProperty =
+            DependencyProperty.Register("created", typeof(bool), typeof(CustomerInterface));
+        bool assigned
+        {
+            get { return (bool)GetValue(AssignedProperty); }
+            set { SetValue(AssignedProperty, value); }
+        }
+        public static readonly DependencyProperty AssignedProperty =
+            DependencyProperty.Register("assigned", typeof(bool), typeof(CustomerInterface));
+        bool pickedUp
+        {
+            get { return (bool)GetValue(PickedUpProperty); }
+            set { SetValue(PickedUpProperty, value); }
+        }
+        public static readonly DependencyProperty PickedUpProperty =
+            DependencyProperty.Register("pickedUp", typeof(bool), typeof(CustomerInterface));
+        bool delivered
+        {
+            get { return (bool)GetValue(DeliveredProperty); }
+            set { SetValue(DeliveredProperty, value); }
+        }
+        public static readonly DependencyProperty DeliveredProperty =
+            DependencyProperty.Register("delivered", typeof(bool), typeof(CustomerInterface));
+        int parcelIdInput
+        {
+            get { return (int)GetValue(IdProperty); }
+            set { SetValue(IdProperty, value); }
+        }
+        public static readonly DependencyProperty IdProperty =
+            DependencyProperty.Register("parcelIdInput", typeof(int), typeof(CustomerInterface));
+    
        // public int Created { get; set; }
         private int _created;
         public int Created
@@ -66,6 +97,16 @@ namespace PL
             set { _received= value; NotifyPropertyChanged(nameof(Received)); }
         }
 
+        //private string _image;
+        //public string Image
+        //{
+        //    get { return (string)GetValue(ImageProperty); }
+        //    set { SetValue(ImageProperty, value); }
+        //}
+        //public static readonly DependencyProperty ImageProperty =
+        //    DependencyProperty.Register("Image", typeof(bool), typeof(CustomerInterface));
+
+        public string Image { get; set; }
         public Parcel parcel { get; set; }
         public int parcelId;
         public ParcelToList parcelToList { get; set; }
@@ -135,6 +176,11 @@ namespace PL
             Created= sendParcels.Count();
             OnItWay = bl.GetAllParcels(x => (x.SenderId == me.Id && x.PickedUp != null && x.Delivered==null)).Count();
             Received = receivedParcels.Count;
+
+            string temp = bl.getPic(me.Id);
+            if (temp != null)
+                Image = temp;
+            else Image = @"C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png";
 
         }
 
@@ -206,6 +252,7 @@ namespace PL
                 try
                 {
                     bl.Register(me, me.Id, password, profileAdd.Source.ToString(), MailAddress);
+                    this.Close();
                 }
                 catch(Exception ex)
                 {

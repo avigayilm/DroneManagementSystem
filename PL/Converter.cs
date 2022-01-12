@@ -43,6 +43,36 @@ namespace PL
 
     }
 
+    internal class CheckLongitudeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            value switch
+            {
+                <-180=>false,
+                >180=>false,
+                _=>true
+            };
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+
+    }
+
+    internal class checkLatitudeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            value switch
+            {
+                < -90 => false,
+                > 90 => false,
+                _ => true
+            };
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+            throw new NotImplementedException();
+
+    }
+
     /// <summary>
     /// checks if all textboxes have a value
     /// </summary>

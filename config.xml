@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configLists>
-  <runNum>1030</runNum>
-	<slotsTaken></slotsTaken>
+  <runNum>1032</runNum>
+  <slotsTaken></slotsTaken>
   <pwrUsgEmpty>3</pwrUsgEmpty>
   <pwrUsgLight>5</pwrUsgLight>
   <pwrUsgMedium>10</pwrUsgMedium>

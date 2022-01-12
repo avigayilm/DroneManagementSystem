@@ -73,8 +73,8 @@
                         <!--<Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\drone.png" ToolTip="ShowDroneList" ></Image>
                         <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
 
-                        <!--<Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
-                        <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>-->
+                        <Image Name="imgDrone" Height="112" Width="41" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\drone.png" ToolTip="ShowDroneList" ></Image>
+                        <TextBlock Text="Dronelist" Foreground="White" Margin="10" VerticalAlignment="Center" ></TextBlock>
 
                     </StackPanel>
                 </TabItem.Header>
@@ -157,7 +157,7 @@
                   FontWeight="Bold"   
                         Foreground="White"  BorderThickness="0,0,0,0" Background="#FF2C2B2B"  Margin="45,438,37,-444" >
                             <StackPanel>
-                                <Image x:Name="addpic" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
+                                <Image x:Name="addpic" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\plus.png"  ToolTip="ShowCustomerList" Height="42" Width="56"/>
                                 <TextBlock Text="Add Drone"  Foreground="White" Margin="10" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                             <!--<StackPanel>
@@ -292,7 +292,7 @@
 
                         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
 
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>-->
                     </Grid.Background>
                     <Grid.RowDefinitions >
@@ -427,7 +427,7 @@
                 </TabItem.Header>
                 <Grid Name="StationGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>-->
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>
@@ -518,7 +518,7 @@
                 </TabItem.Header>
                 <Grid Name="CustomerGridWindow" ShowGridLines="True">
                     <Grid.Background>
-                        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
+                        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\B. background.png"/>-->
                         <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
                     </Grid.Background>

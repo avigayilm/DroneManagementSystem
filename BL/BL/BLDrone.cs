@@ -143,6 +143,7 @@ namespace BL
         {
             try
             {
+                droneBL.Where(d => d.Id == droneId).FirstOrDefault().Deleted = true;
                 idal1.DeleteDrone(droneId);
             }
             catch (MissingIdException ex)

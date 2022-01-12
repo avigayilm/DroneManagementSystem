@@ -31,18 +31,6 @@ namespace PL
             return new ValidationResult(true, null);
         }
     }
-
-    public class    longitudeCheck : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            string charString = value as string;
-            if (string.IsNullOrWhiteSpace(charString))
-                return new ValidationResult(false, "can't be empty");
-            return new ValidationResult(true, null);
-        }
-    }
-
 }
 //{
 //    public class InputValidation : IDataErrorInfo
