@@ -588,7 +588,13 @@
                     </Grid.ColumnDefinitions>
                     <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="5"/>
                     <TextBlock Text="Fill in ParcelId" Grid.Row="2" Grid.Column="5"/>
-                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="5" Content="Submit" Click="sumbmitId_Click"/>
+                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="5" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
                     <CheckBox Grid.Row="1" Grid.Column="1" Content="Ordered and approved" Grid.ColumnSpan="2" IsChecked="{Binding created}"/>
                     <CheckBox Grid.Row="3" Grid.Column="1" Content="Assigned" IsChecked="{Binding assigned}"/>
