@@ -12,10 +12,7 @@ namespace Dal
 {
     internal sealed partial class DalObject
     {
-        /// <summary>
-        /// adds a parcel to the parcellist
-        /// </summary>
-        /// <param name="pack"></param>
+
         public int AddParcel(Parcel pack)
         {
             CheckDuplicateParcel(pack.Id);
@@ -27,53 +24,37 @@ namespace Dal
         public void UpdateParcel(int parcelId, string recId)
         {
             int index = CheckExistingParcel(parcelId);
+            if (DataSource.parcelList[index].Delete) 
+            {  
+                throw new MissingIdException($"This Parcel:{ parcelId } is deleted \n");  
+            }
             Parcel tempParcel = DataSource.parcelList[index];
             tempParcel.ReceiverId = recId;
             DataSource.parcelList[index] = tempParcel;
-
         }
 
-        /// <summary>
-        /// the drone picks up the parcel, therefore updating the drone's status to delivery 
-        /// and updating the picked up time
-        /// </summary>
-        /// <param name="parcelId"></param>
+   
         public void ParcelPickedUp(int parcelId)
         {
             int parcelIndex = CheckExistingParcel(parcelId);
             int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
-            //var temp2 = DataSource.dronesList[droneIndex];
-            // temp2.status = DroneStatuses.Delivery;
             var temp = DataSource.parcelList[parcelIndex];
             temp.PickedUp = DateTime.Now;
-            //DataSource.dronesList[droneIndex] = temp2;
             DataSource.parcelList[parcelIndex] = temp;
         }
 
 
-        /// <summary>
-        ///  funciton updated the parcel to delivered. It changes the drone's status to available
-        ///  and updates the time of requested
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <param name="day"></param>
         public void ParcelDelivered(int parcelId)//when the parcel is delivered, the drone will be available again
         {
             int parcelIndex = CheckExistingParcel(parcelId);
             int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == DataSource.parcelList[parcelIndex].DroneId);
             var temp2 = DataSource.dronesList[droneIndex];
             var temp = DataSource.parcelList[parcelIndex];
-            //temp2.status = DroneStatuses.Available;
             temp.Delivered = DateTime.Now;
             DataSource.dronesList[droneIndex] = temp2;
             DataSource.parcelList[parcelIndex] = temp;
         }
 
-        /// <summary>
-        /// assigning a drone to a parcel
-        /// </summary>
-        /// <param name="parcelId"></param>
-        /// <param name="droneId"></param>
         public void ParcelDrone(int parcelId, int droneId)
         {
             int parcelIndex = CheckExistingParcel(parcelId);
@@ -84,29 +65,18 @@ namespace Dal
 
         }
 
-        /// <summary>
-        /// The get functions return a string with all the information of the lists
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
+
         public Parcel GetParcel(int parcelId)
         {
             int index = CheckExistingParcel(parcelId);
             return DataSource.parcelList[index];
         }
-        /// <summary>
-        /// returns a parcellist
-        /// </summary>
-        /// <returns></returns>
+
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null)
         { 
             return DataSource.parcelList.FindAll(x => predicate == null ? true : predicate(x)&&!x.Delete);
         }
 
-        /// <summary>
-        /// bonus: Doesn't completely delete the parcel but it has a sign that it is deleted
-        /// </summary>
-        /// <param name="parcelId"></param>
 
         public void DeleteParcel(int parcelId)
         {
@@ -146,7 +116,7 @@ namespace Dal
         void CheckDuplicateParcel(int parcelId)
         {
             
-            if (DataSource.parcelList.Exists(p => p.Id == parcelId && !p.Delete))
+            if (DataSource.parcelList.Exists(p => p.Id == parcelId && !p.Delete ))
             {
                 throw new DuplicateIdException($"Parcel with { parcelId } id already exists\n");
             }

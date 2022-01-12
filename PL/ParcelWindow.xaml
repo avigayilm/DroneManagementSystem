@@ -116,8 +116,8 @@
 
     <Grid Name="RegularGrid"  >
         <Grid.Background>
-            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
-            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
             <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
         </Grid.Background>
         <Grid.RowDefinitions>
@@ -192,7 +192,7 @@
         </Button>
 
 
-        <Grid x:Name="UpdateGrid" Grid.Row="4"  Grid.ColumnSpan="5" DataContext="{Binding parcel}" Grid.RowSpan="6" ShowGridLines="True" Visibility="Hidden" >
+        <Grid x:Name="UpdateGrid" Grid.Row="4"  Grid.ColumnSpan="5" DataContext="{Binding parcel}" Grid.RowSpan="6" ShowGridLines="False" Visibility="Hidden" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.6*"/>

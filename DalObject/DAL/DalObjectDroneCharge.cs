@@ -19,12 +19,8 @@ namespace Dal
         /// <param name="StationId"></param>
         public bool SendToCharge(int droneId, int stationId)
         {
-            int droneIndex = DataSource.dronesList.FindIndex(d => d.Id == droneId);
-            int stationIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
-            if (stationIndex == -1)
-                throw new MissingIdException(" No such station in list\n");
-            if (droneIndex == -1)
-                throw new MissingIdException("No  such drone in list \n");
+            int droneIndex = CheckExistingDrone(droneId);
+            int stationIndex = CheckExistingStation(stationId);
             //// making a new Dronecharge
             ChangeChargeSlots(stationId, -1);
             DroneCharge DC = new DroneCharge();
@@ -42,15 +38,15 @@ namespace Dal
         public void BatteryCharged(int droneId, int stationId)
         {
 
-            int droneIndex = DataSource.chargeList.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
-            if (droneIndex == -1)
+            int dronCeIndex = DataSource.chargeList.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
+            if (dronCeIndex == -1)
                 throw new MissingIdException("No such drone \n");
             else
             {
-                DataSource.chargeList.Remove(DataSource.chargeList[droneIndex]);// removing the drone from the chargelist
-                var temp = DataSource.dronesList[droneIndex];
+                DataSource.chargeList.Remove(DataSource.chargeList[dronCeIndex]);// removing the drone from the chargelist
+                var temp = DataSource.dronesList[dronCeIndex];
                 ///temp.battery = 100.00;// battery is full
-                DataSource.dronesList[droneIndex] = temp;
+                DataSource.dronesList[dronCeIndex] = temp;
             }
 
         }

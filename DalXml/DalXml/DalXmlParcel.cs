@@ -129,8 +129,6 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int parcelId)
         {
-
-            //parcels = XMLTools. LoadListFromXMLSerializer<Parcel>(ParcelXml);
             loadingToList(ref parcels, ParcelXml);
             int index = parcels.FindIndex(p => p.Id == parcelId);
             if (index == -1)
@@ -148,9 +146,8 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetAllParcels(Predicate<Parcel> predicate = null) 
         {
-            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml); //there is usage of parcels so as to avoid multiple loading 
+            //there is usage of parcels so as to avoid multiple loading 
             loadingToList(ref parcels, ParcelXml);
-            //return parcels.FindAll(x => predicate == null ? true : predicate(x) && !x.Delete);
             return parcels
                 .Where(p => predicate == null ? true : predicate(p) && !p.Delete);
         }
@@ -159,7 +156,6 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int parcelId)
         {
-            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             loadingToList(ref parcels, ParcelXml);
             int pIndex = parcels.FindIndex(p => p.Id == parcelId);
             if (pIndex == -1)
@@ -174,13 +170,6 @@ namespace Dal
             tempParcel.Delete = true;
             parcels[pIndex] =  tempParcel;
             XMLTools.SaveListToXMLSerializer(parcels, ParcelXml);
-            //if (pIndex == -1)
-            //{
-            //    throw new MissingIdException("No such parcel exists\n");
-            //}
-            //var temp = DataSource.parcelList[index];
-            //temp.Delete = true;
-            //DataSource.parcelList[index] = temp;
         }
 
 

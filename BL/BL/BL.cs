@@ -54,17 +54,6 @@ namespace BL
                 }
             }
 
-
-            //foreach (var (p, tempDro) in from DO.Parcel p in undeliveredParcel
-            //                             let tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId)
-            //                             where tempDro != default// if there is a drone assigned to the parcel
-            //                             select (p, tempDro))
-            //{
-            //    tempDro.Status = DroneStatuses.Delivery;// the drone is in delivery
-            //    tempDro.Battery = rand.Next(40, 100);// random battery level so that the drone can still fly
-            //    tempDro.Loc = DroneLocation(p, tempDro);//location of drone
-            //    tempDro.ParcelId = p.Id;
-            //}
             foreach (var dr in from DroneToList dr in droneBL//Thread.Sleep(19999);
             where dr.Status != DroneStatuses.Delivery
             select dr)
@@ -75,14 +64,7 @@ namespace BL
                     dr.Status = DroneStatuses.Maintenance;
                     dr.Battery = rand.Next(20, 50);// random battery level so that the drone can still fly
                     DO.Station tempSt = idal1.GetStation( idal1.GetDroneChargeList(d => d.DroneId == dr.Id).First().StationId);
-//= tempList[rand.Next(tempList.Count())];
                     dr.Loc = new Location() { Latitude = tempSt.Latitude, Longitude = tempSt.Longitude };
-                    //idal1.SendToCharge(dr.Id, tempSt.Id);
-                    //if (chargeSlotsToAdd.ContainsKey(tempSt.Id))
-                    //    chargeSlotsToAdd[tempSt.Id]++;
-                    //else
-                    //    chargeSlotsToAdd.Add(tempSt.Id, 1);
-                   // count++;
                 }
                 else //the drone is available
                 {

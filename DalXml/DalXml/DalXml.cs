@@ -42,7 +42,7 @@ namespace Dal
         internal static DalXml instance { get { return Instance.Value; } }
         private static Lazy<DalXml> Instance = new Lazy<DalXml>(() => new ());
         static DalXml() {
-           // DataSource.Initialize();
+           //DataSource.Initialize();
             //XMLTools.SaveListToXMLElement(new XElement("DroneChargeXml.xml"), DroneChargeXml);
             //XElement rootElem = new XElement("configLists",new XElement("runNum", 1020), 
             //    new XElement("pwrUsgEmpty", pwrUsgEmpty),
