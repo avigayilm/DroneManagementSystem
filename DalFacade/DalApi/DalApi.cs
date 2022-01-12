@@ -12,7 +12,15 @@ namespace DalApi
     {
         // public static DalObject Instance
 
+        /// <summary>
+        /// adds a user login details
+        /// </summary>
+        /// <param name="log"></param>
         public void AddLogin(Login log);
+        /// <summary>
+        /// adds a station to station list
+        /// </summary>
+        /// <param name="stat"></param>
         void AddStation(Station stat);
         /// <summary>
         /// adds a drone to the dronlist
@@ -94,6 +102,11 @@ namespace DalApi
         /// </summary>
         /// <param name="Buzzer"></param>
         void BatteryCharged(int droneId, int stationId);
+        /// <summary>
+        /// returns thepicture associated with a user
+        /// </summary>
+        /// <param name="cuId"></param>
+        /// <returns></returns>
         string getPic(string cuId);
 
         /// <summary>
@@ -143,13 +156,14 @@ namespace DalApi
         /// returns a list of Dronecharge
         /// </summary>
         /// <returns></returns>
-        List<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null);
-       // public IEnumerable<Parcel> GetvacantParcel();
+        IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null);
+    /// <summary>
+    /// returns pwr usage array with pwr usage according to weight
+    /// </summary>
+    /// <returns></returns>
         int[] DronePwrUsg();
 
-        // public IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
-        //public IEnumerable<Station> GetStationWithCharging();
-        // public IEnumerable<Parcel> UndeliveredParcels();
+       
 
         /// <summary>
         /// updates the model of the drone, used in BL
@@ -186,6 +200,10 @@ namespace DalApi
         /// <param name="stationId"></param>
         /// <returns></returns>
         IEnumerable<Drone> DronesChargingAtStation(int stationId);
+        /// <summary>
+        /// determines whether a station does indeed not already exist
+        /// </summary>
+        /// <param name="stationId"></param>
         void CheckDuplicateStation(int stationId);
         /// <summary>
         /// checks if a station exists in the customerlist, if it doesn't it throws a MissingIdException
@@ -193,8 +211,18 @@ namespace DalApi
         /// <param name="stationId"></param>
         /// <returns></returns>
         int CheckExistingStation(int stationId);
- 
+ /// <summary>
+ /// returns a ll stations according to a predicate
+ /// </summary>
+ /// <param name="predicate"></param>
+ /// <returns></returns>
         IEnumerable<Station> GetAllStations(Predicate<Station> predicate = null);
+        /// <summary>
+        /// validates login try according to list of logins
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         public bool ValidateLogin(string user, string pass);
 
         /// <summary>

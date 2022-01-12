@@ -19,7 +19,6 @@ namespace BL
             int stationId = 0;
             if (tempDron.Status == DroneStatuses.Available)
             {
-
                 DO.Station tempStation = FindClosestStation(tempDron);// returns a station that the drone can fly to.
                 bool hasEnoughBattery = CanReachstation(tempDron, tempStation);
                 if (hasEnoughBattery)//if it's available and there is enough battery
@@ -37,13 +36,7 @@ namespace BL
                     lock (idal1)
                     {
                         //update the station
-                        //idal1.ChangeChargeSlots(tempStation.Id, -1);
-                        //update dronecharge
                         idal1.SendToCharge(droneId, tempStation.Id);
-                        //if (chargeSlotsToAdd.ContainsKey(tempStation.Id))
-                        //    chargeSlotsToAdd[tempStation.Id]++;
-                        //else
-                        //    chargeSlotsToAdd.Add(tempStation.Id, 1);
                     }
 
                 }
@@ -62,15 +55,14 @@ namespace BL
                 DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
                 if (tempDron.Status == DroneStatuses.Maintenance)
                 {
-                    List<DO.DroneCharge> tempDroneChargeList = (List<DO.DroneCharge>)idal1.GetDroneChargeList();
-                    int droneChargeIndex = tempDroneChargeList.FindIndex(dc => dc.DroneId == droneId);// finding the index of drone to get the station id
-                    int stationId = tempDroneChargeList[droneChargeIndex].StationId;
+                    IEnumerable<DO.DroneCharge> tempDroneChargeList = idal1.GetDroneChargeList();
+                    DO.DroneCharge droneCharge = tempDroneChargeList.First(dc => dc.DroneId == droneId);
+                    int stationId = droneCharge.StationId;
                     tempDron.Status = DroneStatuses.Available;
                     // update drone
                     lock (idal1)
                     {
-                        TimeSpan timeInCharging = DateTime.Now - idal1.GetDroneChargeList(x => x.DroneId == tempDron.Id).First().ChargingTime;
-                        //double batteryFilled = (chargingTime / 60) * idal1.DronePwrUsg()[4];
+                        TimeSpan timeInCharging = DateTime.Now - droneCharge.ChargingTime;
                         int batteryCharge = (int)(timeInCharging.TotalHours * idal1.DronePwrUsg()[4]);
                         tempDron.Battery += batteryCharge;
                         if (tempDron.Battery > 100)
@@ -79,7 +71,6 @@ namespace BL
                         idal1.ChangeChargeSlots(stationId, 1);
                         //update dronecharge
                         idal1.BatteryCharged(droneId, stationId);
-                       // chargeSlotsToAdd[stationId]--;
                     }
                     return stationId;
                 }
@@ -108,12 +99,7 @@ namespace BL
             lock (idal1)
             {
                 listDronecharge = from droneC in idal1.DronesChargingAtStation(stationId)
-                    select (getDroneInCharge(droneC.Id));
-                //var chargingListIdal = idal1.DronesChargingAtStation(stationId);
-                //foreach (DO.Drone d in chargingListIdal)
-                //{
-                //    listDronecharge.Add(getDroneInCharge(d.Id));
-                //}
+                                   select (getDroneInCharge(droneC.Id));
                 return (listDronecharge, listDronecharge.Count());
             }
            

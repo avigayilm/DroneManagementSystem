@@ -150,6 +150,22 @@ namespace Dal
                 throw new DuplicateIdException("station already exists\n");
             }
         }
-    
+
+        public void DeleteStation(int stationId)
+        {
+            int sIndex = DataSource.stationList.FindIndex(s => s.Id == stationId);
+            if (sIndex == -1)
+            {
+                throw new MissingIdException("No such station exists\n");
+            }
+            if (DataSource.stationList[sIndex].Deleted)
+            {
+                throw new MissingIdException($"This Parcel:{ stationId } is deleted \n");
+            }
+            Station tempStation = DataSource.stationList[sIndex];
+            tempStation.Deleted = true;
+            DataSource.stationList[sIndex] = tempStation;
+        }
+
     }
 }

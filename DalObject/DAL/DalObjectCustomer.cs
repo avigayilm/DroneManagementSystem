@@ -18,22 +18,22 @@ namespace Dal
         /// <param name="cus"></param>
         public void AddCustomer(Customer cus)
         {
-            if (DataSource.customerList.Exists(c => c.Id == cus.Id))
+            if (DataSource.customerList.Exists(c => c.Id == cus.Id && !c.Deleted))
                 throw new DuplicateIdException("Customer already exists\n");
             DataSource.customerList.Add(cus);
         }
 
-       
+
         public Customer GetCustomer(string customerId)
         {
             int index = CheckExistingCustomer(customerId);
             return DataSource.customerList[index];
         }
 
-        
-        public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null )
+
+        public IEnumerable<Customer> GetAllCustomers(Predicate<Customer> predicate = null)
         {
-           return DataSource.customerList.FindAll(c => predicate == null?true: predicate(c));
+            return DataSource.customerList.FindAll(c => predicate == null ? true : predicate(c) && !c.Deleted);
         }
 
         public void UpdateCustomer(string customerId, string name, string phone)
@@ -41,14 +41,14 @@ namespace Dal
             int index = CheckExistingCustomer(customerId);
             Customer tempCustomer = DataSource.customerList[index];
             if (name != null)
-                 tempCustomer.Name = name;
-            if (phone !=null)
-                 tempCustomer.PhoneNumber = phone;
+                tempCustomer.Name = name;
+            if (phone != null)
+                tempCustomer.PhoneNumber = phone;
             DataSource.customerList[index] = tempCustomer;
         }
-    
 
-        
+
+
         /// <summary>
         /// checks if a customer exists in the customerlist, if it doesn't it throws a MissingIdException
         /// </summary>
@@ -64,17 +64,16 @@ namespace Dal
             return index;
         }
 
-       
+
         /// <summary>
         /// returns the list of customers having received a parcel
         /// </summary>
         /// <returns></returns>
-        public List<Customer> CustomersDeliverdTo()
+        public IEnumerable<Customer> CustomersDeliverdTo()
         {
-            List<Customer> temp = new List<Customer>();
-            foreach (Parcel p in GetAllParcels(pa => pa.Delivered != null))//for every delivered parcel add its customer to the list
-                temp.Add(GetCustomer(p.ReceiverId));
-            return temp;
+
+            return from p in GetAllParcels(pa => pa.Delivered != null && !pa.Delete)
+                   select (GetCustomer(p.ReceiverId));
         }
 
         public void AddLogin(Login log)
@@ -86,20 +85,55 @@ namespace Dal
 
         public bool ValidateLogin(string user, string pass)
         {
-                int index = DataSource.loginList.FindIndex(c => c.UserName == user);
-                if (index == -1)
+            int index = DataSource.loginList.FindIndex(c => c.UserName == user);
+            if (index == -1)
+            {
+                throw new LoginException("username doesnt exists");
+            }
+            else
+            {
+                if (DataSource.loginList[index].Password != pass)
                 {
-                    throw new LoginException("username doesnt exists");
+                    throw new LoginException("password is incorrect");
                 }
                 else
-                {
-                    if (DataSource.loginList[index].Password != pass)
-                    {
-                        throw new LoginException("password is incorrect");
-                    }
-                    else
-                        return DataSource.loginList[index].StaffOrUser;
-                }
+                    return DataSource.loginList[index].StaffOrUser;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(string customerId)
+        {
+
+
+            int cIndex = DataSource.customerList.FindIndex(c => c.Id == customerId); ;
+            if (cIndex == -1)
+            {
+                throw new MissingIdException("No such parcel exists\n");
+            }
+            if (DataSource.customerList[cIndex].Deleted)
+            {
+                throw new MissingIdException($"This Parcel:{ customerId } is deleted \n");
+            }
+            Customer tempCustomer = DataSource.customerList[cIndex];
+            tempCustomer.Deleted = true;
+            DataSource.customerList[cIndex] = tempCustomer;
+
+        }
+
+        public string getPic(string cuId)
+        {
+
+            int index = DataSource.loginList.FindIndex(l => l.UserName == cuId);
+            if (index == -1)
+            {
+                throw new LoginException("username doesnt exists");
+            }
+            else
+            {
+                return DataSource.loginList[index].profileSource;
+            }
+            
         }
     }
-}
+    }

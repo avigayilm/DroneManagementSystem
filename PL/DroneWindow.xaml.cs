@@ -126,6 +126,7 @@ namespace PL
             sTCBAdd.ItemsSource = bl.GetAllStation().Select(s => s.Id);
             addGrid.Visibility = Visibility.Visible;
             DataContext = this;
+            UpdateGrid.Visibility = Visibility.Collapsed;
         }
 
         public DroneWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
@@ -150,15 +151,7 @@ namespace PL
             bl.AddDrone(Drone, StationId);
             wAndS.Status = (DroneStatuses)Drone.Status;
             wAndS.Weight = (WeightCategories)Drone.Weight;
-            if (lastW.droneToLists.ContainsKey(wAndS))
-                lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id));
-            else
-            {
-                lastW.droneToLists.Add(wAndS, bl.GetAllDrones().Where(x => x.Id == Drone.Id).ToList());
-            }
-            //lastW.droneToLists.ContainsKey(wAndS)? 
-            //    lastW.droneToLists[wAndS].Add(bl.GetAllDrones().First(x => x.Id == Drone.Id)) :
-            //    lastW.droneToLists.Add(wAndS, bl.GetAllDrones().TakeWhile(x => x.Id == Drone.Id).ToList());
+            lastW.droneToListsOb.Add(bl.GetAllDrones(x => x.Id == Drone.Id).Single());
             lastW.checkComboBoxesDrone();
             // after drone is updated in bl now updates listview
         }
@@ -197,22 +190,12 @@ namespace PL
                         {
 
                             int tempStationId = bl.SendingDroneToCharge(Drone.Id);
-                            //lastW.stationToLists.Values
-                            //    .First(s => s.Exists(st => st.Id == tempStationId))
-                            //    .First(s => s.Id == tempStationId)
-                            //    .AvailableChargeSlots -= 1;
-                            //lastW.StationListView.Items.Refresh();
                             lastW.UpdateChargeSlots(tempStationId, 1);
                             break;
                         }
                     case UpdateOptions.ReleaseFromCharge:
                         {
                            int tempStationId = bl.ReleasingDroneFromCharge(Drone.Id);
-                            //lastW.stationToLists.Values
-                            //    .First(s => s.Exists(st => st.Id == tempStationId))
-                            //    .First(s => s.Id == tempStationId)
-                            //    .AvailableChargeSlots += 1;
-                            //lastW.StationListView.Items.Refresh();
                             lastW.UpdateChargeSlots(tempStationId,-1);
                             break;
                         }
@@ -425,6 +408,7 @@ namespace PL
             if (AutoManual == false)// if it's on state of manual
             {
                 AutoManual = true;
+                //AutoManualButton.Content = "Manual";
                 AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
                 AutoRun.DoWork += AutoRun_DoWork;
                 AutoRun.ProgressChanged += AutoRun_ProgressChanged;

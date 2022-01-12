@@ -1,18 +1,34 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
-    <Id>2172</Id>
-    <Name>Station-85</Name>
-    <Longitude>35.13508006640597</Longitude>
-    <Latitude>30.256780941880873</Latitude>
-    <AvailableChargeSlots>5</AvailableChargeSlots>
+    <Id>9119</Id>
+    <Name>Station-93</Name>
+    <Longitude>35.330408706133994</Longitude>
+    <Latitude>29.625099745658865</Latitude>
+    <AvailableChargeSlots>7</AvailableChargeSlots>
     <Deleted>false</Deleted>
   </Station>
   <Station>
-    <Id>9084</Id>
-    <Name>Station-83</Name>
-    <Longitude>34.71519327023962</Longitude>
-    <Latitude>29.59014993836527</Latitude>
+    <Id>5366</Id>
+    <Name>Station-71</Name>
+    <Longitude>35.54594942899864</Longitude>
+    <Latitude>32.729351421516284</Latitude>
+    <AvailableChargeSlots>4</AvailableChargeSlots>
+    <Deleted>false</Deleted>
+  </Station>
+  <Station>
+    <Id>3008</Id>
+    <Name>Station-85</Name>
+    <Longitude>34.9551538639026</Longitude>
+    <Latitude>29.8172803350559</Latitude>
+    <AvailableChargeSlots>4</AvailableChargeSlots>
+    <Deleted>false</Deleted>
+  </Station>
+  <Station>
+    <Id>3456</Id>
+    <Name>Station-88</Name>
+    <Longitude>34.932959087798075</Longitude>
+    <Latitude>30.315825078266272</Latitude>
     <AvailableChargeSlots>5</AvailableChargeSlots>
     <Deleted>false</Deleted>
   </Station>

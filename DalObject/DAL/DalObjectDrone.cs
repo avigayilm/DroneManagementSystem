@@ -20,26 +20,10 @@ namespace Dal
         public void AddDrone(Drone dro)
         {
             CheckDuplicateDrone(dro.Id);
-            DataSource.dronesList.Add(dro);    
+            DataSource.dronesList.Add(dro);
         }
 
-        ///// <summary>
-        ///// function that changes the status of the drone according to the given parameter.
-        ///// </summary>
-        ///// <param name="DroneId"></param>
-        ///// <param name="st"></param>
-        //public void ChangeDroneStatus(int DroneId, DroneStatuses st)
-        //{
-        //    int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
-        //    if (droneIndex == -1)
-        //        throw new MissingIdException("No such drone\n");
-        //    else
-        //    {
-        //        var temp = DataSource.dronesList[droneIndex];
-        //        temp.status = st;
-        //        DataSource.dronesList[droneIndex] = temp;
-        //    }
-        //}
+
 
         /// <summary>
         /// returns the drone according to the given Id
@@ -48,24 +32,24 @@ namespace Dal
         /// <returns></returns>
         public Drone GetDrone(int droneId)
         {
-           int index=CheckExistingDrone(droneId);
-           return DataSource.dronesList[index];
+            int index = CheckExistingDrone(droneId);
+            return DataSource.dronesList[index];
         }
 
-      
-        public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate =null)
+
+        public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null)
         {
-            return DataSource.dronesList.FindAll(d => predicate ==null ? true : predicate(d));
+            return DataSource.dronesList.FindAll(d => predicate == null ? true : predicate(d) && !d.Deleted);
         }
         /// <summary>
         /// updates the model of the drone, used in BL
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="model"></param>
-        public void UpdateDrone(int droneId,string model)
+        public void UpdateDrone(int droneId, string model)
         {
             int index = CheckExistingDrone(droneId);
-            Drone tempDrone=DataSource.dronesList[index];
+            Drone tempDrone = DataSource.dronesList[index];
             tempDrone.Model = model;
             DataSource.dronesList[index] = tempDrone;
 
@@ -78,7 +62,7 @@ namespace Dal
         public IEnumerable<Drone> DronesChargingAtStation(int stationId)
         {
             List<Drone> charging = new List<Drone>();
-            DataSource.chargeList.ForEach(c => { if (c.StationId == stationId) charging.Add(GetDrone(c.DroneId));});
+            DataSource.chargeList.ForEach(c => { if (c.StationId == stationId) charging.Add(GetDrone(c.DroneId)); });
             return charging;
         }
 
@@ -103,11 +87,28 @@ namespace Dal
         /// <param name="customerId"></param>
         public void CheckDuplicateDrone(int droneId)
         {
-            if (DataSource.dronesList.Exists(d => d.Id == droneId))
+            if (DataSource.dronesList.Exists(d => d.Id == droneId && !d.Deleted))
             {
                 throw new DuplicateIdException("Drone already exists\n");
             }
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(int droneId)
+        {
+            int dIndex = DataSource.dronesList.FindIndex(d => d.Id == droneId);
+            if (dIndex == -1)
+            {
+                throw new MissingIdException("No such drone exists\n");
+            }
+            if (DataSource.dronesList[dIndex].Deleted)
+            {
+                throw new MissingIdException($"This Drone:{ droneId } is deleted \n");
+            }
+            Drone tempDrone = DataSource.dronesList[dIndex];
+            tempDrone.Deleted = true;
+            DataSource.dronesList[dIndex] = tempDrone;
+        }
     }
 }

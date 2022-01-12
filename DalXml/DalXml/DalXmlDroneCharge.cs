@@ -20,7 +20,6 @@ namespace Dal
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
             droneCharges = GetDroneChargeList().ToList();
             int droneIndex = CheckExistingDrone(droneId);
-               //DataSource.dronesList.FindIndex(d => d.Id == droneId);
             int stationIndex = CheckExistingStation(stationId);
             ChangeChargeSlots(stationId, -1);
             DroneCharge DC = new DroneCharge() { StationId = stationId, DroneId = droneId, ChargingTime = DateTime.Now};
@@ -42,7 +41,7 @@ namespace Dal
         public void BatteryCharged(int droneId, int stationId)
         {
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
-            droneCharges = GetDroneChargeList();
+            droneCharges = GetDroneChargeList().ToList();
             int dronecIndex = droneCharges.FindIndex(d => d.DroneId == droneId);// find the index of the dronecharge according to teh droneIndex
             if (dronecIndex == -1)
                 throw new MissingIdException("No such drone Charge \n");
@@ -64,7 +63,7 @@ namespace Dal
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public List<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null)// Display all the parcels in the array
+        public IEnumerable<DroneCharge> GetDroneChargeList(Predicate<DroneCharge> predicate = null)// Display all the parcels in the array
         {
             //return DataSource.chargeList.FindAll(c => predicate == null ? true : predicate(c));
             XElement droneChargeRoot = XMLTools.LoadListFromXMLElement(DroneChargeXml);
@@ -73,21 +72,21 @@ namespace Dal
                 try
                 {
 
-                    droneCharges = (from dc in droneChargeRoot.Elements()
+                    return (from dc in droneChargeRoot.Elements()
                                     select new DroneCharge()
                                     {
                                         DroneId = Convert.ToInt32(dc.Element("DroneId").Value),
                                         StationId = Convert.ToInt32(dc.Element("StationId").Value),
                                         ChargingTime = Convert.ToDateTime(dc.Element("ChargingTime").Value)
-                                    }).ToList();
+                                    }).Where((c => predicate == null ? true : predicate(c)));
                 }
                 catch
                 {
                     droneCharges = null;
                 }
             }
-           
-            return droneCharges.Where(c => predicate == null ? true : predicate(c)).ToList();
+
+            return droneCharges;
         }
     }
 }

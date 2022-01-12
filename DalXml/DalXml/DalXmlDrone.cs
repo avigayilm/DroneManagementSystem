@@ -23,33 +23,9 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(drones, DroneXml);
         }
 
-        ///// <summary>
-        ///// function that changes the status of the drone according to the given parameter.
-        ///// </summary>
-        ///// <param name="DroneId"></param>
-        ///// <param name="st"></param>
-        //public void ChangeDroneStatus(int DroneId, DroneStatuses st)
-        //{
-        //    int droneIndex = DataSource.dronesList.FindIndex(d => d.id == DroneId);
-        //    if (droneIndex == -1)
-        //        throw new MissingIdException("No such drone\n");
-        //    else
-        //    {
-        //        var temp = DataSource.dronesList[droneIndex];
-        //        temp.status = st;
-        //        DataSource.dronesList[droneIndex] = temp;
-        //    }
-        //}
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int droneId)
         {
-            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            //int index = drones.FindIndex(d => d.Id == droneId);
-            //if (index == -1)
-            //{
-            //    throw new MissingIdException("No such Drone exists\n");
-            //}
             int index = CheckExistingDrone(droneId);
             return drones[index];
         }
@@ -58,18 +34,12 @@ namespace Dal
         public IEnumerable<Drone> GetAllDrones(Predicate<Drone> predicate = null)
         {
             loadingToList(ref drones, DroneXml);
-            return drones.FindAll(d => predicate == null ? true : predicate(d));
+            return drones.FindAll(d => predicate == null ? true : predicate(d) && !d.Deleted);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneId, string model)
         {
-            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            //int index = drones.FindIndex(d => d.Id == droneId);
-            //if(index==-1)
-            //{
-            //    throw new MissingIdException("No such Drone exists\n");
-            //}
             int index = CheckExistingDrone(droneId);
             Drone tempDrone = drones[index];
             tempDrone.Model = model;
@@ -93,7 +63,6 @@ namespace Dal
         /// <returns></returns>
         internal int CheckExistingDrone(int droneId)
         {
-            //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
             loadingToList(ref drones, DroneXml);
             int index = drones.FindIndex(d => d.Id == droneId);
             if (index == -1)
@@ -110,7 +79,7 @@ namespace Dal
         internal void CheckDuplicateDrone(int droneId)
         {
             List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DroneXml);
-            if (drones.Exists(d => d.Id == droneId))
+            if (drones.Exists(d => d.Id == droneId && !d.Deleted))
             {
                 throw new DuplicateIdException("Drone already exists\n");
             }
@@ -121,7 +90,6 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int droneId)
         {
-            //parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(ParcelXml);
             loadingToList(ref drones, DroneXml);
             int dIndex = drones.FindIndex(d => d.Id == droneId);
             if (dIndex == -1)
@@ -136,13 +104,6 @@ namespace Dal
             tempDrone.Deleted = true;
             drones[dIndex] = tempDrone;
             XMLTools.SaveListToXMLSerializer(drones, DroneXml);
-            //if (pIndex == -1)
-            //{
-            //    throw new MissingIdException("No such parcel exists\n");
-            //}
-            //var temp = DataSource.parcelList[index];
-            //temp.Delete = true;
-            //DataSource.parcelList[index] = temp;
         }
 
     }

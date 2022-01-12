@@ -39,12 +39,13 @@ namespace Dal
             CreateStation();
             CreateCustomer();
             CreateParcel();
+            createCharges();
             CreateLogin();
             XMLTools.SaveListToXMLSerializer(dronesList, DroneXml);
             XMLTools.SaveListToXMLSerializer(stationList, StationXml);
             XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
             XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
-            //XMLTools.SaveListToXMLSerializer(new List<DroneCharge>(), DroneChargeXml);
+            XMLTools.SaveListToXMLSerializer(chargeList, DroneChargeXml);
         }
 
         private static string DroneXml = @"DroneXml.xml";
@@ -122,12 +123,14 @@ namespace Dal
                     Created = startDate.AddDays(rand.Next(200)).AddMinutes(rand.Next(24 * 60)),
                    
                 };
-                if(count < 5)
+                if(count < 4)
                 {
                     temp.DroneId = dronesList[count].Id;
                     temp.Assigned = ((DateTime)temp.Created).AddMinutes(180);
                     if (count < 2)
                         temp.PickedUp = ((DateTime)temp.Assigned).AddMinutes(60);
+                    if (count < 1)
+                        temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(500);
                     count++;
 
                 }
@@ -180,22 +183,24 @@ namespace Dal
                 {
                     Id = id,
                     Name = $"Station-{(char)('A' + rand.Next(26)) + rand.Next(10)}",
-                    AvailableChargeSlots = rand.Next(2, 10),
+                    AvailableChargeSlots = rand.Next(4, 10),
                     Latitude = GetRandomNumber(29.55805, 33.20733),// values of Jerusalem
                     Longitude = GetRandomNumber(34.57149, 35.57212)
                 });
             }
         }
-        //public static void createCharges()
-        //{
-        //    int count = 0;
-        //    foreach (var parcel in parcelList)
-        //    {
-        //        if(parcel.DroneId!=0 && parcel.Delivered!=null)
-        //            chargeList.Add(new DroneCharge() { DroneId = parcel.DroneId, StationId = station})
-        //}
+        public static void createCharges()
+        {
+            //int count = 0;
+            //foreach (var parcel in parcelList)
+            //{
+            //if (parcel.DroneId != 0 && parcel.Delivered != null)
+            //    chargeList.Add(new DroneCharge() { DroneId = parcel.DroneId, StationId = station })
+            DroneCharge dc = new() { ChargingTime = DateTime.Now, DroneId = dronesList[4].Id, StationId = stationList[0].Id };
+            chargeList.Add(dc);
+        }
 
-        public static void CreateLogin()
+            public static void CreateLogin()
         {
             loginList.Add(new Login()
             {
