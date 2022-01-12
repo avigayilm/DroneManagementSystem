@@ -38,9 +38,9 @@ namespace BL
         /// <param name="dr"></param>
         /// <param name="par"></param>
         /// <returns></returns>
-        internal double DroneDistanceFromParcel(BO.DroneToList dr, DO.Parcel par)
+        internal double DroneDistanceFromParcel(BO.DroneToList dr, DO.Customer cus)
         {
-            double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, idal1.GetCustomer(par.SenderId).Longitude, idal1.GetCustomer(par.SenderId).Latitude);
+            double distance = Bonus.Haversine(dr.Loc.Longitude, dr.Loc.Latitude, cus.Longitude, cus.Latitude);
             return distance;
         }
         /// <summary>

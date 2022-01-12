@@ -65,6 +65,7 @@ namespace Dal
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+   
         public int CheckExistingCustomer(string customerId)
         {
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(CustomerXml);

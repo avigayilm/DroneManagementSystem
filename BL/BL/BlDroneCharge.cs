@@ -40,10 +40,10 @@ namespace BL
                         //idal1.ChangeChargeSlots(tempStation.Id, -1);
                         //update dronecharge
                         idal1.SendToCharge(droneId, tempStation.Id);
-                        if (chargeSlotsToAdd.ContainsKey(tempStation.Id))
-                            chargeSlotsToAdd[tempStation.Id]++;
-                        else
-                            chargeSlotsToAdd.Add(tempStation.Id, 1);
+                        //if (chargeSlotsToAdd.ContainsKey(tempStation.Id))
+                        //    chargeSlotsToAdd[tempStation.Id]++;
+                        //else
+                        //    chargeSlotsToAdd.Add(tempStation.Id, 1);
                     }
 
                 }
@@ -79,7 +79,7 @@ namespace BL
                         idal1.ChangeChargeSlots(stationId, 1);
                         //update dronecharge
                         idal1.BatteryCharged(droneId, stationId);
-                        chargeSlotsToAdd.Add(stationId, 1);
+                       // chargeSlotsToAdd[stationId]--;
                     }
                     return stationId;
                 }

@@ -48,7 +48,7 @@
     <DroneId>7658</DroneId>
     <Created>2021-01-22T15:44:00</Created>
     <Assigned>2021-01-22T18:44:00</Assigned>
-    <PickedUp xsi:nil="true" />
+    <PickedUp>2022-01-12T09:46:45.3698375+02:00</PickedUp>
     <Delivered xsi:nil="true" />
     <Delete>false</Delete>
   </Parcel>
