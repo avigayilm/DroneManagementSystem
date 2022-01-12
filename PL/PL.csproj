@@ -21,6 +21,7 @@
     <None Remove="Icons\plus.png" />
     <None Remove="Icons\Profile.png" />
     <None Remove="Icons\prullebak.png" />
+    <None Remove="Icons\refresh.png" />
     <None Remove="Icons\stations.png" />
     <None Remove="images (1).jpg" />
     <None Remove="images.jpg" />
@@ -52,6 +53,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\prullebak.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\refresh.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\stations.png">

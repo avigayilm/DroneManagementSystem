@@ -153,22 +153,7 @@ namespace PL
       
         // customerWindow
 
-        private void CustomerListView_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            customerToList = (CustomerToList)CustomerListView.SelectedItem;
-            new CustomerWindow(this, bl).Show();
-        }
-
-        private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
-        {
-            new CustomerWindow(bl, this).Show();
-            //this.Close();
-        }
-        private void CancelCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            new LoginWindow().Show();
-        }
+      
 
       
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -469,11 +454,6 @@ namespace PL
                 //}
                 CustomerListView.ItemsSource = customerToLists;
             }
-        }
-
-        private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void CustomerListView_DoubleClick(object sender, MouseButtonEventArgs e)
