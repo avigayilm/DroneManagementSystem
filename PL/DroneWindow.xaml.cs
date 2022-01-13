@@ -109,11 +109,11 @@ namespace PL
             DependencyProperty.Register("AutoManual", typeof(bool), typeof(DroneWindow));
         public int StationId { get; set; }
         public Drone Drone { get; set; }
-        DroneListWindow lastW;
+        ListWindow lastW;
         BackgroundWorker AutoRun;
         private void UpdatedTask() => AutoRun.ReportProgress(0); // invokes report progress action for thread updating
         private bool chekEnd() => AutoRun.CancellationPending; // returns whether to cancel yet or not
-        public DroneWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a drone
+        public DroneWindow(BlApi.Ibl IblObj, ListWindow last)// constructor to add a drone
         {
             InitializeComponent();
             bl = IblObj;
@@ -129,7 +129,7 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Collapsed;
         }
 
-        public DroneWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a drone
+        public DroneWindow(ListWindow last, BlApi.Ibl ibl) // constructor to update a drone
         {
             InitializeComponent();
             bl = ibl;

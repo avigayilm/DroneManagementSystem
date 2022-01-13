@@ -69,7 +69,7 @@ namespace PL
                 //    MessageBox.Show("Id isn't registered incorrect", "Incorrect Password", MessageBoxButton.OK, MessageBoxImage.Error);
                 //}
             }
-            new DroneListWindow(IblObj).Show();
+            new ListWindow(IblObj).Show();
             this.Close();
         }
 

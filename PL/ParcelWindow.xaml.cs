@@ -23,7 +23,7 @@ namespace PL
     {
         public DateTime? created { get; set; }
         public Parcel parcel { get; set; }
-        DroneListWindow lastW;
+        ListWindow lastW;
         BlApi.Ibl bl;
 
 
@@ -39,7 +39,7 @@ namespace PL
 
 
         //bool addOrUpdate { get; set; }
-        public ParcelWindow(BlApi.Ibl IblObj, DroneListWindow last) // to add
+        public ParcelWindow(BlApi.Ibl IblObj, ListWindow last) // to add
         {
             InitializeComponent();
             created = DateTime.Now;
@@ -56,7 +56,7 @@ namespace PL
             recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
         }
 
-        public ParcelWindow( DroneListWindow last, BlApi.Ibl IblObj) // to update
+        public ParcelWindow( ListWindow last, BlApi.Ibl IblObj) // to update
         {
             InitializeComponent();
             

@@ -57,7 +57,7 @@ namespace PL
                 userType = IblObj.Login(userName, password);
                 if (userName == "Manager")
                 {
-                    new DroneListWindow(IblObj).Show();
+                    new ListWindow(IblObj).Show();
                     textPass.Clear();
                     txtusername.Clear();
                    // this.Close();

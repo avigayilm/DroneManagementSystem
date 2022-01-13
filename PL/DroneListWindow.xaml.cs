@@ -54,7 +54,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneListWindow.xaml
     /// </summary>
-    public partial class DroneListWindow
+    public partial class ListWindow
     {
         BlApi.Ibl bl;
        // public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
@@ -67,7 +67,7 @@ namespace PL
         public StationToList stationToList;
         public CustomerToList customerToList;
 
-        public DroneListWindow(BlApi.Ibl IblObj)
+        public ListWindow(BlApi.Ibl IblObj)
         {
             InitializeComponent();
 

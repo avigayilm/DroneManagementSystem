@@ -154,6 +154,7 @@
                              Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
                                 <Binding.ValidationRules>
                                     <local:LongitudeCheck>
+                                        
                                     </local:LongitudeCheck>
                                 </Binding.ValidationRules>
                             </Binding>

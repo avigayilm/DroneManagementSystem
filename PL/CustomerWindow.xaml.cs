@@ -28,7 +28,7 @@ namespace PL
         BlApi.Ibl bl;
 
         public Customer Customer { get; set; }
-        DroneListWindow lastW;
+        ListWindow lastW;
         LoginWindow lastLogin;
         public ParcelAtCustomer senderReceiver { get; set; }
         public bool addOrUpdate { get; set; }
@@ -47,7 +47,7 @@ namespace PL
         //List<ParcelAtCustomer> tempSenderParcels { get; set; }
         //List<ParcelAtCustomer> tempReceiverParcels { get; set; }
 
-        public CustomerWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a Customer
+        public CustomerWindow(BlApi.Ibl IblObj, ListWindow last)// constructor to add a Customer
         {
             InitializeComponent();
             bl = IblObj;
@@ -74,7 +74,7 @@ namespace PL
         //    UpdateGrid.Visibility = Visibility.Hidden;
         //    UpdateorAddButton.Content = "Register";
         //}
-        public CustomerWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a customer
+        public CustomerWindow(ListWindow last, BlApi.Ibl ibl) // constructor to update a customer
         {
             InitializeComponent();
             bl = ibl;

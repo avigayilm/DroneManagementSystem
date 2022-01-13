@@ -27,7 +27,7 @@ namespace PL
         BlApi.Ibl bl;
         public Station Station { get; set; }
         List<DroneInCharge> tempDroneInCharge { get; set; }
-        DroneListWindow lastW;
+        ListWindow lastW;
         public DroneInCharge droneInCharge { get; set; }
         public bool addOrUpdate
         {
@@ -40,7 +40,7 @@ namespace PL
             DependencyProperty.Register("addOrUpdate", typeof(bool), typeof(StationWindow));
         public ObservableCollection<DroneInCharge> DroneChargeObservable = new();
 
-        public StationWindow(BlApi.Ibl IblObj, DroneListWindow last)// constructor to add a station
+        public StationWindow(BlApi.Ibl IblObj, ListWindow last)// constructor to add a station
         {
             InitializeComponent();
             bl = IblObj;
@@ -52,7 +52,7 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Hidden;
         }
 
-        public StationWindow(DroneListWindow last, BlApi.Ibl ibl) // constructor to update a station
+        public StationWindow(ListWindow last, BlApi.Ibl ibl) // constructor to update a station
         {
             InitializeComponent();
             bl = ibl;

@@ -18,7 +18,7 @@ namespace BL
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
         internal DalApi.Idal idal1 = DalFactory.GetDal();
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
-        //public Dictionary<int, int> chargeSlotsToAdd ;
+       
         public static BL Instance
         {
             get
@@ -37,8 +37,6 @@ namespace BL
             int pwrUsgMedium = tempArray[2];
             int pwrUsgHeavy = tempArray[3];
             int chargePH = tempArray[4];
-            //int count = 0;
-            //List<DO.Drone> tempDroneList = (List<DO.Drone>)idal1.GetAllDrones();
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null && p.Assigned != null).ToList();
             //chargeSlotsToAdd = new();
@@ -54,11 +52,10 @@ namespace BL
                 }
             }
 
-            foreach (var dr in from DroneToList dr in droneBL//Thread.Sleep(19999);
+            foreach (var dr in from DroneToList dr in droneBL
             where dr.Status != DroneStatuses.Delivery
             select dr)
             {
-                //dr.Status = (DroneStatuses)rand.Next(2);
                 if ( idal1.GetDroneChargeList(d => d.DroneId == dr.Id).Any()) //it is in maintenance
                 {
                     dr.Status = DroneStatuses.Maintenance;
@@ -85,15 +82,7 @@ namespace BL
             new Simulation(this, droneId, func, reportProgress);
         }
 
-        //public void changechargeSlots()
-        //{
-        //    List<StationToList> temp = GetAllStation().ToList();
-
-        //    foreach (var k in chargeSlotsToAdd)
-        //    {
-        //        idal1.ChangeChargeSlots(k.Key, k.Value);
-        //    }
-        //}
+       
     }
 }
 
