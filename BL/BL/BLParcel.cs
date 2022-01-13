@@ -330,7 +330,7 @@ namespace BL
 
 
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
+        [MethodImpl(MethodImplOptions.Synchronized)] 
         public void UpdateParcel(int parcelId, string recId)
         {
             lock (idal1)
