@@ -5,7 +5,7 @@
     <Name>Station-76</Name>
     <Longitude>34.86528801670634</Longitude>
     <Latitude>31.149440162769718</Latitude>
-    <AvailableChargeSlots>5</AvailableChargeSlots>
+    <AvailableChargeSlots>6</AvailableChargeSlots>
     <Deleted>false</Deleted>
   </Station>
   <Station>
@@ -29,7 +29,15 @@
     <Name>Station-76</Name>
     <Longitude>34.84674937662726</Longitude>
     <Latitude>31.83433350728592</Latitude>
-    <AvailableChargeSlots>4</AvailableChargeSlots>
+    <AvailableChargeSlots>3</AvailableChargeSlots>
+    <Deleted>false</Deleted>
+  </Station>
+  <Station>
+    <Id>1232</Id>
+    <Name>avi</Name>
+    <Longitude>43</Longitude>
+    <Latitude>34</Latitude>
+    <AvailableChargeSlots>2</AvailableChargeSlots>
     <Deleted>false</Deleted>
   </Station>
 </ArrayOfStation>

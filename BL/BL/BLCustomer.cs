@@ -91,7 +91,14 @@ namespace BL
         }
         public string getPic(string cuId)
         {
-            return idal1.getPic(cuId);
+            try
+            {
+                return idal1.getPic(cuId);
+            }
+            catch(LoginException ex)
+            {
+                throw new RetrievalException(ex.Message);
+            }
         }
 
 

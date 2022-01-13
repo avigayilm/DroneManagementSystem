@@ -146,12 +146,12 @@ namespace PL
         }
 
 
-
-
         //stationwindow
 
       
         // customerWindow
+
+      
 
       
         //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -243,9 +243,7 @@ namespace PL
 
         #endregion parcel
         #region drone
-        private void DroneTab_MouseEnter(object sender, MouseEventArgs e)
-        {
-        }
+
 
         /// <summary>
         /// determines how to filter the list
@@ -442,21 +440,18 @@ namespace PL
         private void CustomerTab_MouseEnter(object sender, MouseEventArgs e)
         {
             // customerToLists = new();
-            customerToLists = new(from cus in bl.GetAllCustomers()
-                                  select cus);
-            //    bl.GetAllCustomers().ToList();
-            //foreach (var customerToList in tempCustomerToLists)
-            //{
-            //    customerToLists.Add(customerToList);
-            //}
-            CustomerListView.ItemsSource = customerToLists;
-        }
 
-        private void logout_Click(object sender, RoutedEventArgs e)
-        {
-            new LoginWindow().Show();
-            this.Close();
-
+            if (customerToLists == null)
+            {
+                customerToLists = new(from cus in bl.GetAllCustomers()
+                                      select cus);
+                //    bl.GetAllCustomers().ToList();
+                //foreach (var customerToList in tempCustomerToLists)
+                //{
+                //    customerToLists.Add(customerToList);
+                //}
+                CustomerListView.ItemsSource = customerToLists;
+            }
         }
 
         private void Image_MouseDownCustomer(object sender, MouseButtonEventArgs e)
@@ -502,13 +497,18 @@ namespace PL
             CheckComboBoxesParcel();
         }
 
-     
 
 
 
-      
+        private void logout_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow().Show();
+            this.Close();
 
-       
+        }
+
+
+
 
         private void Image_MouseDownParcel(object sender, MouseButtonEventArgs e)
         {

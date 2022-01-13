@@ -35,35 +35,35 @@ namespace PL
         public ObservableCollection<ParcelToList> confirmParcels;
         //public ObservableCollection<ParcelToList> parcelToLists;
         public Customer me { get; set; }
-        bool created
+       public bool created
         {
             get { return (bool)GetValue(CreatedProperty); }
             set { SetValue(CreatedProperty, value); }
         }
         public static readonly DependencyProperty CreatedProperty =
             DependencyProperty.Register("created", typeof(bool), typeof(CustomerInterface));
-        bool assigned
+        public bool assigned
         {
             get { return (bool)GetValue(AssignedProperty); }
             set { SetValue(AssignedProperty, value); }
         }
         public static readonly DependencyProperty AssignedProperty =
             DependencyProperty.Register("assigned", typeof(bool), typeof(CustomerInterface));
-        bool pickedUp
+        public bool pickedUp
         {
             get { return (bool)GetValue(PickedUpProperty); }
             set { SetValue(PickedUpProperty, value); }
         }
         public static readonly DependencyProperty PickedUpProperty =
             DependencyProperty.Register("pickedUp", typeof(bool), typeof(CustomerInterface));
-        bool delivered
+        public bool delivered
         {
             get { return (bool)GetValue(DeliveredProperty); }
             set { SetValue(DeliveredProperty, value); }
         }
         public static readonly DependencyProperty DeliveredProperty =
             DependencyProperty.Register("delivered", typeof(bool), typeof(CustomerInterface));
-        int parcelIdInput
+        public int parcelIdInput
         {
             get { return (int)GetValue(IdProperty); }
             set { SetValue(IdProperty, value); }
@@ -135,6 +135,7 @@ namespace PL
             recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
             lastW = last;
             me = bl.GetCustomer(lastW.userName);
+            //Track.ItemsSource = bl.GetAllParcels(p => p.SenderId == me.Id).Select(parcel => parcel.Id);
             parcel = new();
             parcel.Sender = new();
             parcel.Receiver = new();
@@ -167,11 +168,17 @@ namespace PL
             Created= sendParcels.Count();
             OnItWay = bl.GetAllParcels(x => (x.SenderId == me.Id && x.PickedUp != null && x.Delivered==null)).Count();
             Received = receivedParcels.Count;
-
-            string temp = bl.getPic(me.Id);
-            if (temp != null)
-                Image = temp;
-            else Image = @"C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png";
+            try
+            {
+                string temp = bl.getPic(me.Id);
+                if (temp != null)
+                    Image = temp;
+                else Image = @"C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png";
+            }
+            catch(RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
@@ -367,11 +374,25 @@ namespace PL
 
         private void sumbmitId_Click(object sender, RoutedEventArgs e)
         {
-           Parcel tempParcel= bl.GetParcel(parcelIdInput);
-            created = tempParcel.Created != null ? true : false;
-            assigned = tempParcel.Assigned != null ? true : false;
-            pickedUp = tempParcel.PickedUp != null ? true : false;
-            delivered = tempParcel.Delivered != null ? true : false;
+            if (parcelIdInput == 0)
+            {
+                MessageBox.Show("No suitable parcel found");
+            }
+            else
+            {
+                IEnumerable<ParcelToList>tempParcelList= bl.GetAllParcels(x => x.ReceiverId == me.Id || x.SenderId == me.Id);
+                ParcelToList checkParcel=tempParcelList.FirstOrDefault(x => x.Id == parcelIdInput);
+                if (checkParcel != default)
+                {
+                    Parcel tempParcel = bl.GetParcel(parcelIdInput);
+                    created = tempParcel.Created != null ? true : false;
+                    assigned = tempParcel.Assigned != null ? true : false;
+                    pickedUp = tempParcel.PickedUp != null ? true : false;
+                    delivered = tempParcel.Delivered != null ? true : false;
+                }
+                else
+                    MessageBox.Show("parcel has nothing to do with you");
+            }
         }
 
         private void edit_Click(object sender, RoutedEventArgs e)

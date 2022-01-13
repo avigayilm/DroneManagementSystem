@@ -30,6 +30,7 @@ namespace PL
         public Customer Customer { get; set; }
         DroneListWindow lastW;
         LoginWindow lastLogin;
+        public ParcelAtCustomer senderReceiver { get; set; }
         public bool addOrUpdate { get; set; }
         public string imgSrc { get; set; }
         //public bool addOrUpdate
@@ -82,13 +83,14 @@ namespace PL
             Customer = bl.GetCustomer(lastW.customerToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             try {
-                imgSrc = bl.getPic(Customer.Id);
+                string temp = bl.getPic(Customer.Id);
+                imgSrc = temp;
             }
-            catch(Exception ex)
+            catch(RetrievalException ex)
             {
                 imgSrc = @"C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\Profile.png";
             }
-            imgSrc = bl.getPic(Customer.Id);
+            
             DataContext = this;
 
             //senderParcelsObserverable = from item in Customer.SentParcels
@@ -214,6 +216,20 @@ namespace PL
             {
                 profile.Source = new BitmapImage(new Uri(op.FileName));
             }
+        }
+
+        private void SentparcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            senderReceiver = (ParcelAtCustomer)SentparcelsList.SelectedItem;
+            new ParcelWindow(this, bl).Show();
+
+        }
+
+        private void receivedparcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            senderReceiver = (ParcelAtCustomer)receivedparcelsList.SelectedItem;
+            new ParcelWindow(this, bl).Show();
         }
     }
     

@@ -28,6 +28,7 @@ namespace PL
         public Station Station { get; set; }
         List<DroneInCharge> tempDroneInCharge { get; set; }
         DroneListWindow lastW;
+        public DroneInCharge droneInCharge { get; set; }
         public bool addOrUpdate
         {
             get { return (bool)GetValue(addOrUpdateProperty); }
@@ -138,6 +139,13 @@ namespace PL
                     MessageBox.Show(ex.Message, "UpdateIssue", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+        }
+
+        private void DronesInchargeListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            droneInCharge = (DroneInCharge)DronesInchargeListview.SelectedItem;
+            
+            new DroneWindow(this, bl).Show();
         }
     }
 }

@@ -31,6 +31,33 @@ namespace PL
             return new ValidationResult(true, null);
         }
     }
+
+    public class LongitudeCheck : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string charString = value as string;
+            double.TryParse(charString, out double longitude);
+            if (longitude< 34.57149||longitude> 35.57212)
+                return new ValidationResult(false, "Longitude has to be between 34.57149 and 35.57212");
+            return new ValidationResult(true, null);
+        }
+    }
+
+
+    public class LatitudeCheck : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string charString = value as string;
+            double.TryParse(charString, out double latitude);
+            if (latitude < 29.55805 || latitude > 33.20733)
+                return new ValidationResult(false, "Latitude has to be between 29.55805 and 33.20733");
+            return new ValidationResult(true, null);
+        }
+    }
+
+
 }
 //{
 //    public class InputValidation : IDataErrorInfo

@@ -185,8 +185,8 @@
 
     <Grid>
         <Grid.Background>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
         </Grid.Background>
 
         <Grid x:Name="addGrid" ShowGridLines="False" Visibility="Hidden">
@@ -324,7 +324,7 @@
                 </Button.Resources>
             </Button>
             <!--<Button Name="AutoManualButton" Click="AutoButton_Click" Style="{StaticResource AutoOrManual}"></Button>-->
-          
+
         </Grid>
         <Grid x:Name="UpdateGrid" ShowGridLines="False" IsEnabled="True"
          Visibility="Visible">
@@ -432,7 +432,7 @@
                 <TextBlock Name="senderLatitudeb" Text="{Binding ParcelInTrans.PickedUp._Latitude}" Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBlockStyle}" FontSize="12" Height="39" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
             </Grid>
 
-            <Grid x:Name="receiverGrid" Grid.Column="8" Grid.Row="3" Grid.RowSpan="8" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39">
+            <Grid x:Name="receiverGrid" Grid.Column="8" Grid.Row="3" Grid.RowSpan="8" Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,39,0,39" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -546,9 +546,9 @@
 
             <Button Name="AutoManualButton" 
                 IsCancel="True"
+                Grid.ColumnSpan="1"
                 Grid.Row="9" 
                 Grid.Column="8" 
-                Width="200" 
                     Background="AliceBlue"
                     Click="AutoButton_Click" Style="{StaticResource AutoOrManual}">
                 <Button.Resources>

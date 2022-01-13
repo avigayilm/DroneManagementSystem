@@ -95,8 +95,8 @@
 
     <Grid ShowGridLines="False" >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>
-            <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
+            <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\sky.jpg"/>-->
+            <ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -204,7 +204,7 @@
 
         <TextBlock Name="DronesInchargetxt" Text="DronesInchargeList" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                    Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Hidden" />
-        <ListView x:Name="DronesInchargeListview" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Grid.RowSpan="5" Visibility="Hidden" >
+        <ListView x:Name="DronesInchargeListview" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Grid.RowSpan="5" Visibility="Hidden" MouseDoubleClick="DronesInchargeListview_MouseDoubleClick" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -217,8 +217,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Station.Id}" Width="100"/>
-                    <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Station.Battery}" Width="100"/>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="Battery" DisplayMemberBinding="{Binding Battery}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

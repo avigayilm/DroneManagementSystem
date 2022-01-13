@@ -65,4 +65,11 @@
     <StaffOrUser>false</StaffOrUser>
     <profileSource>C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\bbchedva whatsapp.jpeg</profileSource>
   </Login>
+  <Login>
+    <UserName>1111</UserName>
+    <Password>miniProject</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/aviga/Pictures/Camera Roll/WIN_20210728_13_38_48_Pro.jpg</profileSource>
+    <emailAddress>avigayil.mandel@gmail.com</emailAddress>
+  </Login>
 </ArrayOfLogin>

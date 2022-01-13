@@ -25,8 +25,8 @@
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="FontSize" Value="10" />
         </Style>
-        <Style x:Key="buttonEnable" TargetType="Control">
 
+        <Style x:Key="buttonEnable" TargetType="Control">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=Register}" Value="true">
@@ -146,13 +146,34 @@
                     <TextBlock Text="Id" Grid.Column="2" Grid.Row="4"/>
                     <TextBox  Name="Idtxt" Text="{Binding me.Id, Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
                     <TextBlock Text="PhoneNumber" Grid.Column="2" Grid.Row="5"/>
-                    <TextBox Name="Phonetxt" Text="{Binding me.PhoneNumber, Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+                    <TextBox Name="Phonetxt" Text="{Binding me.PhoneNumber, ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="5"/>
                     <TextBlock Text="Longitude" Grid.Column="2" Grid.Row="6"/>
-                    <TextBox Name="Longtxt" Text="{Binding me.Loc.Longitude,  ValidatesOnDataErrors=True}"  Grid.Column="3" Grid.Row="6"/>
+                    <TextBox Name="Longtxt"  Validation.ErrorTemplate="{StaticResource errorTemplate}" Grid.Column="3" Grid.Row="6"><!--Text="{Binding me.Loc.Longitude,  ValidatesOnDataErrors=True}"-->
+                        <TextBox.Text>
+                            <Binding Path="me.Loc.Longitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                                <Binding.ValidationRules>
+                                    <local:LongitudeCheck>
+                                    </local:LongitudeCheck>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Latitude" Grid.Column="2" Grid.Row="7"/>
-                    <TextBox Name="Lattxt" Text="{Binding me.Loc.Latitude,  ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="7"/>
+                    <TextBox Name="Lattxt" Grid.Column="3" Grid.Row="7"  Validation.ErrorTemplate="{StaticResource errorTemplate}">
+                        <TextBox.Text>
+                            <Binding Path="me.Loc.Latitude" ValidatesOnDataErrors="True" 
+                             Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
+                                <Binding.ValidationRules>
+                                    <local:LatitudeCheck >
+                                    </local:LatitudeCheck>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <!--<TextBox Name="Lattxt" Text="{Binding me.Loc.Latitude,  ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="7"/>-->
                     <Button x:Name="edit" Content="edit profile" Grid.Column="3" Grid.Row="8" Click="edit_Click"/>
-                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
+                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="collapsed">
 
                         <Grid.RowDefinitions>
 
@@ -173,7 +194,7 @@
                    Grid.Column="0" Grid.Row="0" />
                         <TextBlock Name="passTblk" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"
                     Text="password"/>
-                        <TextBox Name="emailTbx" Text="{Binding MailAddress, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"/>
+                        <TextBox Name="emailTbx" Text="{Binding MailAddress, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"/>
                         <TextBox Name="passTbx" Text="{Binding password, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"   />
                         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center">
                             <!--<Image x:Name="profileAdd" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56"  MouseLeftButtonDown="profileAdd_MouseEnter"/>-->
@@ -192,6 +213,20 @@
                                     <Binding ElementName="passTbx" Path="Text" />
                                 </MultiBinding>
                             </Button.IsEnabled>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=Lattxt}" Value="False"/>
+                                                <Condition Binding="{Binding Path=(Validation.HasError),ElementName=Longtxt}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                         </Button>
 
                     </Grid>
@@ -588,9 +623,9 @@
                         <ColumnDefinition Width="108*"/>
                         <ColumnDefinition Width="108*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Margin="108,0,0,0"/>
-                    <TextBlock Text="Fill in ParcelId" Grid.Row="1" Grid.Column="6" Margin="108,36,0,36" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
-                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="6" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959" Grid.ColumnSpan="2" Margin="108,0,0,0">
+                    <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="5"/>
+                    <TextBlock Text="Fill in ParcelId" Grid.Row="2" Grid.Column="5"/>
+                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="5" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />

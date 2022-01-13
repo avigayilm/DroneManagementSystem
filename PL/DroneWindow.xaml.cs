@@ -108,7 +108,7 @@ namespace PL
         public static readonly DependencyProperty AutoManualProperty =
             DependencyProperty.Register("AutoManual", typeof(bool), typeof(DroneWindow));
         public int StationId { get; set; }
-        private Drone Drone { get; set; }
+        public Drone Drone { get; set; }
         DroneListWindow lastW;
         BackgroundWorker AutoRun;
         private void UpdatedTask() => AutoRun.ReportProgress(0); // invokes report progress action for thread updating
@@ -119,11 +119,13 @@ namespace PL
             bl = IblObj;
             lastW = last;
             wCbAdd.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            
             Drone = new Drone();
-            DataContext = Drone;
+           
             //sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
             sTCBAdd.ItemsSource = bl.GetAllStation().Select(s => s.Id);
             addGrid.Visibility = Visibility.Visible;
+            DataContext = Drone;
             UpdateGrid.Visibility = Visibility.Collapsed;
         }
 
@@ -132,11 +134,23 @@ namespace PL
             InitializeComponent();
             bl = ibl;
             lastW = last;
+            
             Drone = bl.GetDrone(lastW.droneToList.Id);
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             addGrid.Visibility = Visibility.Hidden;
-            DataContext = Drone;
             ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
+            DataContext = Drone;
+        }
+
+        public DroneWindow(StationWindow last, BlApi.Ibl ibl) // constructor to update a drone
+        {
+            InitializeComponent();
+            bl = ibl;
+            Drone = bl.GetDrone(last.droneInCharge.Id);
+            UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
+            addGrid.Visibility = Visibility.Hidden;
+            ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
+            DataContext = Drone;
         }
         /// <summary>
         /// adds the drone to list view and list in bl
@@ -179,7 +193,6 @@ namespace PL
         {
             try
             {
-                DroneToList tempForUpdate = lastW.droneToList;
                 UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                 switch (inputedOption)
                 {
@@ -405,7 +418,7 @@ namespace PL
             if (AutoManual == false)// if it's on state of manual
             {
                 AutoManual = true;
-                AutoManualButton.Content = "Manual";
+                //AutoManualButton.Content = "Manual";
                 AutoRun = new() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
                 AutoRun.DoWork += AutoRun_DoWork;
                 AutoRun.ProgressChanged += AutoRun_ProgressChanged;

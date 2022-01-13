@@ -72,6 +72,22 @@ namespace PL
             addOrUpdate = Globals.update;
 
         }
+
+        public ParcelWindow(CustomerWindow last, BlApi.Ibl IblObj) // to update
+        {
+            InitializeComponent();
+
+            bl = IblObj;
+            parcel = bl.GetParcel(last.senderReceiver.Id);
+            created = parcel.Created;
+            weiCBx.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            prioCbx.ItemsSource = Enum.GetValues(typeof(Priorities));
+            recIdCBx.ItemsSource = bl.GetAllCustomers().Select(c => c.Id);
+            UpdateGrid.Visibility = Visibility.Visible;
+            DataContext = this;
+            addOrUpdate = Globals.update;
+
+        }
         private int AddParcel()
         {
             //StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
