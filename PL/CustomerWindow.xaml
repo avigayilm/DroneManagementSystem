@@ -232,7 +232,7 @@
 
         <TextBlock Name="sentList" Text="Sent Parcels" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                    Grid.Column="5" Grid.Row="1" Visibility="Hidden" Grid.ColumnSpan="2"/>
-        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden">
+        <ListView x:Name="SentparcelsList" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden" MouseDoubleClick="SentparcelsList_MouseDoubleClick">
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>
@@ -257,7 +257,7 @@
 
         <TextBlock Name="receivedList" Text="Recieved Parcels" Grid.ColumnSpan="2" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                    Grid.Column="5" Grid.Row="5" Visibility="Hidden" />
-        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden" >
+        <ListView x:Name="receivedparcelsList" Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Visibility="Hidden" MouseDoubleClick="receivedparcelsList_MouseDoubleClick" >
             <ListView.Background>
                 <ImageBrush Opacity="0.5"/>
             </ListView.Background>

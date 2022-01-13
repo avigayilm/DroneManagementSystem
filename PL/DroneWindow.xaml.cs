@@ -125,7 +125,7 @@ namespace PL
             //sTCBAdd.ItemsSource = bl.GetAllStation().Select(s=> s.Id);
             sTCBAdd.ItemsSource = bl.GetAllStation().Select(s => s.Id);
             addGrid.Visibility = Visibility.Visible;
-            DataContext = this;
+            DataContext = Drone;
             UpdateGrid.Visibility = Visibility.Collapsed;
         }
 
@@ -139,7 +139,18 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
             addGrid.Visibility = Visibility.Hidden;
             ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
-            DataContext = this;
+            DataContext = Drone;
+        }
+
+        public DroneWindow(StationWindow last, BlApi.Ibl ibl) // constructor to update a drone
+        {
+            InitializeComponent();
+            bl = ibl;
+            Drone = bl.GetDrone(last.droneInCharge.Id);
+            UpdateGrid.Visibility = Visibility.Visible; //shows  appropriate add grid for window
+            addGrid.Visibility = Visibility.Hidden;
+            ComboUpdateOption.ItemsSource = Enum.GetValues(typeof(UpdateOptions));
+            DataContext = Drone;
         }
         /// <summary>
         /// adds the drone to list view and list in bl
@@ -182,7 +193,6 @@ namespace PL
         {
             try
             {
-                DroneToList tempForUpdate = lastW.droneToList;
                 UpdateOptions inputedOption = (UpdateOptions)ComboUpdateOption.SelectedItem;
                 switch (inputedOption)
                 {
@@ -438,7 +448,8 @@ namespace PL
             private void AutoRun_ProgressChanged(object sender, ProgressChangedEventArgs e)
             {
                 Drone = bl.GetDrone(Drone.Id);
-                DataContext = Drone;
+             DataContext = Drone;
+            //DataContext = this;
             }
 
             private void AutoRun_DoWork(object sender, DoWorkEventArgs e)

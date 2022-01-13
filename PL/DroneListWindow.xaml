@@ -12,8 +12,8 @@
     <Window.Background>
 
         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"></ImageBrush>-->
-        <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>
-        <!--<ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"></ImageBrush>-->
+        <!--<ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\b_round.jpg"></ImageBrush>-->
+        <ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"></ImageBrush>
     </Window.Background>
 
     <Window.Resources>

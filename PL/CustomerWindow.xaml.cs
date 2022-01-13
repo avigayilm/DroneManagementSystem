@@ -30,6 +30,7 @@ namespace PL
         public Customer Customer { get; set; }
         DroneListWindow lastW;
         LoginWindow lastLogin;
+        public ParcelAtCustomer senderReceiver { get; set; }
         public bool addOrUpdate { get; set; }
         public string imgSrc { get; set; }
         //public bool addOrUpdate
@@ -215,6 +216,20 @@ namespace PL
             {
                 profile.Source = new BitmapImage(new Uri(op.FileName));
             }
+        }
+
+        private void SentparcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            senderReceiver = (ParcelAtCustomer)SentparcelsList.SelectedItem;
+            new ParcelWindow(this, bl).Show();
+
+        }
+
+        private void receivedparcelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            senderReceiver = (ParcelAtCustomer)receivedparcelsList.SelectedItem;
+            new ParcelWindow(this, bl).Show();
         }
     }
     

@@ -25,8 +25,8 @@
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="FontSize" Value="10" />
         </Style>
-        <Style x:Key="buttonEnable" TargetType="Control">
 
+        <Style x:Key="buttonEnable" TargetType="Control">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=Register}" Value="true">
@@ -621,6 +621,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="5"/>
+                    <!--<ComboBox Name="Track" Grid.Row="3" Grid.Column="5"  SelectedItem="{Binding parcelIdInput}" SelectedIndex="0"  Background="AliceBlue" Grid.ColumnSpan="1" />-->
                     <TextBlock Text="Fill in ParcelId" Grid.Row="2" Grid.Column="5"/>
                     <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="5" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959">
                         <Button.Resources>

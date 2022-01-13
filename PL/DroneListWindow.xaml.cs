@@ -146,8 +146,6 @@ namespace PL
         }
 
 
-
-
         //stationwindow
 
       
@@ -456,6 +454,23 @@ namespace PL
             }
         }
 
+        private void Image_MouseDownCustomer(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                FrameworkElement framework = sender as FrameworkElement;
+                CustomerToList CurrentCustomer = framework.DataContext as CustomerToList;
+                bl.DeleteCustomer(CurrentCustomer.Id);
+                customerToLists.Remove(CurrentCustomer);
+                CustomerListView.Items.Refresh();
+
+            }
+            catch (RetrievalException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void CustomerListView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             customerToList = (CustomerToList)CustomerListView.SelectedItem;
@@ -482,13 +497,18 @@ namespace PL
             CheckComboBoxesParcel();
         }
 
-     
 
 
 
-      
+        private void logout_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow().Show();
+            this.Close();
 
-       
+        }
+
+
+
 
         private void Image_MouseDownParcel(object sender, MouseButtonEventArgs e)
         {
