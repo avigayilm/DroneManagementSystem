@@ -136,34 +136,7 @@ namespace Dal
 
                 }
                 
-                //int statusStats = rand.Next(100);
-                //if (statusStats >= 10) // scheduled
-                //{
-                //    temp.DroneId = dronesList[i % 5].Id;
-                //    temp.Assigned =((DateTime) temp.Created).AddMinutes(180);
-
-                //    if (statusStats >= 20) // picked up
-                //    {
-                //        temp.PickedUp = ((DateTime) temp.Assigned).AddMinutes(60);
-                //        if (statusStats >= 30) // delivered
-                //        {
-                //            temp.Delivered = ((DateTime)temp.PickedUp).AddMinutes(60);
-                //            temp.DroneId = dronesList[rand.Next((dronesList.Count-1))].Id;
-                //        }
-                //    }
-                //    //if (temp.DroneId == 0)
-                //    //{ 
-                //    //    int dIndex = dronesList.FindIndex(d =>  d.Weight <= temp.Weight);//a possible random parcel 
-                //    //    if(dIndex >= 0)
-                //    //    {
-                //    //        var drone = dronesList[dIndex];
-                //    //        temp.DroneId = drone.Id;
-                //    //        //drone.status = DroneStatuses.Delivery;
-                //    //        dronesList[dIndex] = drone;
-                //    //    }
-                        
-                //    //}
-                //}
+    
 
                 parcelList.Add(temp);
                 DataSource.Config.LastParcelNumber++;
@@ -192,11 +165,7 @@ namespace Dal
         }
         public static void createCharges()
         {
-            //int count = 0;
-            //foreach (var parcel in parcelList)
-            //{
-            //if (parcel.DroneId != 0 && parcel.Delivered != null)
-            //    chargeList.Add(new DroneCharge() { DroneId = parcel.DroneId, StationId = station })
+           
             DroneCharge dc = new() { ChargingTime = DateTime.Now, DroneId = dronesList[4].Id, StationId = stationList[0].Id };
             chargeList.Add(dc);
         }

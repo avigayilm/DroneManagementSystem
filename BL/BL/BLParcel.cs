@@ -297,8 +297,6 @@ namespace BL
                     parcelDal.CopyProperties(parcel);
                     parcel.Sender = GetCustomerInParcel(parcelDal.SenderId);
                     parcel.Receiver = GetCustomerInParcel(parcelDal.ReceiverId);
-                    //idal1.GetCustomer(parcelDal.Sender).CopyProperties(parcel.Sender);// converts to CustomerInParcel
-                    //idal1.GetCustomer(parcelDal.Receiver).CopyProperties(parcel.Receiver);
                     parcel.Dr = new DroneInParcel();
                     if (parcelDal.DroneId != 0)
                     {
@@ -321,8 +319,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetAllParcels(Predicate<DO.Parcel> predicate = null)
         {
-            //List<ParcelToList> tempList = new List<ParcelToList>();
-            //idal1.GetAllParcels().ToList().ForEach(p => p.CopyProperties(parcel)); 
             lock (idal1)
                 return from p in idal1.GetAllParcels(predicate)
                        where !p.Delete
@@ -332,13 +328,7 @@ namespace BL
         }
 
 
-        // return idal1.GetAllParcels(predicate).Select(p => p.CopyProperties(new ParcelToList()))
-        //select (p.CopyProperties(new ParcelToList())) ;
-        //return from p in idal1.GetAllParcels(predicate)
-        //       select (new ParcelToList() a=> p.CopyProperties(a);
-        //return from p in idal1.GetAllParcels(predicate)
-        //       let results = new ParcelToList()
-        //       select p.CopyProperties(results);
+
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(int parcelId, string recId)
@@ -350,11 +340,6 @@ namespace BL
                     if (idal1.GetParcel(parcelId).PickedUp != null)
                         throw new UpdateIssueException("Couldn't update the parcel.");
                     idal1.UpdateParcel(parcelId, recId);
-                    //DroneToList tempDron = droneBL.FirstOrDefault(d => d.Id == droneId);
-                    //if (tempDron == default)
-                    //    throw new RetrievalException("Couldn't get the Drone.");
-                    //else
-                    //    tempDron.Model = model;
                 }
                 catch (DO.MissingIdException ex)
                 {

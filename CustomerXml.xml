@@ -88,4 +88,12 @@
     <Longitude>34</Longitude>
     <Deleted>false</Deleted>
   </Customer>
+  <Customer>
+    <Id>306240995</Id>
+    <Name>Dan</Name>
+    <PhoneNumber>0508503456</PhoneNumber>
+    <Latitude>30.123456</Latitude>
+    <Longitude>34.8888</Longitude>
+    <Deleted>false</Deleted>
+  </Customer>
 </ArrayOfCustomer>

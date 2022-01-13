@@ -553,7 +553,7 @@
                         </Button>
                     </Grid>
                     <ListView x:Name="CustomerListView" MouseDoubleClick="CustomerListView_DoubleClick" Grid.Row="3" ItemsSource= "{Binding customerToLists}" >
-                        <ListView.Resources>
+                        <!--<ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <Separator />
                                 <MenuItem Header="Show SenderParcels" Background="WhiteSmoke"  >
@@ -563,7 +563,7 @@
                                     <MenuItem Header="Child1 SubItem" Click="ShowSenderParcel_Click" IsCheckable="true" />
                                 </MenuItem>
                             </ContextMenu>
-                        </ListView.Resources>
+                        </ListView.Resources-->>
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}" >

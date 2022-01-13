@@ -72,4 +72,11 @@
     <profileSource>file:///C:/Users/aviga/Pictures/Camera Roll/WIN_20210728_13_38_48_Pro.jpg</profileSource>
     <emailAddress>avigayil.mandel@gmail.com</emailAddress>
   </Login>
+  <Login>
+    <UserName>306240995</UserName>
+    <Password>123</Password>
+    <StaffOrUser>false</StaffOrUser>
+    <profileSource>file:///C:/Users/Hudis/Pictures/bbchedva whatsapp.jpeg</profileSource>
+    <emailAddress>dzilbers@g.jct.ac.il</emailAddress>
+  </Login>
 </ArrayOfLogin>

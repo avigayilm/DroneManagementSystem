@@ -135,15 +135,7 @@ namespace BL
                 customer.SentParcels = GetParcelsAtCustomer(customerId, true);
                 customer.ReceivedParcels = GetParcelsAtCustomer(customerId, false);
 
-                //select new DroneInCharge
-                //{
-                //    Id = item.DroneId,
-                //    Battery = temp != default ? temp.Battery : throw new RetrievalException("the Id number doesnt exist\n")
-                //};
-                //List < DO.Parcel > ReceivedParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.Delivered != null).ToList();
-                //List<DO.Parcel> SentParcelListDal = idal1.GetAllParcels(p => p.SenderId == customerId && p.PickedUpTime != null).ToList();
-                //ReceivedParcelListDal.ForEach(p => { customer.ReceivedParcels.Add(GetParcelAtCustomer(p.Id)); });// changes the list to a ParcelAtCustomerList
-                //SentParcelListDal.ForEach(p => { customer.SentParcels.Add(GetParcelAtCustomer(p.Id)); });
+
                 return customer;
             }
             catch (DO.MissingIdException ex)

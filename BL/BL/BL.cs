@@ -17,7 +17,7 @@ namespace BL
         internal static Random rand = new Random();
         internal List<BO.DroneToList> droneBL = new List<DroneToList>();
         internal DalApi.Idal idal1 = DalFactory.GetDal();
-        private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());
+        private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL()); 
        
         public static BL Instance
         {
@@ -29,7 +29,7 @@ namespace BL
         private BL()
         {
 
-            //DAL.DalObject dal2 = new();
+          
 
             int[] tempArray = idal1.DronePwrUsg();
             int pwrUsgEmpty = tempArray[0];
@@ -39,7 +39,6 @@ namespace BL
             int chargePH = tempArray[4];
             idal1.GetAllDrones().ToList().CopyPropertyListtoIBLList(droneBL);// converts the dronelist to IBL
             List<DO.Parcel> undeliveredParcel = idal1.GetAllParcels(p => p.Delivered == null && p.Assigned != null).ToList();
-            //chargeSlotsToAdd = new();
             foreach (DO.Parcel p in undeliveredParcel)
             {
                 DroneToList tempDro = droneBL.FirstOrDefault(d => d.Id == p.DroneId);

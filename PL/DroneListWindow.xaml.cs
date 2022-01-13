@@ -57,8 +57,8 @@ namespace PL
     public partial class ListWindow
     {
         BlApi.Ibl bl;
-       // public Dictionary<WeightAndStatus, List<DroneToList>> droneToLists;
-        public ObservableCollection<DroneToList> droneToListsOb;
+      
+        public ObservableCollection<DroneToList> droneToListsOb; 
         public Dictionary<string, List<ParcelToList>> parcelToLists;
         public ObservableCollection<CustomerToList> customerToLists;
         public ObservableCollection<StationToList> stationToLists;
@@ -86,11 +86,7 @@ namespace PL
             WeightSelector.SelectedItem = 3;
         }
 
-        /// <summary>
-        /// if selectors are changed the drone list will be updated accordingly
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+   
        
      
 
@@ -132,6 +128,11 @@ namespace PL
                 MessageBox.Show("Parcel has no sender");
         }
 
+        /// <summary>
+        /// upon clicking wil show the receiver
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowReceiver_Click(object sender, RoutedEventArgs e)
         {
             parcelToList = (ParcelToList)ParcelListView.SelectedItem;
@@ -146,10 +147,7 @@ namespace PL
         }
 
 
-        //stationwindow
-
-      
-        // customerWindow
+  
 
       
 
@@ -492,7 +490,8 @@ namespace PL
 
         #endregion customer
 
-        private void PrioritySelectorParcel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+     
+        private void PrioritySelectorParcel_SelectionChanged(object sender, SelectionChangedEventArgs e) //gets called when one combobox is changed
         {
             CheckComboBoxesParcel();
         }
@@ -500,7 +499,7 @@ namespace PL
 
 
 
-        private void logout_Click(object sender, RoutedEventArgs e)
+        private void logout_Click(object sender, RoutedEventArgs e) //will logout
         {
             new LoginWindow().Show();
             this.Close();
@@ -509,7 +508,11 @@ namespace PL
 
 
 
-
+        /// <summary>
+        /// will semi delete parcel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image_MouseDownParcel(object sender, MouseButtonEventArgs e)
         {
             try
@@ -534,16 +537,11 @@ namespace PL
             }
         }
 
-        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        private void Image_MouseEnter(object sender, MouseEventArgs e) 
         {
             DronesListView.Items.Refresh();
         }
 
-
-        private void ShowReceiverParcel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void ShowSenderParcel_Click(object sender, RoutedEventArgs e)
         {
@@ -555,12 +553,6 @@ namespace PL
             DronesListView.Items.Refresh();
         }
 
-     
-
-        //private void DronesListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        //{
-        //    droneToLists.OrderBy(x => x.Id);
-        //}
 
         
 
