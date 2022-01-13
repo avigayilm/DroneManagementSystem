@@ -58,6 +58,8 @@ namespace PL
                 if (userName == "Manager")
                 {
                     new DroneListWindow(IblObj).Show();
+                    textPass.Clear();
+                    txtusername.Clear();
                    // this.Close();
                 }
                 else

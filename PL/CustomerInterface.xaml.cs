@@ -97,14 +97,6 @@ namespace PL
             set { _received= value; NotifyPropertyChanged(nameof(Received)); }
         }
 
-        //private string _image;
-        //public string Image
-        //{
-        //    get { return (string)GetValue(ImageProperty); }
-        //    set { SetValue(ImageProperty, value); }
-        //}
-        //public static readonly DependencyProperty ImageProperty =
-        //    DependencyProperty.Register("Image", typeof(bool), typeof(CustomerInterface));
 
         public string Image { get; set; }
         public Parcel parcel { get; set; }
@@ -191,6 +183,7 @@ namespace PL
             me = new();
             Register = true;
             me.Loc = new();
+            edit.Visibility = Visibility.Collapsed;
             registerGrid.Visibility = Visibility.Visible;
             DataContext = this;
         }
@@ -379,6 +372,13 @@ namespace PL
             assigned = tempParcel.Assigned != null ? true : false;
             pickedUp = tempParcel.PickedUp != null ? true : false;
             delivered = tempParcel.Delivered != null ? true : false;
+        }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            Register = true;
+            registerGrid.Visibility = Visibility.Visible;
+            edit.IsEnabled = false;
         }
     }
 }

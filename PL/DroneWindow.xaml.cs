@@ -436,7 +436,15 @@ namespace PL
             {
                 Drone = bl.GetDrone(Drone.Id);
                 DataContext = Drone;
+            lastW.DronesListView.Items.Refresh();
+            IEditableCollectionView items = lastW.DronesListView.Items as IEditableCollectionView;
+            if (items != null)
+            {
+                items.EditItem(lastW.droneToList);
+                items.CommitEdit();
             }
+            
+        }
 
             private void AutoRun_DoWork(object sender, DoWorkEventArgs e)
             {

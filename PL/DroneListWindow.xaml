@@ -287,7 +287,7 @@
 
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Name="ParcelGridWindow" ShowGridLines="True">
+                <Grid Name="ParcelGridWindow" ShowGridLines="False">
                     <Grid.Background>
 
                         <!--<ImageBrush ImageSource="C:\Users\aviga\Pictures\sky.jpg"/>-->
@@ -425,7 +425,7 @@
 
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Name="StationGridWindow" ShowGridLines="True">
+                <Grid Name="StationGridWindow" ShowGridLines="False">
                     <Grid.Background>
                         <!--<ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>-->
                         <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\B. background.png"/>
@@ -471,6 +471,7 @@
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 <Setter Property="Margin" Value="10"/>
+                                <Setter Property="Foreground" Value="AliceBlue"/>
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.Background>
@@ -516,7 +517,7 @@
 
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Name="CustomerGridWindow" ShowGridLines="True">
+                <Grid Name="CustomerGridWindow" ShowGridLines="False">
                     <Grid.Background>
                         <!--<ImageBrush ImageSource="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\B. background.png"/>-->
                         <ImageBrush ImageSource="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\PL\Icons\B. background.png"/>

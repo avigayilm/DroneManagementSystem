@@ -32,9 +32,9 @@ namespace PL
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
             value switch
             {
-                BO.DroneStatuses.Available => Brushes.DarkRed,
-                BO.DroneStatuses.Delivery=> Brushes.Yellow,
-                BO.DroneStatuses.Maintenance=>Brushes.Orange,
+                BO.DroneStatuses.Available => Brushes.White,
+                BO.DroneStatuses.Delivery=> Brushes.GreenYellow,
+                BO.DroneStatuses.Maintenance=>Brushes.CadetBlue,
                 _ => Brushes.White
             };
 

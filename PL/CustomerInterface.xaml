@@ -151,8 +151,8 @@
                     <TextBox Name="Longtxt" Text="{Binding me.Loc.Longitude,  ValidatesOnDataErrors=True}"  Grid.Column="3" Grid.Row="6"/>
                     <TextBlock Text="Latitude" Grid.Column="2" Grid.Row="7"/>
                     <TextBox Name="Lattxt" Text="{Binding me.Loc.Latitude,  ValidatesOnDataErrors=True}" Grid.Column="3" Grid.Row="7"/>
-
-                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Collapsed">
+                    <Button x:Name="edit" Content="edit profile" Grid.Column="3" Grid.Row="8" Click="edit_Click"/>
+                    <Grid x:Name="registerGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="3" Visibility="Visible">
 
                         <Grid.RowDefinitions>
 
@@ -176,8 +176,8 @@
                         <TextBox Name="emailTbx" Text="{Binding MailAddress, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"/>
                         <TextBox Name="passTbx" Text="{Binding password, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"   />
                         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center">
-                            <Image x:Name="profileAdd" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56"  MouseLeftButtonDown="profileAdd_MouseEnter"/>
-                            <!--<Image x:Name="profileAdd" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="65" Width="56" MouseEnter="profileAdd_MouseEnter"/>-->
+                            <!--<Image x:Name="profileAdd" Source="C:\Users\aviga\source\repos\avigayilm\DotNet5782_9033_6996\PL\Icons\customers.png"  ToolTip="Add profile picture" Height="42" Width="56"  MouseLeftButtonDown="profileAdd_MouseEnter"/>-->
+                            <Image x:Name="profileAdd" Source="C:\Users\Hudis\source\repos\HudiF\DotNet5782_9033_6996\pictures\customers.png"  ToolTip="Add profile picture" Height="65" Width="56" MouseEnter="profileAdd_MouseEnter"/>
                             <TextBlock Text="Add picture"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <Button  Grid.Column="0" Grid.Row="3" Content="Sumbit" Click="Submit_Click">
@@ -564,7 +564,7 @@
             </TabItem>
 
             <TabItem Name="TrackTrace" Header="Track and Trace" BorderBrush="{x:Null}" Background="{x:Null}" Style="{StaticResource tabEnable}" >
-                <Grid Name="TrackGrid" ShowGridLines="True">
+                <Grid Name="TrackGrid" ShowGridLines="False">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -578,17 +578,19 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="89*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="108*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="5"/>
-                    <TextBlock Text="Fill in ParcelId" Grid.Row="2" Grid.Column="5"/>
-                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="5" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959">
+                    <TextBox Text="{Binding parcelIdInput}" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Margin="108,0,0,0"/>
+                    <TextBlock Text="Fill in ParcelId" Grid.Row="1" Grid.Column="6" Margin="108,36,0,36" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
+                    <Button Name="sumbmitId" Grid.Row="5 " Grid.Column="6" Content="Submit" Click="sumbmitId_Click"  Background="#DFE959" Grid.ColumnSpan="2" Margin="108,0,0,0">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10" />
@@ -596,10 +598,10 @@
                         </Button.Resources>
                     </Button>
 
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Ordered and approved" Grid.ColumnSpan="2" IsChecked="{Binding created}"/>
-                    <CheckBox Grid.Row="3" Grid.Column="1" Content="Assigned" IsChecked="{Binding assigned}"/>
-                    <CheckBox Grid.Row="5" Grid.Column="1" Content="Packed" IsChecked="{Binding pickedUp}"/>
-                    <CheckBox Grid.Row="7" Grid.Column="1" Content="Delivered" IsChecked="{Binding delivered}"/>
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Ordered and approved" Grid.ColumnSpan="5" IsChecked="{Binding created}" Margin="0,0,107,0"/>
+                    <CheckBox Grid.Row="3" Grid.Column="1" Content="Assigned" IsChecked="{Binding assigned}" Grid.ColumnSpan="2" Margin="0,0,18,0"/>
+                    <CheckBox Grid.Row="5" Grid.Column="1" Content="Packed" IsChecked="{Binding pickedUp}" Grid.ColumnSpan="2" Margin="0,0,18,0"/>
+                    <CheckBox Grid.Row="7" Grid.Column="1" Content="Delivered" IsChecked="{Binding delivered}" Grid.ColumnSpan="2" Margin="0,0,18,0"/>
                     <!--<Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Width="600" Height="20">
                         <ProgressBar Name="pbStatus" Minimum="0" Maximum="4" Value="{Binding Battery}"  />
                         -->

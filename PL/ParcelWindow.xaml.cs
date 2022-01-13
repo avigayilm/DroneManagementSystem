@@ -72,7 +72,7 @@ namespace PL
             addOrUpdate = Globals.update;
 
         }
-        private void AddParcel()
+        private int AddParcel()
         {
             //StationId = (int)sTCBAdd.SelectedItem; //receive station id from combobox selection
             //DroneLabel.Content = $"adding drone to the list";
@@ -87,6 +87,7 @@ namespace PL
             }
             lastW.CheckComboBoxesParcel();
             // after drone is updated in bl now updates listview
+            return id;
         }
 
    
@@ -113,7 +114,7 @@ namespace PL
             if (addOrUpdate == Globals.add)
                 try
                 {
-                    AddParcel();
+                    parcel.Id = AddParcel();
                     MessageBox.Show(parcel.ToString(), "added Parcel");
                     this.Close();
                 }
