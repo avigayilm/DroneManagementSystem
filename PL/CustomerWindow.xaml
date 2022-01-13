@@ -149,10 +149,10 @@
 
 
             <TextBlock Name="CustmoerDisplay" Text="Customer" Grid.Row="0" Grid.Column="0" FontFamily="Arial Rounded MT Bold" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Foreground="#FFFCFBFB" Width="162" Grid.ColumnSpan="2" Margin="4,3,0,40" Grid.RowSpan="2"/>
-            <TextBox Name="nameTbx" Text="{Binding Customer.Name, Mode=TwoWay}"  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}"/>
-            <TextBox Name="idTbx" Text="{Binding Customer.Id, Mode=TwoWay}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Style="{StaticResource textboxStyle}" />
-            <TextBox Name="phoneTx" Text="{Binding Customer.PhoneNumber}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter phone number" />
-            <TextBox Name="LogitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Longitude"><!--Text="{Binding Customer.Loc._Longitude}"-->
+            <TextBox Name="nameTbx" Text="{Binding Customer.Name, Mode=TwoWay}" Style="{StaticResource enabledTextbox}" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <TextBox Name="idTbx" Text="{Binding Customer.Id, Mode=TwoWay}" Style="{StaticResource enabledTextbox}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" />
+            <TextBox Name="phoneTx" Text="{Binding Customer.PhoneNumber}" Style="{StaticResource enabledTextbox}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  ToolTip="Enter phone number" />
+            <TextBox Name="LogitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Longitude"><!--Text="{Binding Customer.Loc._Longitude}"-->
                 <TextBox.Text>
                     <Binding Path="Customer.Loc._Longitude" ValidatesOnDataErrors="True" 
                              Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
@@ -164,7 +164,7 @@
                 </TextBox.Text>
             </TextBox>
 
-            <TextBox Name="LatitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource textboxStyle}" ToolTip="Enter Latitude"><!--Text="{Binding Customer.Loc._Latitude}"-->
+            <TextBox Name="LatitudeTx"  Validation.ErrorTemplate="{StaticResource errorTemplate}"  Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource enabledTextbox}" ToolTip="Enter Latitude"><!--Text="{Binding Customer.Loc._Latitude}"-->
                 <TextBox.Text>
                     <Binding Path="Customer.Loc._Latitude" ValidatesOnDataErrors="True" 
                              Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"  >
@@ -245,11 +245,11 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Customer.Id}" Width="40"/>
-                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Customer.Weight}" Width="70"/>
-                    <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Customer.Priority}" Width="80"/>
-                    <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding Customer.ParcelStatus}" Width="90"/>
-                    <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding Customer.CustomerInP}" Width="110"/>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                    <GridViewColumn Header="Priotity" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                    <GridViewColumn Header="ParcelStatus" DisplayMemberBinding="{Binding ParcelStatus}" Width="90"/>
+                    <GridViewColumn Header="Receiver" DisplayMemberBinding="{Binding CustomerInP}" Width="110"/>
                 </GridView>
             </ListView.View>
 

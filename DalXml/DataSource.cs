@@ -46,6 +46,7 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(customerList, CustomerXml);
             XMLTools.SaveListToXMLSerializer(parcelList, ParcelXml);
             XMLTools.SaveListToXMLSerializer(chargeList, DroneChargeXml);
+            XMLTools.SaveListToXMLSerializer(loginList, LoginXml);
         }
 
         private static string DroneXml = @"DroneXml.xml";
